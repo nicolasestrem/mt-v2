@@ -5,6 +5,7 @@ import Criteria from '../components/Criteria.astro';
 import NominationForm from '../components/NominationForm.astro';
 import JurySection from '../components/JurySection.astro';
 import Footer from '../components/Footer.astro';
+import LinkedInFeed from '../components/LinkedInFeed.astro';
 ---
 
 <Layout title="25 Mobility Trailblazers in 25 - Award für Mobilitätspioniere">
@@ -13,7 +14,7 @@ import Footer from '../components/Footer.astro';
   <!-- Who can be nominated -->
   <section class="py-16 md:py-24 bg-gray-50">
     <div class="container mx-auto px-4">
-      <h2 class="text-center mb-8">
+      <h2 class="gradient-text text-center mb-8 animate-slide-in">
         Wer kann nominiert werden?
       </h2>
       <div class="max-w-4xl mx-auto text-center">
@@ -47,7 +48,7 @@ import Footer from '../components/Footer.astro';
   <!-- Nomination Process -->
   <section class="py-16 md:py-24 bg-blue-50">
     <div class="container mx-auto px-4">
-      <h2 class="text-center mb-8">
+      <h2 class="gradient-text text-center mb-8 animate-slide-in">
         So funktioniert die Nominierung
       </h2>
       <div class="max-w-4xl mx-auto">
@@ -106,6 +107,9 @@ import Footer from '../components/Footer.astro';
       </p>
     </div>
   </section>
+  
+  <!-- LinkedIn Feed -->
+  <LinkedInFeed />
   
   <!-- Jury Section -->
   <JurySection />

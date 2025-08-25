@@ -29,22 +29,28 @@ const criteria = [
 ];
 ---
 
-<section id="kriterien" class="py-16 md:py-24 bg-white">
-  <div class="container mx-auto px-4">
-    <h2 class="text-center mb-4">
+<section id="kriterien" class="py-16 md:py-24 bg-white relative overflow-hidden">
+  <!-- Decorative elements -->
+  <div class="decoration-dots top-20 left-20"></div>
+  <div class="decoration-wave bottom-20 right-20"></div>
+  
+  <div class="container mx-auto px-4 relative z-10">
+    <h2 class="gradient-text text-center mb-4 animate-slide-in">
       Unsere Auswahlkriterien
     </h2>
-    <p class="text-center text-brand-text mb-12 max-w-2xl mx-auto">
+    <p class="text-center text-brand-text mb-12 max-w-2xl mx-auto animate-slide-in" style="animation-delay: 0.2s;">
       Wir suchen Macherinnen und Macher, die im Jahr 2025 mit konkreten Projekten 
       oder Initiativen den mobilen Wandel vorangetrieben haben.
     </p>
     
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-      {criteria.map((item) => (
-        <div class="bg-brand-beige rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 p-6 border border-brand-accent/20">
-          <div class="text-4xl mb-4">{item.icon}</div>
-          <h4 class="mb-2">{item.title}</h4>
-          <p class="text-brand-text">{item.description}</p>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {criteria.map((item, index) => (
+        <div class="info-box card-hover animate-slide-in" style={`animation-delay: ${0.3 + index * 0.1}s;`}>
+          <div class="info-box-icon">
+            <span class="text-4xl">{item.icon}</span>
+          </div>
+          <h4 class="text-center mb-3 text-brand-primary">{item.title}</h4>
+          <p class="text-center text-brand-text">{item.description}</p>
         </div>
       ))}
     </div>

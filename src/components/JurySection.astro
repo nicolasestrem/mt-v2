@@ -40,35 +40,48 @@ const juryMembers = [
 ];
 ---
 
-<section class="py-16 md:py-24">
-  <div class="container mx-auto px-4">
-    <h2 class="text-center mb-4">
+<section class="py-16 md:py-24 bg-gradient-to-br from-brand-beige via-white to-brand-accent/5 relative overflow-hidden">
+  <!-- Shape divider top -->
+  <div class="shape-divider shape-divider-top">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
+  </div>
+  
+  <div class="container mx-auto px-4 relative z-10">
+    <h2 class="gradient-text text-center mb-4 animate-slide-in">
       Die Jury
     </h2>
-    <p class="text-center text-brand-text mb-12 max-w-2xl mx-auto">
+    <p class="text-center text-brand-text mb-12 max-w-2xl mx-auto animate-slide-in" style="animation-delay: 0.2s;">
       Eine unabhängige Expertenjury bewertet alle Nominierungen und wählt die 
       25 Mobility Trailblazers in 25.
     </p>
     
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      {juryMembers.map((member) => (
-        <div class="text-center group">
-          <div class="relative overflow-hidden rounded-xl mb-4">
-            <!-- Placeholder for image - in production, use proper images -->
-            <div class="w-full h-64 bg-gradient-to-br from-brand-beige to-brand-accent/20 flex items-center justify-center">
-              <svg class="w-20 h-20 text-brand-text/40" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-              </svg>
-            </div>
-            <!-- Overlay on hover -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-              <div class="p-4 text-white">
-                <p class="font-semibold">{member.organization}</p>
+      {juryMembers.map((member, index) => (
+        <div class="card-gradient-border card-hover animate-slide-in" style={`animation-delay: ${0.3 + index * 0.1}s;`}>
+          <div class="bg-white rounded-[14px] p-6 text-center group">
+            <div class="relative overflow-hidden rounded-full w-40 h-40 mx-auto mb-4">
+              <!-- Placeholder for image - in production, use proper images -->
+              <div class="w-full h-full gradient-bg-accent flex items-center justify-center">
+                <svg class="w-20 h-20 text-white/80" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                </svg>
               </div>
+              <!-- Glow effect on hover -->
+              <div class="absolute inset-0 bg-brand-accent/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-glow"></div>
             </div>
+            <h4 class="mb-1 text-brand-primary">{member.name}</h4>
+            <p class="text-brand-accent font-semibold text-sm">{member.role}</p>
+            <p class="text-brand-text/70 text-sm mt-1">{member.organization}</p>
+            
+            <!-- LinkedIn icon -->
+            <a href="#" class="inline-block mt-4 text-brand-accent hover:text-brand-primary transition">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
           </div>
-          <h4 class="mb-1">{member.name}</h4>
-          <p class="text-brand-text">{member.role}</p>
         </div>
       ))}
     </div>

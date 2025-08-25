@@ -127,6 +127,164 @@ select:focus {
   max-width: 1200px;
 }
 
+/* ===== Gradient Effects ===== */
+.gradient-text {
+  background: linear-gradient(135deg, #003C3D 0%, #C1693C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 3.2em;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.gradient-bg-primary {
+  background: linear-gradient(135deg, #003C3D 0%, #004C5F 50%, #C1693C 100%);
+}
+
+.gradient-bg-accent {
+  background: linear-gradient(135deg, #C1693C 0%, #B86F52 50%, #003C3D 100%);
+}
+
+/* ===== Shape Dividers (like Elementor) ===== */
+.shape-divider {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.shape-divider-top {
+  top: 0;
+}
+
+.shape-divider-bottom {
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
+.shape-divider svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 60px;
+}
+
+.shape-divider .shape-fill {
+  fill: #F8F0E3;
+}
+
+/* ===== Info Boxes ===== */
+.info-box {
+  position: relative;
+  padding: 2rem;
+  border-radius: 20px;
+  background: white;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white),
+                    linear-gradient(135deg, #C1693C, #003C3D);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.info-box:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(193, 105, 60, 0.2);
+}
+
+.info-box-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C1693C, #003C3D);
+  color: white;
+  font-size: 2rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ===== Animated Elements ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(193, 105, 60, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(193, 105, 60, 0.6); }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.6s ease-out;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* ===== Decorative Elements ===== */
+.decoration-dots {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-image: radial-gradient(circle, #C1693C 2px, transparent 2px);
+  background-size: 20px 20px;
+  opacity: 0.3;
+}
+
+.decoration-wave {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'%3E%3Cpath fill='none' stroke='%23C1693C' stroke-width='2' d='M0,50 Q50,10 100,50 T200,50'/%3E%3C/svg%3E") no-repeat;
+  opacity: 0.2;
+}
+
+/* ===== Card Effects ===== */
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) rotateZ(-1deg);
+}
+
+.card-gradient-border {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  padding: 2px;
+}
+
+.card-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(135deg, #C1693C, #003C3D);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: exclude;
+  mask-composite: exclude;
+}
+
 /* ===== Media Queries ===== */
 /* Tablet */
 @media (max-width: 1025px) {

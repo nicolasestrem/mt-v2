@@ -1,0 +1,152 @@
+---
+// LinkedIn Posts Component - Shows latest posts
+// You can embed actual LinkedIn posts or use their API
+const linkedInPosts = [
+  {
+    id: 1,
+    author: "Nicolas Estrem",
+    role: "Mobility Innovation Leader",
+    date: "2 Tage",
+    content: "Excited to announce the 25 Mobility Trailblazers in 25 Award! We're looking for pioneers who are shaping the future of mobility in the DACH region. 🚀",
+    likes: 124,
+    comments: 18,
+    image: "/images/linkedin-1.jpg",
+    link: "https://linkedin.com/posts/..."
+  },
+  {
+    id: 2,
+    author: "Smart Mobility Summit",
+    role: "Official Event",
+    date: "1 Woche",
+    content: "The mobility transformation needs courage. Join us in recognizing the brave individuals making real change happen. Nominate your mobility heroes today!",
+    likes: 89,
+    comments: 12,
+    image: "/images/linkedin-2.jpg",
+    link: "https://linkedin.com/posts/..."
+  },
+  {
+    id: 3,
+    author: "Mobility Trailblazers",
+    role: "Award Program",
+    date: "2 Wochen", 
+    content: "Who are the unsung heroes of mobility transformation in your network? We want to give them the recognition they deserve. Submit your nominations now!",
+    likes: 156,
+    comments: 23,
+    image: "/images/linkedin-3.jpg",
+    link: "https://linkedin.com/posts/..."
+  }
+];
+---
+
+<section class="py-16 md:py-24 relative overflow-hidden">
+  <!-- Background gradient effect -->
+  <div class="absolute inset-0 bg-gradient-to-br from-brand-accent/5 via-transparent to-brand-primary/5"></div>
+  
+  <!-- Animated circles in background -->
+  <div class="absolute top-0 left-0 w-96 h-96 bg-brand-accent/10 rounded-full blur-3xl animate-pulse"></div>
+  <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+  
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="text-center mb-12">
+      <h2 class="gradient-text mb-4">
+        Aktuelle LinkedIn Updates
+      </h2>
+      <p class="text-xl text-brand-text max-w-2xl mx-auto">
+        Folgen Sie unserer Bewegung auf LinkedIn und bleiben Sie informiert über die neuesten Entwicklungen
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      {linkedInPosts.map((post) => (
+        <article class="linkedin-card group">
+          <!-- LinkedIn Card Header -->
+          <div class="flex items-start gap-3 mb-4">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-accent to-brand-primary flex items-center justify-center text-white font-bold">
+              {post.author.charAt(0)}
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-brand-primary m-0 text-lg">{post.author}</h4>
+              <p class="text-sm text-brand-text/70">{post.role}</p>
+              <p class="text-xs text-brand-text/50">{post.date} • 🌐</p>
+            </div>
+            <svg class="w-6 h-6 text-[#0077B5]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </div>
+          
+          <!-- Post Content -->
+          <p class="text-brand-text mb-4 line-clamp-3">
+            {post.content}
+          </p>
+          
+          <!-- Mock Image Placeholder -->
+          <div class="aspect-video bg-gradient-to-br from-brand-beige to-brand-accent/20 rounded-lg mb-4 flex items-center justify-center">
+            <svg class="w-16 h-16 text-brand-accent/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          
+          <!-- Engagement Stats -->
+          <div class="flex items-center justify-between text-sm text-brand-text/70 mb-3">
+            <span class="flex items-center gap-1">
+              👍 {post.likes}
+            </span>
+            <span>{post.comments} Kommentare</span>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="flex gap-2">
+            <button class="flex-1 py-2 text-center text-brand-accent hover:bg-brand-accent/10 rounded transition">
+              Gefällt mir
+            </button>
+            <button class="flex-1 py-2 text-center text-brand-accent hover:bg-brand-accent/10 rounded transition">
+              Kommentieren
+            </button>
+            <a 
+              href={post.link} 
+              target="_blank"
+              class="flex-1 py-2 text-center text-brand-accent hover:bg-brand-accent/10 rounded transition"
+            >
+              Teilen
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+    
+    <!-- Follow CTA -->
+    <div class="text-center mt-12">
+      <a 
+        href="https://www.linkedin.com/company/mobility-trailblazers" 
+        target="_blank"
+        class="inline-flex items-center gap-2 btn-primary group"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+        </svg>
+        Folgen Sie uns auf LinkedIn
+        <span class="group-hover:translate-x-1 transition-transform">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .linkedin-card {
+    @apply bg-white rounded-xl shadow-lg p-6 transition-all duration-300;
+    border: 1px solid rgba(193, 105, 60, 0.1);
+  }
+  
+  .linkedin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(193, 105, 60, 0.15);
+    border-color: rgba(193, 105, 60, 0.3);
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+</style>
