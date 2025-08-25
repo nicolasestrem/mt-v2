@@ -1,0 +1,76 @@
+---
+// Jury members section
+const juryMembers = [
+  {
+    name: "Dr. Sarah Schmidt",
+    role: "Mobilitätsforscherin",
+    organization: "Fraunhofer Institut",
+    image: "/images/jury/jury-1.jpg"
+  },
+  {
+    name: "Thomas Müller",
+    role: "CEO",
+    organization: "Smart Mobility GmbH",
+    image: "/images/jury/jury-2.jpg"
+  },
+  {
+    name: "Prof. Dr. Anna Weber",
+    role: "Verkehrsplanung",
+    organization: "TU Berlin",
+    image: "/images/jury/jury-3.jpg"
+  },
+  {
+    name: "Michael Becker",
+    role: "Innovationsmanager",
+    organization: "Deutsche Bahn",
+    image: "/images/jury/jury-4.jpg"
+  },
+  {
+    name: "Lisa Wagner",
+    role: "Sustainability Director",
+    organization: "BMW Group",
+    image: "/images/jury/jury-5.jpg"
+  },
+  {
+    name: "Dr. Marcus Klein",
+    role: "Digitalisierungsexperte",
+    organization: "Bundesministerium",
+    image: "/images/jury/jury-6.jpg"
+  }
+];
+---
+
+<section class="py-16 md:py-24">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl md:text-5xl font-bold text-center mb-4 text-gray-800">
+      Die Jury
+    </h2>
+    <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+      Eine unabhängige Expertenjury bewertet alle Nominierungen und wählt die 
+      25 Mobility Trailblazers in 25.
+    </p>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {juryMembers.map((member) => (
+        <div class="text-center group">
+          <div class="relative overflow-hidden rounded-xl mb-4">
+            <!-- Placeholder for image - in production, use proper images -->
+            <div class="w-full h-64 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+              <svg class="w-20 h-20 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <!-- Overlay on hover -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+              <div class="p-4 text-white">
+                <p class="font-semibold">{member.organization}</p>
+              </div>
+            </div>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 mb-1">{member.name}</h3>
+          <p class="text-gray-600">{member.role}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

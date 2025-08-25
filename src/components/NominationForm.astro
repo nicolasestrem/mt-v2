@@ -1,0 +1,227 @@
+---
+// Nomination form with Web3Forms integration
+// Get your free API key at: https://web3forms.com/
+const WEB3FORMS_KEY = "YOUR-ACCESS-KEY-HERE"; // Replace with your actual key
+---
+
+<section id="nominierung" class="py-16 md:py-24 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl md:text-5xl font-bold text-center mb-4 text-gray-800">
+      Jetzt nominieren
+    </h2>
+    <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+      Füllen Sie unser Online-Formular aus und geben Sie uns erste Informationen zur vorgeschlagenen Person. 
+      Gerne können Sie Links, Medienberichte oder Projektbeschreibungen ergänzen.
+    </p>
+    
+    <form 
+      id="nomination-form"
+      action="https://api.web3forms.com/submit" 
+      method="POST"
+      class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12"
+    >
+      <!-- Web3Forms Configuration -->
+      <input type="hidden" name="access_key" value={WEB3FORMS_KEY}>
+      <input type="hidden" name="subject" value="Neue Nominierung - Mobility Trailblazers">
+      <input type="hidden" name="from_name" value="Mobility Trailblazers Website">
+      
+      <!-- Honeypot for spam protection -->
+      <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+      
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <!-- Nominee Name -->
+        <div>
+          <label for="nominee_name" class="block text-gray-700 font-semibold mb-2">
+            Name des/der Nominierten *
+          </label>
+          <input 
+            type="text" 
+            id="nominee_name"
+            name="nominee_name" 
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            placeholder="Max Mustermann"
+          >
+        </div>
+        
+        <!-- Organization -->
+        <div>
+          <label for="organization" class="block text-gray-700 font-semibold mb-2">
+            Organisation/Unternehmen
+          </label>
+          <input 
+            type="text" 
+            id="organization"
+            name="organization"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            placeholder="Beispiel GmbH"
+          >
+        </div>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <!-- Your Name -->
+        <div>
+          <label for="your_name" class="block text-gray-700 font-semibold mb-2">
+            Ihr Name *
+          </label>
+          <input 
+            type="text" 
+            id="your_name"
+            name="your_name" 
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            placeholder="Ihr Name"
+          >
+        </div>
+        
+        <!-- Your Email -->
+        <div>
+          <label for="email" class="block text-gray-700 font-semibold mb-2">
+            Ihre E-Mail-Adresse *
+          </label>
+          <input 
+            type="email" 
+            id="email"
+            name="email" 
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            placeholder="ihre.email@beispiel.de"
+          >
+        </div>
+      </div>
+      
+      <!-- Project/Initiative -->
+      <div class="mb-6">
+        <label for="project" class="block text-gray-700 font-semibold mb-2">
+          Projekt/Initiative
+        </label>
+        <input 
+          type="text" 
+          id="project"
+          name="project"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          placeholder="Name oder Beschreibung des Projekts"
+        >
+      </div>
+      
+      <!-- Nomination Reason -->
+      <div class="mb-6">
+        <label for="reason" class="block text-gray-700 font-semibold mb-2">
+          Begründung der Nominierung *
+        </label>
+        <textarea 
+          id="reason"
+          name="reason" 
+          required
+          rows="6"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
+          placeholder="Bitte beschreiben Sie, warum diese Person als Mobility Trailblazer ausgezeichnet werden sollte..."
+        ></textarea>
+      </div>
+      
+      <!-- Links/References -->
+      <div class="mb-6">
+        <label for="links" class="block text-gray-700 font-semibold mb-2">
+          Links/Referenzen
+        </label>
+        <textarea 
+          id="links"
+          name="links" 
+          rows="3"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
+          placeholder="Webseiten, Artikel, Videos oder andere Referenzen (optional)"
+        ></textarea>
+      </div>
+      
+      <!-- Privacy Consent -->
+      <div class="mb-8">
+        <label class="flex items-start cursor-pointer">
+          <input 
+            type="checkbox" 
+            name="privacy_consent" 
+            required
+            class="mt-1 mr-3 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+          >
+          <span class="text-sm text-gray-600">
+            Ich stimme der Verarbeitung meiner Daten gemäß der 
+            <a href="/datenschutz" class="text-blue-600 hover:underline">Datenschutzerklärung</a> zu. *
+          </span>
+        </label>
+      </div>
+      
+      <!-- Submit Button -->
+      <button 
+        type="submit"
+        class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl"
+      >
+        Nominierung einreichen
+      </button>
+      
+      <!-- Success/Error Messages -->
+      <div id="form-message" class="mt-6 hidden">
+        <!-- Will be populated by JavaScript -->
+      </div>
+    </form>
+    
+    <p class="text-center text-gray-500 text-sm mt-8">
+      <em>Hinweis:</em> Alle eingereichten Vorschläge werden von unserem Team geprüft. 
+      Eine unabhängige Jury wählt im Herbst 2025 die finalen 25 Mobility Trailblazers in 25.
+    </p>
+  </div>
+</section>
+
+<script>
+  // Form handling with better UX
+  const form = document.getElementById('nomination-form') as HTMLFormElement;
+  const messageDiv = document.getElementById('form-message');
+  
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const originalText = submitButton.textContent;
+      
+      // Show loading state
+      submitButton.disabled = true;
+      submitButton.textContent = 'Wird gesendet...';
+      
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form)
+        });
+        
+        if (response.ok) {
+          // Success
+          if (messageDiv) {
+            messageDiv.className = 'mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg';
+            messageDiv.innerHTML = `
+              <strong>Vielen Dank!</strong> Ihre Nominierung wurde erfolgreich eingereicht. 
+              Wir werden sie sorgfältig prüfen.
+            `;
+            messageDiv.classList.remove('hidden');
+          }
+          form.reset();
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (error) {
+        // Error
+        if (messageDiv) {
+          messageDiv.className = 'mt-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg';
+          messageDiv.innerHTML = `
+            <strong>Es ist ein Fehler aufgetreten.</strong> 
+            Bitte versuchen Sie es später erneut oder kontaktieren Sie uns direkt.
+          `;
+          messageDiv.classList.remove('hidden');
+        }
+      } finally {
+        // Reset button
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    });
+  }
+</script>

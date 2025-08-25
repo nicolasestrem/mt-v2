@@ -1,0 +1,95 @@
+---
+// Hero component with countdown timer
+---
+
+<section class="hero bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 text-white py-20 md:py-32">
+  <div class="container mx-auto px-4 text-center">
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in">
+      25 Mobility Trailblazers in 25
+    </h1>
+    
+    <p class="text-xl md:text-2xl italic mb-12 max-w-3xl mx-auto opacity-90">
+      „Mobiler Wandel braucht Mut. Und mutige Menschen verdienen eine Bühne."
+    </p>
+    
+    <!-- Countdown Timer -->
+    <div class="mb-12">
+      <p class="text-sm uppercase tracking-widest mb-4 opacity-75">Award-Verleihung in</p>
+      <div id="countdown" class="flex justify-center gap-4 text-3xl md:text-5xl font-mono">
+        <div class="text-center">
+          <span id="days" class="block font-bold">--</span>
+          <span class="text-sm uppercase tracking-wide opacity-75">Tage</span>
+        </div>
+        <div class="text-center">
+          <span id="hours" class="block font-bold">--</span>
+          <span class="text-sm uppercase tracking-wide opacity-75">Stunden</span>
+        </div>
+        <div class="text-center">
+          <span id="minutes" class="block font-bold">--</span>
+          <span class="text-sm uppercase tracking-wide opacity-75">Minuten</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#nominierung" 
+         class="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
+        Jetzt nominieren →
+      </a>
+      <a href="#kriterien" 
+         class="inline-block bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300">
+        Mehr erfahren
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Vanilla JS countdown timer - no dependencies needed
+  const targetDate = new Date('2025-10-30T18:00:00+01:00');
+  const daysEl = document.getElementById('days');
+  const hoursEl = document.getElementById('hours');
+  const minutesEl = document.getElementById('minutes');
+  
+  function updateCountdown() {
+    const now = new Date();
+    const diff = targetDate.getTime() - now.getTime();
+    
+    if (diff > 0) {
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      
+      if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
+      if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+      if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+    } else {
+      // Event has passed
+      const countdown = document.getElementById('countdown');
+      if (countdown) {
+        countdown.innerHTML = '<span class="text-2xl">Der Award wurde verliehen!</span>';
+      }
+    }
+  }
+  
+  // Update immediately and then every minute
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+</script>
+
+<style>
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 1s ease-out;
+  }
+</style>
