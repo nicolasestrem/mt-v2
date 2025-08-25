@@ -42,10 +42,10 @@ const juryMembers = [
 
 <section class="py-16 md:py-24">
   <div class="container mx-auto px-4">
-    <h2 class="text-3xl md:text-5xl font-bold text-center mb-4 text-gray-800">
+    <h2 class="text-center mb-4">
       Die Jury
     </h2>
-    <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+    <p class="text-center text-brand-text mb-12 max-w-2xl mx-auto">
       Eine unabhängige Expertenjury bewertet alle Nominierungen und wählt die 
       25 Mobility Trailblazers in 25.
     </p>
@@ -55,8 +55,8 @@ const juryMembers = [
         <div class="text-center group">
           <div class="relative overflow-hidden rounded-xl mb-4">
             <!-- Placeholder for image - in production, use proper images -->
-            <div class="w-full h-64 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-              <svg class="w-20 h-20 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <div class="w-full h-64 bg-gradient-to-br from-brand-beige to-brand-accent/20 flex items-center justify-center">
+              <svg class="w-20 h-20 text-brand-text/40" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
               </svg>
             </div>
@@ -67,8 +67,8 @@ const juryMembers = [
               </div>
             </div>
           </div>
-          <h3 class="text-xl font-bold text-gray-800 mb-1">{member.name}</h3>
-          <p class="text-gray-600">{member.role}</p>
+          <h4 class="mb-1">{member.name}</h4>
+          <p class="text-brand-text">{member.role}</p>
         </div>
       ))}
     </div>

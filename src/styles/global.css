@@ -1,1 +1,164 @@
 @import "tailwindcss";
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&family=Cabin:wght@400;600&display=swap');
+
+/* ===== Base Styles ===== */
+body {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: #302C37;
+  background-color: #F8F0E3;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* ===== Typography ===== */
+h1 {
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 4em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #003C3D;
+}
+
+h2 {
+  font-family: 'Trebuchet MS', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 3.2em;
+  line-height: 1.2;
+  color: #003C3D;
+}
+
+h3 {
+  font-family: 'Trebuchet MS', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 2.4em;
+  line-height: 1.2;
+  color: #003C3D;
+}
+
+h4 {
+  font-family: 'Cabin', 'Helvetica Neue', Arial, sans-serif;
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.2;
+  color: #302C37;
+}
+
+/* Links */
+a {
+  color: #C1693C;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #003C3D;
+}
+
+/* ===== Buttons ===== */
+.btn-primary {
+  display: inline-block;
+  padding: 1rem 2rem;
+  color: #003C3D;
+  background: linear-gradient(90deg, #C1693C, #004C5FCC);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #B86F52;
+  border: 1px solid #C1693C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: transparent;
+  border: 2px solid #C1693C;
+  border-radius: 10px;
+  color: #C1693C;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #C1693C;
+  color: #F8F0E3;
+  transform: translateY(-2px);
+}
+
+/* Form inputs */
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #C1693C40;
+  border-radius: 0.5rem;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #C1693C;
+  box-shadow: 0 0 0 3px rgba(193, 105, 60, 0.1);
+}
+
+/* Container */
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 1200px;
+}
+
+/* ===== Media Queries ===== */
+/* Tablet */
+@media (max-width: 1025px) {
+  body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 7vw;
+  }
+  
+  h2 {
+    font-size: 5vw;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  body {
+    font-size: 18px;
+  }
+  
+  h1 {
+    font-size: 28px;
+    line-height: 1.1;
+  }
+  
+  h2 {
+    font-size: 40px;
+  }
+  
+  h4 {
+    font-size: 18px;
+  }
+}

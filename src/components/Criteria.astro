@@ -29,22 +29,22 @@ const criteria = [
 ];
 ---
 
-<section id="kriterien" class="py-16 md:py-24">
+<section id="kriterien" class="py-16 md:py-24 bg-white">
   <div class="container mx-auto px-4">
-    <h2 class="text-3xl md:text-5xl font-bold text-center mb-4 text-gray-800">
+    <h2 class="text-center mb-4">
       Unsere Auswahlkriterien
     </h2>
-    <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+    <p class="text-center text-brand-text mb-12 max-w-2xl mx-auto">
       Wir suchen Macherinnen und Macher, die im Jahr 2025 mit konkreten Projekten 
       oder Initiativen den mobilen Wandel vorangetrieben haben.
     </p>
     
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
       {criteria.map((item) => (
-        <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 p-6">
+        <div class="bg-brand-beige rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 p-6 border border-brand-accent/20">
           <div class="text-4xl mb-4">{item.icon}</div>
-          <h3 class="text-xl font-bold mb-2 text-gray-800">{item.title}</h3>
-          <p class="text-gray-600">{item.description}</p>
+          <h4 class="mb-2">{item.title}</h4>
+          <p class="text-brand-text">{item.description}</p>
         </div>
       ))}
     </div>
