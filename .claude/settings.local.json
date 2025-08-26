@@ -8,7 +8,13 @@
       "mcp__kapture__keypress",
       "mcp__kapture__dom",
       "mcp__kapture__show",
-      "mcp__kapture__new_tab"
+      "mcp__kapture__new_tab",
+      "WebFetch(domain:css-tricks.com)",
+      "WebFetch(domain:www.joshwcomeau.com)",
+      "WebFetch(domain:moderncss.dev)",
+      "Bash(npm run build:*)",
+      "Bash(taskkill:*)",
+      "mcp__kapture__click"
     ],
     "deny": [],
     "ask": []

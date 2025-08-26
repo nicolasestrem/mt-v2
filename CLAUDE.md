@@ -127,6 +127,37 @@ The project has no test files or testing setup. All validation must be done thro
 The `/Media` directory contains WordPress migration artifacts and should be ignored (in .gitignore). Only files in `/public` are served.
 
 ## Recent Updates
+
+### Visual Enhancements (January 2025)
+
+#### Section Dividers
+Added subtle SVG shape dividers between sections for improved visual flow:
+- **Mission**: Wave divider
+- **Jury**: Tilt/angle divider  
+- **Newsletter**: Curved arc with gradient
+- **LinkedIn Feed**: Zigzag pattern
+- **Nomination Form**: Stepped divider
+
+#### Form Glow Effects
+Implemented multi-colored glow effects on forms using brand colors:
+
+**Input Fields**:
+- Multi-layered box-shadows alternating between teal (#1a365d) and orange (#f6ad55)
+- Default: 3 layers (10-30px spread)
+- Hover: 4 layers (12-55px spread)
+- Focus: 6 layers (18-75px spread) with inner glow
+
+**Buttons**:
+- Teal glow (#1a365d) for contrast with orange buttons
+- Default: 40-50px spread at 30% opacity
+- Hover: Up to 100px spread at 60% opacity
+
+**Form Containers**:
+- Animated pulsing glow (3s cycle)
+- Border color transitions from 20% to 50% opacity
+- Multi-layer shadows for depth
+
+### Spacing Optimization
 The site underwent a spacing reduction update to fix excessive vertical spacing:
 - Hero: Reduced from 100vh to 80vh height
 - Section padding: Standardized to 3rem (48px)

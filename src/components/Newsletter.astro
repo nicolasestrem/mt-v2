@@ -161,11 +161,17 @@
 		backdrop-filter: blur(10px);
 		border-radius: 20px;
 		padding: 2rem;
-		border: 1px solid rgba(255, 255, 255, 0.2);
+		border: 2px solid rgba(246, 173, 85, 0.3);
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 1.5rem;
 		text-align: left;
+		box-shadow: 
+			0 20px 60px rgba(0, 0, 0, 0.2),
+			0 0 80px rgba(246, 173, 85, 0.3),
+			0 0 120px rgba(26, 54, 93, 0.2),
+			inset 0 0 60px rgba(246, 173, 85, 0.05);
+		animation: subtle-glow 3s ease-in-out infinite alternate;
 	}
 
 	.form-group {
@@ -193,24 +199,44 @@
 	.form-group input,
 	.form-group select {
 		padding: 0.8rem 1rem;
-		border: 1px solid rgba(255, 255, 255, 0.3);
+		border: 2px solid rgba(255, 255, 255, 0.3);
 		border-radius: 8px;
 		background: rgba(255, 255, 255, 0.1);
 		color: white;
 		font-size: 1rem;
 		transition: all 0.3s ease;
+		box-shadow: 
+			0 0 10px rgba(26, 54, 93, 0.3),
+			0 0 20px rgba(246, 173, 85, 0.2),
+			0 0 30px rgba(26, 54, 93, 0.1);
 	}
 
 	.form-group input::placeholder {
 		color: rgba(255, 255, 255, 0.6);
 	}
 
+	.form-group input:hover,
+	.form-group select:hover {
+		border-color: rgba(246, 173, 85, 0.8);
+		box-shadow: 
+			0 0 15px rgba(26, 54, 93, 0.5),
+			0 0 30px rgba(246, 173, 85, 0.4),
+			0 0 45px rgba(26, 54, 93, 0.3),
+			0 0 60px rgba(246, 173, 85, 0.2);
+	}
+
 	.form-group input:focus,
 	.form-group select:focus {
 		outline: none;
 		border-color: var(--color-accent);
-		background: rgba(255, 255, 255, 0.2);
-		box-shadow: 0 0 0 3px rgba(193, 105, 60, 0.2);
+		background: rgba(255, 255, 255, 0.3);
+		box-shadow: 
+			0 0 0 3px rgba(246, 173, 85, 0.6),
+			0 0 20px rgba(26, 54, 93, 0.6),
+			0 0 40px rgba(246, 173, 85, 0.5),
+			0 0 60px rgba(26, 54, 93, 0.4),
+			0 0 80px rgba(246, 173, 85, 0.3),
+			inset 0 0 20px rgba(246, 173, 85, 0.1);
 	}
 
 	.form-group select option {
@@ -229,13 +255,50 @@
 		cursor: pointer;
 		transition: all 0.3s ease;
 		margin-top: 1rem;
+		box-shadow: 
+			0 4px 20px rgba(26, 54, 93, 0.5),
+			0 0 40px rgba(26, 54, 93, 0.3);
 	}
 
 	.newsletter-btn:hover {
 		background: white;
 		color: var(--color-accent);
 		transform: translateY(-2px);
-		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+		box-shadow: 
+			0 10px 30px rgba(0, 0, 0, 0.3),
+			0 0 50px rgba(26, 54, 93, 0.7),
+			0 0 100px rgba(26, 54, 93, 0.4),
+			inset 0 0 30px rgba(26, 54, 93, 0.2);
+	}
+
+	@keyframes subtle-glow {
+		from {
+			box-shadow: 
+				0 20px 60px rgba(0, 0, 0, 0.2),
+				0 0 80px rgba(246, 173, 85, 0.3),
+				0 0 120px rgba(26, 54, 93, 0.2),
+				inset 0 0 60px rgba(246, 173, 85, 0.05);
+			border-color: rgba(246, 173, 85, 0.3);
+		}
+		to {
+			box-shadow: 
+				0 20px 60px rgba(0, 0, 0, 0.2),
+				0 0 100px rgba(246, 173, 85, 0.5),
+				0 0 150px rgba(26, 54, 93, 0.3),
+				inset 0 0 80px rgba(246, 173, 85, 0.1);
+			border-color: rgba(246, 173, 85, 0.6);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.newsletter-form {
+			animation: none;
+		}
+		.form-group input,
+		.form-group select,
+		.newsletter-btn {
+			transition: none;
+		}
 	}
 
 	@media (max-width: 768px) {
