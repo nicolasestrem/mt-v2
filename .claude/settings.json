@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__wordpress-mcp__wp_transient\n  mcp__wordpress-mcp__wp_rest_api\n  mcp__wordpress-mcp__wp_user_meta\n  mcp__wordpress-mcp__wp_post_meta\n  mcp__wordpress-mcp__wp_cron\n  mcp__kapture__list_tabs\n  mcp__kapture__tab_detail\n  mcp__kapture__navigate\n  mcp__kapture__back\n  mcp__kapture__forward\n  mcp__kapture__reload\n  mcp__kapture__show\n  mcp__kapture__new_tab\n  mcp__kapture__close\n  mcp__kapture__click\n  mcp__kapture__hover\n  mcp__kapture__focus\n  mcp__kapture__blur\n  mcp__kapture__fill\n  mcp__kapture__select\n  mcp__kapture__keypress\n  mcp__kapture__screenshot\n  mcp__kapture__dom\n  mcp__kapture__elements\n  mcp__kapture__elementsFromPoint\n  mcp__kapture__console_logs\n  ListMcpResourcesTool\n  ReadMcpResourceTool",
+      "general-purpose",
+      "security-audit-specialist",
+      "prompt-engineering-expert",
+      "fullstack-dev-expert",
+      "fullstack-dev-expert",
+      "frontend-ui-specialist",
+      "documentation-writer",
+      "code-refactoring-specialist"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

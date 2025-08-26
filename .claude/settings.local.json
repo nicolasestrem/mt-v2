@@ -24,7 +24,8 @@
       "Bash(rm:*)",
       "mcp__kapture__fill",
       "mcp__kapture__console_logs",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "frontend-ui-specialist"
     ],
     "deny": [],
     "ask": []
