@@ -427,94 +427,62 @@
 </style>
 
 <script>
-	// Enhanced mobile menu with comprehensive Android/iOS real-device fixes
+	// Simplified mobile menu - focusing on basic functionality first
 	document.addEventListener('DOMContentLoaded', () => {
-		// Find elements within the header context
+		console.log('DOM loaded, initializing mobile menu...');
+		
 		const header = document.querySelector('.header');
-		if (!header) return;
+		const navToggle = document.querySelector('.nav-toggle');
+		const navMenu = document.querySelector('.nav-menu');
+		const navSocial = document.querySelector('.nav-social');
 		
-		const navToggle = header.querySelector('.nav-toggle');
-		const navMenu = header.querySelector('.nav-menu');
-		const navSocial = header.querySelector('.nav-social');
+		console.log('Elements found:', { 
+			navToggle: !!navToggle, 
+			navMenu: !!navMenu, 
+			navSocial: !!navSocial 
+		});
 		
-		// Debug logging for real device testing
-		console.log('Mobile menu init:', { navToggle: !!navToggle, navMenu: !!navMenu, navSocial: !!navSocial });
-		
-		// Only add listeners if they haven't been added already
-		if (navToggle && !navToggle.hasAttribute('data-listener-added')) {
-			navToggle.setAttribute('data-listener-added', 'true');
+		if (navToggle && navMenu && navSocial) {
+			console.log('Setting up simple click handler...');
 			
-			// Enhanced toggle function with real device fixes
-			const toggleMenu = (e) => {
-				// Critical: Prevent all default behaviors immediately
+			// Simple toggle function
+			function toggleMenu(e) {
 				e.preventDefault();
-				e.stopImmediatePropagation();
-				
-				console.log('Toggle clicked/touched:', e.type);
+				console.log('Toggle clicked:', e.type);
 				
 				const isActive = navToggle.classList.contains('active');
-				console.log('Current state:', isActive ? 'active' : 'inactive');
-				
-				// Force immediate visual feedback for touch devices
-				navToggle.style.opacity = '0.7';
-				setTimeout(() => { navToggle.style.opacity = '1'; }, 100);
 				
 				if (isActive) {
-					navMenu?.classList.remove('active');
-					navSocial?.classList.remove('active');
+					navMenu.classList.remove('active');
+					navSocial.classList.remove('active');
 					navToggle.classList.remove('active');
 					console.log('Menu closed');
 				} else {
-					navMenu?.classList.add('active');
-					navSocial?.classList.add('active');
+					navMenu.classList.add('active');
+					navSocial.classList.add('active');
 					navToggle.classList.add('active');
 					console.log('Menu opened');
 				}
-				
-				return false; // Extra safety for older mobile browsers
-			};
+			}
 			
-			// Enhanced event handler with debouncing for real devices
-			let lastToggleTime = 0;
-			const debouncedToggle = (e) => {
-				const now = Date.now();
-				if (now - lastToggleTime < 200) {
-					console.log('Toggle debounced');
-					return;
-				}
-				lastToggleTime = now;
-				toggleMenu(e);
-			};
+			// Simple click handler that works
+			navToggle.addEventListener('click', toggleMenu);
 			
-			// Multiple event types for maximum compatibility
-			navToggle.addEventListener('click', debouncedToggle, { passive: false });
-			navToggle.addEventListener('touchend', debouncedToggle, { passive: false });
-			
-			// iOS Safari specific - prevent ghost clicks
-			navToggle.addEventListener('touchstart', (e) => {
-				console.log('Touch start registered');
-				// iOS Safari: prevent subsequent click event
+			// Also add touchend for better mobile support
+			navToggle.addEventListener('touchend', (e) => {
 				e.preventDefault();
-			}, { passive: false });
-			
-			// Android Chrome specific - handle tap events
-			navToggle.addEventListener('pointerdown', (e) => {
-				console.log('Pointer down registered');
-				if (e.pointerType === 'touch') {
-					// Small delay to ensure touch is registered
-					setTimeout(() => debouncedToggle(e), 10);
-				}
+				toggleMenu(e);
 			}, { passive: false });
 			
 			// Function to close menu
-			const closeMenu = () => {
-				if (navMenu?.classList.contains('active')) {
-					console.log('Closing menu');
+			function closeMenu() {
+				if (navMenu.classList.contains('active')) {
 					navMenu.classList.remove('active');
-					navSocial?.classList.remove('active');
-					navToggle?.classList.remove('active');
+					navSocial.classList.remove('active');
+					navToggle.classList.remove('active');
+					console.log('Menu closed by outside click');
 				}
-			};
+			}
 			
 			// Enhanced link click handlers
 			const navLinks = header.querySelectorAll('.nav-list a');
