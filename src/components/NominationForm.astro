@@ -1,227 +1,307 @@
 ---
-// Nomination form with Web3Forms integration
-// Get your free API key at: https://web3forms.com/
-const WEB3FORMS_KEY = "YOUR-ACCESS-KEY-HERE"; // Replace with your actual key
+// Nomination form component for Mobility Trailblazers
 ---
 
-<section id="nominierung" class="py-16 md:py-24 bg-gray-50">
-  <div class="container mx-auto px-4">
-    <h2 class="text-3xl md:text-5xl font-bold text-center mb-4 text-gray-800">
-      Jetzt nominieren
-    </h2>
-    <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-      Füllen Sie unser Online-Formular aus und geben Sie uns erste Informationen zur vorgeschlagenen Person. 
-      Gerne können Sie Links, Medienberichte oder Projektbeschreibungen ergänzen.
-    </p>
-    
-    <form 
-      id="nomination-form"
-      action="https://api.web3forms.com/submit" 
-      method="POST"
-      class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12"
-    >
-      <!-- Web3Forms Configuration -->
-      <input type="hidden" name="access_key" value={WEB3FORMS_KEY}>
-      <input type="hidden" name="subject" value="Neue Nominierung - Mobility Trailblazers">
-      <input type="hidden" name="from_name" value="Mobility Trailblazers Website">
-      
-      <!-- Honeypot for spam protection -->
-      <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-      
-      <div class="grid md:grid-cols-2 gap-6 mb-6">
-        <!-- Nominee Name -->
-        <div>
-          <label for="nominee_name" class="block text-brand-text font-semibold mb-2">
-            Name des/der Nominierten *
-          </label>
-          <input 
-            type="text" 
-            id="nominee_name"
-            name="nominee_name" 
-            required
-            class="w-full px-4 py-3 border border-brand-accent/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent transition"
-            placeholder="Max Mustermann"
-          >
-        </div>
-        
-        <!-- Organization -->
-        <div>
-          <label for="organization" class="block text-brand-text font-semibold mb-2">
-            Organisation/Unternehmen
-          </label>
-          <input 
-            type="text" 
-            id="organization"
-            name="organization"
-            class="w-full px-4 py-3 border border-brand-accent/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent transition"
-            placeholder="Beispiel GmbH"
-          >
-        </div>
-      </div>
-      
-      <div class="grid md:grid-cols-2 gap-6 mb-6">
-        <!-- Your Name -->
-        <div>
-          <label for="your_name" class="block text-brand-text font-semibold mb-2">
-            Ihr Name *
-          </label>
-          <input 
-            type="text" 
-            id="your_name"
-            name="your_name" 
-            required
-            class="w-full px-4 py-3 border border-brand-accent/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent transition"
-            placeholder="Ihr Name"
-          >
-        </div>
-        
-        <!-- Your Email -->
-        <div>
-          <label for="email" class="block text-brand-text font-semibold mb-2">
-            Ihre E-Mail-Adresse *
-          </label>
-          <input 
-            type="email" 
-            id="email"
-            name="email" 
-            required
-            class="w-full px-4 py-3 border border-brand-accent/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent transition"
-            placeholder="ihre.email@beispiel.de"
-          >
-        </div>
-      </div>
-      
-      <!-- Project/Initiative -->
-      <div class="mb-6">
-        <label for="project" class="block text-brand-text font-semibold mb-2">
-          Projekt/Initiative
-        </label>
-        <input 
-          type="text" 
-          id="project"
-          name="project"
-          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-          placeholder="Name oder Beschreibung des Projekts"
-        >
-      </div>
-      
-      <!-- Nomination Reason -->
-      <div class="mb-6">
-        <label for="reason" class="block text-brand-text font-semibold mb-2">
-          Begründung der Nominierung *
-        </label>
-        <textarea 
-          id="reason"
-          name="reason" 
-          required
-          rows="6"
-          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
-          placeholder="Bitte beschreiben Sie, warum diese Person als Mobility Trailblazer ausgezeichnet werden sollte..."
-        ></textarea>
-      </div>
-      
-      <!-- Links/References -->
-      <div class="mb-6">
-        <label for="links" class="block text-brand-text font-semibold mb-2">
-          Links/Referenzen
-        </label>
-        <textarea 
-          id="links"
-          name="links" 
-          rows="3"
-          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
-          placeholder="Webseiten, Artikel, Videos oder andere Referenzen (optional)"
-        ></textarea>
-      </div>
-      
-      <!-- Privacy Consent -->
-      <div class="mb-8">
-        <label class="flex items-start cursor-pointer">
-          <input 
-            type="checkbox" 
-            name="privacy_consent" 
-            required
-            class="mt-1 mr-3 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
-          >
-          <span class="text-sm text-gray-600">
-            Ich stimme der Verarbeitung meiner Daten gemäß der 
-            <a href="/datenschutz" class="text-blue-600 hover:underline">Datenschutzerklärung</a> zu. *
-          </span>
-        </label>
-      </div>
-      
-      <!-- Submit Button -->
-      <button 
-        type="submit"
-        class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl"
-      >
-        Nominierung einreichen
-      </button>
-      
-      <!-- Success/Error Messages -->
-      <div id="form-message" class="mt-6 hidden">
-        <!-- Will be populated by JavaScript -->
-      </div>
-    </form>
-    
-    <p class="text-center text-gray-500 text-sm mt-8">
-      <em>Hinweis:</em> Alle eingereichten Vorschläge werden von unserem Team geprüft. 
-      Eine unabhängige Jury wählt im Herbst 2025 die finalen 25 Mobility Trailblazers in 25.
-    </p>
-  </div>
+<section class="nomination" id="vorschlagen">
+	<div class="container">
+		<div class="nomination-content">
+			<h2 class="nomination-title">Schlagen Sie eine(n) Mobility Trailblazer vor</h2>
+			
+			<div class="nomination-description">
+				<p><strong>„Mobiler Wandel braucht Mut. Und mutige Menschen verdienen eine Bühne."</strong></p>
+				<p>Mit dem Award <em>25 Mobility Trailblazers in 25</em> zeichnen wir Persönlichkeiten aus, die im deutschsprachigen Raum mutige und wirkungsvolle Beiträge zur Mobilitätswende leisten. Wenn Sie eine solche Person kennen – aus Wirtschaft, Politik, Verwaltung, Wissenschaft oder Zivilgesellschaft – freuen wir uns auf Ihre Nominierung.</p>
+				
+				<h3>Wer kann nominiert werden?</h3>
+				<p>Wir suchen Macherinnen und Macher, die…</p>
+				<ul>
+					<li>im Jahr 2025 mit konkreten Projekten oder Initiativen den mobilen Wandel vorangetrieben haben,</li>
+					<li>durch Innovationskraft, Umsetzungskompetenz und persönliche Haltung überzeugen,</li>
+					<li>die Mobilitätswende aktiv gestalten – unabhängig von Hierarchie, Branche oder Bekanntheitsgrad.</li>
+				</ul>
+				<p>Im Mittelpunkt steht immer die einzelne Person – nicht das Unternehmen oder die Organisation.</p>
+				
+				<h3>Unsere Auswahlkriterien:</h3>
+				<ul>
+					<li><strong>Mut & Pioniergeist</strong>: Welche Risiken wurden eingegangen? Welche Konventionen hinterfragt?</li>
+					<li><strong>Innovationsgrad</strong>: Wie neuartig ist der Ansatz?</li>
+					<li><strong>Wirkung & Umsetzung</strong>: Welche konkrete Veränderung wurde erreicht?</li>
+					<li><strong>Relevanz für die Mobilitätswende</strong>: Leistet der Beitrag einen strukturellen oder gesellschaftlichen Mehrwert?</li>
+					<li><strong>Vorbildfunktion & Persönlichkeit</strong>: Inspiriert die Person durch Haltung und Sichtbarkeit?</li>
+				</ul>
+				
+				<h3>So funktioniert die Nominierung</h3>
+				<p>Füllen Sie unser nachfolgendes Online-Formular aus und geben Sie uns erste Informationen zur vorgeschlagenen Person. Gerne können Sie Links, Medienberichte oder Projektbeschreibungen ergänzen. Auch Mehrfachnominierungen sind möglich.</p>
+				<p><em>Hinweis:</em> Alle eingereichten Vorschläge werden von unserem Team geprüft. Eine unabhängige Jury wählt im Herbst 2025 die finalen <em>25 Mobility Trailblazers in 25</em>. Die Auszeichnung erfolgt im Rahmen des Smart Mobility Summit am 30. Oktober 2025 in Berlin.</p>
+				
+				<h3>Warum Ihre Nominierung wichtig ist</h3>
+				<p>Mutige Vorreiterinnen und Vorreiter verdienen Aufmerksamkeit. Ihre Nominierung hilft uns dabei, diesen Menschen eine Bühne zu geben – und anderen Mut zu machen, eigene Wege in der Mobilitätswende zu gehen.</p>
+			</div>
+			
+			<form class="nomination-form" id="nominationForm">
+				<div class="form-row">
+					<div class="form-group">
+						<label for="nominatorFirstName">Ihr Vorname *</label>
+						<input type="text" id="nominatorFirstName" name="nominatorFirstName" required>
+					</div>
+					
+					<div class="form-group">
+						<label for="nominatorLastName">Ihr Nachname *</label>
+						<input type="text" id="nominatorLastName" name="nominatorLastName" required>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="nominatorEmail">Ihre E-Mail *</label>
+					<input type="email" id="nominatorEmail" name="nominatorEmail" required>
+				</div>
+				
+				<div class="form-group">
+					<label for="nominatorSalutation">Anrede *</label>
+					<select id="nominatorSalutation" name="nominatorSalutation" required>
+						<option value="">Bitte wählen</option>
+						<option value="Frau">Frau</option>
+						<option value="Herr">Herr</option>
+						<option value="Keine Angabe">Keine Angabe</option>
+					</select>
+				</div>
+				
+				<div class="form-group">
+					<label for="nominationMessage">Optionale Nachricht</label>
+					<textarea id="nominationMessage" name="nominationMessage" rows="6" placeholder="Wen schlagen Sie vor? Gerne mit einer kurzen oder auch ausführlichen Begründung."></textarea>
+				</div>
+				
+				<div class="form-group checkbox-group">
+					<label class="checkbox-label">
+						<input type="checkbox" name="newsletterSignup" value="true">
+						<span class="checkmark"></span>
+						Gerne melde ich mich auch zum Newsletter an.
+					</label>
+				</div>
+				
+				<button type="submit" class="nomination-btn">Vorschlag einreichen</button>
+			</form>
+		</div>
+	</div>
 </section>
 
+<style>
+	.nomination {
+		background: var(--color-background);
+		position: relative;
+		overflow: hidden;
+		padding: 3rem 0;
+	}
+
+	.nomination::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: url('/images/background.webp') center center/cover;
+		opacity: 0.05;
+		z-index: 1;
+	}
+
+	.nomination-content {
+		max-width: 900px;
+		margin: 0 auto;
+		position: relative;
+		z-index: 2;
+	}
+
+	.nomination-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin-bottom: 2rem;
+		text-align: center;
+		color: var(--color-primary);
+		background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.nomination-description {
+		margin-bottom: 3rem;
+		color: var(--color-text);
+	}
+
+	.nomination-description p {
+		font-size: 1.1rem;
+		line-height: 1.6;
+		margin-bottom: 1rem;
+	}
+
+	.nomination-description h3 {
+		color: var(--color-primary);
+		font-size: 1.5rem;
+		font-weight: 600;
+		margin: 2rem 0 1rem 0;
+	}
+
+	.nomination-description ul {
+		list-style: none;
+		padding: 0;
+		margin: 1rem 0;
+	}
+
+	.nomination-description li {
+		padding: 0.5rem 0;
+		font-size: 1rem;
+		position: relative;
+		padding-left: 1.5rem;
+	}
+
+	.nomination-description li::before {
+		content: '•';
+		position: absolute;
+		left: 0;
+		color: var(--color-accent);
+		font-weight: bold;
+		font-size: 1.2rem;
+	}
+
+	.nomination-description strong {
+		color: var(--color-primary);
+		font-weight: 600;
+	}
+
+	.nomination-description em {
+		color: var(--color-accent);
+		font-style: italic;
+	}
+
+	.nomination-form {
+		background: white;
+		border-radius: 20px;
+		padding: 2.5rem;
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+		border: 1px solid rgba(0, 0, 0, 0.1);
+	}
+
+	.form-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.5rem;
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 1.5rem;
+	}
+
+	.form-group label {
+		font-size: 0.9rem;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+		color: var(--color-primary);
+	}
+
+	.form-group input,
+	.form-group select,
+	.form-group textarea {
+		padding: 0.8rem 1rem;
+		border: 2px solid #e5e7eb;
+		border-radius: 8px;
+		background: white;
+		color: var(--color-text);
+		font-size: 1rem;
+		transition: all 0.3s ease;
+		font-family: inherit;
+	}
+
+	.form-group input:focus,
+	.form-group select:focus,
+	.form-group textarea:focus {
+		outline: none;
+		border-color: var(--color-accent);
+		box-shadow: 0 0 0 3px rgba(193, 105, 60, 0.1);
+	}
+
+	.form-group textarea {
+		resize: vertical;
+		min-height: 120px;
+	}
+
+	.checkbox-group {
+		flex-direction: row;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.checkbox-label {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		cursor: pointer;
+		font-size: 1rem;
+		margin: 0;
+	}
+
+	.checkbox-label input[type="checkbox"] {
+		width: 18px;
+		height: 18px;
+		margin: 0;
+	}
+
+	.nomination-btn {
+		background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+		color: white;
+		border: none;
+		padding: 1rem 2rem;
+		border-radius: 50px;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		width: 100%;
+		margin-top: 1rem;
+	}
+
+	.nomination-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	}
+
+	@media (max-width: 768px) {
+		.nomination-title {
+			font-size: 2rem;
+		}
+
+		.form-row {
+			grid-template-columns: 1fr;
+		}
+
+		.nomination-form {
+			padding: 1.5rem;
+		}
+
+		.nomination-description h3 {
+			font-size: 1.3rem;
+		}
+	}
+</style>
+
 <script>
-  // Form handling with better UX
-  const form = document.getElementById('nomination-form') as HTMLFormElement;
-  const messageDiv = document.getElementById('form-message');
-  
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-      const originalText = submitButton.textContent;
-      
-      // Show loading state
-      submitButton.disabled = true;
-      submitButton.textContent = 'Wird gesendet...';
-      
-      try {
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form)
-        });
-        
-        if (response.ok) {
-          // Success
-          if (messageDiv) {
-            messageDiv.className = 'mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg';
-            messageDiv.innerHTML = `
-              <strong>Vielen Dank!</strong> Ihre Nominierung wurde erfolgreich eingereicht. 
-              Wir werden sie sorgfältig prüfen.
-            `;
-            messageDiv.classList.remove('hidden');
-          }
-          form.reset();
-        } else {
-          throw new Error('Submission failed');
-        }
-      } catch (error) {
-        // Error
-        if (messageDiv) {
-          messageDiv.className = 'mt-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg';
-          messageDiv.innerHTML = `
-            <strong>Es ist ein Fehler aufgetreten.</strong> 
-            Bitte versuchen Sie es später erneut oder kontaktieren Sie uns direkt.
-          `;
-          messageDiv.classList.remove('hidden');
-        }
-      } finally {
-        // Reset button
-        submitButton.disabled = false;
-        submitButton.textContent = originalText;
-      }
-    });
-  }
+	// Nomination form handling
+	const nominationForm = document.getElementById('nominationForm') as HTMLFormElement;
+	
+	nominationForm?.addEventListener('submit', function(e) {
+		e.preventDefault();
+		
+		const formData = new FormData(this);
+		const data = Object.fromEntries(formData);
+		
+		// Here you would typically send the data to your backend
+		console.log('Nomination submitted:', data);
+		
+		// Show success message
+		alert('Vielen Dank für Ihren Vorschlag! Wir werden ihn sorgfältig prüfen.');
+		
+		// Reset form
+		this.reset();
+	});
 </script>

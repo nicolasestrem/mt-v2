@@ -1,0 +1,194 @@
+---
+// Header component for Mobility Trailblazers
+---
+
+<header class="header">
+	<div class="container">
+		<nav class="nav">
+			<div class="nav-brand">
+				<a href="/" class="logo">
+					<img src="/images/logo.webp" alt="Mobility Trailblazers Logo" width="110" height="110">
+				</a>
+			</div>
+			
+			<div class="nav-menu">
+				<ul class="nav-list">
+					<li><a href="#about">About</a></li>
+					<li><a href="#jury">Jury</a></li>
+					<li><a href="#newsletter">Newsletter</a></li>
+					<li><a href="#vorschlagen">Vorschlagen</a></li>
+				</ul>
+			</div>
+			
+			<div class="nav-social">
+				<a href="mailto:kontakt@mobilitytrailblazers.de?subject=Kontakt Website" class="social-link">
+					<i class="fas fa-envelope"></i>
+					<span>Kontakt</span>
+				</a>
+				<a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" rel="noopener noreferrer" class="social-link">
+					<i class="fab fa-linkedin"></i>
+					<span>LinkedIn</span>
+				</a>
+			</div>
+			
+			<button class="nav-toggle" aria-label="Toggle navigation">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+		</nav>
+	</div>
+</header>
+
+<style>
+	.header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		background: rgba(255, 255, 255, 0.95);
+		backdrop-filter: blur(10px);
+		z-index: 1000;
+		padding: 1rem 0;
+		box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+	}
+
+	.nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2rem;
+	}
+
+	.nav-brand {
+		flex-shrink: 0;
+	}
+
+	.logo img {
+		width: 110px;
+		height: 110px;
+		object-fit: contain;
+	}
+
+	.nav-menu {
+		flex: 1;
+		display: flex;
+		justify-content: center;
+	}
+
+	.nav-list {
+		display: flex;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		gap: 3rem;
+	}
+
+	.nav-list a {
+		color: var(--color-primary);
+		font-weight: 500;
+		text-decoration: none;
+		transition: color 0.3s ease;
+		position: relative;
+	}
+
+	.nav-list a:hover {
+		color: var(--color-accent);
+	}
+
+	.nav-list a::after {
+		content: '';
+		position: absolute;
+		bottom: -5px;
+		left: 0;
+		width: 0;
+		height: 2px;
+		background: var(--color-accent);
+		transition: width 0.3s ease;
+	}
+
+	.nav-list a:hover::after {
+		width: 100%;
+	}
+
+	.nav-social {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+	}
+
+	.social-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--color-primary);
+		font-size: 0.9rem;
+		transition: color 0.3s ease;
+	}
+
+	.social-link:hover {
+		color: var(--color-accent);
+	}
+
+	.social-link i {
+		font-size: 1.2rem;
+	}
+
+	.nav-toggle {
+		display: none;
+		flex-direction: column;
+		gap: 4px;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.5rem;
+	}
+
+	.nav-toggle span {
+		width: 25px;
+		height: 3px;
+		background: var(--color-primary);
+		transition: all 0.3s ease;
+	}
+
+	@media (max-width: 768px) {
+		.nav-menu {
+			display: none;
+		}
+
+		.nav-social {
+			display: none;
+		}
+
+		.nav-toggle {
+			display: flex;
+		}
+
+		.logo img {
+			width: 80px;
+			height: 80px;
+		}
+	}
+</style>
+
+<script>
+	// Mobile navigation toggle
+	const navToggle = document.querySelector('.nav-toggle');
+	const navMenu = document.querySelector('.nav-menu');
+	const navSocial = document.querySelector('.nav-social');
+
+	navToggle?.addEventListener('click', () => {
+		navMenu?.classList.toggle('active');
+		navSocial?.classList.toggle('active');
+		navToggle.classList.toggle('active');
+	});
+
+	// Close mobile menu when clicking on a link
+	document.querySelectorAll('.nav-list a').forEach(link => {
+		link.addEventListener('click', () => {
+			navMenu?.classList.remove('active');
+			navSocial?.classList.remove('active');
+			navToggle?.classList.remove('active');
+		});
+	});
+</script>

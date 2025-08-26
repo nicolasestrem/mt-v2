@@ -1,56 +1,232 @@
 ---
-// Footer component
-const currentYear = new Date().getFullYear();
+// Footer component for Mobility Trailblazers
 ---
 
-<footer class="bg-brand-primary text-brand-beige py-12">
-  <div class="container mx-auto px-4">
-    <div class="grid md:grid-cols-3 gap-8 mb-8">
-      <!-- About -->
-      <div>
-        <h3 class="text-xl font-bold mb-4">Über den Award</h3>
-        <p class="text-brand-beige/80">
-          Der 25 Mobility Trailblazers in 25 Award zeichnet Persönlichkeiten aus, 
-          die mutige und wirkungsvolle Beiträge zur Mobilitätswende leisten.
-        </p>
-      </div>
-      
-      <!-- Quick Links -->
-      <div>
-        <h3 class="text-xl font-bold mb-4">Links</h3>
-        <ul class="space-y-2 text-brand-beige/80">
-          <li>
-            <a href="#kriterien" class="hover:text-brand-accent transition">Auswahlkriterien</a>
-          </li>
-          <li>
-            <a href="#nominierung" class="hover:text-brand-accent transition">Nominierung</a>
-          </li>
-          <li>
-            <a href="/datenschutz" class="hover:text-brand-accent transition">Datenschutz</a>
-          </li>
-          <li>
-            <a href="/impressum" class="hover:text-brand-accent transition">Impressum</a>
-          </li>
-        </ul>
-      </div>
-      
-      <!-- Contact -->
-      <div>
-        <h3 class="text-xl font-bold mb-4">Kontakt</h3>
-        <p class="text-brand-beige/80 mb-2">
-          Smart Mobility Summit<br>
-          30. Oktober 2025<br>
-          Berlin
-        </p>
-        <a href="mailto:info@mobilitytrailblazers.de" 
-           class="text-brand-accent hover:text-brand-beige transition">
-          info@mobilitytrailblazers.de
-        </a>
-      </div>
-    </div>
-    
-    <div class="border-t border-brand-beige/20 pt-8 text-center text-brand-beige/60">
-      <p>&copy; {currentYear} Mobility Trailblazers. Alle Rechte vorbehalten.</p>
-    </div>
-  </div>
+<footer class="footer">
+	<div class="container">
+		<div class="footer-content">
+			<div class="footer-section">
+				<div class="footer-logo">
+					<img src="/images/logo.webp" alt="Mobility Trailblazers Logo" width="80" height="80">
+					<h3>Mobility Trailblazers</h3>
+				</div>
+				<p class="footer-description">
+					25 Mobility Trailblazers in 25 – Weil mobiler Wandel Mut braucht.
+				</p>
+			</div>
+			
+			<div class="footer-section">
+				<h4>Kontakt</h4>
+				<div class="footer-contact">
+					<p><i class="fas fa-envelope"></i> kontakt@mobilitytrailblazers.de</p>
+					<p><i class="fas fa-map-marker-alt"></i> Deutschland, Schweiz, Österreich</p>
+				</div>
+			</div>
+			
+			<div class="footer-section">
+				<h4>Folgen Sie uns</h4>
+				<div class="footer-social">
+					<a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" rel="noopener noreferrer" class="social-link">
+						<i class="fab fa-linkedin"></i>
+						<span>LinkedIn</span>
+					</a>
+					<a href="mailto:kontakt@mobilitytrailblazers.de?subject=Kontakt Website" class="social-link">
+						<i class="fas fa-envelope"></i>
+						<span>E-Mail</span>
+					</a>
+				</div>
+			</div>
+			
+			<div class="footer-section">
+				<h4>Links</h4>
+				<ul class="footer-links">
+					<li><a href="#about">Über uns</a></li>
+					<li><a href="#jury">Jury</a></li>
+					<li><a href="#newsletter">Newsletter</a></li>
+					<li><a href="#vorschlagen">Vorschlagen</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="footer-bottom">
+			<div class="footer-legal">
+				<p>&copy; 2025 Mobility Trailblazers. Alle Rechte vorbehalten.</p>
+				<div class="footer-legal-links">
+					<a href="/datenschutz">Datenschutz</a>
+					<a href="/impressum">Impressum</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </footer>
+
+<style>
+	.footer {
+		background: var(--color-primary);
+		color: white;
+		padding: 3rem 0 1rem 0;
+	}
+
+	.footer-content {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 2rem;
+		margin-bottom: 2rem;
+	}
+
+	.footer-section h4 {
+		font-size: 1.2rem;
+		font-weight: 600;
+		margin-bottom: 1rem;
+		color: var(--color-accent);
+	}
+
+	.footer-logo {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.footer-logo img {
+		width: 60px;
+		height: 60px;
+		object-fit: contain;
+	}
+
+	.footer-logo h3 {
+		font-size: 1.5rem;
+		font-weight: 700;
+		margin: 0;
+		color: var(--color-accent);
+	}
+
+	.footer-description {
+		font-size: 1rem;
+		line-height: 1.6;
+		opacity: 0.9;
+		margin: 0;
+	}
+
+	.footer-contact p {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 0.5rem;
+		font-size: 0.9rem;
+		opacity: 0.9;
+	}
+
+	.footer-contact i {
+		color: var(--color-accent);
+		width: 16px;
+	}
+
+	.footer-social {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.social-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: white;
+		text-decoration: none;
+		font-size: 0.9rem;
+		transition: color 0.3s ease;
+	}
+
+	.social-link:hover {
+		color: var(--color-accent);
+	}
+
+	.social-link i {
+		color: var(--color-accent);
+		width: 16px;
+	}
+
+	.footer-links {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.footer-links li {
+		margin-bottom: 0.5rem;
+	}
+
+	.footer-links a {
+		color: white;
+		text-decoration: none;
+		font-size: 0.9rem;
+		transition: color 0.3s ease;
+		opacity: 0.9;
+	}
+
+	.footer-links a:hover {
+		color: var(--color-accent);
+		opacity: 1;
+	}
+
+	.footer-bottom {
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		padding-top: 1rem;
+	}
+
+	.footer-legal {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.footer-legal p {
+		font-size: 0.8rem;
+		opacity: 0.7;
+		margin: 0;
+	}
+
+	.footer-legal-links {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.footer-legal-links a {
+		color: white;
+		text-decoration: none;
+		font-size: 0.8rem;
+		opacity: 0.7;
+		transition: opacity 0.3s ease;
+	}
+
+	.footer-legal-links a:hover {
+		opacity: 1;
+	}
+
+	@media (max-width: 768px) {
+		.footer-content {
+			grid-template-columns: 1fr;
+			text-align: center;
+		}
+
+		.footer-logo {
+			justify-content: center;
+		}
+
+		.footer-contact p {
+			justify-content: center;
+		}
+
+		.footer-social {
+			align-items: center;
+		}
+
+		.footer-legal {
+			flex-direction: column;
+			text-align: center;
+		}
+	}
+</style>
