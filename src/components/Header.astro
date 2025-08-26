@@ -277,23 +277,48 @@
 </style>
 
 <script>
-	// Mobile navigation toggle
-	const navToggle = document.querySelector('.nav-toggle');
-	const navMenu = document.querySelector('.nav-menu');
-	const navSocial = document.querySelector('.nav-social');
-
-	navToggle?.addEventListener('click', () => {
-		navMenu?.classList.toggle('active');
-		navSocial?.classList.toggle('active');
-		navToggle.classList.toggle('active');
-	});
-
-	// Close mobile menu when clicking on a link
-	document.querySelectorAll('.nav-list a').forEach(link => {
-		link.addEventListener('click', () => {
-			navMenu?.classList.remove('active');
-			navSocial?.classList.remove('active');
-			navToggle?.classList.remove('active');
-		});
+	// Use event delegation and ensure script only runs once
+	document.addEventListener('DOMContentLoaded', () => {
+		// Find elements within the header context
+		const header = document.querySelector('.header');
+		if (!header) return;
+		
+		const navToggle = header.querySelector('.nav-toggle');
+		const navMenu = header.querySelector('.nav-menu');
+		const navSocial = header.querySelector('.nav-social');
+		
+		// Only add listeners if they haven't been added already
+		if (navToggle && !navToggle.hasAttribute('data-listener-added')) {
+			navToggle.setAttribute('data-listener-added', 'true');
+			
+			navToggle.addEventListener('click', (e) => {
+				e.stopPropagation();
+				navMenu?.classList.toggle('active');
+				navSocial?.classList.toggle('active');
+				navToggle.classList.toggle('active');
+			});
+			
+			// Close mobile menu when clicking on a link
+			const navLinks = header.querySelectorAll('.nav-list a');
+			navLinks.forEach(link => {
+				link.addEventListener('click', (e) => {
+					// Only close menu for hash links (not external pages like /shop)
+					if (link.getAttribute('href')?.startsWith('#')) {
+						navMenu?.classList.remove('active');
+						navSocial?.classList.remove('active');
+						navToggle?.classList.remove('active');
+					}
+				});
+			});
+			
+			// Close menu when clicking outside
+			document.addEventListener('click', (e) => {
+				if (!header.contains(e.target)) {
+					navMenu?.classList.remove('active');
+					navSocial?.classList.remove('active');
+					navToggle?.classList.remove('active');
+				}
+			});
+		}
 	});
 </script>
