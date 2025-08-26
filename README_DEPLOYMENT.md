@@ -6,7 +6,7 @@
 1. Go to https://web3forms.com/
 2. Enter your email
 3. Get your access key instantly (no signup required)
-4. Replace `YOUR-ACCESS-KEY-HERE` in `src/components/NominationForm.astro`
+4. Replace `YOUR-ACCESS-KEY-HERE` in `src/components/NominationForm.astro` (line 47)
 
 ### 2. Build the Site
 ```bash
