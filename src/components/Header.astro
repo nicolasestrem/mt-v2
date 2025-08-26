@@ -47,11 +47,24 @@
 		top: 0;
 		left: 0;
 		right: 0;
+		width: 100vw; /* Ensure full width on Android */
 		background: rgba(248, 240, 227, 0.95);
+		/* Enhanced Android backdrop filter support */
 		backdrop-filter: blur(10px);
-		z-index: 1000;
+		-webkit-backdrop-filter: blur(10px);
+		/* Android fallback background */
+		background: #f8f0e3;
+		background: rgba(248, 240, 227, 0.95);
+		/* Critical z-index for Android stacking context */
+		z-index: 999999;
+		isolation: isolate; /* Create new stacking context */
 		padding: 0.75rem 0;
 		box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+		/* Prevent Android scroll bounce affecting header */
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+		/* Force hardware acceleration on Android */
+		will-change: transform;
 	}
 
 	.container {
@@ -179,17 +192,28 @@
 		border: none;
 		cursor: pointer;
 		padding: 0.75rem;
-		/* Increased touch target for Android */
-		min-width: 44px;
-		min-height: 44px;
+		/* Enhanced Android touch target - larger than standard */
+		min-width: 48px;
+		min-height: 48px;
 		/* Prevent text selection on touch */
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
 		user-select: none;
-		/* Prevent zoom on double-tap */
+		/* Critical: Prevent zoom and scroll conflicts */
 		touch-action: manipulation;
-		/* Ensure proper touch feedback */
-		-webkit-tap-highlight-color: rgba(193, 105, 60, 0.2);
+		/* Enhanced Android tap highlighting */
+		-webkit-tap-highlight-color: rgba(193, 105, 60, 0.3);
+		/* Force hardware acceleration for smooth animation */
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
+		will-change: transform;
+		/* Ensure button stays above other elements on Android */
+		position: relative;
+		z-index: 1002;
+		/* Android-specific outline removal */
+		outline: none;
+		-webkit-appearance: none;
+		appearance: none;
 	}
 
 	.nav-toggle span {
@@ -202,9 +226,12 @@
 		pointer-events: none;
 	}
 
-	@media (max-width: 768px) {
+	/* Android-specific media query with enhanced specificity */
+	@media screen and (max-width: 768px) {
 		.nav {
 			position: relative;
+			/* Create stacking context for Android */
+			isolation: isolate;
 		}
 
 		.nav-menu {
@@ -213,20 +240,31 @@
 			top: 100%;
 			left: 0;
 			right: 0;
-			background: rgba(248, 240, 227, 0.98);
-			/* Fallback for Android browsers that don't support backdrop-filter */
-			background: #f8f0e3;
-			background: rgba(248, 240, 227, 0.98);
+			width: 100vw; /* Ensure full width on Android */
+			max-width: 100vw;
+			/* Enhanced Android background fallback chain */
+			background: #f8f0e3; /* Solid fallback for old Android */
+			background: rgba(248, 240, 227, 0.98); /* Semi-transparent */
 			backdrop-filter: blur(10px);
 			-webkit-backdrop-filter: blur(10px);
-			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+			/* Critical z-index for Android menu visibility */
+			z-index: 999998;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 			padding: 1rem;
 			margin-top: 0.5rem;
 			border-radius: 8px;
-			/* Improve touch scrolling on Android */
+			/* Enhanced Android touch scrolling */
 			-webkit-overflow-scrolling: touch;
-			/* Prevent zoom on form elements */
+			overflow-y: auto;
+			/* Prevent zoom and improve touch response */
 			touch-action: manipulation;
+			/* Force hardware acceleration */
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);
+			will-change: opacity, transform;
+			/* Android-specific fixes */
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
 		}
 
 		.nav-menu.active {
@@ -242,10 +280,17 @@
 			padding: 0.75rem 1rem;
 			border-radius: 4px;
 			transition: background 0.3s ease;
-			/* Ensure proper touch targets on Android */
-			min-height: 44px;
+			/* Enhanced Android touch targets - larger minimum */
+			min-height: 48px;
 			display: flex;
 			align-items: center;
+			/* Ensure proper touch response */
+			touch-action: manipulation;
+			/* Remove Android tap delay */
+			-webkit-tap-highlight-color: rgba(193, 105, 60, 0.2);
+			/* Force hardware acceleration */
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);
 		}
 
 		.nav-list li:hover,
@@ -257,10 +302,17 @@
 			display: block;
 			font-size: 1.1rem;
 			width: 100%;
-			/* Prevent zoom on tap */
+			padding: 0.5rem 0; /* Extra padding for better touch targets */
+			/* Critical Android touch settings */
 			touch-action: manipulation;
-			/* Remove tap highlight on Android */
-			-webkit-tap-highlight-color: transparent;
+			/* Enhanced tap highlight for better feedback */
+			-webkit-tap-highlight-color: rgba(193, 105, 60, 0.15);
+			/* Prevent text selection on touch */
+			-webkit-user-select: none;
+			user-select: none;
+			/* Android-specific text rendering */
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
 		}
 
 		.nav-social {
@@ -269,22 +321,28 @@
 			top: 100%;
 			left: 0;
 			right: 0;
-			background: rgba(248, 240, 227, 0.98);
-			/* Fallback for Android browsers that don't support backdrop-filter */
-			background: #f8f0e3;
+			width: 100vw;
+			max-width: 100vw;
+			/* Enhanced Android background support */
+			background: #f8f0e3; /* Solid fallback */
 			background: rgba(248, 240, 227, 0.98);
 			backdrop-filter: blur(10px);
 			-webkit-backdrop-filter: blur(10px);
-			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+			/* Ensure visibility above menu */
+			z-index: 999997;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 			padding: 1rem;
 			margin-top: 0.5rem;
 			border-radius: 8px;
 			justify-content: center;
 			gap: 2rem;
-			/* Improve touch scrolling on Android */
+			/* Enhanced Android touch handling */
 			-webkit-overflow-scrolling: touch;
-			/* Prevent zoom on form elements */
 			touch-action: manipulation;
+			/* Force hardware acceleration */
+			-webkit-transform: translateZ(0);
+			transform: translateZ(0);
+			will-change: opacity, transform;
 		}
 
 		.nav-social.active {
@@ -294,7 +352,11 @@
 
 		.nav-toggle {
 			display: flex;
-			z-index: 1001;
+			/* Critical z-index to stay above all menu elements */
+			z-index: 1000000;
+			/* Ensure button remains interactive on Android */
+			position: relative;
+			isolation: isolate;
 		}
 
 		.nav-toggle.active span:nth-child(1) {
@@ -314,10 +376,58 @@
 			height: 55px;
 		}
 	}
+	
+	/* CSS-only fallback for touch devices when JavaScript fails */
+	@media screen and (max-width: 768px) {
+		/* Show menu on :focus-within for keyboard navigation */
+		.nav:focus-within .nav-menu {
+			display: block !important;
+		}
+		
+		.nav:focus-within .nav-social {
+			display: flex !important;
+			margin-top: 280px;
+		}
+		
+		/* Ensure toggle button can receive focus */
+		.nav-toggle:focus {
+			outline: 2px solid #c1693c;
+			outline-offset: 2px;
+		}
+		
+		/* Alternative: Pure CSS checkbox hack fallback (hidden) */
+		.nav-toggle-checkbox {
+			position: absolute;
+			opacity: 0;
+			pointer-events: none;
+		}
+	}
+	
+	/* High contrast mode support for accessibility */
+	@media (prefers-contrast: high) {
+		.nav-toggle span {
+			background: currentColor;
+		}
+		
+		.nav-menu, .nav-social {
+			background: Canvas !important;
+			color: CanvasText !important;
+			border: 1px solid ButtonBorder;
+		}
+	}
+	
+	/* Reduced motion support */
+	@media (prefers-reduced-motion: reduce) {
+		.nav-toggle span,
+		.nav-list li,
+		.nav-list a::after {
+			transition: none !important;
+		}
+	}
 </style>
 
 <script>
-	// Enhanced mobile menu with Android-specific improvements
+	// Enhanced mobile menu with comprehensive Android/iOS real-device fixes
 	document.addEventListener('DOMContentLoaded', () => {
 		// Find elements within the header context
 		const header = document.querySelector('.header');
@@ -327,83 +437,160 @@
 		const navMenu = header.querySelector('.nav-menu');
 		const navSocial = header.querySelector('.nav-social');
 		
+		// Debug logging for real device testing
+		console.log('Mobile menu init:', { navToggle: !!navToggle, navMenu: !!navMenu, navSocial: !!navSocial });
+		
 		// Only add listeners if they haven't been added already
 		if (navToggle && !navToggle.hasAttribute('data-listener-added')) {
 			navToggle.setAttribute('data-listener-added', 'true');
 			
-			// Function to toggle menu state
+			// Enhanced toggle function with real device fixes
 			const toggleMenu = (e) => {
+				// Critical: Prevent all default behaviors immediately
 				e.preventDefault();
-				e.stopPropagation();
+				e.stopImmediatePropagation();
+				
+				console.log('Toggle clicked/touched:', e.type);
 				
 				const isActive = navToggle.classList.contains('active');
+				console.log('Current state:', isActive ? 'active' : 'inactive');
+				
+				// Force immediate visual feedback for touch devices
+				navToggle.style.opacity = '0.7';
+				setTimeout(() => { navToggle.style.opacity = '1'; }, 100);
 				
 				if (isActive) {
 					navMenu?.classList.remove('active');
 					navSocial?.classList.remove('active');
 					navToggle.classList.remove('active');
+					console.log('Menu closed');
 				} else {
 					navMenu?.classList.add('active');
 					navSocial?.classList.add('active');
 					navToggle.classList.add('active');
+					console.log('Menu opened');
 				}
+				
+				return false; // Extra safety for older mobile browsers
 			};
 			
-			// Add both click and touchstart events for Android compatibility
-			navToggle.addEventListener('click', toggleMenu);
-			navToggle.addEventListener('touchstart', toggleMenu, { passive: false });
+			// Enhanced event handler with debouncing for real devices
+			let lastToggleTime = 0;
+			const debouncedToggle = (e) => {
+				const now = Date.now();
+				if (now - lastToggleTime < 200) {
+					console.log('Toggle debounced');
+					return;
+				}
+				lastToggleTime = now;
+				toggleMenu(e);
+			};
+			
+			// Multiple event types for maximum compatibility
+			navToggle.addEventListener('click', debouncedToggle, { passive: false });
+			navToggle.addEventListener('touchend', debouncedToggle, { passive: false });
+			
+			// iOS Safari specific - prevent ghost clicks
+			navToggle.addEventListener('touchstart', (e) => {
+				console.log('Touch start registered');
+				// iOS Safari: prevent subsequent click event
+				e.preventDefault();
+			}, { passive: false });
+			
+			// Android Chrome specific - handle tap events
+			navToggle.addEventListener('pointerdown', (e) => {
+				console.log('Pointer down registered');
+				if (e.pointerType === 'touch') {
+					// Small delay to ensure touch is registered
+					setTimeout(() => debouncedToggle(e), 10);
+				}
+			}, { passive: false });
 			
 			// Function to close menu
 			const closeMenu = () => {
-				navMenu?.classList.remove('active');
-				navSocial?.classList.remove('active');
-				navToggle?.classList.remove('active');
+				if (navMenu?.classList.contains('active')) {
+					console.log('Closing menu');
+					navMenu.classList.remove('active');
+					navSocial?.classList.remove('active');
+					navToggle?.classList.remove('active');
+				}
 			};
 			
-			// Close mobile menu when clicking on a link
+			// Enhanced link click handlers
 			const navLinks = header.querySelectorAll('.nav-list a');
-			navLinks.forEach(link => {
+			navLinks.forEach((link, index) => {
 				const closeMobileMenu = (e) => {
-					// Close menu for all links on mobile
+					console.log(`Link ${index} clicked on mobile`);
 					if (window.innerWidth <= 768) {
 						closeMenu();
+						// Small delay for smooth transition before navigation
+						setTimeout(() => {
+							if (e.target.href && !e.defaultPrevented) {
+								window.location.href = e.target.href;
+							}
+						}, 150);
 					}
 				};
 				
-				link.addEventListener('click', closeMobileMenu);
-				link.addEventListener('touchstart', closeMobileMenu, { passive: true });
+				// Multiple event types for mobile link handling
+				link.addEventListener('click', closeMobileMenu, { passive: false });
+				link.addEventListener('touchend', closeMobileMenu, { passive: false });
 			});
 			
-			// Close menu when clicking/touching outside
-			const closeOnOutsideClick = (e) => {
-				// Check if the click/touch is outside the header
-				if (!header.contains(e.target)) {
+			// Enhanced outside click detection for mobile devices
+			const closeOnOutsideTouch = (e) => {
+				// Only close if menu is open and touch/click is outside header
+				if (navToggle.classList.contains('active') && !header.contains(e.target)) {
+					console.log('Outside touch detected, closing menu');
 					closeMenu();
 				}
 			};
 			
-			document.addEventListener('click', closeOnOutsideClick);
-			document.addEventListener('touchstart', closeOnOutsideClick, { passive: true });
+			// Multiple event types for outside click detection
+			document.addEventListener('touchstart', closeOnOutsideTouch, { passive: true });
+			document.addEventListener('click', closeOnOutsideTouch, { passive: true });
 			
-			// Handle orientation change on Android
+			// Enhanced orientation and resize handling for mobile devices
+			const handleViewportChange = () => {
+				console.log('Viewport change detected:', window.innerWidth, 'x', window.innerHeight);
+				if (window.innerWidth > 768) {
+					closeMenu();
+				}
+			};
+			
+			// Multiple viewport change events
 			window.addEventListener('orientationchange', () => {
-				// Small delay to allow orientation change to complete
-				setTimeout(() => {
-					if (window.innerWidth > 768) {
-						closeMenu();
-					}
-				}, 100);
+				setTimeout(handleViewportChange, 200); // Longer delay for real devices
 			});
 			
-			// Handle resize events (Android soft keyboard, etc.)
-			let resizeTimeout;
-			window.addEventListener('resize', () => {
-				clearTimeout(resizeTimeout);
-				resizeTimeout = setTimeout(() => {
-					if (window.innerWidth > 768) {
-						closeMenu();
-					}
-				}, 150);
+			window.addEventListener('resize', (() => {
+				let resizeTimeout;
+				return () => {
+					clearTimeout(resizeTimeout);
+					resizeTimeout = setTimeout(handleViewportChange, 300); // Longer delay for real devices
+				};
+			})());
+			
+			// Mobile browser back button handling
+			window.addEventListener('popstate', () => {
+				console.log('Back button pressed');
+				closeMenu();
+			});
+			
+			// Android: Handle browser tab visibility changes
+			document.addEventListener('visibilitychange', () => {
+				if (document.hidden) {
+					console.log('Tab hidden, closing menu');
+					closeMenu();
+				}
+			});
+			
+			// Final safety check - force menu state reset on page focus
+			window.addEventListener('focus', () => {
+				console.log('Window focused, checking menu state');
+				if (window.innerWidth > 768 && navToggle.classList.contains('active')) {
+					closeMenu();
+				}
 			});
 		}
 	});
