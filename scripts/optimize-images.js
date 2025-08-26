@@ -15,9 +15,13 @@
  * 3. Optimized images will be saved to ./public/images/
  */
 
-const sharp = require('sharp');
-const fs = require('fs');
-const path = require('path');
+import sharp from 'sharp';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configuration
 const config = {
@@ -239,8 +243,4 @@ async function main() {
 }
 
 // Run the script
-if (require.main === module) {
-  main();
-}
-
-module.exports = { optimizeImage, processDirectory };
+main();
