@@ -51,12 +51,13 @@ All components are `.astro` files using Astro's component syntax:
 ### Page Structure
 The site is a single landing page (`src/pages/index.astro`) composed of:
 1. **Hero** - Countdown timer to October 30, 2025 event
-2. **Inline sections** - "Who can be nominated" and "How it works" (directly in index.astro)
-3. **Criteria** - 5 selection criteria with animated cards
-4. **NominationForm** - Multi-field form with Web3Forms integration
-5. **JurySection** - Jury member profiles
-6. **LinkedInFeed** - LinkedIn integration (EmbedSocial or direct embeds)
-7. **Footer** - Site footer
+2. **Mission** - Mission statement and what defines Mobility Trailblazers
+3. **AboutSection** - Initiative overview with partner organizations (IMO, Tomczak-Gross, Handelsblatt)
+4. **Criteria** - 5 selection criteria with animated cards
+5. **NominationForm** - Multi-field form with Web3Forms integration
+6. **JurySection** - Jury member profiles
+7. **LinkedInFeed** - LinkedIn integration (EmbedSocial or direct embeds)
+8. **Footer** - Site footer
 
 ### Styling System
 
@@ -139,9 +140,21 @@ The `/Media` directory contains WordPress migration artifacts and should be igno
 
 ### Visual Enhancements (January 2025)
 
+#### AboutSection Component (Added January 2025)
+New section added between Mission and Criteria sections featuring:
+- **50-50 Grid Layout**: Content on left, Fernsehturm Berlin image on right
+- **Partner Cards**: Three partner organizations displayed in responsive grid
+  - Institut für Mobilität der Universität St. Gallen
+  - Tomczak-Gross & Partners AG  
+  - Handelsblatt (Media Partner)
+- **Call-to-Action**: Two primary buttons linking to partner websites
+- **Closing Statement**: Motivational message with nomination prompt
+- **Images**: Located in `/public/images/about/`
+
 #### Section Dividers
 Added subtle SVG shape dividers between sections for improved visual flow:
 - **Mission**: Wave divider
+- **AboutSection**: Curved wave divider
 - **Jury**: Tilt/angle divider  
 - **Newsletter**: Curved arc with gradient
 - **LinkedIn Feed**: Zigzag pattern

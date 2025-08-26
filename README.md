@@ -20,6 +20,8 @@ mobility-astro/
 ├── src/
 │   ├── components/
 │   │   ├── Hero.astro              # Hero section with countdown timer
+│   │   ├── Mission.astro           # Mission statement section
+│   │   ├── AboutSection.astro      # About the initiative with partners
 │   │   ├── Criteria.astro          # Selection criteria with info boxes
 │   │   ├── NominationForm.astro    # Form with Web3Forms integration
 │   │   ├── JurySection.astro       # Jury members cards
