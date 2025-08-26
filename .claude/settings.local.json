@@ -14,7 +14,11 @@
       "WebFetch(domain:moderncss.dev)",
       "Bash(npm run build:*)",
       "Bash(taskkill:*)",
-      "mcp__kapture__click"
+      "mcp__kapture__click",
+      "WebFetch(domain:mobilitytrailblazers.de)",
+      "WebFetch(domain:www.sociablekit.com)",
+      "mcp__kapture__elements",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []
