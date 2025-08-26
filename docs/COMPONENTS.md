@@ -189,25 +189,6 @@ All LinkedIn styling is controlled through CSS variables defined in the componen
 
 ---
 
-### 📱 LinkedInPosts.astro (Fallback)
-
-Static LinkedIn-style post cards as fallback when real integration isn't available.
-
-**Features:**
-- Mock LinkedIn post cards
-- Engagement stats display
-- Animated background elements
-- Hover effects
-- Static data structure
-
-**Usage:**
-```astro
-<LinkedInPosts />
-```
-
-**Note:** This is a fallback component. Use `LinkedInFeed.astro` for real LinkedIn integration.
-
----
 
 ### 🦶 Footer.astro
 

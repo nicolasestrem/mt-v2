@@ -23,8 +23,7 @@ mobility-astro/
 │   │   ├── Criteria.astro          # Selection criteria with info boxes
 │   │   ├── NominationForm.astro    # Form with Web3Forms integration
 │   │   ├── JurySection.astro       # Jury members cards
-│   │   ├── LinkedInFeed.astro      # Real LinkedIn posts integration
-│   │   ├── LinkedInPosts.astro     # Fallback LinkedIn cards
+│   │   ├── LinkedInFeed.astro      # LinkedIn posts integration
 │   │   └── Footer.astro            # Site footer
 │   ├── layouts/
 │   │   └── Layout.astro            # Base HTML layout
@@ -184,6 +183,29 @@ npm run build
 - Requests: 12 (-86%)
 - Lighthouse: 98
 - Monthly Cost: €0
+
+## 📚 Documentation
+
+Comprehensive documentation is available in the `/docs/` folder:
+
+### Setup & Deployment
+- [🚀 Quick Start Guide](docs/QUICK_START.md) - Fast setup and basic configuration
+- [📦 Deployment Guide](docs/DEPLOYMENT.md) - Complete deployment instructions for all platforms
+- [📧 Web3Forms Setup](docs/WEB3FORM_SETUP.md) - Form configuration and security
+
+### Development
+- [🧱 Components Guide](docs/COMPONENTS.md) - Detailed component documentation
+- [🧪 Testing Guide](docs/TESTING.md) - Testing setup and procedures
+- [🖼️ Image Storage Guidelines](docs/IMAGE_STORAGE_GUIDELINES.md) - Image optimization and management
+
+### Social Integration
+- [📱 SociableKit Setup](docs/SOCIABLEKIT_SETUP.md) - LinkedIn feed integration
+
+### Migration & Features
+- [📋 Missing Features](docs/MISSING_FEATURES.md) - Features comparison with WordPress version
+- [🔄 WordPress Migration](docs/WORDPRESS-MIGRATION.md) - Complete migration documentation
+- [📊 Migration Summary](docs/MIGRATION_SUMMARY.md) - Performance improvements summary
+- [🖼️ Image Storage Summary](docs/IMAGE_STORAGE_SUMMARY.md) - Image handling overview
 
 ## 👀 Learn More
 

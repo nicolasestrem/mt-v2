@@ -60,7 +60,7 @@ public/
 
 ### 5. **LinkedIn Feed Images**
 - **Location**: `public/images/linkedin/`
-- **Usage**: LinkedInPosts component (fallback)
+- **Usage**: LinkedInFeed component
 - **Format**: JPG (matches LinkedIn format)
 - **Size**: Various (16:9 aspect ratio preferred)
 - **Optimization**: Medium compression for social media look
