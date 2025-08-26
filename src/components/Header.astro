@@ -85,15 +85,16 @@
 	}
 
 	.nav-list a {
-		color: var(--color-primary);
-		font-weight: 500;
+		color: #c1693c;
+		font-weight: 600;
+		font-size: 1.1rem;
 		text-decoration: none;
 		transition: color 0.3s ease;
 		position: relative;
 	}
 
 	.nav-list a:hover {
-		color: var(--color-accent);
+		color: #004C5F;
 	}
 
 	.nav-list a::after {
@@ -103,7 +104,7 @@
 		left: 0;
 		width: 0;
 		height: 2px;
-		background: var(--color-accent);
+		background: #c1693c;
 		transition: width 0.3s ease;
 	}
 
@@ -113,25 +114,35 @@
 
 	.nav-social {
 		display: flex;
-		gap: 1rem;
+		gap: 1.5rem;
 		align-items: center;
 	}
 
 	.social-link {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		color: var(--color-primary);
-		font-size: 0.9rem;
-		transition: color 0.3s ease;
+		gap: 0.75rem;
+		color: #c1693c;
+		font-size: 1.25rem;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		padding: 0.25rem 0.5rem;
+		border-radius: 8px;
 	}
 
 	.social-link:hover {
-		color: var(--color-accent);
+		color: #004C5F;
+		transform: translateY(-2px);
+		background: rgba(193, 105, 60, 0.05);
 	}
 
 	.social-link i {
-		font-size: 1.2rem;
+		font-size: 1.8rem;
+	}
+
+	.social-link span {
+		font-size: 1.15rem;
+		font-weight: 600;
 	}
 
 	.nav-toggle {
@@ -147,7 +158,7 @@
 	.nav-toggle span {
 		width: 25px;
 		height: 3px;
-		background: var(--color-primary);
+		background: #c1693c;
 		transition: all 0.3s ease;
 	}
 
