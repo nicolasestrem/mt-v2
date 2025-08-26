@@ -29,6 +29,7 @@
 2. Enter your email address
 3. Get your access key instantly (no signup required)
 
+<<<<<<< HEAD
 ### 2. Set Up Environment Variables
 1. Copy `.env.example` to `.env`:
    ```bash
@@ -37,6 +38,15 @@
 2. Edit `.env` and replace `your-web3forms-access-key-here` with your actual Web3Forms access key.
 
 **Important**: The `.env` file is already in `.gitignore` and will not be committed to GitHub, keeping your key secure.
+=======
+### 2. Replace the Placeholder Key
+In `src/components/NominationForm.astro`, find this line:
+```html
+<input type="hidden" name="access_key" value="YOUR-ACCESS-KEY-HERE">
+```
+
+Replace `YOUR-ACCESS-KEY-HERE` with your actual Web3Forms access key.
+>>>>>>> 135f43c (feat: Add Web3Forms integration to nomination form)
 
 ### 3. Test the Form
 1. Run `npm run dev` to start the development server

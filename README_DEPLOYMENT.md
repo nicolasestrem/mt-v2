@@ -6,7 +6,11 @@
 1. Go to https://web3forms.com/
 2. Enter your email
 3. Get your access key instantly (no signup required)
+<<<<<<< HEAD
 4. Copy `.env.example` to `.env` and add your Web3Forms access key
+=======
+4. Replace `YOUR-ACCESS-KEY-HERE` in `src/components/NominationForm.astro` (line 47)
+>>>>>>> 135f43c (feat: Add Web3Forms integration to nomination form)
 
 ### 2. Build the Site
 ```bash
