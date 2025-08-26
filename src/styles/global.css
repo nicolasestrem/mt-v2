@@ -8,8 +8,9 @@
 	--color-accent-hover: #ed8936;
 	--color-text: #2d3748;
 	--color-text-light: #718096;
-	--color-background: #ffffff;
+	--color-background: #F8F0E3;
 	--color-background-alt: #f7fafc;
+	--color-brand-beige: #F8F0E3;
 	--color-border: #e2e8f0;
 	--color-success: #48bb78;
 	--color-error: #f56565;
@@ -35,13 +36,14 @@
 
 html {
 	scroll-behavior: smooth;
+	background-color: #F8F0E3;
 }
 
 body {
 	font-family: var(--font-primary);
 	line-height: 1.6;
 	color: var(--color-text);
-	background-color: var(--color-background);
+	background-color: #F8F0E3;
 	margin: 0;
 	padding: 0;
 }
