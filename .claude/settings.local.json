@@ -21,7 +21,10 @@
       "Bash(git add:*)",
       "Bash(move:*)",
       "Bash(mv:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "mcp__kapture__fill",
+      "mcp__kapture__console_logs",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
