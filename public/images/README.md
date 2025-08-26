@@ -18,7 +18,7 @@ images/
 │   ├── linkedin-2.jpg           # 1200x630px
 │   └── linkedin-3.jpg           # 1200x630px
 ├── icons/                       # Icon files
-│   └── cityscape.svg            # Decorative elements
+
 └── uploads/                     # User-uploaded content
     └── nominations/             # Nomination form uploads
 ```
