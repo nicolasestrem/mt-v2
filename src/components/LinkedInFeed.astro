@@ -1,279 +1,261 @@
 ---
-// LinkedIn Feed Component with proper embed styling
-// This component embeds real LinkedIn posts using the LinkedIn embed API
+// LinkedIn Feed component for Mobility Trailblazers
 ---
 
-<section class="py-16 md:py-24 relative overflow-hidden bg-brand-beige">
-  <!-- Background gradient effect -->
-  <div class="absolute inset-0 bg-gradient-to-br from-brand-accent/5 via-transparent to-brand-primary/5"></div>
-  
-  <!-- Animated circles in background -->
-  <div class="absolute top-0 left-0 w-96 h-96 bg-brand-accent/10 rounded-full blur-3xl animate-pulse"></div>
-  <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
-  
-  <div class="container mx-auto px-4 relative z-10">
-    <div class="text-center mb-12">
-      <h2 class="gradient-text mb-4">
-        LinkedIn Updates
-      </h2>
-      <p class="text-xl text-brand-text max-w-2xl mx-auto">
-        Folgen Sie unserer Bewegung auf LinkedIn
-      </p>
-    </div>
-    
-    <!-- LinkedIn Feed Widget Container -->
-    <div class="linkedin-feed-container">
-      <!-- EmbedSocial LinkedIn Feed Widget -->
-      <!-- Replace with your actual EmbedSocial or LinkedIn embed code -->
-      <div class="linkedin-widget" id="linkedin-feed">
-        <!-- Option 1: EmbedSocial Integration (if you're using it on WordPress) -->
-        <script>(function(d, s, id) { 
-          var js; 
-          if (d.getElementById(id)) {return;} 
-          js = d.createElement(s); 
-          js.id = id; 
-          js.src = "https://embedsocial.com/cdn/ht.js"; 
-          d.getElementsByTagName("head")[0].appendChild(js); 
-        }(document, "script", "EmbedSocialHashtagScript"));</script>
-        
-        <!-- Your EmbedSocial widget code here -->
-        <div class="embedsocial-hashtag" 
-             data-ref="YOUR-EMBEDSOCIAL-REF-ID"
-             style="width: 100%;">
-          <a class="feed-powered-by-es feed-powered-by-es-feed-new" 
-             href="https://embedsocial.com/social-media-aggregator/" 
-             target="_blank" 
-             title="Powered by EmbedSocial">
-            Powered by EmbedSocial
-          </a>
-        </div>
-        
-        <!-- Option 2: Direct LinkedIn Post Embeds -->
-        <div class="linkedin-posts-grid">
-          <!-- Post 1 -->
-          <div class="linkedin-post">
-            <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:YOUR-POST-ID-1" 
-                    height="450" 
-                    width="100%" 
-                    frameborder="0" 
-                    allowfullscreen="" 
-                    title="Embedded post">
-            </iframe>
-          </div>
-          
-          <!-- Post 2 -->
-          <div class="linkedin-post">
-            <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:YOUR-POST-ID-2" 
-                    height="450" 
-                    width="100%" 
-                    frameborder="0" 
-                    allowfullscreen="" 
-                    title="Embedded post">
-            </iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Follow CTA -->
-    <div class="text-center mt-12">
-      <a 
-        href="https://www.linkedin.com/company/mobility-trailblazers" 
-        target="_blank"
-        class="inline-flex items-center gap-2 btn-primary group"
-      >
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-        </svg>
-        Folgen Sie uns auf LinkedIn
-        <span class="group-hover:translate-x-1 transition-transform">→</span>
-      </a>
-    </div>
-  </div>
+<section class="linkedin-feed">
+	<div class="container">
+		<div class="feed-header">
+			<h2 class="feed-title">Folgen Sie uns auf LinkedIn</h2>
+			<p class="feed-subtitle">Bleiben Sie auf dem Laufenden mit den neuesten Entwicklungen im Mobilitätswandel</p>
+			<a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+				<i class="fab fa-linkedin"></i>
+				LinkedIn folgen
+			</a>
+		</div>
+		
+		<div class="feed-grid">
+			<div class="feed-item">
+				<div class="feed-content">
+					<div class="feed-avatar">
+						<img src="/images/linkedin-avatar.webp" alt="Mobility Trailblazers" width="48" height="48">
+					</div>
+					<div class="feed-text">
+						<div class="feed-meta">
+							<span class="feed-author">Mobility Trailblazers</span>
+							<span class="feed-time">vor 2 Stunden</span>
+						</div>
+						<p class="feed-message">
+							🚀 Die Nominierungsphase für die "25 Mobility Trailblazers in 25" läuft auf Hochtouren! 
+							Wir sind begeistert von den vielen inspirierenden Vorschlägen, die bereits eingegangen sind. 
+							Haben Sie noch jemanden, der mutig den Mobilitätswandel vorantreibt? Jetzt ist die Zeit für Ihre Nominierung! 
+							#MobilityTrailblazers #Mobilitätswende #Innovation
+						</p>
+						<div class="feed-actions">
+							<button class="feed-action">
+								<i class="far fa-thumbs-up"></i>
+								<span>24</span>
+							</button>
+							<button class="feed-action">
+								<i class="far fa-comment"></i>
+								<span>8</span>
+							</button>
+							<button class="feed-action">
+								<i class="far fa-share-square"></i>
+								<span>12</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="feed-item">
+				<div class="feed-content">
+					<div class="feed-avatar">
+						<img src="/images/linkedin-avatar.webp" alt="Mobility Trailblazers" width="48" height="48">
+					</div>
+					<div class="feed-text">
+						<div class="feed-meta">
+							<span class="feed-author">Mobility Trailblazers</span>
+							<span class="feed-time">vor 1 Tag</span>
+						</div>
+						<p class="feed-message">
+							🎯 Was macht einen echten Mobility Trailblazer aus? 
+							Unsere Jury-Mitglieder teilen ihre Kriterien für die Auswahl der 25 Preisträger. 
+							Von Innovationskraft bis hin zu nachhaltiger Wirkung - erfahren Sie, worauf es wirklich ankommt. 
+							#MobilityTrailblazers #Jury #Auswahlkriterien
+						</p>
+						<div class="feed-actions">
+							<button class="feed-action">
+								<i class="far fa-thumbs-up"></i>
+								<span>31</span>
+							</button>
+							<button class="feed-action">
+								<i class="far fa-comment"></i>
+								<span>15</span>
+							</button>
+							<button class="feed-action">
+								<i class="far fa-share-square"></i>
+								<span>18</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="feed-item">
+				<div class="feed-content">
+					<div class="feed-avatar">
+						<img src="/images/linkedin-avatar.webp" alt="Mobility Trailblazers" width="48" height="48">
+					</div>
+					<div class="feed-text">
+						<div class="feed-meta">
+							<span class="feed-author">Mobility Trailblazers</span>
+							<span class="feed-time">vor 3 Tagen</span>
+						</div>
+						<p class="feed-message">
+							📅 Save the Date: 30. Oktober 2025! 
+							Der Smart Mobility Summit in Berlin wird der Höhepunkt des Jahres für alle Mobilitätsenthusiasten. 
+							Hier werden die 25 Mobility Trailblazers erstmals öffentlich vorgestellt und ausgezeichnet. 
+							Seien Sie dabei, wenn wir gemeinsam die Zukunft der Mobilität gestalten! 
+							#SmartMobilitySummit #Berlin #AwardCeremony
+						</p>
+						<div class="feed-actions">
+							<button class="feed-action">
+								<i class="far fa-thumbs-up"></i>
+								<span>42</span>
+							</button>
+							<button class="feed-action">
+								<i class="far fa-comment"></i>
+								<span>23</span>
+							</button>
+							<button class="feed-action">
+								<i class="far fa-share-square"></i>
+								<span>29</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 
 <style>
-  /* LinkedIn Feed Widget Styles - Matching your WordPress settings */
-  .linkedin-feed-container {
-    --column-count: 2;
-    --show-profile-picture: block;
-    --show-profile-name: block;
-    --show-profile-description: block;
-    --show-profile-follower-count: block;
-    --show-profile-employees-count: none;
-    --show-organization-type: none;
-    --show-address: none;
-    --show-profile-follow-button: flex;
-    --show-profile-website: flex;
-    --show-profile-button-at-bottom: flex;
-    --post-height: 300px;
-    --item-content-padding: 30px;
-    --item-border-radius: 0px;
-    --show-circular-main-picture: 50%;
-    --show-post-profile-image: block;
-    --show-post-profile-name: block;
-    --show-post-likes-count: flex;
-    --show-post-comments-count: flex;
-    --show-post-icon: block;
-    --show-box-shadow: 0.2;
-    --show-share-icon: block;
-    --show-post-date: block;
-    --show-image-on-top: column;
-    --arrow-color: #808080;
-    --arrow-background-color: #000000;
-    --arrow-opacity: 0.6;
-    --autoplay: 0.6;
-    --delay: 1;
-    --font-family: 'Roboto Flex', 'Roboto', sans-serif;
-    --title-font-size: 25px;
-    --details-font-size: 15px;
-    --title-all-caps: none;
-    --details-all-caps: none;
-    --widget-bg-color: #f8f0e3;
-    --widget-font-color: #003c3d;
-    --widget-link-color: #c1693c;
-    --details-bg-color: #f8f0e3;
-    --details-font-color: #003c3d;
-    --details-link-color: #c1693c;
-    --details-link-hover-color: #b86f52;
-    --details-secondary-font-color: #004c5f;
-    --article-bg-color: #f8f0e3;
-    --article-text-color: #003c3d;
-    --button-bg-color: #b86f52;
-    --button-text-color: #003c3d;
-    --button-hover-bg-color: #c1693c;
-    --button-hover-text-color: #004c5f;
-    --show-load-more-button: block;
-    --pop-up-bg-color: #f8f0e3;
-    --pop-up-font-color: #003c3d;
-    --pop-up-link-color: #b86f52;
-    --show-stats-section: flex;
-    --show-seperator: none;
-    --show-info-section: none;
-  }
-  
-  /* Apply the variables to the widget */
-  .linkedin-widget {
-    font-family: var(--font-family);
-    background-color: var(--widget-bg-color);
-    color: var(--widget-font-color);
-  }
-  
-  .linkedin-widget a {
-    color: var(--widget-link-color);
-  }
-  
-  .linkedin-widget a:hover {
-    color: var(--details-link-hover-color);
-  }
-  
-  /* Grid layout for posts */
-  .linkedin-posts-grid {
-    display: grid;
-    grid-template-columns: repeat(var(--column-count), 1fr);
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  @media (max-width: 768px) {
-    .linkedin-posts-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  /* Individual post styling */
-  .linkedin-post {
-    background: var(--article-bg-color);
-    border-radius: var(--item-border-radius);
-    padding: var(--item-content-padding);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, calc(var(--show-box-shadow) * 0.1));
-    min-height: var(--post-height);
-    overflow: hidden;
-  }
-  
-  .linkedin-post iframe {
-    border-radius: var(--item-border-radius);
-  }
-  
-  /* EmbedSocial specific overrides */
-  .embedsocial-hashtag {
-    background: var(--widget-bg-color) !important;
-  }
-  
-  .embedsocial-hashtag .es-widget-profile-picture {
-    display: var(--show-profile-picture);
-    border-radius: var(--show-circular-main-picture);
-  }
-  
-  .embedsocial-hashtag .es-widget-profile-name {
-    display: var(--show-profile-name);
-    font-size: var(--title-font-size);
-    text-transform: var(--title-all-caps);
-  }
-  
-  .embedsocial-hashtag .es-widget-profile-description {
-    display: var(--show-profile-description);
-    font-size: var(--details-font-size);
-    color: var(--details-font-color);
-  }
-  
-  .embedsocial-hashtag .es-widget-profile-follower-count {
-    display: var(--show-profile-follower-count);
-  }
-  
-  .embedsocial-hashtag .es-widget-profile-follow-button {
-    display: var(--show-profile-follow-button);
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-  }
-  
-  .embedsocial-hashtag .es-widget-profile-follow-button:hover {
-    background-color: var(--button-hover-bg-color);
-    color: var(--button-hover-text-color);
-  }
-  
-  .embedsocial-hashtag .es-post-profile-image {
-    display: var(--show-post-profile-image);
-  }
-  
-  .embedsocial-hashtag .es-post-profile-name {
-    display: var(--show-post-profile-name);
-  }
-  
-  .embedsocial-hashtag .es-post-likes-count {
-    display: var(--show-post-likes-count);
-  }
-  
-  .embedsocial-hashtag .es-post-comments-count {
-    display: var(--show-post-comments-count);
-  }
-  
-  .embedsocial-hashtag .es-post-date {
-    display: var(--show-post-date);
-    color: var(--details-secondary-font-color);
-  }
-  
-  .embedsocial-hashtag .es-load-more-button {
-    display: var(--show-load-more-button);
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-  }
-  
-  .embedsocial-hashtag .es-load-more-button:hover {
-    background-color: var(--button-hover-bg-color);
-    color: var(--button-hover-text-color);
-  }
-</style>
+	.linkedin-feed {
+		background: var(--color-background-alt);
+		padding: 3rem 0;
+	}
 
-<script>
-  // LinkedIn embed script (if using direct embeds)
-  if (typeof window !== 'undefined') {
-    // Load LinkedIn embed script
-    const script = document.createElement('script');
-    script.src = 'https://platform.linkedin.com/badges/js/profile.js';
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-  }
-</script>
+	.feed-header {
+		text-align: center;
+		margin-bottom: 2rem;
+	}
+
+	.feed-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin-bottom: 1rem;
+		color: var(--color-primary);
+	}
+
+	.feed-subtitle {
+		font-size: 1.125rem;
+		color: var(--color-text-light);
+		margin-bottom: 2rem;
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.feed-grid {
+		display: grid;
+		gap: 2rem;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.feed-item {
+		background: white;
+		border-radius: var(--border-radius-lg);
+		padding: 1.5rem;
+		box-shadow: var(--shadow);
+		transition: var(--transition);
+		border: 1px solid var(--color-border);
+	}
+
+	.feed-item:hover {
+		box-shadow: var(--shadow-lg);
+		transform: translateY(-2px);
+	}
+
+	.feed-content {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.feed-avatar {
+		flex-shrink: 0;
+	}
+
+	.feed-avatar img {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.feed-text {
+		flex: 1;
+	}
+
+	.feed-meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.feed-author {
+		font-weight: 600;
+		color: var(--color-primary);
+	}
+
+	.feed-time {
+		font-size: 0.875rem;
+		color: var(--color-text-light);
+	}
+
+	.feed-message {
+		font-size: 1rem;
+		line-height: 1.6;
+		color: var(--color-text);
+		margin-bottom: 1rem;
+	}
+
+	.feed-actions {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.feed-action {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: none;
+		border: none;
+		color: var(--color-text-light);
+		font-size: 0.875rem;
+		cursor: pointer;
+		padding: 0.5rem;
+		border-radius: var(--border-radius);
+		transition: var(--transition);
+	}
+
+	.feed-action:hover {
+		background: var(--color-background-alt);
+		color: var(--color-accent);
+	}
+
+	.feed-action i {
+		font-size: 1rem;
+	}
+
+	@media (max-width: 768px) {
+		.feed-title {
+			font-size: 2rem;
+		}
+
+		.feed-content {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.feed-avatar {
+			margin-bottom: 0.5rem;
+		}
+
+		.feed-actions {
+			flex-wrap: wrap;
+		}
+	}
+</style>
