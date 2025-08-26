@@ -178,7 +178,18 @@
 		background: none;
 		border: none;
 		cursor: pointer;
-		padding: 0.5rem;
+		padding: 0.75rem;
+		/* Increased touch target for Android */
+		min-width: 44px;
+		min-height: 44px;
+		/* Prevent text selection on touch */
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		user-select: none;
+		/* Prevent zoom on double-tap */
+		touch-action: manipulation;
+		/* Ensure proper touch feedback */
+		-webkit-tap-highlight-color: rgba(193, 105, 60, 0.2);
 	}
 
 	.nav-toggle span {
@@ -186,6 +197,9 @@
 		height: 3px;
 		background: #c1693c;
 		transition: all 0.3s ease;
+		border-radius: 1px;
+		/* Ensure spans are clickable */
+		pointer-events: none;
 	}
 
 	@media (max-width: 768px) {
@@ -200,11 +214,19 @@
 			left: 0;
 			right: 0;
 			background: rgba(248, 240, 227, 0.98);
+			/* Fallback for Android browsers that don't support backdrop-filter */
+			background: #f8f0e3;
+			background: rgba(248, 240, 227, 0.98);
 			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
 			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 			padding: 1rem;
 			margin-top: 0.5rem;
 			border-radius: 8px;
+			/* Improve touch scrolling on Android */
+			-webkit-overflow-scrolling: touch;
+			/* Prevent zoom on form elements */
+			touch-action: manipulation;
 		}
 
 		.nav-menu.active {
@@ -220,15 +242,25 @@
 			padding: 0.75rem 1rem;
 			border-radius: 4px;
 			transition: background 0.3s ease;
+			/* Ensure proper touch targets on Android */
+			min-height: 44px;
+			display: flex;
+			align-items: center;
 		}
 
-		.nav-list li:hover {
+		.nav-list li:hover,
+		.nav-list li:active {
 			background: rgba(193, 105, 60, 0.1);
 		}
 
 		.nav-list a {
 			display: block;
 			font-size: 1.1rem;
+			width: 100%;
+			/* Prevent zoom on tap */
+			touch-action: manipulation;
+			/* Remove tap highlight on Android */
+			-webkit-tap-highlight-color: transparent;
 		}
 
 		.nav-social {
@@ -238,13 +270,21 @@
 			left: 0;
 			right: 0;
 			background: rgba(248, 240, 227, 0.98);
+			/* Fallback for Android browsers that don't support backdrop-filter */
+			background: #f8f0e3;
+			background: rgba(248, 240, 227, 0.98);
 			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
 			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 			padding: 1rem;
 			margin-top: 0.5rem;
 			border-radius: 8px;
 			justify-content: center;
 			gap: 2rem;
+			/* Improve touch scrolling on Android */
+			-webkit-overflow-scrolling: touch;
+			/* Prevent zoom on form elements */
+			touch-action: manipulation;
 		}
 
 		.nav-social.active {
@@ -291,33 +331,79 @@
 		if (navToggle && !navToggle.hasAttribute('data-listener-added')) {
 			navToggle.setAttribute('data-listener-added', 'true');
 			
-			navToggle.addEventListener('click', (e) => {
+			// Function to toggle menu state
+			const toggleMenu = (e) => {
+				e.preventDefault();
 				e.stopPropagation();
-				navMenu?.classList.toggle('active');
-				navSocial?.classList.toggle('active');
-				navToggle.classList.toggle('active');
-			});
+				
+				const isActive = navToggle.classList.contains('active');
+				
+				if (isActive) {
+					navMenu?.classList.remove('active');
+					navSocial?.classList.remove('active');
+					navToggle.classList.remove('active');
+				} else {
+					navMenu?.classList.add('active');
+					navSocial?.classList.add('active');
+					navToggle.classList.add('active');
+				}
+			};
+			
+			// Add both click and touchstart events for Android compatibility
+			navToggle.addEventListener('click', toggleMenu);
+			navToggle.addEventListener('touchstart', toggleMenu, { passive: false });
+			
+			// Function to close menu
+			const closeMenu = () => {
+				navMenu?.classList.remove('active');
+				navSocial?.classList.remove('active');
+				navToggle?.classList.remove('active');
+			};
 			
 			// Close mobile menu when clicking on a link
 			const navLinks = header.querySelectorAll('.nav-list a');
 			navLinks.forEach(link => {
-				link.addEventListener('click', (e) => {
+				const closeMobileMenu = (e) => {
 					// Close menu for all links on mobile
 					if (window.innerWidth <= 768) {
-						navMenu?.classList.remove('active');
-						navSocial?.classList.remove('active');
-						navToggle?.classList.remove('active');
+						closeMenu();
 					}
-				});
+				};
+				
+				link.addEventListener('click', closeMobileMenu);
+				link.addEventListener('touchstart', closeMobileMenu, { passive: true });
 			});
 			
-			// Close menu when clicking outside
-			document.addEventListener('click', (e) => {
+			// Close menu when clicking/touching outside
+			const closeOnOutsideClick = (e) => {
+				// Check if the click/touch is outside the header
 				if (!header.contains(e.target)) {
-					navMenu?.classList.remove('active');
-					navSocial?.classList.remove('active');
-					navToggle?.classList.remove('active');
+					closeMenu();
 				}
+			};
+			
+			document.addEventListener('click', closeOnOutsideClick);
+			document.addEventListener('touchstart', closeOnOutsideClick, { passive: true });
+			
+			// Handle orientation change on Android
+			window.addEventListener('orientationchange', () => {
+				// Small delay to allow orientation change to complete
+				setTimeout(() => {
+					if (window.innerWidth > 768) {
+						closeMenu();
+					}
+				}, 100);
+			});
+			
+			// Handle resize events (Android soft keyboard, etc.)
+			let resizeTimeout;
+			window.addEventListener('resize', () => {
+				clearTimeout(resizeTimeout);
+				resizeTimeout = setTimeout(() => {
+					if (window.innerWidth > 768) {
+						closeMenu();
+					}
+				}, 150);
 			});
 		}
 	});
