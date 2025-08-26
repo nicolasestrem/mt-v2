@@ -16,6 +16,7 @@
 					<li><a href="#about">About</a></li>
 					<li><a href="#jury">Jury</a></li>
 					<li><a href="#newsletter">Newsletter</a></li>
+					<li><a href="/shop" class="shop-link">Shop</a></li>
 					<li><a href="#vorschlagen">Vorschlagen</a></li>
 				</ul>
 			</div>
@@ -114,6 +115,27 @@
 
 	.nav-list a:hover::after {
 		width: 100%;
+	}
+
+	/* Special styling for Shop link */
+	.shop-link {
+		background: linear-gradient(135deg, #c1693c, #d17f52);
+		color: white !important;
+		padding: 0.4rem 1rem;
+		border-radius: 6px;
+		transition: all 0.3s ease;
+		position: relative;
+	}
+
+	.shop-link:hover {
+		background: linear-gradient(135deg, #d17f52, #c1693c);
+		color: white !important;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(193, 105, 60, 0.3);
+	}
+
+	.shop-link::after {
+		display: none; /* Remove underline effect for shop button */
 	}
 
 	.nav-social {

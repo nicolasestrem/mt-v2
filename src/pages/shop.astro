@@ -1,0 +1,403 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Shop - Mobility Trailblazers">
+	<Header />
+	
+	<main class="shop-page">
+		<div class="shop-hero">
+			<div class="container">
+				<h1>Mobility Trailblazers Shop</h1>
+				<p class="subtitle">Zeigen Sie Ihre Unterstützung für innovative Mobilität mit unseren exklusiven Merchandise-Artikeln</p>
+			</div>
+		</div>
+
+		<div class="shop-preview-section">
+			<div class="container">
+				<div class="shop-card">
+					<div class="shop-content">
+						<h2>Entdecken Sie unsere Kollektion</h2>
+						<p class="shop-description">
+							Hochwertige T-Shirts, Hoodies, Tassen und mehr – alle Artikel sind mit unserem 
+							exklusiven Mobility Trailblazers Design versehen. Jeder Kauf unterstützt unsere 
+							Mission, innovative Mobilität zu fördern.
+						</p>
+						
+						<div class="product-categories">
+							<div class="category">
+								<i class="fas fa-tshirt"></i>
+								<span>Bekleidung</span>
+							</div>
+							<div class="category">
+								<i class="fas fa-mug-hot"></i>
+								<span>Accessoires</span>
+							</div>
+							<div class="category">
+								<i class="fas fa-bag-shopping"></i>
+								<span>Taschen</span>
+							</div>
+							<div class="category">
+								<i class="fas fa-gift"></i>
+								<span>Geschenke</span>
+							</div>
+						</div>
+
+						<a href="https://AWARD-mobility-trailblazers.myspreadshop.de" 
+						   target="_blank" 
+						   rel="noopener noreferrer"
+						   class="shop-cta-button">
+							<span>Zum Shop</span>
+							<i class="fas fa-arrow-right"></i>
+						</a>
+
+						<p class="shop-note">
+							<i class="fas fa-info-circle"></i>
+							Sie werden zu unserem Partner-Shop weitergeleitet
+						</p>
+					</div>
+					
+					<div class="shop-image">
+						<div class="image-placeholder">
+							<i class="fas fa-store"></i>
+							<p>Mobility Trailblazers<br>Merchandise</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="shop-info">
+			<div class="container">
+				<div class="info-grid">
+					<div class="info-card">
+						<i class="fas fa-truck"></i>
+						<h3>Schneller Versand</h3>
+						<p>Versand innerhalb von 3-5 Werktagen direkt von Spreadshirt</p>
+					</div>
+					<div class="info-card">
+						<i class="fas fa-shield-alt"></i>
+						<h3>Sichere Zahlung</h3>
+						<p>Verschlüsselte Zahlungsabwicklung über Spreadshirt</p>
+					</div>
+					<div class="info-card">
+						<i class="fas fa-leaf"></i>
+						<h3>Nachhaltige Produktion</h3>
+						<p>On-Demand Druck reduziert Überproduktion</p>
+					</div>
+					<div class="info-card">
+						<i class="fas fa-undo"></i>
+						<h3>30 Tage Rückgaberecht</h3>
+						<p>Problemlose Rückgabe bei Nichtgefallen</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<Footer />
+</Layout>
+
+<style>
+	.shop-page {
+		padding-top: 100px;
+		min-height: 100vh;
+		background: #F8F0E3;
+	}
+
+	.shop-hero {
+		background: linear-gradient(135deg, #003C3D 0%, #004C5F 100%);
+		padding: 3rem 0;
+		text-align: center;
+		margin-bottom: 3rem;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.shop-hero::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: url('/images/pattern.svg') repeat;
+		opacity: 0.05;
+	}
+
+	.shop-hero h1 {
+		font-family: 'Poppins', sans-serif;
+		font-size: 3rem;
+		font-weight: 700;
+		background: linear-gradient(135deg, #FFF8F0DD 0%, #A4DCD5 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		margin-bottom: 1rem;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		position: relative;
+	}
+
+	.shop-hero .subtitle {
+		font-size: 1.2rem;
+		color: #F8F0E3;
+		max-width: 600px;
+		margin: 0 auto;
+		opacity: 0.95;
+		font-family: 'Roboto', sans-serif;
+		position: relative;
+	}
+
+	.shop-preview-section {
+		padding: 0 1rem;
+		margin-bottom: 3rem;
+	}
+
+	.shop-card {
+		background: white;
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	.shop-content {
+		padding: 3rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.shop-content h2 {
+		font-family: 'Trebuchet MS', sans-serif;
+		font-size: 2.2rem;
+		color: #004C5F;
+		margin-bottom: 1.5rem;
+	}
+
+	.shop-description {
+		font-family: 'Roboto', sans-serif;
+		font-size: 1.1rem;
+		color: #666;
+		line-height: 1.7;
+		margin-bottom: 2rem;
+	}
+
+	.product-categories {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.category {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.75rem;
+		background: #F8F0E3;
+		border-radius: 8px;
+		transition: all 0.3s ease;
+	}
+
+	.category:hover {
+		background: #efe5d3;
+		transform: translateX(5px);
+	}
+
+	.category i {
+		font-size: 1.3rem;
+		color: #C1693C;
+		width: 30px;
+		text-align: center;
+	}
+
+	.category span {
+		font-family: 'Cabin', sans-serif;
+		font-size: 1rem;
+		color: #004C5F;
+		font-weight: 600;
+	}
+
+	.shop-cta-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1.2rem 2.5rem;
+		background: linear-gradient(135deg, #C1693C, #d17f52);
+		color: white;
+		text-decoration: none;
+		border-radius: 50px;
+		font-family: 'Cabin', sans-serif;
+		font-size: 1.2rem;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		box-shadow: 0 5px 20px rgba(193, 105, 60, 0.3);
+		align-self: flex-start;
+		margin-bottom: 1.5rem;
+	}
+
+	.shop-cta-button:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 10px 35px rgba(193, 105, 60, 0.4);
+		background: linear-gradient(135deg, #d17f52, #C1693C);
+	}
+
+	.shop-cta-button i {
+		transition: transform 0.3s ease;
+	}
+
+	.shop-cta-button:hover i {
+		transform: translateX(5px);
+	}
+
+	.shop-note {
+		font-size: 0.9rem;
+		color: #999;
+		font-style: italic;
+		margin: 0;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.shop-note i {
+		color: #C1693C;
+	}
+
+	.shop-image {
+		background: linear-gradient(135deg, #004C5F, #003C3D);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+	}
+
+	.image-placeholder {
+		text-align: center;
+		color: white;
+		padding: 2rem;
+	}
+
+	.image-placeholder i {
+		font-size: 5rem;
+		color: #C1693C;
+		margin-bottom: 1.5rem;
+		display: block;
+		filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+	}
+
+	.image-placeholder p {
+		font-family: 'Poppins', sans-serif;
+		font-size: 1.5rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		line-height: 1.4;
+		opacity: 0.9;
+	}
+
+	.shop-info {
+		padding: 3rem 0;
+		background: #F8F0E3;
+	}
+
+	.info-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 1.5rem;
+		max-width: 1100px;
+		margin: 0 auto;
+	}
+
+	.info-card {
+		text-align: center;
+		padding: 2rem 1.5rem;
+		background: white;
+		border-radius: 12px;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.info-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+	}
+
+	.info-card i {
+		font-size: 2.5rem;
+		color: #C1693C;
+		margin-bottom: 1rem;
+	}
+
+	.info-card h3 {
+		font-family: 'Trebuchet MS', sans-serif;
+		font-size: 1.3rem;
+		color: #004C5F;
+		margin-bottom: 0.5rem;
+	}
+
+	.info-card p {
+		font-family: 'Roboto', sans-serif;
+		color: #666;
+		font-size: 0.95rem;
+		line-height: 1.5;
+	}
+
+	/* Mobile styles */
+	@media (max-width: 968px) {
+		.shop-card {
+			grid-template-columns: 1fr;
+		}
+
+		.shop-image {
+			min-height: 300px;
+			order: -1;
+		}
+
+		.shop-content {
+			padding: 2rem;
+		}
+
+		.product-categories {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.shop-hero h1 {
+			font-size: 2rem;
+		}
+
+		.shop-hero .subtitle {
+			font-size: 1rem;
+			padding: 0 1rem;
+		}
+
+		.shop-content h2 {
+			font-size: 1.8rem;
+		}
+
+		.shop-cta-button {
+			padding: 1rem 2rem;
+			font-size: 1.1rem;
+			width: 100%;
+			justify-content: center;
+		}
+
+		.info-grid {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+
+		.info-card {
+			padding: 1.5rem;
+		}
+	}
+</style>
