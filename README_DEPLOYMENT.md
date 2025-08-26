@@ -6,7 +6,7 @@
 1. Go to https://web3forms.com/
 2. Enter your email
 3. Get your access key instantly (no signup required)
-4. Replace `YOUR-ACCESS-KEY-HERE` in `src/components/NominationForm.astro` (line 47)
+4. Copy `.env.example` to `.env` and add your Web3Forms access key
 
 ### 2. Build the Site
 ```bash
@@ -39,13 +39,17 @@ This creates a `dist/` folder with your static site.
 
 ## Environment Variables
 
-If you want to keep your Web3Forms key secret:
+The Web3Forms key is now properly secured using environment variables:
+
+### Local Development
+1. Copy `.env.example` to `.env`
+2. Add your Web3Forms access key to `.env`
+3. The `.env` file is already in `.gitignore` and won't be committed
+
+### Production Deployment (Cloudflare Pages)
 1. In Cloudflare Pages → Settings → Environment variables
 2. Add: `PUBLIC_WEB3FORMS_KEY = your-key-here`
-3. Update NominationForm.astro to use:
-   ```astro
-   const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY;
-   ```
+3. The form automatically uses the environment variable
 
 ## Local Development
 

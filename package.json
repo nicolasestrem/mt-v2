@@ -10,7 +10,8 @@
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug"
+    "test:debug": "playwright test --debug",
+    "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",

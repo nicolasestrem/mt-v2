@@ -1,0 +1,7 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="300" fill="#f8f0e3"/>
+  <rect x="50" y="50" width="200" height="200" fill="#003c3d" opacity="0.1"/>
+  <text x="150" y="140" font-family="Arial, sans-serif" font-size="16" fill="#003c3d" text-anchor="middle">Image Placeholder</text>
+  <text x="150" y="160" font-family="Arial, sans-serif" font-size="12" fill="#c1693c" text-anchor="middle">300x300px</text>
+  <text x="150" y="180" font-family="Arial, sans-serif" font-size="10" fill="#666" text-anchor="middle">Replace with actual image</text>
+</svg>
