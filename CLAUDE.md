@@ -4,115 +4,131 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the MobilityTrailblazers.de website built with Astro, a modern static site generator. It's a replacement for the WordPress site, offering €0/month hosting with Cloudflare Pages and dramatically improved performance (0.5s load time vs 3.8s WordPress).
+MobilityTrailblazers.de - A modern static site built with Astro, migrated from WordPress for €0/month hosting with dramatically improved performance (0.5s load time vs 3.8s WordPress).
 
 ## Essential Commands
 
-### Development
 ```bash
-# Install dependencies
-npm install
+# Development
+npm install          # Install dependencies
+npm run dev          # Start dev server at http://localhost:4321
+npm run build        # Build for production (outputs to ./dist/)
+npm run preview      # Preview production build locally
+```
 
-# Start dev server at http://localhost:4321
-npm run dev
+## Critical Configuration
 
-# Build for production (outputs to ./dist/)
+### Web3Forms API Key (REQUIRED)
+The nomination form won't work without configuring the Web3Forms key:
+1. Get free key at https://web3forms.com/
+2. Update in `src/components/NominationForm.astro:4`
+   ```astro
+   const WEB3FORMS_KEY = "YOUR-ACCESS-KEY-HERE"; // Replace with actual key
+   ```
+
+### Deployment to Cloudflare Pages
+```bash
 npm run build
-
-# Preview production build locally
-npm run preview
+# Upload dist/ folder to pages.cloudflare.com OR
+# Connect GitHub repo with build command: npm run build, output: dist
 ```
 
 ## Architecture
 
 ### Tech Stack
-- **Framework**: Astro 5.13 (static site generator)
-- **Styling**: Tailwind CSS v4 with custom design tokens
-- **Forms**: Web3Forms API integration (250 free submissions/month)
-- **Deployment**: Cloudflare Pages (free hosting with CDN)
+- **Astro 5.13**: Static site generator with zero JavaScript by default
+- **Tailwind CSS v4**: Using Vite plugin integration
+- **TypeScript**: Strict mode enabled
+- **Forms**: Web3Forms API (250 free submissions/month)
 
-### Directory Structure
-- `src/components/` - Astro components for page sections
-  - `Hero.astro` - Hero section with countdown timer
-  - `Criteria.astro` - 5 selection criteria cards
-  - `NominationForm.astro` - Web3Forms integrated nomination form
-  - `JurySection.astro` - Jury member profiles
-  - `LinkedInFeed.astro` / `LinkedInPosts.astro` - Social media integration
-  - `Footer.astro` - Site footer
-- `src/pages/` - Page routes (file-based routing)
-  - `index.astro` - Main landing page
-- `src/layouts/` - Page templates
-  - `Layout.astro` - Base HTML wrapper
-- `src/styles/` - Global styles
-  - `global.css` - Tailwind imports and custom styles
-- `src/content/jury/` - Content collections for jury members
-- `public/` - Static assets served as-is
-- `dist/` - Production build output (upload this to Cloudflare)
+### Component Architecture
+All components are `.astro` files using Astro's component syntax:
+- **Frontend code** in component template (HTML-like)
+- **Server code** in frontmatter (`---` blocks)
+- **Scoped styles** in `<style>` tags
+- **Client scripts** in `<script>` tags
 
-### Key Configuration Files
-- `astro.config.mjs` - Astro configuration with Tailwind Vite plugin
-- `tailwind.config.mjs` - Custom design system with brand colors and typography
-- `tsconfig.json` - TypeScript configuration (strict mode)
+### Page Structure
+The site is a single landing page (`src/pages/index.astro`) composed of:
+1. **Hero** - Countdown timer to October 30, 2025 event
+2. **Inline sections** - "Who can be nominated" and "How it works" (directly in index.astro)
+3. **Criteria** - 5 selection criteria with animated cards
+4. **NominationForm** - Multi-field form with Web3Forms integration
+5. **JurySection** - Jury member profiles
+6. **LinkedInFeed** - LinkedIn integration (EmbedSocial or direct embeds)
+7. **Footer** - Site footer
 
-## Critical Setup Requirements
+### Styling System
 
-### Web3Forms API Key
-**REQUIRED**: Replace `YOUR-ACCESS-KEY-HERE` in `src/components/NominationForm.astro:4`
-1. Get free key at https://web3forms.com/
-2. Update the WEB3FORMS_KEY constant
-3. Form submissions will be emailed to the configured address
+#### Design Tokens (tailwind.config.mjs)
+```javascript
+colors: {
+  'brand-primary': '#003C3D',     // Dark teal
+  'brand-accent': '#C1693C',      // Orange  
+  'brand-beige': '#F8F0E3',       // Background
+  'brand-text': '#302C37'         // Body text
+}
+```
 
-### Deployment to Cloudflare Pages
+#### Typography Hierarchy
+- H1: Poppins, 4em, uppercase
+- H2/H3: Trebuchet MS, 3.2em/2.4em
+- H4: Cabin, 22px
+- Body: Roboto, 18px
 
-#### Quick Deploy (Manual Upload)
-1. Run `npm run build`
-2. Go to https://pages.cloudflare.com/
-3. Drag and drop the `dist/` folder
-4. Site is live at `[project-name].pages.dev`
+#### CSS Architecture
+- **global.css**: Tailwind imports + custom animations/utilities
+- **Component styles**: Scoped styles in each `.astro` component
+- **Utility classes**: Tailwind utilities throughout components
 
-#### Git Integration (Auto-deploy)
-1. Push to GitHub
-2. Connect repo in Cloudflare Pages
-3. Build settings:
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-4. Auto-deploys on every push
+### Build Configuration
 
-## Design System
+#### astro.config.mjs
+```javascript
+{
+  site: 'https://mobilitytrailblazers.de',
+  output: 'static',                    // Pure static HTML
+  vite: { plugins: [tailwindcss()] },  // Tailwind v4 integration
+  build: { inlineStylesheets: 'auto' } // Inline critical CSS
+}
+```
 
-### Brand Colors (defined in tailwind.config.mjs)
-- Primary: `#003C3D` (dark teal)
-- Accent: `#C1693C` (orange)
-- Background: `#F8F0E3` (beige)
-- Text: `#302C37` (dark gray)
+### Form Handling Pattern
+Forms use client-side JavaScript with Web3Forms API:
+1. Form submission prevented with `e.preventDefault()`
+2. FormData sent to Web3Forms endpoint
+3. Success/error UI updates without page reload
+4. See `NominationForm.astro` lines 174-227 for implementation
 
-### Typography
-- Headings: Poppins, Trebuchet MS, Cabin
-- Body: Roboto
-- Responsive font sizes configured for desktop/tablet/mobile
+### LinkedIn Integration
+Two approaches configured in `LinkedInFeed.astro`:
+1. **EmbedSocial** widget (lines 40-49) - Requires account setup
+2. **Direct iframe embeds** (lines 52-74) - Manual post embedding
 
-### Component Patterns
-- All components use Astro's `.astro` format
-- Tailwind utility classes for styling
-- Responsive design with mobile-first approach
-- Form handling with client-side JavaScript for better UX
-
-## Performance Optimizations
-- Static HTML generation (no server required)
-- Inline styles for critical CSS (`inlineStylesheets: 'auto'`)
-- No database queries or dynamic content
+### Performance Optimizations
+- Static HTML generation (no server/database)
+- Inline critical CSS (`inlineStylesheets: 'auto'`)
+- Minimal JavaScript (only countdown timer and form handling)
 - CDN-ready static files
 
-## Development Tips
-- The site is fully static - no server-side processing
-- All dynamic behavior uses client-side JavaScript
-- Form submissions go directly to Web3Forms API
-- Images should be placed in `public/images/`
-- The countdown timer in Hero.astro calculates days until October 30, 2025
+## Project Constraints
 
-## Testing Checklist
-- [ ] Form submission works (check Web3Forms dashboard)
-- [ ] All links are functional
-- [ ] Responsive design works on mobile/tablet/desktop
-- [ ] Build completes without errors
-- [ ] Preview shows correct styling
+### No Testing Framework
+The project has no test files or testing setup. All validation must be done through:
+- Build verification (`npm run build`)
+- Manual preview (`npm run preview`)
+
+### Static-Only Architecture
+- No server-side processing or API routes
+- All dynamic behavior via client-side JavaScript
+- Form submissions handled by external service (Web3Forms)
+
+### Media Files
+The `/Media` directory contains WordPress migration artifacts and should be ignored (in .gitignore). Only files in `/public` are served.
+
+## Recent Updates
+The site underwent a spacing reduction update to fix excessive vertical spacing:
+- Hero: Reduced from 100vh to 80vh height
+- Section padding: Standardized to 3rem (48px)
+- Component padding: Reduced from 64-96px to 32-48px
+- Always use specialised agents and sequential thinking for complex tasks.

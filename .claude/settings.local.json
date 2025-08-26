@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__kapture__list_tabs",
+      "mcp__kapture__navigate",
+      "mcp__kapture__screenshot",
+      "mcp__kapture__reload",
+      "mcp__kapture__keypress",
+      "mcp__kapture__dom",
+      "mcp__kapture__show",
+      "mcp__kapture__new_tab"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
