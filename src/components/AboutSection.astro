@@ -136,8 +136,10 @@
 	
 	.cta-buttons {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 1rem;
 		margin-top: 2rem;
+		justify-content: flex-start;
 	}
 	
 	.btn {
@@ -149,8 +151,9 @@
 		transition: all 0.3s ease;
 		display: inline-block;
 		text-align: center;
-		flex: 1;
-		min-width: 0;
+		white-space: normal;
+		line-height: 1.4;
+		flex: 0 1 auto;
 	}
 	
 	.btn-primary {
@@ -351,10 +354,12 @@
 		
 		.cta-buttons {
 			flex-direction: column;
+			align-items: stretch;
 		}
 		
 		.btn {
 			width: 100%;
+			text-align: center;
 		}
 		
 		.partner-card {
