@@ -1,5 +1,23 @@
 ---
 // LinkedIn Feed component for Mobility Trailblazers
+// Uses SociableKit widget for displaying LinkedIn posts (same as production site)
+// 
+// SETUP INSTRUCTIONS:
+// 1. Go to https://www.sociablekit.com
+// 2. Click "Create a Widget" and select "LinkedIn Page Posts"
+// 3. Connect your LinkedIn page (Mobility Trailblazers showcase)
+// 4. Customize the widget appearance (optional)
+// 5. Copy the widget ID from the embed code
+// 6. Replace the ID in the iframe src below (currently using production ID: 25576730)
+// 
+// FREE TIER LIMITATIONS:
+// - Limited to 5 posts display
+// - SociableKit branding shown at bottom
+// - Updates every 24 hours
+// - Basic customization options
+// 
+// NOTE: The widget ID 25576730 is from the production site.
+// To use your own feed, create a new widget and replace this ID.
 ---
 
 <section class="linkedin-feed">
@@ -11,124 +29,42 @@
 	</div>
 	<div class="container">
 		<div class="feed-header">
-			<h2 class="feed-title">Folgen Sie uns auf LinkedIn</h2>
-			<p class="feed-subtitle">Bleiben Sie auf dem Laufenden mit den neuesten Entwicklungen im Mobilitätswandel</p>
-			<a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-				<i class="fab fa-linkedin"></i>
-				LinkedIn folgen
-			</a>
+			<h2 class="feed-title">Aktuelles von LinkedIn</h2>
+			<p class="feed-subtitle">
+				Folgen Sie unseren neuesten Updates und Diskussionen zur Mobilitätswende
+			</p>
 		</div>
 		
-		<div class="feed-grid">
-			<div class="feed-item">
-				<div class="feed-content">
-					<div class="feed-avatar">
-						<img src="/images/linkedin-avatar.webp" alt="Mobility Trailblazers" width="48" height="48">
-					</div>
-					<div class="feed-text">
-						<div class="feed-meta">
-							<span class="feed-author">Mobility Trailblazers</span>
-							<span class="feed-time">vor 2 Stunden</span>
-						</div>
-						<p class="feed-message">
-							🚀 Die Nominierungsphase für die "25 Mobility Trailblazers in 25" läuft auf Hochtouren! 
-							Wir sind begeistert von den vielen inspirierenden Vorschlägen, die bereits eingegangen sind. 
-							Haben Sie noch jemanden, der mutig den Mobilitätswandel vorantreibt? Jetzt ist die Zeit für Ihre Nominierung! 
-							#MobilityTrailblazers #Mobilitätswende #Innovation
-						</p>
-						<div class="feed-actions">
-							<button class="feed-action">
-								<i class="far fa-thumbs-up"></i>
-								<span>24</span>
-							</button>
-							<button class="feed-action">
-								<i class="far fa-comment"></i>
-								<span>8</span>
-							</button>
-							<button class="feed-action">
-								<i class="far fa-share-square"></i>
-								<span>12</span>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="feed-item">
-				<div class="feed-content">
-					<div class="feed-avatar">
-						<img src="/images/linkedin-avatar.webp" alt="Mobility Trailblazers" width="48" height="48">
-					</div>
-					<div class="feed-text">
-						<div class="feed-meta">
-							<span class="feed-author">Mobility Trailblazers</span>
-							<span class="feed-time">vor 1 Tag</span>
-						</div>
-						<p class="feed-message">
-							🎯 Was macht einen echten Mobility Trailblazer aus? 
-							Unsere Jury-Mitglieder teilen ihre Kriterien für die Auswahl der 25 Preisträger. 
-							Von Innovationskraft bis hin zu nachhaltiger Wirkung - erfahren Sie, worauf es wirklich ankommt. 
-							#MobilityTrailblazers #Jury #Auswahlkriterien
-						</p>
-						<div class="feed-actions">
-							<button class="feed-action">
-								<i class="far fa-thumbs-up"></i>
-								<span>31</span>
-							</button>
-							<button class="feed-action">
-								<i class="far fa-comment"></i>
-								<span>15</span>
-							</button>
-							<button class="feed-action">
-								<i class="far fa-share-square"></i>
-								<span>18</span>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="feed-item">
-				<div class="feed-content">
-					<div class="feed-avatar">
-						<img src="/images/linkedin-avatar.webp" alt="Mobility Trailblazers" width="48" height="48">
-					</div>
-					<div class="feed-text">
-						<div class="feed-meta">
-							<span class="feed-author">Mobility Trailblazers</span>
-							<span class="feed-time">vor 3 Tagen</span>
-						</div>
-						<p class="feed-message">
-							📅 Save the Date: 30. Oktober 2025! 
-							Der Smart Mobility Summit in Berlin wird der Höhepunkt des Jahres für alle Mobilitätsenthusiasten. 
-							Hier werden die 25 Mobility Trailblazers erstmals öffentlich vorgestellt und ausgezeichnet. 
-							Seien Sie dabei, wenn wir gemeinsam die Zukunft der Mobilität gestalten! 
-							#SmartMobilitySummit #Berlin #AwardCeremony
-						</p>
-						<div class="feed-actions">
-							<button class="feed-action">
-								<i class="far fa-thumbs-up"></i>
-								<span>42</span>
-							</button>
-							<button class="feed-action">
-								<i class="far fa-comment"></i>
-								<span>23</span>
-							</button>
-							<button class="feed-action">
-								<i class="far fa-share-square"></i>
-								<span>29</span>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
+		<!-- SociableKit LinkedIn Feed Widget -->
+		<div class="linkedin-widget-container">
+			<iframe 
+				src="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730"
+				frameborder="0"
+				width="100%"
+				height="1800"
+				loading="lazy"
+				class="linkedin-iframe"
+				title="Mobility Trailblazers LinkedIn Feed">
+			</iframe>
+		</div>
+
+		<!-- Follow CTA -->
+		<div class="linkedin-follow-cta">
+			<a href="https://www.linkedin.com/showcase/mobility-trailblazers/" 
+			   target="_blank" 
+			   rel="noopener noreferrer" 
+			   class="linkedin-button">
+				<i class="fab fa-linkedin"></i>
+				<span>Folgen Sie uns auf LinkedIn</span>
+			</a>
+			<p class="linkedin-hashtag">#MobilityTrailblazers #Mobilitätswende</p>
 		</div>
 	</div>
 </section>
 
 <style>
 	.linkedin-feed {
-		background: var(--color-background-alt);
+		background: linear-gradient(135deg, #f8f0e3 0%, #fff 100%);
 		padding: 3rem 0;
 		position: relative;
 	}
@@ -157,116 +93,73 @@
 
 	.feed-header {
 		text-align: center;
-		margin-bottom: 2rem;
+		margin-bottom: 2.5rem;
 	}
 
 	.feed-title {
 		font-size: 2.5rem;
 		font-weight: 700;
+		color: #003c3d;
 		margin-bottom: 1rem;
-		color: var(--color-primary);
+		font-family: 'Trebuchet MS', sans-serif;
 	}
 
 	.feed-subtitle {
 		font-size: 1.125rem;
-		color: var(--color-text-light);
-		margin-bottom: 2rem;
+		color: #666;
 		max-width: 600px;
-		margin-left: auto;
-		margin-right: auto;
-	}
-
-	.feed-grid {
-		display: grid;
-		gap: 2rem;
-		max-width: 800px;
 		margin: 0 auto;
 	}
 
-	.feed-item {
+	.linkedin-widget-container {
+		max-width: 1200px;
+		margin: 0 auto 3rem;
 		background: white;
-		border-radius: var(--border-radius-lg);
-		padding: 1.5rem;
-		box-shadow: var(--shadow);
-		transition: var(--transition);
-		border: 1px solid var(--color-border);
+		border-radius: 20px;
+		padding: 2rem;
+		box-shadow: 0 10px 40px rgba(0, 60, 61, 0.1);
 	}
 
-	.feed-item:hover {
-		box-shadow: var(--shadow-lg);
-		transform: translateY(-2px);
+	.linkedin-iframe {
+		border-radius: 12px;
+		min-height: 600px;
 	}
 
-	.feed-content {
-		display: flex;
-		gap: 1rem;
+	.linkedin-follow-cta {
+		text-align: center;
+		padding: 2rem;
 	}
 
-	.feed-avatar {
-		flex-shrink: 0;
-	}
-
-	.feed-avatar img {
-		width: 48px;
-		height: 48px;
-		border-radius: 50%;
-		object-fit: cover;
-	}
-
-	.feed-text {
-		flex: 1;
-	}
-
-	.feed-meta {
-		display: flex;
+	.linkedin-button {
+		display: inline-flex;
 		align-items: center;
-		gap: 0.5rem;
-		margin-bottom: 0.75rem;
-	}
-
-	.feed-author {
+		gap: 0.75rem;
+		padding: 1rem 2.5rem;
+		background: linear-gradient(135deg, #0077b5, #0a66c2);
+		color: white;
+		font-size: 1.1rem;
 		font-weight: 600;
-		color: var(--color-primary);
+		text-decoration: none;
+		border-radius: 50px;
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);
 	}
 
-	.feed-time {
-		font-size: 0.875rem;
-		color: var(--color-text-light);
+	.linkedin-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 25px rgba(0, 119, 181, 0.4);
+		background: linear-gradient(135deg, #0a66c2, #0077b5);
 	}
 
-	.feed-message {
-		font-size: 1rem;
-		line-height: 1.6;
-		color: var(--color-text);
-		margin-bottom: 1rem;
+	.linkedin-button i {
+		font-size: 1.3rem;
 	}
 
-	.feed-actions {
-		display: flex;
-		gap: 1rem;
-	}
-
-	.feed-action {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		background: none;
-		border: none;
-		color: var(--color-text-light);
-		font-size: 0.875rem;
-		cursor: pointer;
-		padding: 0.5rem;
-		border-radius: var(--border-radius);
-		transition: var(--transition);
-	}
-
-	.feed-action:hover {
-		background: var(--color-background-alt);
-		color: var(--color-accent);
-	}
-
-	.feed-action i {
-		font-size: 1rem;
+	.linkedin-hashtag {
+		margin-top: 1.5rem;
+		font-size: 0.95rem;
+		color: #0077b5;
+		font-weight: 500;
 	}
 
 	@media (max-width: 768px) {
@@ -274,17 +167,17 @@
 			font-size: 2rem;
 		}
 
-		.feed-content {
-			flex-direction: column;
-			align-items: flex-start;
+		.linkedin-widget-container {
+			padding: 1rem;
 		}
 
-		.feed-avatar {
-			margin-bottom: 0.5rem;
+		.linkedin-iframe {
+			height: 1200px;
 		}
 
-		.feed-actions {
-			flex-wrap: wrap;
+		.linkedin-button {
+			padding: 0.9rem 2rem;
+			font-size: 1rem;
 		}
 	}
 </style>
