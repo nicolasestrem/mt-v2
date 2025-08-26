@@ -4,12 +4,10 @@ import '../styles/global.css';
 export interface Props {
 	title: string;
 	description?: string;
+	image?: string;
 }
 
-const { 
-	title, 
-	description = "25 Mobility Trailblazers in 25 - Nominieren Sie Vorreiter der Mobilitätswende. Award für mutige Persönlichkeiten, die den mobilen Wandel vorantreiben."
-} = Astro.props;
+const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wandel Mut braucht.", image = "/images/og-image.jpg" } = Astro.props;
 ---
 
 <!doctype html>
@@ -21,20 +19,151 @@ const {
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		
-		<!-- Open Graph -->
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
-		<meta property="og:locale" content="de_DE" />
-		
-		<!-- Twitter Card -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
-		
+		<meta property="og:image" content={new URL(image, Astro.url)} />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 		<title>{title}</title>
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
+
+<style is:global>
+	:root {
+		--color-primary: #003C3D;
+		--color-secondary: #302C37;
+		--color-accent: #C1693C;
+		--color-text: #302C37;
+		--color-background: #F5F5F5;
+		--color-white: #FFFFFF;
+		--font-primary: 'Cabin', sans-serif;
+		--font-secondary: 'Roboto', sans-serif;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		font-family: var(--font-primary);
+		line-height: 1.6;
+		color: var(--color-text);
+		background-color: var(--color-background);
+		margin: 0;
+		padding: 0;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: var(--font-primary);
+		font-weight: 600;
+		line-height: 1.2;
+		margin: 0 0 1rem 0;
+	}
+
+	h1 { font-size: 3.5rem; }
+	h2 { font-size: 2.5rem; }
+	h3 { font-size: 2rem; }
+	h4 { font-size: 1.5rem; }
+	h5 { font-size: 1.25rem; }
+	h6 { font-size: 1rem; }
+
+	p {
+		margin: 0 0 1rem 0;
+	}
+
+	a {
+		color: var(--color-accent);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	a:hover {
+		color: var(--color-primary);
+	}
+
+	button {
+		font-family: var(--font-primary);
+		cursor: pointer;
+		border: none;
+		background: none;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1rem;
+	}
+
+	.btn {
+		display: inline-block;
+		padding: 1rem 2rem;
+		background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+		color: white;
+		border-radius: 50px;
+		font-weight: 600;
+		text-decoration: none;
+		transition: all 0.3s ease;
+		border: none;
+		cursor: pointer;
+	}
+
+	.btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+		color: white;
+	}
+
+	.section {
+		padding: 4rem 0;
+	}
+
+	.text-center {
+		text-align: center;
+	}
+
+	.text-left {
+		text-align: left;
+	}
+
+	.text-right {
+		text-align: right;
+	}
+
+	@media (max-width: 768px) {
+		h1 { font-size: 2.5rem; }
+		h2 { font-size: 2rem; }
+		h3 { font-size: 1.5rem; }
+		
+		.section {
+			padding: 2rem 0;
+		}
+		
+		.container {
+			padding: 0 0.5rem;
+		}
+	}
+</style>

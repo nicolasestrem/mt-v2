@@ -1,0 +1,188 @@
+---
+// Mission section component for Mobility Trailblazers
+---
+
+<section class="mission" id="about">
+	<div class="container">
+		<div class="mission-grid">
+			<div class="mission-content">
+				<div class="mission-box">
+					<h3 class="mission-prefix">Unsere Mission</h3>
+					<h2 class="mission-title">Warum «25 Mobility Trailblazers In 25»?</h2>
+					<p class="mission-description">
+						Wirtschaft, Gesellschaft und Politik im DACH-Raum müssen sich der Mobilitätswende stellen, sollen Wettbewerbsfähigkeit und Wohlstand behauptet werden. Doch Wandel braucht Mut. Unsere Auszeichnung gibt Persönlichkeiten eine Bühne, die vorangehen.
+					</p>
+				</div>
+			</div>
+			
+			<div class="mission-criteria">
+				<h3 class="criteria-title">Was zeichnet Mobility Trailblazers aus?</h3>
+				<ul class="criteria-list">
+					<li class="criteria-item">
+						<i class="fas fa-circle criteria-icon"></i>
+						<span>Menschen, die mit <strong>Mut und Wirkung</strong> den Mobilitätswandel gestalten</span>
+					</li>
+					<li class="criteria-item">
+						<i class="fas fa-circle criteria-icon"></i>
+						<span><strong>Visionäre</strong> aus Start-ups, etablierten Unternehmen, öffentlicher Verwaltung oder Politik</span>
+					</li>
+					<li class="criteria-item">
+						<i class="fas fa-circle criteria-icon"></i>
+						<span>Persönlichkeiten, die <strong>neue Wege</strong> gehen – und Vorbild und Inspiration für andere sind</span>
+					</li>
+					<li class="criteria-item">
+						<i class="fas fa-circle criteria-icon"></i>
+						<span>Menschen, die mit ihren Projekten <strong>spürbare Veränderungen</strong> anstoßen</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.mission {
+		background: var(--color-background);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.mission::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: url('/images/background.webp') center center/cover;
+		opacity: 0.1;
+		z-index: 1;
+	}
+
+	.mission-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+		align-items: center;
+		position: relative;
+		z-index: 2;
+	}
+
+	.mission-content {
+		position: relative;
+	}
+
+	.mission-box {
+		background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+		backdrop-filter: blur(10px);
+		border-radius: 20px;
+		padding: 3rem;
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+	}
+
+	.mission-prefix {
+		color: var(--color-accent);
+		font-size: 1rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		margin-bottom: 1rem;
+	}
+
+	.mission-title {
+		color: var(--color-primary);
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin-bottom: 1.5rem;
+		line-height: 1.2;
+	}
+
+	.mission-description {
+		color: var(--color-text);
+		font-size: 1.1rem;
+		line-height: 1.7;
+		margin: 0;
+	}
+
+	.mission-criteria {
+		background: rgba(255, 255, 255, 0.8);
+		border-radius: 20px;
+		padding: 3rem;
+		box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+	}
+
+	.criteria-title {
+		color: var(--color-primary);
+		font-size: 2rem;
+		font-weight: 600;
+		margin-bottom: 2rem;
+		text-align: center;
+	}
+
+	.criteria-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.criteria-item {
+		display: flex;
+		align-items: flex-start;
+		gap: 1rem;
+		padding: 1rem;
+		background: rgba(255, 255, 255, 0.5);
+		border-radius: 10px;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.criteria-item:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+	}
+
+	.criteria-icon {
+		color: var(--color-accent);
+		font-size: 0.8rem;
+		margin-top: 0.3rem;
+		flex-shrink: 0;
+	}
+
+	.criteria-item span {
+		color: var(--color-text);
+		font-size: 1rem;
+		line-height: 1.6;
+	}
+
+	.criteria-item strong {
+		color: var(--color-primary);
+		font-weight: 600;
+	}
+
+	@media (max-width: 768px) {
+		.mission-grid {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.mission-box,
+		.mission-criteria {
+			padding: 2rem;
+		}
+
+		.mission-title {
+			font-size: 2rem;
+		}
+
+		.criteria-title {
+			font-size: 1.5rem;
+		}
+
+		.criteria-item {
+			padding: 0.8rem;
+		}
+	}
+</style>

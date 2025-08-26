@@ -1,0 +1,244 @@
+---
+// Newsletter section component for Mobility Trailblazers
+---
+
+<section class="newsletter" id="newsletter">
+	<div class="container">
+		<div class="newsletter-content">
+			<h2 class="newsletter-title">Bleiben Sie informiert – mit unserem Mobility Trailblazers Newsletter</h2>
+			
+			<div class="newsletter-description">
+				<p>Erfahren Sie zuerst, wer nominiert wurde, wie der Auswahlprozess läuft und was Jury und Medien über den Mobilitätswandel denken. Inklusive:</p>
+				<ul>
+					<li>Hintergrundgeschichten & Interviews</li>
+					<li>News rund um das Event & das Netzwerk</li>
+					<li>Das exklusive digitale Booklet mit allen Trailblazer-Porträts, Artikeln und Insights</li>
+				</ul>
+				<p><strong>Direkt nach dem Award erhalten Sie das komplette Booklet bequem per E-Mail.</strong></p>
+			</div>
+			
+			<form class="newsletter-form" id="newsletterForm">
+				<div class="form-group">
+					<label for="firstName">Vorname *</label>
+					<input type="text" id="firstName" name="firstName" required>
+				</div>
+				
+				<div class="form-group">
+					<label for="lastName">Nachname *</label>
+					<input type="text" id="lastName" name="lastName" required>
+				</div>
+				
+				<div class="form-group">
+					<label for="email">E-Mail-Adresse *</label>
+					<input type="email" id="email" name="email" required>
+				</div>
+				
+				<div class="form-group">
+					<label for="salutation">Anrede *</label>
+					<select id="salutation" name="salutation" required>
+						<option value="">Bitte wählen</option>
+						<option value="Frau">Frau</option>
+						<option value="Herr">Herr</option>
+						<option value="Keine Angabe">Keine Angabe</option>
+					</select>
+				</div>
+				
+				<button type="submit" class="newsletter-btn">Newsletter abonnieren</button>
+			</form>
+		</div>
+	</div>
+</section>
+
+<style>
+	.newsletter {
+		background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+		color: white;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.newsletter::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: url('/images/background.webp') center center/cover;
+		opacity: 0.1;
+		z-index: 1;
+	}
+
+	.newsletter-content {
+		max-width: 800px;
+		margin: 0 auto;
+		text-align: center;
+		position: relative;
+		z-index: 2;
+	}
+
+	.newsletter-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin-bottom: 2rem;
+		background: linear-gradient(45deg, #ffffff, #f0f0f0);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.newsletter-description {
+		margin-bottom: 3rem;
+		text-align: left;
+	}
+
+	.newsletter-description p {
+		font-size: 1.1rem;
+		line-height: 1.6;
+		margin-bottom: 1rem;
+	}
+
+	.newsletter-description ul {
+		list-style: none;
+		padding: 0;
+		margin: 1rem 0;
+	}
+
+	.newsletter-description li {
+		padding: 0.5rem 0;
+		font-size: 1rem;
+		position: relative;
+		padding-left: 1.5rem;
+	}
+
+	.newsletter-description li::before {
+		content: '✓';
+		position: absolute;
+		left: 0;
+		color: var(--color-accent);
+		font-weight: bold;
+	}
+
+	.newsletter-form {
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(10px);
+		border-radius: 20px;
+		padding: 2rem;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.5rem;
+		text-align: left;
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.form-group:nth-child(3),
+	.form-group:nth-child(4) {
+		grid-column: span 2;
+	}
+
+	.form-group:last-child {
+		grid-column: span 2;
+		text-align: center;
+	}
+
+	.form-group label {
+		font-size: 0.9rem;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+		color: rgba(255, 255, 255, 0.9);
+	}
+
+	.form-group input,
+	.form-group select {
+		padding: 0.8rem 1rem;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 8px;
+		background: rgba(255, 255, 255, 0.1);
+		color: white;
+		font-size: 1rem;
+		transition: all 0.3s ease;
+	}
+
+	.form-group input::placeholder {
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	.form-group input:focus,
+	.form-group select:focus {
+		outline: none;
+		border-color: var(--color-accent);
+		background: rgba(255, 255, 255, 0.2);
+		box-shadow: 0 0 0 3px rgba(193, 105, 60, 0.2);
+	}
+
+	.form-group select option {
+		background: var(--color-primary);
+		color: white;
+	}
+
+	.newsletter-btn {
+		background: var(--color-accent);
+		color: white;
+		border: none;
+		padding: 1rem 2rem;
+		border-radius: 50px;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		margin-top: 1rem;
+	}
+
+	.newsletter-btn:hover {
+		background: white;
+		color: var(--color-accent);
+		transform: translateY(-2px);
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	}
+
+	@media (max-width: 768px) {
+		.newsletter-title {
+			font-size: 2rem;
+		}
+
+		.newsletter-form {
+			grid-template-columns: 1fr;
+			padding: 1.5rem;
+		}
+
+		.form-group:nth-child(3),
+		.form-group:nth-child(4) {
+			grid-column: span 1;
+		}
+
+		.form-group:last-child {
+			grid-column: span 1;
+		}
+	}
+</style>
+
+<script>
+	// Newsletter form handling
+	const newsletterForm = document.getElementById('newsletterForm') as HTMLFormElement;
+	
+	newsletterForm?.addEventListener('submit', function(e) {
+		e.preventDefault();
+		
+		const formData = new FormData(this);
+		const data = Object.fromEntries(formData);
+		
+		// Here you would typically send the data to your backend
+		console.log('Newsletter signup:', data);
+		
+		// Show success message
+		alert('Vielen Dank für Ihre Anmeldung zum Newsletter!');
+		
+		// Reset form
+		this.reset();
+	});
+</script>
