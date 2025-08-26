@@ -71,10 +71,19 @@ colors: {
 ```
 
 #### Typography Hierarchy
-- H1: Poppins, 4em, uppercase
-- H2/H3: Trebuchet MS, 3.2em/2.4em
+- H1: Poppins, 4em, uppercase with gradient effect
+- H2/H3: Trebuchet MS, 3.2em/2.4em with solid colors
 - H4: Cabin, 22px
 - Body: Roboto, 18px
+
+#### Gradient Color Scheme
+**H1 Titles:**
+- Light backgrounds: Gradient from #C1693C (orange) to #004C5F (dark teal)
+- Dark backgrounds: Gradient from #FFF8F0DD (light cream) to #A4DCD5 (light teal)
+
+**H2 Titles:**
+- Light backgrounds: Solid #004C5F (dark teal)
+- Dark backgrounds: Solid #C1693C (orange)
 
 #### CSS Architecture
 - **global.css**: Tailwind imports + custom animations/utilities

@@ -109,12 +109,22 @@ a:hover {
 .bg-accent { background-color: var(--color-accent); }
 .bg-light { background-color: var(--color-background-alt); }
 
-/* Gradient Text */
+/* Gradient Text - for H1 on light backgrounds */
 .gradient-text {
-	background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
+	background: linear-gradient(90deg, #C1693C 0%, #004C5F 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
+	color: transparent;
+}
+
+/* Gradient Text Light - for H1 on dark backgrounds */
+.gradient-text-light {
+	background: linear-gradient(90deg, #FFF8F0DD 0%, #A4DCD5 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	color: transparent;
 }
 
 /* Buttons */
