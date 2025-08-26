@@ -13,11 +13,11 @@
 			
 			<div class="nav-menu">
 				<ul class="nav-list">
-					<li><a href="#about">About</a></li>
-					<li><a href="#jury">Jury</a></li>
-					<li><a href="#newsletter">Newsletter</a></li>
+					<li><a href="/#about">About</a></li>
+					<li><a href="/#jury">Jury</a></li>
+					<li><a href="/#newsletter">Newsletter</a></li>
 					<li><a href="/shop" class="shop-link">Shop</a></li>
-					<li><a href="#vorschlagen">Vorschlagen</a></li>
+					<li><a href="/#vorschlagen">Vorschlagen</a></li>
 				</ul>
 			</div>
 			
@@ -302,8 +302,8 @@
 			const navLinks = header.querySelectorAll('.nav-list a');
 			navLinks.forEach(link => {
 				link.addEventListener('click', (e) => {
-					// Only close menu for hash links (not external pages like /shop)
-					if (link.getAttribute('href')?.startsWith('#')) {
+					// Close menu for all links on mobile
+					if (window.innerWidth <= 768) {
 						navMenu?.classList.remove('active');
 						navSocial?.classList.remove('active');
 						navToggle?.classList.remove('active');
