@@ -29,7 +29,8 @@
       "Bash(cp:*)",
       "Bash(npm run dev:*)",
       "mcp__filesystem-mcp__list_directory",
-      "mcp__filesystem-mcp__read_file"
+      "mcp__filesystem-mcp__read_file",
+      "mcp__filesystem-mcp__read_multiple_files"
     ],
     "deny": [],
     "ask": []
