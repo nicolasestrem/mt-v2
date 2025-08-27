@@ -194,7 +194,7 @@
 		}
 
 		.nav-menu {
-			display: none;
+			display: none !important; /* Force hide on mobile initially */
 			position: absolute;
 			top: 100%;
 			left: 0;
@@ -205,10 +205,11 @@
 			padding: 1rem;
 			margin-top: 0.5rem;
 			border-radius: 8px;
+			z-index: 1000;
 		}
 
 		.nav-menu.active {
-			display: block;
+			display: block !important; /* Force show when active */
 		}
 
 		.nav-list {
@@ -232,7 +233,7 @@
 		}
 
 		.nav-social {
-			display: none;
+			display: none !important; /* Force hide on mobile initially */
 			position: absolute;
 			top: 100%;
 			left: 0;
@@ -245,16 +246,22 @@
 			border-radius: 8px;
 			justify-content: center;
 			gap: 2rem;
+			z-index: 999;
 		}
 
 		.nav-social.active {
-			display: flex;
+			display: flex !important; /* Force show when active */
 			margin-top: 280px; /* Space for nav menu */
 		}
 
 		.nav-toggle {
-			display: flex;
+			display: flex !important; /* Force show on mobile */
 			z-index: 1001;
+			position: relative;
+			width: 40px;
+			height: 40px;
+			align-items: center;
+			justify-content: center;
 		}
 
 		.nav-toggle.active span:nth-child(1) {
@@ -276,49 +283,96 @@
 	}
 </style>
 
-<script>
-	// Use event delegation and ensure script only runs once
-	document.addEventListener('DOMContentLoaded', () => {
-		// Find elements within the header context
-		const header = document.querySelector('.header');
-		if (!header) return;
-		
-		const navToggle = header.querySelector('.nav-toggle');
-		const navMenu = header.querySelector('.nav-menu');
-		const navSocial = header.querySelector('.nav-social');
-		
-		// Only add listeners if they haven't been added already
-		if (navToggle && !navToggle.hasAttribute('data-listener-added')) {
+<script is:inline>
+	// Mobile menu script - ES5 compatible for all browsers
+	(function() {
+		function initMobileMenu() {
+			// Find elements
+			var header = document.querySelector('.header');
+			if (!header) {
+				console.log('Header not found, retrying...');
+				setTimeout(initMobileMenu, 100);
+				return;
+			}
+			
+			var navToggle = header.querySelector('.nav-toggle');
+			var navMenu = header.querySelector('.nav-menu');
+			var navSocial = header.querySelector('.nav-social');
+			
+			if (!navToggle || !navMenu) {
+				console.log('Menu elements not found');
+				return;
+			}
+			
+			// Check if already initialized
+			if (navToggle.hasAttribute('data-listener-added')) {
+				return;
+			}
 			navToggle.setAttribute('data-listener-added', 'true');
 			
-			navToggle.addEventListener('click', (e) => {
-				e.stopPropagation();
-				navMenu?.classList.toggle('active');
-				navSocial?.classList.toggle('active');
-				navToggle.classList.toggle('active');
+			console.log('Initializing mobile menu');
+			
+			// Toggle menu function
+			function toggleMenu(e) {
+				if (e) {
+					e.preventDefault();
+					e.stopPropagation();
+				}
+				
+				if (navMenu.classList.contains('active')) {
+					navMenu.classList.remove('active');
+					if (navSocial) navSocial.classList.remove('active');
+					navToggle.classList.remove('active');
+				} else {
+					navMenu.classList.add('active');
+					if (navSocial) navSocial.classList.add('active');
+					navToggle.classList.add('active');
+				}
+			}
+			
+			// Add both click and touch events
+			navToggle.addEventListener('click', toggleMenu);
+			navToggle.addEventListener('touchstart', function(e) {
+				e.preventDefault();
+				toggleMenu(e);
 			});
 			
-			// Close mobile menu when clicking on a link
-			const navLinks = header.querySelectorAll('.nav-list a');
-			navLinks.forEach(link => {
-				link.addEventListener('click', (e) => {
-					// Close menu for all links on mobile
+			// Close menu when clicking on a link
+			var navLinks = header.querySelectorAll('.nav-list a');
+			for (var i = 0; i < navLinks.length; i++) {
+				navLinks[i].addEventListener('click', function() {
 					if (window.innerWidth <= 768) {
-						navMenu?.classList.remove('active');
-						navSocial?.classList.remove('active');
-						navToggle?.classList.remove('active');
+						navMenu.classList.remove('active');
+						if (navSocial) navSocial.classList.remove('active');
+						navToggle.classList.remove('active');
 					}
 				});
-			});
+			}
 			
 			// Close menu when clicking outside
-			document.addEventListener('click', (e) => {
+			document.addEventListener('click', function(e) {
 				if (!header.contains(e.target)) {
-					navMenu?.classList.remove('active');
-					navSocial?.classList.remove('active');
-					navToggle?.classList.remove('active');
+					navMenu.classList.remove('active');
+					if (navSocial) navSocial.classList.remove('active');
+					navToggle.classList.remove('active');
+				}
+			});
+			
+			document.addEventListener('touchstart', function(e) {
+				if (!header.contains(e.target)) {
+					navMenu.classList.remove('active');
+					if (navSocial) navSocial.classList.remove('active');
+					navToggle.classList.remove('active');
 				}
 			});
 		}
-	});
+		
+		// Initialize when DOM is ready
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initMobileMenu);
+		} else {
+			// DOM is already ready
+			initMobileMenu();
+		}
+	})();
 </script>
