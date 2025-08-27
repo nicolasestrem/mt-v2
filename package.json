@@ -21,6 +21,7 @@
     "test:browser-compat": "playwright test tests/browser-compatibility.spec.ts",
     "test:e2e": "playwright test tests/e2e-workflow.spec.ts",
     "test:mobile": "playwright test --project='iPhone*' --project='Pixel*' --project='Galaxy*'",
+    "test:mobile-menu": "playwright test tests/mobile-menu.spec.ts",
     "test:desktop": "playwright test --project='Desktop*'",
     "test:chrome": "playwright test --project='Desktop Chrome'",
     "test:firefox": "playwright test --project='Desktop Firefox'",
