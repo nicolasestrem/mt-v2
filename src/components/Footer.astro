@@ -1,5 +1,6 @@
 ---
 // Footer component for Mobility Trailblazers
+import Icons from './Icons.astro';
 ---
 
 <footer class="footer">
@@ -18,7 +19,7 @@
 			<div class="footer-section">
 				<h4>Kontakt</h4>
 				<div class="footer-contact">
-					<p><i class="fas fa-envelope"></i> kontakt@mobilitytrailblazers.de</p>
+					<p><Icons name="envelope" /> kontakt@mobilitytrailblazers.de</p>
 				</div>
 			</div>
 			
@@ -26,11 +27,11 @@
 				<h4>Folgen Sie uns</h4>
 				<div class="footer-social">
 					<a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" rel="noopener noreferrer" class="social-link">
-						<i class="fab fa-linkedin"></i>
+						<Icons name="linkedin" />
 						<span>LinkedIn</span>
 					</a>
 					<a href="mailto:kontakt@mobilitytrailblazers.de?subject=Kontakt Website" class="social-link">
-						<i class="fas fa-envelope"></i>
+						<Icons name="envelope" />
 						<span>E-Mail</span>
 					</a>
 				</div>
@@ -116,9 +117,13 @@
 		opacity: 0.9;
 	}
 
-	.footer-contact i {
+	.footer-contact p :global(svg) {
 		color: var(--color-accent);
 		width: 16px;
+		height: 16px;
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 0.25rem;
 	}
 
 	.footer-social {
@@ -141,9 +146,12 @@
 		color: var(--color-accent);
 	}
 
-	.social-link i {
+	.social-link :global(svg) {
 		color: var(--color-accent);
 		width: 16px;
+		height: 16px;
+		display: inline-block;
+		vertical-align: middle;
 	}
 
 	.footer-links {

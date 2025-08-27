@@ -1,5 +1,6 @@
 ---
 // About section component for Mobility Trailblazers
+import Icons from './Icons.astro';
 ---
 
 <section class="about-section" id="about-initiative">
@@ -32,7 +33,11 @@
 			</div>
 			
 			<div class="about-image">
-				<img src="/images/about/fernsehturm-berlin.jpg" alt="Fernsehturm Berlin - Wahrzeichen der deutschen Hauptstadt, symbolisiert die Innovationskraft im Mobilitätswandel" loading="lazy">
+				<img src="/images/about/fernsehturm-berlin.jpg" 
+				     alt="Fernsehturm Berlin - Wahrzeichen der deutschen Hauptstadt, symbolisiert die Innovationskraft im Mobilitätswandel" 
+				     width="600" 
+				     height="400" 
+				     fetchpriority="high">
 			</div>
 		</div>
 		
@@ -48,7 +53,7 @@
 					Das Institut für Mobilität an der Universität St. Gallen (IMO) betreibt exzellente Forschung und gestaltet aktiv die Zukunft der Mobilität mit. Es verbindet Forschung, Lehre und Weiterbildung in enger Zusammenarbeit mit Wirtschaft, Politik und Gesellschaft.
 				</p>
 				<a href="https://imo.unisg.ch/de/home/" target="_blank" rel="noopener noreferrer" class="partner-link">
-					Learn More <i class="fas fa-arrow-right"></i>
+					Learn More <Icons name="arrow-right" class="arrow-icon" />
 				</a>
 			</div>
 			
@@ -62,7 +67,7 @@
 					Tomczak-Gross & Partners ist ein evidenzbasiertes Beratungsunternehmen mit Fokus auf New Mobility, Transformation und Innovation, Digitalisierung & KI, Marketing & Sales.
 				</p>
 				<a href="https://www.tomczak-gross.com/" target="_blank" rel="noopener noreferrer" class="partner-link">
-					Learn More <i class="fas fa-arrow-right"></i>
+					Learn More <Icons name="arrow-right" class="arrow-icon" />
 				</a>
 			</div>
 			
@@ -76,7 +81,7 @@
 					Die Handelsblatt Media Group ist das führende Medienhaus für Wirtschafts- und Finanzinformationen in Deutschland.
 				</p>
 				<a href="https://www.handelsblatt.com/" target="_blank" rel="noopener noreferrer" class="partner-link">
-					Learn More <i class="fas fa-arrow-right"></i>
+					Learn More <Icons name="arrow-right" class="arrow-icon" />
 				</a>
 			</div>
 		</div>
@@ -93,7 +98,7 @@
 				Mobilität verändert sich – weil Menschen den Mut haben, sie zu gestalten.
 			</p>
 			<a href="#vorschlagen" class="btn btn-accent">
-				Mobility Trailblazer vorschlagen <i class="fas fa-arrow-right"></i>
+				Mobility Trailblazer vorschlagen <Icons name="arrow-right" class="btn-icon" />
 			</a>
 		</div>
 	</div>
@@ -286,11 +291,15 @@
 		color: var(--color-primary);
 	}
 	
-	.partner-link i {
+	.partner-link :global(.arrow-icon) {
 		transition: transform 0.3s ease;
+		width: 1em;
+		height: 1em;
+		display: inline-block;
+		vertical-align: middle;
 	}
 	
-	.partner-link:hover i {
+	.partner-link:hover :global(.arrow-icon) {
 		transform: translateX(3px);
 	}
 	
@@ -333,6 +342,19 @@
 		font-size: 1.3rem;
 		margin-bottom: 2rem;
 		font-weight: 500;
+	}
+	
+	.btn :global(.btn-icon) {
+		width: 1em;
+		height: 1em;
+		display: inline-block;
+		vertical-align: middle;
+		margin-left: 0.5rem;
+		transition: transform 0.3s ease;
+	}
+	
+	.btn:hover :global(.btn-icon) {
+		transform: translateX(3px);
 	}
 	
 	@media (max-width: 1024px) {

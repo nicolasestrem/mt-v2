@@ -42,13 +42,26 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 		<!-- Fonts with font-display: swap and preload -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Trebuchet+MS:wght@400;700&display=swap" as="style">
-		<link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Trebuchet+MS:wght@400;700&display=swap" rel="stylesheet">
+		<!-- Only load essential fonts immediately -->
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+		<!-- Load other fonts asynchronously -->
+		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+		<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"></noscript>
 
-		<!-- Font Awesome -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<!-- Preload critical images -->
+		<link rel="preload" as="image" href="/images/about/fernsehturm-berlin.jpg" fetchpriority="high">
 
 		<title>{title}</title>
+		
+		<!-- Inline critical CSS for hero text -->
+		<style>
+			.hero-subtitle {
+				font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+				font-size: 1.25rem;
+				margin-bottom: 2rem;
+				line-height: 1.6;
+			}
+		</style>
 		
 		<!-- Structured Data for SEO -->
 		<script type="application/ld+json">

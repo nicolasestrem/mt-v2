@@ -1,5 +1,6 @@
 ---
 // Jury section component for Mobility Trailblazers
+import Icons from './Icons.astro';
 ---
 
 <section class="jury" id="jury">
@@ -26,7 +27,7 @@
 					<p class="member-bio">Prof. Dr. Andreas Herrmann Gründer und Direktor des Instituts für Mobilität an der Universität St. Gallen</p>
 					<div class="member-social">
 						<a href="https://www.linkedin.com/in/andreas-herrmann-4053541/" target="_blank" rel="noopener noreferrer" class="social-link">
-							<i class="fab fa-linkedin"></i>
+							<Icons name="linkedin" />
 						</a>
 					</div>
 				</div>
@@ -42,7 +43,7 @@
 					<p class="member-bio">Prof. Dr. Dr. h.c. Torsten Tomczak Gründer des Instituts für Mobilität an der Universität St. Gallen</p>
 					<div class="member-social">
 						<a href="https://www.linkedin.com/in/torstentomczak/" target="_blank" rel="noopener noreferrer" class="social-link">
-							<i class="fab fa-linkedin"></i>
+							<Icons name="linkedin" />
 						</a>
 					</div>
 				</div>
@@ -216,8 +217,9 @@
 		transform: translateY(-2px);
 	}
 
-	.social-link i {
-		font-size: 1.2rem;
+	.social-link :global(svg) {
+		width: 1.2rem;
+		height: 1.2rem;
 	}
 
 	@media (max-width: 768px) {
