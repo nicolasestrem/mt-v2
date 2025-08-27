@@ -38,7 +38,9 @@
       "Bash(cat:*)",
       "Bash(git grep:*)",
       "Bash(npm run test:smoke:*)",
-      "Bash(npm run test:chrome:*)"
+      "Bash(npm run test:chrome:*)",
+      "Bash(dir:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []
