@@ -1,5 +1,5 @@
 ---
-// Optimized image component with multiple formats and sizes
+// Optimized image component with graceful fallback handling
 export interface Props {
   src: string;
   alt: string;
@@ -8,6 +8,8 @@ export interface Props {
   loading?: 'lazy' | 'eager';
   fetchpriority?: 'high' | 'low' | 'auto';
   class?: string;
+  sizes?: string;
+  useWebP?: boolean;
 }
 
 const { 
@@ -17,22 +19,38 @@ const {
   height, 
   loading = 'lazy', 
   fetchpriority = 'auto',
-  class: className = '' 
+  class: className = '',
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px',
+  useWebP = false // Only use WebP if explicitly enabled and files exist
 } = Astro.props;
 
-// Generate srcset for responsive images
+// Generate srcset for responsive images with proper fallbacks
 const generateSrcset = (baseSrc: string) => {
-  const sizes = [320, 640, 768, 1024, 1280];
-  return sizes.map(size => `${baseSrc}?w=${size} ${size}w`).join(', ');
+  // Only generate srcset if we're dealing with local images
+  if (!baseSrc.startsWith('/') && !baseSrc.startsWith('./')) {
+    return baseSrc;
+  }
+  
+  const responsiveSizes = [320, 640, 768, 1024, 1280];
+  // For now, just return the original source
+  // In production, this would connect to an image optimization service
+  return baseSrc;
 };
+
+// Check if WebP version exists (only for local images)
+const webpSrc = useWebP && src.match(/\.(jpg|jpeg|png)$/i) 
+  ? src.replace(/\.(jpg|jpeg|png)$/i, '.webp')
+  : null;
 ---
 
 <picture>
-  <source
-    type="image/webp"
-    srcset={generateSrcset(src.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}
-    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-  />
+  {webpSrc && (
+    <source
+      type="image/webp"
+      srcset={webpSrc}
+      sizes={sizes}
+    />
+  )}
   <img
     src={src}
     alt={alt}

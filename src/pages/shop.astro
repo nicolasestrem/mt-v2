@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Icons from '../components/Icons.astro';
 import products from '../data/shop-products.json';
 ---
 
@@ -45,25 +46,25 @@ import products from '../data/shop-products.json';
 				) : (
 					<div class="products-fallback">
 						<div class="fallback-content">
-							<i class="fas fa-store"></i>
+							<Icons name="store" />
 							<h3>Entdecken Sie unsere Kollektion</h3>
 							<p>Hochwertige T-Shirts, Hoodies, Tassen und mehr mit dem exklusiven Mobility Trailblazers Design</p>
 							
 							<div class="product-categories">
 								<div class="category">
-									<i class="fas fa-tshirt"></i>
+									<Icons name="tshirt" />
 									<span>Bekleidung</span>
 								</div>
 								<div class="category">
-									<i class="fas fa-mug-hot"></i>
+									<Icons name="mug-hot" />
 									<span>Accessoires</span>
 								</div>
 								<div class="category">
-									<i class="fas fa-bag-shopping"></i>
+									<Icons name="bag-shopping" />
 									<span>Taschen</span>
 								</div>
 								<div class="category">
-									<i class="fas fa-gift"></i>
+									<Icons name="gift" />
 									<span>Geschenke</span>
 								</div>
 							</div>
@@ -77,7 +78,7 @@ import products from '../data/shop-products.json';
 					   rel="noopener noreferrer"
 					   class="shop-button">
 						<span>Alle Produkte im Shop ansehen</span>
-						<i class="fas fa-arrow-right"></i>
+						<Icons name="arrow-right" />
 					</a>
 				</div>
 			</div>
@@ -87,22 +88,22 @@ import products from '../data/shop-products.json';
 			<div class="container">
 				<div class="info-grid">
 					<div class="info-card">
-						<i class="fas fa-truck"></i>
+						<Icons name="truck" />
 						<h3>Schneller Versand</h3>
 						<p>Versand innerhalb von 3-5 Werktagen direkt von Spreadshirt</p>
 					</div>
 					<div class="info-card">
-						<i class="fas fa-shield-alt"></i>
+						<Icons name="shield-alt" />
 						<h3>Sichere Zahlung</h3>
 						<p>Verschlüsselte Zahlungsabwicklung über Spreadshirt</p>
 					</div>
 					<div class="info-card">
-						<i class="fas fa-leaf"></i>
+						<Icons name="leaf" />
 						<h3>Nachhaltige Produktion</h3>
 						<p>On-Demand Druck reduziert Überproduktion</p>
 					</div>
 					<div class="info-card">
-						<i class="fas fa-undo"></i>
+						<Icons name="undo" />
 						<h3>30 Tage Rückgaberecht</h3>
 						<p>Problemlose Rückgabe bei Nichtgefallen</p>
 					</div>
