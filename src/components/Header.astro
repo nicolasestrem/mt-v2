@@ -178,15 +178,7 @@
 		background: none;
 		border: none;
 		cursor: pointer;
-		padding: 0.75rem;
-		min-width: 44px;
-		min-height: 44px;
-		justify-content: center;
-		align-items: center;
-		-webkit-tap-highlight-color: rgba(193, 105, 60, 0.2);
-		touch-action: manipulation;
-		position: relative;
-		z-index: 1002;
+		padding: 0.5rem;
 	}
 
 	.nav-toggle span {
@@ -262,12 +254,7 @@
 
 		.nav-toggle {
 			display: flex;
-			z-index: 1002;
-			border-radius: 4px;
-		}
-		
-		.nav-toggle:hover {
-			background: rgba(193, 105, 60, 0.1);
+			z-index: 1001;
 		}
 
 		.nav-toggle.active span:nth-child(1) {
@@ -304,21 +291,12 @@
 		if (navToggle && !navToggle.hasAttribute('data-listener-added')) {
 			navToggle.setAttribute('data-listener-added', 'true');
 			
-			const toggleMenu = (e) => {
-				e.preventDefault();
+			navToggle.addEventListener('click', (e) => {
 				e.stopPropagation();
 				navMenu?.classList.toggle('active');
 				navSocial?.classList.toggle('active');
 				navToggle.classList.toggle('active');
-			};
-			
-			// Add both click and touchstart events for better mobile support
-			navToggle.addEventListener('click', toggleMenu);
-			navToggle.addEventListener('touchstart', (e) => {
-				// Prevent both touchstart and subsequent click from firing
-				e.preventDefault();
-				toggleMenu(e);
-			}, { passive: false });
+			});
 			
 			// Close mobile menu when clicking on a link
 			const navLinks = header.querySelectorAll('.nav-list a');
