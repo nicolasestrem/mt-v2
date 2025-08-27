@@ -1,23 +1,30 @@
 /* Global CSS for Mobility Trailblazers */
 
-/* CSS Variables */
+/* CSS Variables - Consolidated with Tailwind Config */
 :root {
-	--color-primary: #1a365d;
-	--color-secondary: #2d3748;
-	--color-accent: #f6ad55;
-	--color-accent-hover: #ed8936;
-	--color-text: #2d3748;
-	--color-text-light: #718096;
+	/* Brand Colors - Single Source of Truth */
+	--color-primary: #003C3D;
+	--color-secondary: #302C37;
+	--color-accent: #C1693C;
+	--color-accent-hover: #B86F52;
+	--color-text: #302C37;
+	--color-text-light: #4a5568;
 	--color-background: #F8F0E3;
 	--color-background-alt: #f7fafc;
 	--color-brand-beige: #F8F0E3;
+	--color-white: #FFFFFF;
 	--color-border: #e2e8f0;
 	--color-success: #48bb78;
 	--color-error: #f56565;
 	--color-warning: #ed8936;
+	--color-gradient-end: #004C5FCC;
 	
-	--font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	--font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	/* Fonts - Matching Tailwind Config */
+	--font-primary: 'Cabin', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--font-body: 'Roboto', 'Arial', 'Helvetica', sans-serif;
+	--font-heading: 'Cabin', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--font-heading-primary: 'Poppins', system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+	--font-heading-secondary: 'Trebuchet MS', 'Helvetica Neue', 'Arial', sans-serif;
 	
 	--border-radius: 8px;
 	--border-radius-lg: 12px;
