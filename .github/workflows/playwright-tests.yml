@@ -1,0 +1,349 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run tests daily at 6 AM UTC
+    - cron: '0 6 * * *'
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1/4, 2/4, 3/4, 4/4]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Build project
+      run: npm run build
+      
+    - name: Run Playwright tests
+      run: npx playwright test --shard=${{ matrix.shard }}
+      env:
+        PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+    
+    - name: Upload Playwright Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report-${{ matrix.shard }}
+        path: playwright-report/
+        retention-days: 30
+    
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ matrix.shard }}
+        path: test-results/
+        retention-days: 30
+
+  # Merge reports from all shards
+  merge-reports:
+    if: always()
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Download all reports
+      uses: actions/download-artifact@v4
+      with:
+        path: all-reports/
+        pattern: playwright-report-*
+        merge-multiple: true
+    
+    - name: Merge reports
+      run: npx playwright merge-reports --reporter html ./all-reports
+    
+    - name: Upload merged report
+      uses: actions/upload-artifact@v4
+      with:
+        name: merged-playwright-report
+        path: playwright-report/
+        retention-days: 30
+
+  # Performance and accessibility tests (run separately for better reporting)
+  performance-tests:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps chromium
+    
+    - name: Build project
+      run: npm run build
+    
+    - name: Run Performance Tests
+      run: npx playwright test tests/performance.spec.ts --project="Desktop Chrome"
+      env:
+        PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+    
+    - name: Run Accessibility Tests
+      run: npx playwright test tests/accessibility.spec.ts --project="Desktop Chrome"
+      env:
+        PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+    
+    - name: Upload Performance Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: performance-results
+        path: test-results/
+        retention-days: 30
+
+  # Visual regression tests (run less frequently)
+  visual-tests:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Build project
+      run: npm run build
+    
+    - name: Run Visual Regression Tests
+      run: npx playwright test tests/visual-regression.spec.ts
+      env:
+        PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+    
+    - name: Upload Visual Test Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: visual-test-results
+        path: test-results/
+        retention-days: 30
+
+  # Mobile-specific tests
+  mobile-tests:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Build project
+      run: npm run build
+    
+    - name: Run Mobile Tests
+      run: npx playwright test --project="iPhone*" --project="Pixel*" --project="Galaxy*"
+      env:
+        PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+    
+    - name: Upload Mobile Test Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: mobile-test-results
+        path: test-results/
+        retention-days: 30
+
+  # Cross-browser tests
+  cross-browser-tests:
+    timeout-minutes: 45
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Build project
+      run: npm run build
+    
+    - name: Run Cross-Browser Tests
+      run: npx playwright test tests/browser-compatibility.spec.ts
+      env:
+        PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+    
+    - name: Upload Cross-Browser Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: cross-browser-results
+        path: test-results/
+        retention-days: 30
+
+  # Generate test summary
+  test-summary:
+    if: always()
+    needs: [test, mobile-tests, cross-browser-tests]
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download all test results
+      uses: actions/download-artifact@v4
+      with:
+        path: all-results/
+        pattern: "*-results"
+        merge-multiple: true
+    
+    - name: Generate Test Summary
+      run: |
+        echo "# Test Results Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## Test Execution" >> $GITHUB_STEP_SUMMARY
+        echo "- **Main Tests**: ${{ needs.test.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Mobile Tests**: ${{ needs.mobile-tests.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Cross-Browser Tests**: ${{ needs.cross-browser-tests.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## Artifacts Available" >> $GITHUB_STEP_SUMMARY
+        echo "- Playwright Reports" >> $GITHUB_STEP_SUMMARY
+        echo "- Test Results" >> $GITHUB_STEP_SUMMARY
+        echo "- Screenshots (on failures)" >> $GITHUB_STEP_SUMMARY
+        echo "- Performance Metrics" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Count test files
+        TEST_COUNT=$(find tests/ -name "*.spec.ts" | wc -l)
+        echo "## Test Coverage" >> $GITHUB_STEP_SUMMARY
+        echo "- **Total Test Files**: $TEST_COUNT" >> $GITHUB_STEP_SUMMARY
+        echo "- **Device Configurations**: 16" >> $GITHUB_STEP_SUMMARY
+        echo "- **Browser Coverage**: Chrome, Firefox, Safari, Edge" >> $GITHUB_STEP_SUMMARY
+
+  # Lighthouse CI for performance monitoring
+  lighthouse:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build project
+      run: npm run build
+    
+    - name: Start server
+      run: npm run preview &
+      
+    - name: Wait for server
+      run: npx wait-on http://localhost:4321 --timeout 30000
+    
+    - name: Run Lighthouse CI
+      run: |
+        npm install -g @lhci/cli@0.12.x
+        lhci autorun
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  # Notify on failures
+  notify-on-failure:
+    if: failure()
+    needs: [test, mobile-tests, cross-browser-tests]
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Create Issue on Test Failure
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const title = `Test Failure: ${context.workflow} - ${new Date().toISOString().split('T')[0]}`;
+          const body = `
+          ## Test Failure Report
+          
+          **Workflow**: ${context.workflow}
+          **Run**: ${context.runNumber}
+          **Commit**: ${context.sha}
+          **Branch**: ${context.ref}
+          
+          ### Failed Jobs
+          - Main Tests: ${{ needs.test.result }}
+          - Mobile Tests: ${{ needs.mobile-tests.result }}
+          - Cross-Browser Tests: ${{ needs.cross-browser-tests.result }}
+          
+          **Action**: [View Run](${context.payload.repository.html_url}/actions/runs/${context.runId})
+          
+          Please check the test results and fix any failing tests.
+          `;
+          
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: title,
+            body: body,
+            labels: ['bug', 'test-failure', 'automated']
+          });

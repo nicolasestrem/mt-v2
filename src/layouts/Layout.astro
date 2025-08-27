@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ScrollToTop from '../components/ScrollToTop.astro';
 
 export interface Props {
 	title: string;
@@ -50,6 +51,7 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 	</head>
 	<body>
 		<slot />
+		<ScrollToTop />
 	</body>
 </html>
 
@@ -82,6 +84,7 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 		background-color: #F8F0E3;
 		margin: 0;
 		padding: 0;
+		overflow-x: hidden;
 	}
 
 	h1, h2, h3, h4, h5, h6 {

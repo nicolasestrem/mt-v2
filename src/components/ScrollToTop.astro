@@ -1,0 +1,165 @@
+---
+// Scroll to Top button component
+---
+
+<button
+  id="scrollToTop"
+  class="scroll-to-top"
+  aria-label="Nach oben scrollen"
+  title="Nach oben"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
+
+<style>
+  .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background-color: #003C3D;
+    color: #C1693C;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0, 60, 61, 0.3);
+  }
+
+  .scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .scroll-to-top:not(.visible) {
+    transform: translateY(10px);
+  }
+
+  .scroll-to-top:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 60, 61, 0.4);
+    background-color: #004C5F;
+  }
+
+  .scroll-to-top:active {
+    transform: scale(0.95);
+  }
+
+  .scroll-to-top:focus {
+    outline: 2px solid #C1693C;
+    outline-offset: 2px;
+  }
+
+  .scroll-to-top svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .scroll-to-top {
+      bottom: 16px;
+      right: 16px;
+      width: 48px;
+      height: 48px;
+    }
+
+    .scroll-to-top svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .scroll-to-top:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-to-top {
+      transition: opacity 0.2s, visibility 0.2s;
+    }
+
+    .scroll-to-top:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const scrollToTopButton = document.getElementById('scrollToTop');
+  
+  if (scrollToTopButton) {
+    // Show/hide button based on scroll position
+    const toggleVisibility = () => {
+      if (window.scrollY > 300) {
+        scrollToTopButton.classList.add('visible');
+      } else {
+        scrollToTopButton.classList.remove('visible');
+      }
+    };
+
+    // Throttle scroll event for better performance
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          toggleVisibility();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // Scroll to top functionality
+    const scrollToTop = () => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      if (prefersReducedMotion) {
+        // Instant scroll for users who prefer reduced motion
+        window.scrollTo(0, 0);
+      } else {
+        // Smooth scroll for others
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    // Event listeners
+    window.addEventListener('scroll', handleScroll);
+    scrollToTopButton.addEventListener('click', scrollToTop);
+
+    // Keyboard support (Enter and Space keys)
+    scrollToTopButton.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToTop();
+      }
+    });
+
+    // Initial check
+    toggleVisibility();
+  }
+</script>
