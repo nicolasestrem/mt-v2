@@ -12,7 +12,7 @@
 [![Lighthouse CI](https://github.com/nicolasestrem/mt-v2/actions/workflows/lighthouse-ci.yml/badge.svg)](https://github.com/nicolasestrem/mt-v2/actions/workflows/lighthouse-ci.yml)
 [![Playwright Tests](https://github.com/nicolasestrem/mt-v2/actions/workflows/playwright-tests.yml/badge.svg)](https://github.com/nicolasestrem/mt-v2/actions/workflows/playwright-tests.yml)
 
-A high-performance, modern replacement for the WordPress MobilityTrailblazers.de website, built with Astro and hosted for €0/month on Cloudflare Pages.
+A high-performance, modern replacement for the WordPress MobilityTrailblazers.de website, built with Astro.
 
 ## 🚀 Project Overview
 
