@@ -44,29 +44,40 @@
 			</div>
 			
 			<form class="nomination-form" id="nominationForm">
+				<!-- Form status messages -->
+				<div class="form-message success-message" id="successMessage" role="alert" aria-live="polite">
+					<i class="fas fa-check-circle"></i>
+					Vielen Dank für Ihren Vorschlag! Wir werden ihn sorgfältig prüfen.
+				</div>
+				<div class="form-message error-message" id="errorMessage" role="alert" aria-live="assertive">
+					<i class="fas fa-exclamation-circle"></i>
+					<span id="errorText">Es gab einen Fehler beim Senden. Bitte versuchen Sie es erneut.</span>
+				</div>
+				
 				<!-- Web3Forms Access Key -->
 				<input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY}>
 				
 				<div class="form-row">
 					<div class="form-group">
 						<label for="nominatorFirstName">Ihr Vorname *</label>
-						<input type="text" id="nominatorFirstName" name="nominatorFirstName" required>
+						<input type="text" id="nominatorFirstName" name="nominatorFirstName" required aria-required="true">
 					</div>
 					
 					<div class="form-group">
 						<label for="nominatorLastName">Ihr Nachname *</label>
-						<input type="text" id="nominatorLastName" name="nominatorLastName" required>
+						<input type="text" id="nominatorLastName" name="nominatorLastName" required aria-required="true">
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label for="nominatorEmail">Ihre E-Mail *</label>
-					<input type="email" id="nominatorEmail" name="nominatorEmail" required>
+					<input type="email" id="nominatorEmail" name="nominatorEmail" required aria-required="true" aria-describedby="emailHelp">
+					<small id="emailHelp" class="form-help">Wir verwenden Ihre E-Mail nur für Rückfragen zu Ihrer Nominierung.</small>
 				</div>
 				
 				<div class="form-group">
 					<label for="nominatorSalutation">Anrede *</label>
-					<select id="nominatorSalutation" name="nominatorSalutation" required>
+					<select id="nominatorSalutation" name="nominatorSalutation" required aria-required="true">
 						<option value="">Bitte wählen</option>
 						<option value="Frau">Frau</option>
 						<option value="Herr">Herr</option>
@@ -291,6 +302,51 @@
 		gap: 0.5rem;
 	}
 
+	.form-message {
+		display: none;
+		padding: 1rem;
+		border-radius: 8px;
+		margin-bottom: 1.5rem;
+		font-size: 1rem;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.form-message.show {
+		display: flex;
+		animation: slideDown 0.3s ease-out;
+	}
+
+	.success-message {
+		background: #d4edda;
+		border: 1px solid #c3e6cb;
+		color: #155724;
+	}
+
+	.error-message {
+		background: #f8d7da;
+		border: 1px solid #f5c6cb;
+		color: #721c24;
+	}
+
+	.form-help {
+		font-size: 0.85rem;
+		color: #4a5568;
+		margin-top: 0.25rem;
+		display: block;
+	}
+
+	@keyframes slideDown {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
 	.checkbox-label {
 		display: flex;
 		align-items: center;
@@ -410,16 +466,44 @@
 			
 			if (result.success) {
 				// Show success message
-				alert('Vielen Dank für Ihren Vorschlag! Wir werden ihn sorgfältig prüfen.');
+				const successMsg = document.getElementById('successMessage');
+				const errorMsg = document.getElementById('errorMessage');
+				
+				if (errorMsg) errorMsg.classList.remove('show');
+				if (successMsg) {
+					successMsg.classList.add('show');
+					// Auto-hide after 5 seconds
+					setTimeout(() => successMsg.classList.remove('show'), 5000);
+				}
 				
 				// Reset form
 				this.reset();
+				
+				// Scroll to top of form to show success message
+				this.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			} else {
-				throw new Error('Form submission failed');
+				throw new Error(result.message || 'Form submission failed');
 			}
 		} catch (error) {
 			console.error('Form submission error:', error);
-			alert('Es gab einen Fehler beim Senden Ihres Vorschlags. Bitte versuchen Sie es erneut.');
+			
+			// Show error message
+			const errorMsg = document.getElementById('errorMessage');
+			const errorText = document.getElementById('errorText');
+			const successMsg = document.getElementById('successMessage');
+			
+			if (successMsg) successMsg.classList.remove('show');
+			if (errorMsg && errorText) {
+				// Customize error message based on error type
+				if (error.message && error.message !== 'Form submission failed') {
+					errorText.textContent = error.message;
+				} else {
+					errorText.textContent = 'Es gab einen Fehler beim Senden. Bitte versuchen Sie es erneut.';
+				}
+				errorMsg.classList.add('show');
+				// Auto-hide after 7 seconds
+				setTimeout(() => errorMsg.classList.remove('show'), 7000);
+			}
 		} finally {
 			// Reset button state
 			submitButton.textContent = originalText;

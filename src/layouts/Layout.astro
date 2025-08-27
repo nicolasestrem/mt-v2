@@ -39,15 +39,65 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={new URL(image, Astro.url)} />
 
-		<!-- Fonts -->
+		<!-- Fonts with font-display: swap and preload -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Trebuchet+MS:wght@400;700&display=swap" as="style">
+		<link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Trebuchet+MS:wght@400;700&display=swap" rel="stylesheet">
 
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 		<title>{title}</title>
+		
+		<!-- Structured Data for SEO -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@graph": [
+				{
+					"@type": "Organization",
+					"@id": "https://mobilitytrailblazers.de/#organization",
+					"name": "Mobility Trailblazers",
+					"url": "https://mobilitytrailblazers.de",
+					"logo": {
+						"@type": "ImageObject",
+						"url": "https://mobilitytrailblazers.de/images/logo.webp",
+						"width": 300,
+						"height": 300
+					},
+					"description": "25 Mobility Trailblazers in 25 – Weil mobiler Wandel Mut braucht. Initiative zur Auszeichnung von Vorreitern der Mobilitätswende.",
+					"sameAs": [
+						"https://www.linkedin.com/company/mobility-trailblazers"
+					]
+				},
+				{
+					"@type": "Event",
+					"@id": "https://mobilitytrailblazers.de/#event",
+					"name": "25 Mobility Trailblazers in 25 Awards",
+					"description": "Auszeichnung der 25 wichtigsten Vorreiter der Mobilitätswende in Deutschland für das Jahr 2025.",
+					"startDate": "2025-10-30",
+					"eventStatus": "https://schema.org/EventScheduled",
+					"eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+					"location": {
+						"@type": "Place",
+						"name": "Deutschland",
+						"addressCountry": "DE"
+					},
+					"organizer": {
+						"@id": "https://mobilitytrailblazers.de/#organization"
+					},
+					"offers": {
+						"@type": "Offer",
+						"price": "0",
+						"priceCurrency": "EUR",
+						"availability": "https://schema.org/InStock",
+						"validFrom": "2025-01-01"
+					}
+				}
+			]
+		}
+		</script>
 	</head>
 	<body>
 		<slot />
@@ -56,17 +106,7 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 </html>
 
 <style is:global>
-	:root {
-		--color-primary: #003C3D;
-		--color-secondary: #302C37;
-		--color-accent: #C1693C;
-		--color-text: #302C37;
-		--color-background: #F8F0E3;
-		--color-brand-beige: #F8F0E3;
-		--color-white: #FFFFFF;
-		--font-primary: 'Cabin', sans-serif;
-		--font-secondary: 'Roboto', sans-serif;
-	}
+	/* CSS Variables removed from Layout.astro - now using global.css as single source of truth */
 
 	* {
 		box-sizing: border-box;

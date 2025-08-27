@@ -7,12 +7,12 @@
 		<nav class="nav">
 			<div class="nav-brand">
 				<a href="/" class="logo">
-					<img src="/images/logo.webp" alt="Mobility Trailblazers Logo" width="65" height="65">
+					<img src="/images/logo.webp" alt="Mobility Trailblazers - 25 Mobility Trailblazers in 25, Logo zur Startseite" width="65" height="65">
 				</a>
 			</div>
 			
-			<div class="nav-menu">
-				<ul class="nav-list">
+			<div class="nav-menu" id="nav-menu" role="navigation">
+				<ul class="nav-list" role="list">
 					<li><a href="/#about">About</a></li>
 					<li><a href="/#jury">Jury</a></li>
 					<li><a href="/#newsletter">Newsletter</a></li>
@@ -32,10 +32,13 @@
 				</a>
 			</div>
 			
-			<button class="nav-toggle" aria-label="Toggle navigation">
-				<span></span>
-				<span></span>
-				<span></span>
+			<button class="nav-toggle" 
+				aria-label="Toggle navigation menu" 
+				aria-expanded="false"
+				aria-controls="nav-menu">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
 			</button>
 		</nav>
 	</div>
@@ -323,10 +326,15 @@
 					navMenu.classList.remove('active');
 					if (navSocial) navSocial.classList.remove('active');
 					navToggle.classList.remove('active');
+					navToggle.setAttribute('aria-expanded', 'false');
 				} else {
 					navMenu.classList.add('active');
 					if (navSocial) navSocial.classList.add('active');
 					navToggle.classList.add('active');
+					navToggle.setAttribute('aria-expanded', 'true');
+					// Focus first menu item for keyboard navigation
+					var firstLink = navMenu.querySelector('.nav-list a');
+					if (firstLink) firstLink.focus();
 				}
 			}
 			
@@ -345,6 +353,7 @@
 						navMenu.classList.remove('active');
 						if (navSocial) navSocial.classList.remove('active');
 						navToggle.classList.remove('active');
+						navToggle.setAttribute('aria-expanded', 'false');
 					}
 				});
 			}
@@ -355,6 +364,7 @@
 					navMenu.classList.remove('active');
 					if (navSocial) navSocial.classList.remove('active');
 					navToggle.classList.remove('active');
+					navToggle.setAttribute('aria-expanded', 'false');
 				}
 			});
 			
@@ -363,6 +373,7 @@
 					navMenu.classList.remove('active');
 					if (navSocial) navSocial.classList.remove('active');
 					navToggle.classList.remove('active');
+					navToggle.setAttribute('aria-expanded', 'false');
 				}
 			});
 		}
