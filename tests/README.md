@@ -1,3 +1,50 @@
+📍 Test Reports Location:
+
+  1. HTML Report (Main Report):
+    - Location: playwright-report/ directory
+    - View with: npm run test:report
+    - Interactive browser-based report with screenshots, videos, and traces
+  2. Test Results:
+    - Location: test-results/ directory
+    - Contains failure screenshots, videos, and error details
+    - Each failed test gets its own subdirectory
+  3. JSON Report: test-results/results.json
+  4. JUnit XML Report: test-results/results.xml
+
+  🧪 Mobile Menu Test Coverage:
+
+  Created tests/mobile-menu.spec.ts with 13 comprehensive tests:
+  - Menu visibility on mobile devices
+  - Toggle open/close functionality
+  - Touch event support
+  - Click outside to close
+  - Navigation link click behavior
+  - Multiple device testing (iPhone SE, iPhone 12/14, Pixel, Samsung)
+  - Desktop vs mobile transitions
+  - Hamburger animation verification
+  - Accessibility attributes
+  - Landscape orientation support
+  - Performance monitoring
+
+  📝 How to Run Tests:
+
+  # Run all tests
+  npm test
+
+  # Run mobile menu tests specifically
+  npm run test:mobile-menu
+
+  # Run with interactive UI
+  npm run test:ui
+
+  # View test report after running tests
+  npm run test:report
+
+
+
+
+
+
 # Playwright Test Suite for MobilityTrailblazers.de
 
 This comprehensive test suite ensures the reliability, performance, and accessibility of the MobilityTrailblazers.de website across various devices and browsers.
