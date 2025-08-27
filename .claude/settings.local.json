@@ -30,7 +30,13 @@
       "Bash(npm run dev:*)",
       "mcp__filesystem-mcp__list_directory",
       "mcp__filesystem-mcp__read_file",
-      "mcp__filesystem-mcp__read_multiple_files"
+      "mcp__filesystem-mcp__read_multiple_files",
+      "mcp__filesystem-mcp__list_allowed_directories",
+      "mcp__filesystem-mcp__directory_tree",
+      "Bash(git checkout:*)",
+      "Bash(git log:*)",
+      "Bash(cat:*)",
+      "Bash(git grep:*)"
     ],
     "deny": [],
     "ask": []
