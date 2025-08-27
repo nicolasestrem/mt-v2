@@ -1,0 +1,260 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build site
+        run: npm run build
+      
+      - name: Run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.12.x
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+      
+      - name: Extract Lighthouse Scores
+        id: lighthouse_scores
+        if: always()
+        run: |
+          # Find the latest Lighthouse results
+          REPORT_FILE=$(find .lighthouseci -name "*.json" -type f | grep -E "lhr-[0-9]" | head -1)
+          
+          if [ -f "$REPORT_FILE" ]; then
+            # Extract scores from JSON
+            PERFORMANCE=$(cat "$REPORT_FILE" | jq '.categories.performance.score * 100' | cut -d. -f1)
+            ACCESSIBILITY=$(cat "$REPORT_FILE" | jq '.categories.accessibility.score * 100' | cut -d. -f1)
+            BEST_PRACTICES=$(cat "$REPORT_FILE" | jq '.categories["best-practices"].score * 100' | cut -d. -f1)
+            SEO=$(cat "$REPORT_FILE" | jq '.categories.seo.score * 100' | cut -d. -f1)
+            
+            # Set outputs
+            echo "performance=$PERFORMANCE" >> $GITHUB_OUTPUT
+            echo "accessibility=$ACCESSIBILITY" >> $GITHUB_OUTPUT
+            echo "best_practices=$BEST_PRACTICES" >> $GITHUB_OUTPUT
+            echo "seo=$SEO" >> $GITHUB_OUTPUT
+            
+            # Generate summary
+            echo "## 🚦 Lighthouse Scores" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Metric | Score |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| 🎯 Performance | $PERFORMANCE% |" >> $GITHUB_STEP_SUMMARY
+            echo "| ♿ Accessibility | $ACCESSIBILITY% |" >> $GITHUB_STEP_SUMMARY
+            echo "| 📋 Best Practices | $BEST_PRACTICES% |" >> $GITHUB_STEP_SUMMARY
+            echo "| 🔍 SEO | $SEO% |" >> $GITHUB_STEP_SUMMARY
+            
+            # Create color for performance badge
+            if [ "$PERFORMANCE" -ge 90 ]; then
+              PERF_COLOR="green"
+            elif [ "$PERFORMANCE" -ge 50 ]; then
+              PERF_COLOR="orange"
+            else
+              PERF_COLOR="red"
+            fi
+            
+            # Create badge JSON
+            cat > lighthouse-scores.json <<EOF
+            {
+              "performance": $PERFORMANCE,
+              "accessibility": $ACCESSIBILITY,
+              "best_practices": $BEST_PRACTICES,
+              "seo": $SEO,
+              "performance_color": "$PERF_COLOR",
+              "timestamp": "$(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+            }
+          EOF
+          else
+            echo "No Lighthouse report found"
+            exit 1
+          fi
+      
+      - name: Upload Lighthouse Scores
+        if: success() && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-scores
+          path: lighthouse-scores.json
+      
+      - name: Create Badge Data
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p badges
+          
+          # Performance Badge
+          PERF_SCORE="${{ steps.lighthouse_scores.outputs.performance }}"
+          if [ "$PERF_SCORE" -ge 90 ]; then
+            PERF_COLOR="brightgreen"
+          elif [ "$PERF_SCORE" -ge 50 ]; then
+            PERF_COLOR="orange"
+          else
+            PERF_COLOR="red"
+          fi
+          
+          # Accessibility Badge
+          A11Y_SCORE="${{ steps.lighthouse_scores.outputs.accessibility }}"
+          if [ "$A11Y_SCORE" -ge 90 ]; then
+            A11Y_COLOR="brightgreen"
+          elif [ "$A11Y_SCORE" -ge 50 ]; then
+            A11Y_COLOR="orange"
+          else
+            A11Y_COLOR="red"
+          fi
+          
+          # Best Practices Badge
+          BP_SCORE="${{ steps.lighthouse_scores.outputs.best_practices }}"
+          if [ "$BP_SCORE" -ge 90 ]; then
+            BP_COLOR="brightgreen"
+          elif [ "$BP_SCORE" -ge 50 ]; then
+            BP_COLOR="orange"
+          else
+            BP_COLOR="red"
+          fi
+          
+          # SEO Badge
+          SEO_SCORE="${{ steps.lighthouse_scores.outputs.seo }}"
+          if [ "$SEO_SCORE" -ge 90 ]; then
+            SEO_COLOR="brightgreen"
+          elif [ "$SEO_SCORE" -ge 50 ]; then
+            SEO_COLOR="orange"
+          else
+            SEO_COLOR="red"
+          fi
+          
+          # Create JSON for badges
+          cat > badges/lighthouse-badges.json <<EOF
+          {
+            "schemaVersion": 1,
+            "label": "Performance",
+            "message": "${PERF_SCORE}%",
+            "color": "$PERF_COLOR"
+          }
+          EOF
+          
+          # Create badge URLs
+          echo "![Lighthouse Performance](https://img.shields.io/badge/Performance-${PERF_SCORE}%25-${PERF_COLOR}?style=for-the-badge&logo=lighthouse)" > badges/performance.md
+          echo "![Lighthouse Accessibility](https://img.shields.io/badge/Accessibility-${A11Y_SCORE}%25-${A11Y_COLOR}?style=for-the-badge&logo=lighthouse)" > badges/accessibility.md
+          echo "![Lighthouse Best Practices](https://img.shields.io/badge/Best%20Practices-${BP_SCORE}%25-${BP_COLOR}?style=for-the-badge&logo=lighthouse)" > badges/best-practices.md
+          echo "![Lighthouse SEO](https://img.shields.io/badge/SEO-${SEO_SCORE}%25-${SEO_COLOR}?style=for-the-badge&logo=lighthouse)" > badges/seo.md
+      
+      - name: Update Gist with Badge Data
+        if: success() && github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/github-script@v7
+        env:
+          GIST_ID: ${{ secrets.LIGHTHOUSE_GIST_ID }}
+        with:
+          github-token: ${{ secrets.GIST_TOKEN }}
+          script: |
+            const fs = require('fs');
+            
+            // Read scores
+            const perf = '${{ steps.lighthouse_scores.outputs.performance }}';
+            const a11y = '${{ steps.lighthouse_scores.outputs.accessibility }}';
+            const bp = '${{ steps.lighthouse_scores.outputs.best_practices }}';
+            const seo = '${{ steps.lighthouse_scores.outputs.seo }}';
+            
+            // Create badge JSON content
+            const badgeData = {
+              performance: {
+                schemaVersion: 1,
+                label: "Lighthouse Performance",
+                message: `${perf}%`,
+                color: perf >= 90 ? 'brightgreen' : perf >= 50 ? 'orange' : 'red'
+              },
+              accessibility: {
+                schemaVersion: 1,
+                label: "Lighthouse Accessibility",
+                message: `${a11y}%`,
+                color: a11y >= 90 ? 'brightgreen' : a11y >= 50 ? 'orange' : 'red'
+              },
+              bestPractices: {
+                schemaVersion: 1,
+                label: "Lighthouse Best Practices",
+                message: `${bp}%`,
+                color: bp >= 90 ? 'brightgreen' : bp >= 50 ? 'orange' : 'red'
+              },
+              seo: {
+                schemaVersion: 1,
+                label: "Lighthouse SEO",
+                message: `${seo}%`,
+                color: seo >= 90 ? 'brightgreen' : seo >= 50 ? 'orange' : 'red'
+              }
+            };
+            
+            // Update gist if GIST_ID is set
+            if (process.env.GIST_ID) {
+              await github.rest.gists.update({
+                gist_id: process.env.GIST_ID,
+                files: {
+                  'lighthouse-performance.json': {
+                    content: JSON.stringify(badgeData.performance)
+                  },
+                  'lighthouse-accessibility.json': {
+                    content: JSON.stringify(badgeData.accessibility)
+                  },
+                  'lighthouse-best-practices.json': {
+                    content: JSON.stringify(badgeData.bestPractices)
+                  },
+                  'lighthouse-seo.json': {
+                    content: JSON.stringify(badgeData.seo)
+                  }
+                }
+              });
+            }
+      
+      - name: Comment PR with Lighthouse Results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const perf = '${{ steps.lighthouse_scores.outputs.performance }}';
+            const a11y = '${{ steps.lighthouse_scores.outputs.accessibility }}';
+            const bp = '${{ steps.lighthouse_scores.outputs.best_practices }}';
+            const seo = '${{ steps.lighthouse_scores.outputs.seo }}';
+            
+            const comment = `## 🚦 Lighthouse Report
+            
+            | Metric | Score |
+            |--------|-------|
+            | 🎯 **Performance** | ${perf}% |
+            | ♿ **Accessibility** | ${a11y}% |
+            | 📋 **Best Practices** | ${bp}% |
+            | 🔍 **SEO** | ${seo}% |
+            
+            ---
+            *Lighthouse ran against the preview build*`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+      
+      - name: Save Lighthouse Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: |
+            .lighthouseci/
+            badges/
+            lighthouse-scores.json
+          retention-days: 30

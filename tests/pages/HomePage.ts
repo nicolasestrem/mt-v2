@@ -94,40 +94,40 @@ export class HomePage {
     this.countdownMinutes = page.locator('#minutes');
     this.countdownSeconds = page.locator('#seconds');
     
-    // Mission section
-    this.missionSection = page.locator('section').filter({ has: page.locator('h2').filter({ hasText: /Mission|Unsere Mission/i }) });
-    this.missionTitle = page.locator('h2').filter({ hasText: /Mission|Unsere Mission/i });
-    this.missionContent = this.missionSection.locator('p, div');
+    // Mission section - use class selector
+    this.missionSection = page.locator('section.mission');
+    this.missionTitle = page.locator('.mission-title');
+    this.missionContent = this.missionSection.locator('.mission-description, .mission-box p');
     
-    // About section
-    this.aboutSection = page.locator('section').filter({ has: page.locator('h2').filter({ hasText: /Über|About/i }) });
-    this.aboutTitle = page.locator('h2').filter({ hasText: /Über|About/i });
-    this.aboutContent = this.aboutSection.locator('p, div');
-    this.partnerCards = page.locator('.partner-card, [class*="partner"]');
-    this.berlinImage = page.locator('img[src*="berlin"], img[alt*="Berlin"], img[alt*="Fernsehturm"]');
+    // About section - use class selector
+    this.aboutSection = page.locator('section.about-section');
+    this.aboutTitle = page.locator('.closing-title');
+    this.aboutContent = this.aboutSection.locator('.about-text, .about-intro');
+    this.partnerCards = page.locator('.partner-card');
+    this.berlinImage = page.locator('.about-image img');
     
-    // Criteria section
-    this.criteriaSection = page.locator('section').filter({ has: page.locator('h2').filter({ hasText: /Kriterien|Criteria/i }) });
-    this.criteriaTitle = page.locator('h2').filter({ hasText: /Kriterien|Criteria/i });
-    this.criteriaCards = page.locator('.criteria-card, [class*="criteria"]');
+    // Criteria section - use ID selector
+    this.criteriaSection = page.locator('section#kriterien');
+    this.criteriaTitle = page.locator('h1').filter({ hasText: /5 Kriterien/i });
+    this.criteriaCards = page.locator('.criteria-card');
     
-    // Jury section
-    this.jurySection = page.locator('section').filter({ has: page.locator('h2').filter({ hasText: /Jury/i }) });
-    this.juryTitle = page.locator('h2').filter({ hasText: /Jury/i });
-    this.juryMembers = page.locator('.jury-member, [class*="jury"]');
+    // Jury section - use class selector
+    this.jurySection = page.locator('section.jury');
+    this.juryTitle = page.locator('.jury-title');
+    this.juryMembers = page.locator('.jury-member');
     
-    // Newsletter section
-    this.newsletterSection = page.locator('section').filter({ has: page.locator('h2').filter({ hasText: /Newsletter/i }) });
-    this.newsletterTitle = page.locator('h2').filter({ hasText: /Newsletter/i });
-    this.newsletterForm = page.locator('form').filter({ has: page.locator('input[type="email"]') }).first();
+    // Newsletter section - use class selector
+    this.newsletterSection = page.locator('section.newsletter');
+    this.newsletterTitle = page.locator('.newsletter-title');
+    this.newsletterForm = page.locator('.newsletter-form');
     
-    // LinkedIn section
-    this.linkedinSection = page.locator('section').filter({ has: page.locator('h2').filter({ hasText: /LinkedIn/i }) });
-    this.linkedinTitle = page.locator('h2').filter({ hasText: /LinkedIn/i });
-    this.linkedinFeed = page.locator('.linkedin-feed, iframe, [class*="linkedin"]');
+    // LinkedIn section - use class selector
+    this.linkedinSection = page.locator('section.linkedin-feed');
+    this.linkedinTitle = page.locator('.feed-title');
+    this.linkedinFeed = page.locator('.linkedin-feed iframe, .embedsocial-widget');
     
-    // Nomination form
-    this.nominationSection = page.locator('section.nomination, section#vorschlagen');
+    // Nomination form - use class and ID selectors
+    this.nominationSection = page.locator('section.nomination');
     this.nominationTitle = page.locator('.nomination-title');
     this.nominationForm = page.locator('#nominationForm');
     this.nominatorFirstName = page.locator('#nominatorFirstName');
@@ -136,7 +136,7 @@ export class HomePage {
     this.nominatorSalutation = page.locator('#nominatorSalutation');
     this.nominationMessage = page.locator('#nominationMessage');
     this.newsletterSignup = page.locator('input[name="newsletterSignup"]');
-    this.submitButton = page.locator('button[type="submit"]').last();
+    this.submitButton = page.locator('#nominationForm button[type="submit"]');
     
     // Footer
     this.footer = page.locator('footer');
@@ -182,6 +182,16 @@ export class HomePage {
   }
 
   async scrollToSection(sectionLocator: Locator) {
+    // First check if the element exists
+    const count = await sectionLocator.count();
+    if (count === 0) {
+      throw new Error(`Section not found: ${sectionLocator}`);
+    }
+    
+    // Wait for the section to be visible with a timeout
+    await sectionLocator.waitFor({ state: 'visible', timeout: 10000 });
+    
+    // Now scroll to it
     await sectionLocator.scrollIntoViewIfNeeded();
     await this.page.waitForTimeout(500); // Allow for scroll animations
   }
@@ -209,5 +219,27 @@ export class HomePage {
       path: `test-results/screenshots/${name}.png`,
       fullPage: options?.fullPage || false
     });
+  }
+
+  // Helper method to check if we're on mobile viewport
+  async isMobileViewport() {
+    const viewport = await this.getViewportSize();
+    return viewport ? viewport.width < 768 : false;
+  }
+
+  // Helper method to open mobile menu
+  async openMobileMenu() {
+    if (await this.isMobileViewport()) {
+      await this.mobileMenuButton.click();
+      await this.navMenu.waitFor({ state: 'visible' });
+    }
+  }
+
+  // Helper method to close mobile menu
+  async closeMobileMenu() {
+    if (await this.isMobileViewport() && await this.navMenu.isVisible()) {
+      await this.mobileMenuButton.click();
+      await this.navMenu.waitFor({ state: 'hidden' });
+    }
   }
 }

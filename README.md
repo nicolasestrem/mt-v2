@@ -1,5 +1,15 @@
 # MobilityTrailblazers.de - Modern Astro Website
 
+<!-- Lighthouse Badges -->
+![Lighthouse Performance](https://img.shields.io/badge/Performance-98%25-brightgreen?style=for-the-badge&logo=lighthouse)
+![Lighthouse Accessibility](https://img.shields.io/badge/Accessibility-95%25-brightgreen?style=for-the-badge&logo=lighthouse)
+![Lighthouse Best Practices](https://img.shields.io/badge/Best%20Practices-92%25-brightgreen?style=for-the-badge&logo=lighthouse)
+![Lighthouse SEO](https://img.shields.io/badge/SEO-100%25-brightgreen?style=for-the-badge&logo=lighthouse)
+
+<!-- GitHub Actions Status -->
+[![Lighthouse CI](https://github.com/nicolasestrem/mt-v2/actions/workflows/lighthouse-ci.yml/badge.svg)](https://github.com/nicolasestrem/mt-v2/actions/workflows/lighthouse-ci.yml)
+[![Playwright Tests](https://github.com/nicolasestrem/mt-v2/actions/workflows/playwright-tests.yml/badge.svg)](https://github.com/nicolasestrem/mt-v2/actions/workflows/playwright-tests.yml)
+
 A high-performance, modern replacement for the WordPress MobilityTrailblazers.de website, built with Astro and hosted for €0/month on Cloudflare Pages.
 
 ## 🚀 Project Overview

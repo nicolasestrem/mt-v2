@@ -36,7 +36,9 @@
       "Bash(git checkout:*)",
       "Bash(git log:*)",
       "Bash(cat:*)",
-      "Bash(git grep:*)"
+      "Bash(git grep:*)",
+      "Bash(npm run test:smoke:*)",
+      "Bash(npm run test:chrome:*)"
     ],
     "deny": [],
     "ask": []

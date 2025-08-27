@@ -28,7 +28,9 @@
     "test:safari": "playwright test --project='Desktop Safari'",
     "test:update-snapshots": "playwright test --update-snapshots",
     "test:report": "playwright show-report",
-    "optimize-images": "node scripts/optimize-images.js"
+    "optimize-images": "node scripts/optimize-images.js",
+    "lighthouse": "lhci autorun",
+    "lighthouse:badges": "node scripts/update-lighthouse-badges.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
