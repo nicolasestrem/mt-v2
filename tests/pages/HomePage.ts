@@ -7,6 +7,10 @@ export class HomePage {
   readonly header: Locator;
   readonly navigation: Locator;
   readonly logo: Locator;
+  readonly mobileMenuButton: Locator;
+  readonly navMenu: Locator;
+  readonly navSocial: Locator;
+  readonly navLinks: Locator;
   
   // Hero section
   readonly heroSection: Locator;
@@ -74,6 +78,10 @@ export class HomePage {
     this.header = page.locator('header');
     this.navigation = page.locator('nav');
     this.logo = page.locator('header img, header .logo');
+    this.mobileMenuButton = page.locator('.nav-toggle');
+    this.navMenu = page.locator('.nav-menu');
+    this.navSocial = page.locator('.nav-social');
+    this.navLinks = page.locator('.nav-list a');
     
     // Hero section
     this.heroSection = page.locator('section.hero');
