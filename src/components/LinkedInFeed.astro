@@ -36,26 +36,17 @@ import Icons from './Icons.astro';
 			</p>
 		</div>
 		
-		<!-- SociableKit LinkedIn Feed Widget with lazy loading facade -->
+		<!-- SociableKit LinkedIn Feed Widget -->
 		<div class="linkedin-widget-container" id="linkedin-feed-container">
-			<!-- Placeholder/Facade that loads on user interaction -->
-			<div class="linkedin-facade" id="linkedin-facade">
-				<div class="facade-content">
-					<Icons name="linkedin" class="facade-icon" />
-					<h3>LinkedIn Feed</h3>
-					<p>Klicken Sie hier, um die neuesten Updates zu laden</p>
-					<button class="load-button" aria-label="LinkedIn Feed laden">Feed anzeigen</button>
-				</div>
-			</div>
-			<!-- Actual iframe (hidden initially) -->
+			<!-- Direct iframe loading -->
 			<iframe 
 				id="linkedin-iframe"
-				data-src="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730"
+				src="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730"
 				frameborder="0"
 				width="100%"
 				height="1800"
 				loading="lazy"
-				class="linkedin-iframe hidden"
+				class="linkedin-iframe"
 				title="Mobility Trailblazers LinkedIn Feed">
 			</iframe>
 		</div>
@@ -139,71 +130,6 @@ import Icons from './Icons.astro';
 		min-height: 600px;
 	}
 
-	.linkedin-iframe.hidden {
-		display: none;
-	}
-
-	.linkedin-facade {
-		min-height: 600px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-		border-radius: 12px;
-		cursor: pointer;
-		transition: all 0.3s ease;
-	}
-
-	.linkedin-facade:hover {
-		background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-	}
-
-	.linkedin-facade.loading {
-		pointer-events: none;
-		opacity: 0.7;
-	}
-
-	.facade-content {
-		text-align: center;
-		padding: 2rem;
-	}
-
-	.facade-content :global(.facade-icon) {
-		width: 4rem;
-		height: 4rem;
-		color: #0077b5;
-		margin-bottom: 1rem;
-	}
-
-	.facade-content h3 {
-		font-size: 1.5rem;
-		color: #003c3d;
-		margin-bottom: 0.5rem;
-	}
-
-	.facade-content p {
-		color: #666;
-		margin-bottom: 1.5rem;
-	}
-
-	.load-button {
-		padding: 0.75rem 2rem;
-		background: linear-gradient(135deg, #0077b5, #0a66c2);
-		color: white;
-		border: none;
-		border-radius: 50px;
-		font-size: 1rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);
-	}
-
-	.load-button:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 6px 25px rgba(0, 119, 181, 0.4);
-	}
-
 	.linkedin-follow-cta {
 		text-align: center;
 		padding: 2rem;
@@ -264,56 +190,3 @@ import Icons from './Icons.astro';
 	}
 </style>
 
-<script>
-	// Lazy load LinkedIn feed on user interaction or when it comes into view
-	document.addEventListener('DOMContentLoaded', function() {
-		const facade = document.getElementById('linkedin-facade');
-		const iframe = document.getElementById('linkedin-iframe') as HTMLIFrameElement;
-		const container = document.getElementById('linkedin-feed-container');
-		
-		if (!facade || !iframe || !container) return;
-		
-		let feedLoaded = false;
-		
-		// Function to load the iframe
-		function loadLinkedInFeed() {
-			if (feedLoaded) return;
-			feedLoaded = true;
-			
-			// Add loading state
-			facade.classList.add('loading');
-			
-			// Set the actual src
-			const src = iframe.dataset.src;
-			if (src) {
-				iframe.src = src;
-				
-				// Wait for iframe to load, then show it
-				iframe.onload = function() {
-					facade.style.display = 'none';
-					iframe.classList.remove('hidden');
-				};
-			}
-		}
-		
-		// Load on click
-		facade.addEventListener('click', loadLinkedInFeed);
-		
-		// Also load when the section comes into view
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting && !feedLoaded) {
-						// Delay loading slightly to prioritize above-fold content
-						setTimeout(loadLinkedInFeed, 1500);
-					}
-				});
-			},
-			{
-				rootMargin: '100px'
-			}
-		);
-		
-		observer.observe(container);
-	});
-</script>
