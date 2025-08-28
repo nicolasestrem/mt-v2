@@ -42,7 +42,8 @@
       "Bash(dir:*)",
       "Bash(grep:*)",
       "Bash(gh pr view:*)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []
