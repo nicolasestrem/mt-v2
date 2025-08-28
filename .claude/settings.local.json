@@ -44,7 +44,9 @@
       "Bash(npm install:*)",
       "Bash(mkdir:*)",
       "Bash(powershell.exe:*)",
-      "Bash(npx tinacms build)"
+      "Bash(npx tinacms build)",
+      "mcp__filesystem-mcp__get_file_info",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
