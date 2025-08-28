@@ -3,8 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "tinacms dev -c \"astro dev\"",
-    "build": "tinacms build && astro build",
+    "dev": "astro dev",
+    "dev:cms": "tinacms dev -c \"astro dev\"",
+    "build": "astro build",
+    "build:cms": "tinacms build && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "test": "playwright test",

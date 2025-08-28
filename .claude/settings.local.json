@@ -42,7 +42,9 @@
       "Bash(dir:*)",
       "Bash(grep:*)",
       "Bash(npm install:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(powershell.exe:*)",
+      "Bash(npx tinacms build)"
     ],
     "deny": [],
     "ask": []
