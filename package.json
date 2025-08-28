@@ -3,8 +3,8 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "tinacms dev -c \"astro dev\"",
+    "build": "tinacms build && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "test": "playwright test",
@@ -39,6 +39,9 @@
     "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0"
+    "@playwright/test": "^1.40.0",
+    "@tinacms/auth": "^1.1.0",
+    "@tinacms/cli": "^1.10.2",
+    "tinacms": "^2.8.2"
   }
 }

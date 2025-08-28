@@ -40,7 +40,9 @@
       "Bash(npm run test:smoke:*)",
       "Bash(npm run test:chrome:*)",
       "Bash(dir:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(npm install:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": [],
     "ask": []

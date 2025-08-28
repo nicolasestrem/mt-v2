@@ -33,3 +33,7 @@ raw-images/
 # Media files
 /Media
 nul
+
+# TinaCMS
+.tina/__generated__*
+admin/

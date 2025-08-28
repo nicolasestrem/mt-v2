@@ -1,0 +1,21 @@
+{
+  "web3formsKey": "YOUR-ACCESS-KEY-HERE",
+  "linkedinFeedUrl": "",
+  "footer": {
+    "copyright": "© 2025 Mobility Trailblazers. All rights reserved.",
+    "links": [
+      {
+        "label": "Impressum",
+        "url": "/impressum"
+      },
+      {
+        "label": "Datenschutz",
+        "url": "/datenschutz"
+      },
+      {
+        "label": "Kontakt",
+        "url": "/kontakt"
+      }
+    ]
+  }
+}

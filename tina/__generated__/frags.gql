@@ -1,0 +1,62 @@
+fragment HeroParts on Hero {
+  __typename
+  title
+  subtitle
+  eventDate
+  buttonText
+  buttonLink
+}
+
+fragment MissionParts on Mission {
+  __typename
+  prefix
+  title
+  description
+  criteriaTitle
+  criteria {
+    __typename
+    text
+  }
+}
+
+fragment JuryParts on Jury {
+  __typename
+  name
+  title
+  organization
+  image
+  bio
+  linkedin
+}
+
+fragment CriteriaParts on Criteria {
+  __typename
+  title
+  icon
+  description
+  order
+}
+
+fragment PartnersParts on Partners {
+  __typename
+  name
+  description
+  logo
+  website
+  type
+}
+
+fragment SettingsParts on Settings {
+  __typename
+  web3formsKey
+  linkedinFeedUrl
+  footer {
+    __typename
+    copyright
+    links {
+      __typename
+      label
+      url
+    }
+  }
+}
