@@ -9,13 +9,13 @@ interface Criterion {
   order: number;
 }
 
-// Load all criteria from TinaCMS
+// Load all criteria from static JSON files
 const criteriaFiles = [
-  await getContent<Criterion>('criteria', 'criteria-1'),
-  await getContent<Criterion>('criteria', 'criteria-2'),
-  await getContent<Criterion>('criteria', 'criteria-3'),
-  await getContent<Criterion>('criteria', 'criteria-4'),
-  await getContent<Criterion>('criteria', 'criteria-5')
+  getContent<Criterion>('criteria', 'criteria-1'),
+  getContent<Criterion>('criteria', 'criteria-2'),
+  getContent<Criterion>('criteria', 'criteria-3'),
+  getContent<Criterion>('criteria', 'criteria-4'),
+  getContent<Criterion>('criteria', 'criteria-5')
 ].filter(Boolean);
 
 // Add gradients and styling

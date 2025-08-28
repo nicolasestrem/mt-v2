@@ -11,8 +11,8 @@ interface MissionContent {
   criteria: Array<{ text: string }>;
 }
 
-// Load content from TinaCMS or use defaults
-const content = await getContent<MissionContent>('mission', 'mission') || {
+// Load content from static JSON files with fallback defaults
+const content = getContent<MissionContent>('mission', 'mission') || {
   prefix: 'Unsere Mission',
   title: 'Warum «25 Mobility Trailblazers In 25»?',
   description: 'Wirtschaft, Gesellschaft und Politik im DACH-Raum müssen sich der Mobilitätswende stellen, sollen Wettbewerbsfähigkeit und Wohlstand behauptet werden. Doch Wandel braucht Mut. Unsere Auszeichnung gibt Persönlichkeiten eine Bühne, die vorangehen.',

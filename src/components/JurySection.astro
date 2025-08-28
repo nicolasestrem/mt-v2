@@ -18,9 +18,9 @@ interface JuryContent {
   members: JuryMember[];
 }
 
-// Load all jury members from content/jury/ directory
-const juryMember1 = await getContent<JuryMember>('jury', 'jury-member-1');
-const juryMember2 = await getContent<JuryMember>('jury', 'jury-member-2');
+// Load all jury members from static JSON files
+const juryMember1 = getContent<JuryMember>('jury', 'jury-member-1');
+const juryMember2 = getContent<JuryMember>('jury', 'jury-member-2');
 
 // Create jury content with fallbacks
 const content: JuryContent = {

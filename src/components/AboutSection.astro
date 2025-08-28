@@ -20,8 +20,8 @@ interface AboutContent {
   partners: Partner[];
 }
 
-// Load about content from TinaCMS
-const content = await getContent<AboutContent>('about', 'about') || {
+// Load about content from static JSON files with fallback defaults
+const content = getContent<AboutContent>('about', 'about') || {
   intro: "Wer steht hinter den «25 Mobility Trailblazers in 25»?",
   description: [
     "Der Award «25 Mobility Trailblazers in 25» ist eine Initiative des Instituts für Mobilität der Universität St. Gallen.",

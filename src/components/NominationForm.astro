@@ -3,8 +3,8 @@
 import Icons from './Icons.astro';
 import { getContent } from '../lib/tina';
 
-// Load settings from content/settings.json
-const settings = await getContent<any>('', 'settings');
+// Load settings from static JSON files
+const settings = getContent<any>('settings', 'settings');
 const web3formsKey = settings?.web3formsKey || import.meta.env.PUBLIC_WEB3FORMS_KEY || 'YOUR-ACCESS-KEY-HERE';
 
 // Validate that the key is configured

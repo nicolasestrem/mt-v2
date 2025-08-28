@@ -10,8 +10,8 @@ interface NewsletterContent {
   placeholderText: string;
 }
 
-// Load newsletter content from TinaCMS
-const content = await getContent<NewsletterContent>('newsletter', 'newsletter') || {
+// Load newsletter content from static JSON files with fallback defaults
+const content = getContent<NewsletterContent>('newsletter', 'newsletter') || {
   title: "Bleiben Sie informiert – mit unserem Mobility Trailblazers Newsletter",
   subtitle: "Erhalten Sie Updates zum Award und zur Mobilitätswende",
   description: "Melden Sie sich für unseren Newsletter an und verpassen Sie keine wichtigen Updates zu den 25 Mobility Trailblazers in 25 und aktuellen Entwicklungen in der Mobilität.",

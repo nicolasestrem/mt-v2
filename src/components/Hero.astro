@@ -10,8 +10,8 @@ interface HeroContent {
   buttonLink: string;
 }
 
-// Load content from TinaCMS or use defaults
-const content = await getContent<HeroContent>('hero', 'hero') || {
+// Load content from static JSON files with fallback defaults
+const content = getContent<HeroContent>('hero', 'hero') || {
   title: '25 Mobility Trailblazers in 25',
   subtitle: 'Weil mobiler Wandel Mut braucht.',
   eventDate: '2025-10-30T18:00:00Z',
