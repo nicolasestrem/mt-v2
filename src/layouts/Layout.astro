@@ -115,6 +115,72 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 	<body>
 		<slot />
 		<ScrollToTop />
+		
+		<!-- Enhanced scroll behavior for internal links -->
+		<script is:inline>
+		(function() {
+			// Header height offset (approximately 89px + 11px buffer = 100px)
+			var HEADER_OFFSET = 100;
+			
+			// Function to smoothly scroll to element with offset
+			function smoothScrollToElement(targetId) {
+				var target = document.getElementById(targetId);
+				if (!target) return false;
+				
+				var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
+				
+				// Use modern scrollTo with smooth behavior if supported
+				if ('scrollBehavior' in document.documentElement.style) {
+					window.scrollTo({
+						top: targetPosition,
+						behavior: 'smooth'
+					});
+				} else {
+					// Fallback for older browsers
+					window.scrollTo(0, targetPosition);
+				}
+				return true;
+			}
+			
+			// Handle internal link clicks
+			function handleInternalLinks() {
+				var links = document.querySelectorAll('a[href^="#"], a[href^="/#"]');
+				
+				for (var i = 0; i < links.length; i++) {
+					links[i].addEventListener('click', function(e) {
+						var href = this.getAttribute('href');
+						var targetId = href.replace(/^\/?#/, ''); // Remove leading /# or #
+						
+						if (targetId && smoothScrollToElement(targetId)) {
+							e.preventDefault();
+							// Update URL without jumping
+							if (history.pushState) {
+								history.pushState(null, null, '#' + targetId);
+							} else {
+								// Fallback for older browsers
+								window.location.hash = targetId;
+							}
+						}
+					});
+				}
+			}
+			
+			// Initialize when DOM is ready
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', handleInternalLinks);
+			} else {
+				handleInternalLinks();
+			}
+			
+			// Handle direct hash navigation on page load
+			if (window.location.hash) {
+				setTimeout(function() {
+					var targetId = window.location.hash.substring(1);
+					smoothScrollToElement(targetId);
+				}, 100);
+			}
+		})();
+		</script>
 	</body>
 </html>
 
@@ -126,7 +192,6 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 	}
 
 	html {
-		scroll-behavior: smooth;
 		background-color: #F8F0E3;
 	}
 

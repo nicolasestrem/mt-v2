@@ -44,6 +44,8 @@
 html {
 	scroll-behavior: smooth;
 	background-color: #F8F0E3;
+	/* Add scroll padding to account for fixed header */
+	scroll-padding-top: 100px;
 }
 
 body {
