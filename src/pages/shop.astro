@@ -138,8 +138,11 @@ import products from '../data/shop-products.json';
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background: url('/images/pattern.svg') repeat;
-		opacity: 0.05;
+		background: linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03)),
+					linear-gradient(45deg, rgba(255,255,255,0.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03));
+		background-size: 50px 50px;
+		background-position: 0 0, 25px 25px;
+		opacity: 0.5;
 	}
 
 	.shop-hero h1 {
