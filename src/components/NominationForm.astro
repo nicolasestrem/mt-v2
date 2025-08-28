@@ -1,6 +1,16 @@
 ---
 // Nomination form component for Mobility Trailblazers
 import Icons from './Icons.astro';
+import { getContent } from '../lib/tina';
+
+// Load settings from content/settings.json
+const settings = await getContent<any>('', 'settings');
+const web3formsKey = settings?.web3formsKey || import.meta.env.PUBLIC_WEB3FORMS_KEY || 'YOUR-ACCESS-KEY-HERE';
+
+// Validate that the key is configured
+if (web3formsKey === 'YOUR-ACCESS-KEY-HERE' && import.meta.env.MODE === 'production') {
+    console.warn('Warning: Web3Forms key is not configured. Form submissions will fail.');
+}
 ---
 
 <section class="nomination" id="vorschlagen">
@@ -56,7 +66,7 @@ import Icons from './Icons.astro';
 				</div>
 				
 				<!-- Web3Forms Access Key -->
-				<input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY}>
+				<input type="hidden" name="access_key" value={web3formsKey}>
 				
 				<div class="form-row">
 					<div class="form-group">

@@ -10,6 +10,12 @@ import Newsletter from '../components/Newsletter.astro';
 import NominationForm from '../components/NominationForm.astro';
 import LinkedInFeed from '../components/LinkedInFeed.astro';
 import Footer from '../components/Footer.astro';
+import { validateConfiguration } from '../lib/validate-config';
+
+// Validate configuration at build time
+if (import.meta.env.MODE === 'production' || import.meta.env.MODE === 'development') {
+    await validateConfiguration();
+}
 ---
 
 <Layout title="25 Mobility Trailblazers in 25 – Weil mobiler Wandel Mut braucht.">
