@@ -1,5 +1,3 @@
-[![Playwright Tests](https://github.com/nicolasestrem/mt-v2/actions/workflows/playwright-tests.yml/badge.svg)](https://github.com/nicolasestrem/mt-v2/actions/workflows/playwright-tests.yml)
-
 # MobilityTrailblazers.de - Modern Astro Website
 
 <!-- Lighthouse Badges -->
