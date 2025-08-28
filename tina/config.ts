@@ -300,6 +300,128 @@ export default defineConfig({
           },
         ],
       },
+      {
+        name: 'about',
+        label: 'About Section',
+        path: 'content/about',
+        format: 'json',
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        fields: [
+          {
+            type: 'string',
+            name: 'intro',
+            label: 'Introduction Question',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'description',
+            label: 'Description Paragraphs',
+            list: true,
+            required: true,
+          },
+          {
+            type: 'object',
+            name: 'heroImage',
+            label: 'Hero Image',
+            fields: [
+              {
+                type: 'image',
+                name: 'src',
+                label: 'Image',
+                required: true,
+              },
+              {
+                type: 'string',
+                name: 'alt',
+                label: 'Alt Text',
+                required: true,
+              },
+            ],
+          },
+          {
+            type: 'object',
+            name: 'partners',
+            label: 'Partner Organizations',
+            list: true,
+            fields: [
+              {
+                type: 'string',
+                name: 'name',
+                label: 'Name',
+                required: true,
+              },
+              {
+                type: 'image',
+                name: 'logo',
+                label: 'Logo',
+                required: true,
+              },
+              {
+                type: 'string',
+                name: 'url',
+                label: 'Website URL',
+                required: true,
+              },
+              {
+                type: 'string',
+                name: 'description',
+                label: 'Description',
+                required: true,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'newsletter',
+        label: 'Newsletter Section',
+        path: 'content/newsletter',
+        format: 'json',
+        ui: {
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        fields: [
+          {
+            type: 'string',
+            name: 'title',
+            label: 'Title',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'subtitle',
+            label: 'Subtitle',
+            required: true,
+          },
+          {
+            type: 'rich-text',
+            name: 'description',
+            label: 'Description',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'buttonText',
+            label: 'Button Text',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'placeholderText',
+            label: 'Email Placeholder Text',
+            required: true,
+          },
+        ],
+      },
     ],
   },
 });

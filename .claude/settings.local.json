@@ -48,7 +48,8 @@
       "mcp__filesystem-mcp__get_file_info",
       "Bash(git commit:*)",
       "Bash(npm audit:*)",
-      "Bash(npx astro:*)"
+      "Bash(npx astro:*)",
+      "mcp__filesystem-mcp__create_directory"
     ],
     "deny": [],
     "ask": []

@@ -1,0 +1,33 @@
+{
+  "intro": "Wer steht hinter den «25 Mobility Trailblazers in 25»?",
+  "description": [
+    "Der Award «25 Mobility Trailblazers in 25» ist eine Initiative des Instituts für Mobilität der Universität St. Gallen.",
+    "Ziel ist es, den mutigsten und wirksamsten Persönlichkeiten des Mobilitätswandels im DACH-Raum eine Bühne zu geben – unabhängig von Branche, Organisationsform oder Bekanntheitsgrad.",
+    "Medienpartner ist das Handelsblatt.",
+    "Die organisatorische Umsetzung der Initiative erfolgt durch Tomczak-Gross & Partners AG."
+  ],
+  "heroImage": {
+    "src": "/images/about/fernsehturm-berlin.jpg",
+    "alt": "Fernsehturm Berlin - Wahrzeichen der deutschen Hauptstadt, symbolisiert die Innovationskraft im Mobilitätswandel"
+  },
+  "partners": [
+    {
+      "name": "Institut für Mobilität der Universität St. Gallen",
+      "logo": "/images/about/imo-logo.webp",
+      "url": "https://imo.unisg.ch/de/home/",
+      "description": "Forschungsinstitut für die Zukunft der Mobilität"
+    },
+    {
+      "name": "Tomczak-Gross & Partners AG",
+      "logo": "/images/about/tomczak-gross-logo.webp",
+      "url": "https://www.tomczak-gross.com/",
+      "description": "Strategieberatung und Organisationsumsetzung"
+    },
+    {
+      "name": "Handelsblatt",
+      "logo": "/images/about/handelsblatt-logo.webp",
+      "url": "https://www.handelsblatt.com/",
+      "description": "Medienpartner"
+    }
+  ]
+}

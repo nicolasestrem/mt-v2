@@ -1,6 +1,50 @@
 ---
 // Jury section component for Mobility Trailblazers
 import Icons from './Icons.astro';
+import { getContent } from '../lib/tina';
+
+interface JuryMember {
+  name: string;
+  title: string;
+  organization: string;
+  image: string;
+  bio: string;
+  linkedin?: string;
+}
+
+interface JuryContent {
+  title: string;
+  subtitle: string;
+  members: JuryMember[];
+}
+
+// Load all jury members from content/jury/ directory
+const juryMember1 = await getContent<JuryMember>('jury', 'jury-member-1');
+const juryMember2 = await getContent<JuryMember>('jury', 'jury-member-2');
+
+// Create jury content with fallbacks
+const content: JuryContent = {
+  title: 'Die Jury',
+  subtitle: 'Expertinnen und Experten aus Wirtschaft, Wissenschaft und Politik.',
+  members: [
+    juryMember1 || {
+      name: "Andreas Herrmann",
+      title: "Präsident", 
+      organization: "Prof. Dr. Andreas Herrmann Gründer und Direktor des Instituts für Mobilität an der Universität St. Gallen",
+      image: "/images/jury/andreas-herrmann.webp",
+      bio: "Prof. Dr. Andreas Herrmann Gründer und Direktor des Instituts für Mobilität an der Universität St. Gallen",
+      linkedin: "https://www.linkedin.com/in/andreas-herrmann-4053541/"
+    },
+    juryMember2 || {
+      name: "Torsten Tomczak",
+      title: "Vize-Präsident",
+      organization: "Prof. Dr. Dr. h.c. Torsten Tomczak Gründer des Instituts für Mobilität an der Universität St. Gallen", 
+      image: "/images/jury/torsten-tomczak.webp",
+      bio: "Prof. Dr. Dr. h.c. Torsten Tomczak Gründer des Instituts für Mobilität an der Universität St. Gallen",
+      linkedin: "https://www.linkedin.com/in/torstentomczak/"
+    }
+  ].filter(Boolean)
+};
 ---
 
 <section class="jury" id="jury">
@@ -12,53 +56,30 @@ import Icons from './Icons.astro';
 	</div>
 	<div class="container">
 		<div class="jury-header">
-			<h2 class="jury-title" style="color: #C1693C;">Die Jury</h2>
-			<p class="jury-subtitle">Expertinnen und Experten aus Wirtschaft, Wissenschaft und Politik.</p>
+			<h2 class="jury-title" style="color: #C1693C;">{content.title}</h2>
+			<p class="jury-subtitle">{content.subtitle}</p>
 		</div>
 		
 		<div class="jury-members">
-			<div class="jury-member">
-				<div class="member-image">
-					<img src="/images/jury/andreas-herrmann.webp" alt="Prof. Dr. Andreas Herrmann, Präsident und Direktor des Instituts für Mobilität an der Universität St. Gallen" width="300" height="300" loading="lazy">
-				</div>
-				<div class="member-info">
-					<h3 class="member-name">Andreas Herrmann</h3>
-					<h4 class="member-role">Präsident</h4>
-					<p class="member-bio">Prof. Dr. Andreas Herrmann Gründer und Direktor des Instituts für Mobilität an der Universität St. Gallen</p>
-					<div class="member-social">
-						<a href="https://www.linkedin.com/in/andreas-herrmann-4053541/" target="_blank" rel="noopener noreferrer" class="social-link">
-							<Icons name="linkedin" />
-						</a>
+			{content.members.map((member) => (
+				<div class="jury-member">
+					<div class="member-image">
+						<img src={member.image} alt={`${member.name}, ${member.title} - ${member.organization}`} width="300" height="300" loading="lazy">
+					</div>
+					<div class="member-info">
+						<h3 class="member-name">{member.name}</h3>
+						<h4 class="member-role">{member.title}</h4>
+						<p class="member-bio">{member.bio}</p>
+						{member.linkedin && (
+							<div class="member-social">
+								<a href={member.linkedin} target="_blank" rel="noopener noreferrer" class="social-link">
+									<Icons name="linkedin" />
+								</a>
+							</div>
+						)}
 					</div>
 				</div>
-			</div>
-			
-			<div class="jury-member">
-				<div class="member-image">
-					<img src="/images/jury/torsten-tomczak.webp" alt="Prof. Dr. Dr. h.c. Torsten Tomczak, Vize-Präsident und Gründer des Instituts für Mobilität an der Universität St. Gallen" width="300" height="300" loading="lazy">
-				</div>
-				<div class="member-info">
-					<h3 class="member-name">Torsten Tomczak</h3>
-					<h4 class="member-role">Vize-Präsident</h4>
-					<p class="member-bio">Prof. Dr. Dr. h.c. Torsten Tomczak Gründer des Instituts für Mobilität an der Universität St. Gallen</p>
-					<div class="member-social">
-						<a href="https://www.linkedin.com/in/torstentomczak/" target="_blank" rel="noopener noreferrer" class="social-link">
-							<Icons name="linkedin" />
-						</a>
-					</div>
-				</div>
-			</div>
-			
-			<div class="jury-member">
-				<div class="member-image">
-					<img src="/images/jury/astronaut.svg" alt="Platzhalter für weitere Jury-Mitglieder, die in Kürze bekannt gegeben werden" width="300" height="300" loading="lazy">
-				</div>
-				<div class="member-info">
-					<h3 class="member-name">Weitere Jury-Mitglieder</h3>
-					<h4 class="member-role">Jurymitglied</h4>
-					<p class="member-bio">Die weiteren Jury-Mitglieder werden in Kürze bekannt gegeben.</p>
-				</div>
-			</div>
+			))}
 		</div>
 	</div>
 </section>

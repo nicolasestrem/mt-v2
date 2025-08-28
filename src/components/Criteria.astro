@@ -1,38 +1,35 @@
 ---
 // Selection criteria component
-const criteria = [
-  {
-    title: "Mut & Pioniergeist",
-    description: "Welche Risiken wurden eingegangen? Welche Konventionen hinterfragt?",
-    icon: "🚀",
-    gradient: "from-orange-400 to-red-500"
-  },
-  {
-    title: "Innovationsgrad",
-    description: "Wie neuartig ist der Ansatz?",
-    icon: "💡",
-    gradient: "from-yellow-400 to-orange-500"
-  },
-  {
-    title: "Wirkung & Umsetzung",
-    description: "Welche konkrete Veränderung wurde erreicht?",
-    icon: "🎯",
-    gradient: "from-teal-600 to-cyan-600",
-    isHero: true
-  },
-  {
-    title: "Relevanz für die Mobilitätswende",
-    description: "Leistet der Beitrag einen strukturellen oder gesellschaftlichen Mehrwert?",
-    icon: "🌍",
-    gradient: "from-green-500 to-teal-600"
-  },
-  {
-    title: "Vorbildfunktion & Persönlichkeit",
-    description: "Inspiriert die Person durch Haltung und Sichtbarkeit?",
-    icon: "⭐",
-    gradient: "from-purple-500 to-pink-500"
-  }
-];
+import { getContent } from '../lib/tina';
+
+interface Criterion {
+  title: string;
+  icon: string;
+  description: string;
+  order: number;
+}
+
+// Load all criteria from TinaCMS
+const criteriaFiles = [
+  await getContent<Criterion>('criteria', 'criteria-1'),
+  await getContent<Criterion>('criteria', 'criteria-2'),
+  await getContent<Criterion>('criteria', 'criteria-3'),
+  await getContent<Criterion>('criteria', 'criteria-4'),
+  await getContent<Criterion>('criteria', 'criteria-5')
+].filter(Boolean);
+
+// Add gradients and styling
+const criteria = criteriaFiles.map((criterion, index) => ({
+  ...criterion,
+  gradient: [
+    "from-orange-400 to-red-500",
+    "from-yellow-400 to-orange-500", 
+    "from-teal-600 to-cyan-600",
+    "from-green-500 to-teal-600",
+    "from-purple-500 to-pink-500"
+  ][index] || "from-gray-400 to-gray-600",
+  isHero: index === 2 // Third criteria (Wirkung & Umsetzung) is the hero
+}));
 ---
 
 <section id="kriterien" class="py-12 md:py-16 relative" style="background-color: #F8F0E3;">

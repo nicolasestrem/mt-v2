@@ -1,5 +1,23 @@
 ---
 // Newsletter section component for Mobility Trailblazers
+import { getContent } from '../lib/tina';
+
+interface NewsletterContent {
+  title: string;
+  subtitle: string;
+  description: string;
+  buttonText: string;
+  placeholderText: string;
+}
+
+// Load newsletter content from TinaCMS
+const content = await getContent<NewsletterContent>('newsletter', 'newsletter') || {
+  title: "Bleiben Sie informiert – mit unserem Mobility Trailblazers Newsletter",
+  subtitle: "Erhalten Sie Updates zum Award und zur Mobilitätswende",
+  description: "Melden Sie sich für unseren Newsletter an und verpassen Sie keine wichtigen Updates zu den 25 Mobility Trailblazers in 25 und aktuellen Entwicklungen in der Mobilität.",
+  buttonText: "Newsletter abonnieren",
+  placeholderText: "Ihre E-Mail-Adresse"
+};
 ---
 
 <section class="newsletter" id="newsletter">
@@ -18,7 +36,7 @@
 	</div>
 	<div class="container">
 		<div class="newsletter-content">
-			<h2 class="newsletter-title" style="color: #C1693C;">Bleiben Sie informiert – mit unserem Mobility Trailblazers Newsletter</h2>
+			<h2 class="newsletter-title" style="color: #C1693C;">{content.title}</h2>
 			
 			<div class="newsletter-description">
 				<p>Erfahren Sie zuerst, wer nominiert wurde, wie der Auswahlprozess läuft und was Jury und Medien über den Mobilitätswandel denken. Inklusive:</p>

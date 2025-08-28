@@ -1,6 +1,59 @@
 ---
 // About section component for Mobility Trailblazers
 import Icons from './Icons.astro';
+import { getContent } from '../lib/tina';
+
+interface Partner {
+  name: string;
+  logo: string;
+  url: string;
+  description: string;
+}
+
+interface AboutContent {
+  intro: string;
+  description: string[];
+  heroImage: {
+    src: string;
+    alt: string;
+  };
+  partners: Partner[];
+}
+
+// Load about content from TinaCMS
+const content = await getContent<AboutContent>('about', 'about') || {
+  intro: "Wer steht hinter den «25 Mobility Trailblazers in 25»?",
+  description: [
+    "Der Award «25 Mobility Trailblazers in 25» ist eine Initiative des Instituts für Mobilität der Universität St. Gallen.",
+    "Ziel ist es, den mutigsten und wirksamsten Persönlichkeiten des Mobilitätswandels im DACH-Raum eine Bühne zu geben – unabhängig von Branche, Organisationsform oder Bekanntheitsgrad.",
+    "Medienpartner ist das Handelsblatt.",
+    "Die organisatorische Umsetzung der Initiative erfolgt durch Tomczak-Gross & Partners AG."
+  ],
+  heroImage: {
+    src: "/images/about/fernsehturm-berlin.jpg",
+    alt: "Fernsehturm Berlin - Wahrzeichen der deutschen Hauptstadt, symbolisiert die Innovationskraft im Mobilitätswandel"
+  },
+  partners: [
+    {
+      name: "Institut für Mobilität der Universität St. Gallen",
+      logo: "/images/about/imo-logo.webp",
+      url: "https://imo.unisg.ch/de/home/",
+      description: "Forschungsinstitut für die Zukunft der Mobilität"
+    },
+    {
+      name: "Tomczak-Gross & Partners AG", 
+      logo: "/images/about/tomczak-gross-logo.webp",
+      url: "https://www.tomczak-gross.com/",
+      description: "Strategieberatung und Organisationsumsetzung"
+    },
+    {
+      name: "Handelsblatt",
+      logo: "/images/about/handelsblatt-logo.webp", 
+      url: "https://www.handelsblatt.com/",
+      description: "Medienpartner"
+    }
+  ]
+};
 ---
 
 <section class="about-section" id="about-initiative">
@@ -8,33 +61,23 @@ import Icons from './Icons.astro';
 		<!-- Main about content with image -->
 		<div class="about-hero">
 			<div class="about-content">
-				<h4 class="about-intro">Wer steht hinter den «25 Mobility Trailblazers in 25»?</h4>
-				<p class="about-text">
-					Der Award «25 Mobility Trailblazers in 25» ist eine Initiative des Instituts für Mobilität der Universität St. Gallen.
-				</p>
-				<p class="about-text">
-					Ziel ist es, den mutigsten und wirksamsten Persönlichkeiten des Mobilitätswandels im DACH-Raum eine Bühne zu geben – unabhängig von Branche, Organisationsform oder Bekanntheitsgrad.
-				</p>
-				<p class="about-text">
-					Medienpartner ist das Handelsblatt.
-				</p>
-				<p class="about-text">
-					Die organisatorische Umsetzung der Initiative erfolgt durch Tomczak-Gross & Partners AG.
-				</p>
+				<h4 class="about-intro">{content.intro}</h4>
+				{content.description.map((paragraph) => (
+					<p class="about-text">{paragraph}</p>
+				))}
 				
 				<div class="cta-buttons">
-					<a href="https://imo.unisg.ch/de/home/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-						Institut für Mobilität der Universität St. Gallen
-					</a>
-					<a href="https://www.tomczak-gross.com/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-						Tomczak-Gross & Partners AG
-					</a>
+					{content.partners.slice(0, 2).map((partner) => (
+						<a href={partner.url} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+							{partner.name}
+						</a>
+					))}
 				</div>
 			</div>
 			
 			<div class="about-image">
-				<img src="/images/about/fernsehturm-berlin.jpg" 
-				     alt="Fernsehturm Berlin - Wahrzeichen der deutschen Hauptstadt, symbolisiert die Innovationskraft im Mobilitätswandel" 
+				<img src={content.heroImage.src} 
+				     alt={content.heroImage.alt} 
 				     width="600" 
 				     height="400" 
 				     fetchpriority="high">
@@ -43,47 +86,18 @@ import Icons from './Icons.astro';
 		
 		<!-- Partner cards section -->
 		<div class="partners-section">
-			<!-- Institut für Mobilität -->
-			<div class="partner-card">
-				<div class="partner-logo">
-					<img src="/images/about/imo-logo.webp" alt="Logo des Instituts für Mobilität der Universität St. Gallen - Forschungsinstitut für die Zukunft der Mobilität" loading="lazy">
+			{content.partners.map((partner) => (
+				<div class="partner-card">
+					<div class="partner-logo">
+						<img src={partner.logo} alt={`Logo ${partner.name} - ${partner.description}`} loading="lazy">
+					</div>
+					<h3 class="partner-title">{partner.name}</h3>
+					<p class="partner-description">{partner.description}</p>
+					<a href={partner.url} target="_blank" rel="noopener noreferrer" class="partner-link">
+						Learn More <Icons name="arrow-right" class="arrow-icon" />
+					</a>
 				</div>
-				<h3 class="partner-title">Institut für Mobilität der Universität St. Gallen</h3>
-				<p class="partner-description">
-					Das Institut für Mobilität an der Universität St. Gallen (IMO) betreibt exzellente Forschung und gestaltet aktiv die Zukunft der Mobilität mit. Es verbindet Forschung, Lehre und Weiterbildung in enger Zusammenarbeit mit Wirtschaft, Politik und Gesellschaft.
-				</p>
-				<a href="https://imo.unisg.ch/de/home/" target="_blank" rel="noopener noreferrer" class="partner-link">
-					Learn More <Icons name="arrow-right" class="arrow-icon" />
-				</a>
-			</div>
-			
-			<!-- Tomczak-Gross & Partners -->
-			<div class="partner-card">
-				<div class="partner-logo">
-					<img src="/images/about/tomczak-gross-logo.svg" alt="Logo Tomczak-Gross & Partners AG - evidenzbasierte Beratung für New Mobility und Innovation" loading="lazy">
-				</div>
-				<h3 class="partner-title">Tomczak-Gross & Partners AG</h3>
-				<p class="partner-description">
-					Tomczak-Gross & Partners ist ein evidenzbasiertes Beratungsunternehmen mit Fokus auf New Mobility, Transformation und Innovation, Digitalisierung & KI, Marketing & Sales.
-				</p>
-				<a href="https://www.tomczak-gross.com/" target="_blank" rel="noopener noreferrer" class="partner-link">
-					Learn More <Icons name="arrow-right" class="arrow-icon" />
-				</a>
-			</div>
-			
-			<!-- Handelsblatt -->
-			<div class="partner-card">
-				<div class="partner-logo">
-					<img src="/images/about/handelsblatt-logo.png" alt="Logo Handelsblatt - führende deutsche Wirtschaftszeitung und Medienpartner der Initiative" loading="lazy">
-				</div>
-				<h3 class="partner-title">Handelsblatt</h3>
-				<p class="partner-description">
-					Die Handelsblatt Media Group ist das führende Medienhaus für Wirtschafts- und Finanzinformationen in Deutschland.
-				</p>
-				<a href="https://www.handelsblatt.com/" target="_blank" rel="noopener noreferrer" class="partner-link">
-					Learn More <Icons name="arrow-right" class="arrow-icon" />
-				</a>
-			</div>
+			))}
 		</div>
 		
 		<!-- Closing statement -->
