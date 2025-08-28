@@ -39,9 +39,11 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={new URL(image, Astro.url)} />
 
-		<!-- Fonts with font-display: swap and preload -->
+		<!-- Resource hints for performance -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="dns-prefetch" href="https://widgets.sociablekit.com">
+		<link rel="dns-prefetch" href="https://www.linkedin.com">
 		<!-- Only load essential fonts immediately -->
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 		<!-- Load other fonts asynchronously -->

@@ -33,11 +33,33 @@ import Icons from './Icons.astro';
 			</div>
 			
 			<div class="about-image">
-				<img src="/images/about/fernsehturm-berlin.jpg" 
-				     alt="Fernsehturm Berlin - Wahrzeichen der deutschen Hauptstadt, symbolisiert die Innovationskraft im Mobilitätswandel" 
-				     width="600" 
-				     height="400" 
-				     fetchpriority="high">
+				<picture>
+					<source 
+						type="image/webp"
+						srcset="/images/about/fernsehturm-berlin-small.webp 400w,
+						        /images/about/fernsehturm-berlin-medium.webp 800w,
+						        /images/about/fernsehturm-berlin-large.webp 1200w,
+						        /images/about/fernsehturm-berlin-xlarge.webp 1920w"
+						sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+					>
+					<source 
+						type="image/jpeg"
+						srcset="/images/about/fernsehturm-berlin-small.jpg 400w,
+						        /images/about/fernsehturm-berlin-medium.jpg 800w,
+						        /images/about/fernsehturm-berlin-large.jpg 1200w,
+						        /images/about/fernsehturm-berlin-xlarge.jpg 1920w"
+						sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+					>
+					<img 
+						src="/images/about/fernsehturm-berlin-medium.jpg" 
+						alt="Fernsehturm Berlin - Wahrzeichen der deutschen Hauptstadt, symbolisiert die Innovationskraft im Mobilitätswandel" 
+						width="600" 
+						height="400" 
+						fetchpriority="high"
+						loading="eager"
+						decoding="async"
+					>
+				</picture>
 			</div>
 		</div>
 		
