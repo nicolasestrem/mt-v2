@@ -37,8 +37,10 @@ import Icons from './Icons.astro';
 		</div>
 		
 		<!-- SociableKit LinkedIn Feed Widget -->
-		<div class="linkedin-widget-container">
+		<div class="linkedin-widget-container" id="linkedin-feed-container">
+			<!-- Direct iframe loading -->
 			<iframe 
+				id="linkedin-iframe"
 				src="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730"
 				frameborder="0"
 				width="100%"
@@ -187,3 +189,4 @@ import Icons from './Icons.astro';
 		}
 	}
 </style>
+
