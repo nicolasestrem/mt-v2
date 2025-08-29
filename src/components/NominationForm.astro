@@ -493,6 +493,9 @@ import Icons from './Icons.astro';
 			// Send to Web3Forms
 			const response = await fetch('https://api.web3forms.com/submit', {
 				method: 'POST',
+				headers: {
+					'Accept': 'application/json'
+				},
 				body: formData
 			});
 			
