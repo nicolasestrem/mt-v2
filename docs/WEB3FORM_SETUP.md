@@ -29,24 +29,13 @@
 2. Enter your email address
 3. Get your access key instantly (no signup required)
 
-<<<<<<< HEAD
-### 2. Set Up Environment Variables
-1. Copy `.env.example` to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-2. Edit `.env` and replace `your-web3forms-access-key-here` with your actual Web3Forms access key.
-
-**Important**: The `.env` file is already in `.gitignore` and will not be committed to GitHub, keeping your key secure.
-=======
-### 2. Replace the Placeholder Key
-In `src/components/NominationForm.astro`, find this line:
+### 2. Replace the Hardcoded Key
+In `src/components/NominationForm.astro`, find line 57:
 ```html
-<input type="hidden" name="access_key" value="YOUR-ACCESS-KEY-HERE">
+<input type="hidden" name="access_key" value="cad41826-27c2-4be4-ac65-8929c8fadda3">
 ```
 
-Replace `YOUR-ACCESS-KEY-HERE` with your actual Web3Forms access key.
->>>>>>> 135f43c (feat: Add Web3Forms integration to nomination form)
+Replace the existing key with your actual Web3Forms access key.
 
 ### 3. Test the Form
 1. Run `npm run dev` to start the development server
@@ -54,18 +43,8 @@ Replace `YOUR-ACCESS-KEY-HERE` with your actual Web3Forms access key.
 3. Fill out and submit the form
 4. Check your email for the submission
 
-### 4. Optional: Environment Variable Setup
-For better security, you can use environment variables:
-
-1. Create a `.env` file in your project root:
-```
-PUBLIC_WEB3FORMS_KEY=your-actual-key-here
-```
-
-2. Update the form to use the environment variable:
-```html
-<input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY}>
-```
+### 4. Security Note
+This project uses hardcoded Web3Forms keys in the component files for simplicity. For production deployments to Cloudflare Pages, the key remains secure as it's only used for form submissions and doesn't expose sensitive functionality.
 
 ## How It Works
 

@@ -11,11 +11,12 @@ Both forms (Nomination and Newsletter) require a Web3Forms API key to function.
    - Sign up for a free account (250 submissions/month)
    - Copy your access key
 
-2. **Configure the environment variable**
-   - Create a `.env` file in the project root
-   - Add your key:
-     ```
-     PUBLIC_WEB3FORMS_KEY=your-actual-access-key-here
+2. **Update the form component**
+   - Open `src/components/NominationForm.astro`
+   - Find line 57 with the Web3Forms access key
+   - Replace the placeholder key with your actual key:
+     ```html
+     <input type="hidden" name="access_key" value="your-actual-access-key-here">
      ```
 
 3. **Restart the dev server**
@@ -51,5 +52,5 @@ When a form is submitted:
 Without the API key configured, forms will fail with a submission error. Check browser console for detailed error messages.
 
 ### Current Configuration:
-- API Key is configured in `.env` file
+- API Key is hardcoded in `NominationForm.astro` component (line 57)
 - Forms are fully functional and will send data to the email configured in your Web3Forms account
