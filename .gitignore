@@ -33,3 +33,5 @@ raw-images/
 # Media files
 /Media
 nul
+/playwright-report
+/playwright-report
