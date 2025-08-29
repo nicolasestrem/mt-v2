@@ -43,7 +43,8 @@
       "Bash(grep:*)",
       "Bash(gh pr view:*)",
       "Bash(git fetch:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(del test-web3forms.js test-web3forms-fetch.js)"
     ],
     "deny": [],
     "ask": []
