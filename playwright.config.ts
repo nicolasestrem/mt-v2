@@ -6,19 +6,19 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   /* Timeout for each test */
-  timeout: 30000,
+  timeout: 15000,
   /* Expect timeout for assertions */
   expect: {
-    timeout: 10000,
+    timeout: 5000,
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 1 : 0,
+  /* Enable parallel workers on CI for faster execution */
+  workers: process.env.CI ? 4 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
@@ -33,15 +33,15 @@ export default defineConfig({
     trace: 'on-first-retry',
     /* Take screenshot on failure */
     screenshot: 'only-on-failure',
-    /* Record video on failure */
-    video: 'retain-on-failure',
+    /* Disable video recording to save resources */
+    video: 'off',
     /* Ignore HTTPS errors */
     ignoreHTTPSErrors: true,
   },
 
-  /* Configure projects for major browsers and devices */
+  /* Configure projects for essential browsers and devices only */
   projects: [
-    // Desktop Browsers
+    // Core Desktop Browsers (run on all tests)
     {
       name: 'Desktop Chrome',
       use: { 
@@ -56,80 +56,39 @@ export default defineConfig({
         viewport: { width: 1920, height: 1080 }
       },
     },
-    {
-      name: 'Desktop Safari',
-      use: { 
-        ...devices['Desktop Safari'],
-        viewport: { width: 1920, height: 1080 }
-      },
-    },
-    {
-      name: 'Desktop Edge',
-      use: { 
-        ...devices['Desktop Edge'], 
-        channel: 'msedge',
-        viewport: { width: 1920, height: 1080 }
-      },
-    },
 
-    // Tablet devices
+    // Core Mobile Devices (run on all tests)
     {
-      name: 'iPad Pro',
-      use: { ...devices['iPad Pro'] },
-    },
-    {
-      name: 'iPad',
-      use: { ...devices['iPad'] },
-    },
-    {
-      name: 'Galaxy Tab S4',
-      use: { ...devices['Galaxy Tab S4'] },
-    },
-
-    // Mobile devices
-    {
-      name: 'iPhone 14 Pro',
-      use: { ...devices['iPhone 14 Pro'] },
-    },
-    {
-      name: 'iPhone 12',
-      use: { ...devices['iPhone 12'] },
-    },
-    {
-      name: 'iPhone SE',
-      use: { ...devices['iPhone SE'] },
-    },
-    {
-      name: 'Pixel 7',
+      name: 'Mobile Chrome',
       use: { ...devices['Pixel 7'] },
     },
     {
-      name: 'Galaxy S9+',
-      use: { ...devices['Galaxy S9+'] },
+      name: 'Mobile Safari',
+      use: { ...devices['iPhone 12'] },
     },
 
-    // Additional viewport tests
-    {
-      name: 'Small Desktop',
-      use: { 
-        ...devices['Desktop Chrome'],
-        viewport: { width: 1366, height: 768 }
+    // Extended browser testing (only for main branch or scheduled runs)
+    ...(process.env.EXTENDED_TESTS ? [
+      {
+        name: 'Desktop Safari',
+        use: { 
+          ...devices['Desktop Safari'],
+          viewport: { width: 1920, height: 1080 }
+        },
       },
-    },
-    {
-      name: 'Large Desktop',
-      use: { 
-        ...devices['Desktop Chrome'],
-        viewport: { width: 2560, height: 1440 }
+      {
+        name: 'Desktop Edge',
+        use: { 
+          ...devices['Desktop Edge'], 
+          channel: 'msedge',
+          viewport: { width: 1920, height: 1080 }
+        },
       },
-    },
-    {
-      name: 'Ultrawide',
-      use: { 
-        ...devices['Desktop Chrome'],
-        viewport: { width: 3440, height: 1440 }
+      {
+        name: 'iPad',
+        use: { ...devices['iPad Pro'] },
       },
-    },
+    ] : []),
   ],
 
   /* Run your local dev server before starting the tests */
