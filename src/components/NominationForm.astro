@@ -61,8 +61,8 @@ import Icons from './Icons.astro';
 				<input type="hidden" name="from_name" value="Mobility Trailblazers Website">
 				
 				<!-- Additional Web3Forms fields for better email deliverability -->
-				<!-- IMPORTANT: Set your email address here to receive submissions -->
-				<input type="hidden" name="email" value="nicolas.estrem@gmail.com">
+				<!-- Destination email - using 'to' for Web3Forms delivery -->
+				<input type="hidden" name="to" value="nicolas.estrem@gmail.com">
 				<input type="hidden" name="redirect" value="https://mobilitytrailblazers.de/danke">
 				
 				<!-- Email configuration for better deliverability -->
@@ -97,7 +97,7 @@ import Icons from './Icons.astro';
 				
 				<!-- Honeypot field for spam protection (hidden from users) -->
 				<div style="display: none;" aria-hidden="true">
-					<input type="text" name="botcheck" tabindex="-1" autocomplete="off">
+					<input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-label="Leave this field empty">
 				</div>
 				
 				<div class="form-group">
