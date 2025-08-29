@@ -46,13 +46,11 @@ import Icons from './Icons.astro';
 			
 			<form class="nomination-form" id="nominationForm">
 				<!-- Form status messages -->
-				<div class="form-message success-message" id="successMessage" role="alert" aria-live="polite">
-					<Icons name="check-circle" />
-					Vielen Dank für Ihren Vorschlag! Wir werden ihn sorgfältig prüfen.
+				<div class="form-message success-message" id="successMessage" role="alert" aria-live="polite" style="display: none;">
+					✓ Vielen Dank für Ihren Vorschlag! Wir werden ihn sorgfältig prüfen.
 				</div>
-				<div class="form-message error-message" id="errorMessage" role="alert" aria-live="assertive">
-					<Icons name="exclamation-circle" />
-					<span id="errorText">Es gab einen Fehler beim Senden. Bitte versuchen Sie es erneut.</span>
+				<div class="form-message error-message" id="errorMessage" role="alert" aria-live="assertive" style="display: none;">
+					⚠ <span id="errorText">Es gab einen Fehler beim Senden. Bitte versuchen Sie es erneut.</span>
 				</div>
 				
 				<!-- Web3Forms Configuration -->
@@ -324,17 +322,11 @@ import Icons from './Icons.astro';
 	}
 
 	.form-message {
-		display: none;
 		padding: 1rem;
 		border-radius: 8px;
 		margin-bottom: 1.5rem;
 		font-size: 1rem;
-		align-items: center;
-		gap: 0.5rem;
-	}
-
-	.form-message.show {
-		display: flex;
+		text-align: center;
 		animation: slideDown 0.3s ease-out;
 	}
 
@@ -493,14 +485,14 @@ import Icons from './Icons.astro';
 			
 			if (result.success) {
 				// Show success message
-				const successMsg = document.getElementById('successMessage');
-				const errorMsg = document.getElementById('errorMessage');
+				const successMsg = document.getElementById('successMessage') as HTMLElement;
+				const errorMsg = document.getElementById('errorMessage') as HTMLElement;
 				
-				if (errorMsg) errorMsg.classList.remove('show');
+				if (errorMsg) errorMsg.style.display = 'none';
 				if (successMsg) {
-					successMsg.classList.add('show');
+					successMsg.style.display = 'block';
 					// Auto-hide after 5 seconds
-					setTimeout(() => successMsg.classList.remove('show'), 5000);
+					setTimeout(() => successMsg.style.display = 'none', 5000);
 				}
 				
 				// Reset form
@@ -515,16 +507,16 @@ import Icons from './Icons.astro';
 			console.error('Form submission error:', error);
 			
 			// Show error message
-			const errorMsg = document.getElementById('errorMessage');
-			const errorText = document.getElementById('errorText');
-			const successMsg = document.getElementById('successMessage');
+			const errorMsg = document.getElementById('errorMessage') as HTMLElement;
+			const errorText = document.getElementById('errorText') as HTMLElement;
+			const successMsg = document.getElementById('successMessage') as HTMLElement;
 			
-			if (successMsg) successMsg.classList.remove('show');
+			if (successMsg) successMsg.style.display = 'none';
 			if (errorMsg && errorText) {
 				errorText.textContent = 'Es gab einen Fehler beim Senden. Bitte versuchen Sie es erneut.';
-				errorMsg.classList.add('show');
+				errorMsg.style.display = 'block';
 				// Auto-hide after 7 seconds
-				setTimeout(() => errorMsg.classList.remove('show'), 7000);
+				setTimeout(() => errorMsg.style.display = 'none', 7000);
 			}
 		} finally {
 			// Reset button state
