@@ -24,14 +24,34 @@ jobs:
         node-version: lts/*
         cache: 'npm'
     
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
+    
     - name: Install dependencies
       run: npm ci
     
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     
+    - name: Cache build artifacts
+      uses: actions/cache@v4
+      with:
+        path: |
+          dist
+          .astro
+        key: ${{ runner.os }}-build-${{ hashFiles('src/**', 'package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-
+    
     - name: Build project
+      id: build
       run: npm run build
+      continue-on-error: false
       
     - name: Run Playwright tests (PR - Quick Tests)
       run: npx playwright test tests/home.spec.ts tests/basic-functionality.spec.ts tests/form-functionality.spec.ts
@@ -68,14 +88,34 @@ jobs:
         node-version: lts/*
         cache: 'npm'
     
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
+    
     - name: Install dependencies
       run: npm ci
     
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     
+    - name: Cache build artifacts
+      uses: actions/cache@v4
+      with:
+        path: |
+          dist
+          .astro
+        key: ${{ runner.os }}-build-${{ hashFiles('src/**', 'package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-
+    
     - name: Build project
+      id: build
       run: npm run build
+      continue-on-error: false
       
     - name: Run Playwright tests (Main - Full Suite)
       run: npx playwright test
@@ -105,14 +145,23 @@ jobs:
         node-version: lts/*
         cache: 'npm'
     
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
+    
     - name: Install dependencies
       run: npm ci
     
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps chromium
+      run: npx playwright install --with-deps
     
     - name: Build project
       run: npm run build
+      continue-on-error: false
     
     - name: Run All Tests with Extended Browsers
       run: npx playwright test
@@ -141,6 +190,14 @@ jobs:
       with:
         node-version: lts/*
         cache: 'npm'
+    
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
     
     - name: Install dependencies
       run: npm ci
@@ -174,22 +231,56 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download test results if available
+      uses: actions/download-artifact@v4
+      continue-on-error: true
+      with:
+        path: test-artifacts/
+        pattern: test-results-*
+        merge-multiple: true
+    
     - name: Generate Test Summary
       run: |
-        echo "# Test Results Summary" >> $GITHUB_STEP_SUMMARY
+        echo "# 🎭 Playwright Test Results" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "## Test Execution" >> $GITHUB_STEP_SUMMARY
+        
+        echo "## 📊 Test Execution Status" >> $GITHUB_STEP_SUMMARY
+        echo "| Job | Status | Type |" >> $GITHUB_STEP_SUMMARY
+        echo "|-----|--------|------|" >> $GITHUB_STEP_SUMMARY
+        
         if [ "${{ needs.test-pr.result }}" != "skipped" ]; then
-          echo "- **PR Tests**: ${{ needs.test-pr.result }}" >> $GITHUB_STEP_SUMMARY
+          STATUS_ICON="✅"
+          [ "${{ needs.test-pr.result }}" != "success" ] && STATUS_ICON="❌"
+          echo "| test-pr | $STATUS_ICON ${{ needs.test-pr.result }} | Quick smoke tests |" >> $GITHUB_STEP_SUMMARY
         fi
+        
         if [ "${{ needs.test-main.result }}" != "skipped" ]; then
-          echo "- **Main Branch Tests**: ${{ needs.test-main.result }}" >> $GITHUB_STEP_SUMMARY
+          STATUS_ICON="✅"
+          [ "${{ needs.test-main.result }}" != "success" ] && STATUS_ICON="❌"
+          echo "| test-main | $STATUS_ICON ${{ needs.test-main.result }} | Full test suite |" >> $GITHUB_STEP_SUMMARY
         fi
+        
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "## Configuration" >> $GITHUB_STEP_SUMMARY
+        
+        # Try to extract test counts from JSON results if available
+        if [ -d "test-artifacts" ] && [ -f "test-artifacts/results.json" ]; then
+          echo "## 📈 Test Metrics" >> $GITHUB_STEP_SUMMARY
+          TOTAL=$(jq '.tests | length' test-artifacts/results.json 2>/dev/null || echo "N/A")
+          PASSED=$(jq '[.tests[] | select(.outcome == "expected")] | length' test-artifacts/results.json 2>/dev/null || echo "N/A")
+          FAILED=$(jq '[.tests[] | select(.outcome != "expected")] | length' test-artifacts/results.json 2>/dev/null || echo "N/A")
+          echo "- **Total Tests**: $TOTAL" >> $GITHUB_STEP_SUMMARY
+          echo "- **Passed**: $PASSED" >> $GITHUB_STEP_SUMMARY
+          echo "- **Failed**: $FAILED" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## ⚙️ Configuration" >> $GITHUB_STEP_SUMMARY
         echo "- **Core Browsers**: Chrome, Firefox" >> $GITHUB_STEP_SUMMARY
         echo "- **Mobile Devices**: iOS Safari, Android Chrome" >> $GITHUB_STEP_SUMMARY
-        echo "- **Execution Time**: Optimized for < 15 min (PR) / < 30 min (Main)" >> $GITHUB_STEP_SUMMARY
+        echo "- **Parallel Workers**: 4" >> $GITHUB_STEP_SUMMARY
+        echo "- **Target Times**: < 15 min (PR) / < 30 min (Main)" >> $GITHUB_STEP_SUMMARY
 
   # Lighthouse CI for performance monitoring
   lighthouse:
