@@ -60,6 +60,23 @@ import Icons from './Icons.astro';
 				<input type="hidden" name="subject" value="Neue Mobility Trailblazer Nominierung">
 				<input type="hidden" name="from_name" value="Mobility Trailblazers Website">
 				
+				<!-- Additional Web3Forms fields for better email deliverability -->
+				<!-- IMPORTANT: Set your email address here to receive submissions -->
+				<input type="hidden" name="email" value="nicolas.estrem@gmail.com">
+				<input type="hidden" name="redirect" value="https://mobilitytrailblazers.de/danke">
+				
+				<!-- Email configuration for better deliverability -->
+				<input type="hidden" name="replyto" value="nominatorEmail">
+				<input type="hidden" name="botcheck" value="">
+				
+				<!-- Optional: Specify the email address where submissions should be sent -->
+				<!-- Uncomment and replace with your email address if needed -->
+				<!-- <input type="hidden" name="email" value="your-email@example.com"> -->
+				
+				<!-- Metadata for tracking -->
+				<input type="hidden" name="_template" value="table">
+				<input type="hidden" name="_captcha" value="false">
+				
 				<div class="form-row">
 					<div class="form-group">
 						<label for="nominatorFirstName">Ihr Vorname *</label>
@@ -76,6 +93,11 @@ import Icons from './Icons.astro';
 					<label for="nominatorEmail">Ihre E-Mail *</label>
 					<input type="email" id="nominatorEmail" name="nominatorEmail" required aria-required="true" aria-describedby="emailHelp">
 					<small id="emailHelp" class="form-help">Wir verwenden Ihre E-Mail nur für Rückfragen zu Ihrer Nominierung.</small>
+				</div>
+				
+				<!-- Honeypot field for spam protection (hidden from users) -->
+				<div style="display: none;" aria-hidden="true">
+					<input type="text" name="botcheck" tabindex="-1" autocomplete="off">
 				</div>
 				
 				<div class="form-group">
@@ -458,6 +480,12 @@ import Icons from './Icons.astro';
 		
 		try {
 			const formData = new FormData(this);
+			
+			// Add timestamp for tracking
+			formData.append('_timestamp', new Date().toISOString());
+			
+			// Add page URL for reference
+			formData.append('_url', window.location.href);
 			
 			// Add debugging
 			console.log('Submitting form with data:', Object.fromEntries(formData));

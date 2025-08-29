@@ -44,6 +44,23 @@
 				<input type="hidden" name="subject" value="Neue Newsletter Anmeldung - Mobility Trailblazers">
 				<input type="hidden" name="from_name" value="Mobility Trailblazers Website">
 				
+				<!-- Additional Web3Forms fields for better email deliverability -->
+				<!-- IMPORTANT: Set your email address here to receive submissions -->
+				<input type="hidden" name="email" value="nicolas.estrem@gmail.com">
+				<input type="hidden" name="redirect" value="https://mobilitytrailblazers.de/danke">
+				
+				<!-- Email configuration for better deliverability -->
+				<input type="hidden" name="replyto" value="email">
+				<input type="hidden" name="botcheck" value="">
+				
+				<!-- Optional: Specify the email address where submissions should be sent -->
+				<!-- Uncomment and replace with your email address if needed -->
+				<!-- <input type="hidden" name="email" value="your-email@example.com"> -->
+				
+				<!-- Metadata for tracking -->
+				<input type="hidden" name="_template" value="table">
+				<input type="hidden" name="_captcha" value="false">
+				
 				<div class="form-group">
 					<label for="firstName">Vorname *</label>
 					<input type="text" id="firstName" name="firstName" required>
@@ -57,6 +74,11 @@
 				<div class="form-group">
 					<label for="email">E-Mail-Adresse *</label>
 					<input type="email" id="email" name="email" required>
+				</div>
+				
+				<!-- Honeypot field for spam protection (hidden from users) -->
+				<div style="display: none;" aria-hidden="true">
+					<input type="text" name="botcheck" tabindex="-1" autocomplete="off">
 				</div>
 				
 				<div class="form-group">
@@ -375,6 +397,12 @@
 		
 		try {
 			const formData = new FormData(this);
+			
+			// Add timestamp for tracking
+			formData.append('_timestamp', new Date().toISOString());
+			
+			// Add page URL for reference
+			formData.append('_url', window.location.href);
 			
 			// Add debugging
 			console.log('Submitting newsletter form with data:', Object.fromEntries(formData));
