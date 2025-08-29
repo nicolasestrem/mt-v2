@@ -43,7 +43,7 @@ In both form files, uncomment and configure the email redirect field:
 
 ```html
 <!-- Replace with your actual email address -->
-<input type="hidden" name="email" value="your-email@gmail.com">
+<input type="hidden" name="email" value="kontakt@mobilitytrailblazers.de">
 ```
 
 This explicitly tells Web3Forms where to send the submissions.

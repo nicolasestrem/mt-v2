@@ -21,10 +21,10 @@ npm run preview      # Preview production build locally
 ### Web3Forms API Key (REQUIRED)
 The nomination form won't work without configuring the Web3Forms key:
 1. Get free key at https://web3forms.com/
-2. Update in `src/components/NominationForm.astro:4`
-   ```astro
-   const WEB3FORMS_KEY = "YOUR-ACCESS-KEY-HERE"; // Replace with actual key
-   ```
+2. Both forms use the key directly in their HTML:
+   - `src/components/NominationForm.astro` (line ~57)
+   - `src/components/Newsletter.astro` (line ~43)
+   - The key is also stored in `.env` as `PUBLIC_WEB3FORMS_KEY`
 
 ### Deployment to Cloudflare Pages
 ```bash
