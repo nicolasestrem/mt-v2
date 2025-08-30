@@ -186,18 +186,25 @@
 		}
 
 		.countdown-container {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: 1fr 1fr;
 			gap: 1rem;
+			justify-items: center;
+			max-width: 300px;
+			margin: 0 auto;
 		}
 
 		.countdown-item {
-			min-width: 80px;
+			min-width: 120px;
 			padding: 1rem;
+			width: 100%;
 		}
 
 		/* Enhanced mobile styling for days and seconds */
 		.countdown-item:nth-child(1),
 		.countdown-item:nth-child(4) {
-			min-width: 100px;
+			min-width: 120px;
 			padding: 1.5rem 1rem;
 		}
 
