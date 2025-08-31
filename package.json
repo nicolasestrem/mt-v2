@@ -33,6 +33,7 @@
     "lighthouse:badges": "node scripts/update-lighthouse-badges.js"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.5.1",
     "@tailwindcss/vite": "^4.1.12",
     "astro": "^5.13.3",
     "sharp": "^0.34.3",

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ScrollToTop from '../components/ScrollToTop.astro';
+import SEO from '../components/SEO.astro';
 
 export interface Props {
 	title: string;
@@ -15,7 +16,6 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 <html lang="de">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
 		<!-- Enhanced Android viewport meta tag -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, shrink-to-fit=no, viewport-fit=cover" />
 		<!-- Android Chrome theme color -->
@@ -25,19 +25,8 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={Astro.url} />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content={new URL(image, Astro.url)} />
-
-		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content={Astro.url} />
-		<meta property="twitter:title" content={title} />
-		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content={new URL(image, Astro.url)} />
+		<!-- SEO Component handles all meta tags -->
+		<SEO title={title} description={description} image={image} />
 
 		<!-- Resource hints for performance -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,8 +41,6 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 
 		<!-- Preload critical images -->
 		<link rel="preload" as="image" href="/images/about/fernsehturm-berlin.jpg" fetchpriority="high">
-
-		<title>{title}</title>
 		
 		<!-- Inline critical CSS for hero text -->
 		<style>
@@ -64,55 +51,6 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 				line-height: 1.6;
 			}
 		</style>
-		
-		<!-- Structured Data for SEO -->
-		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@graph": [
-				{
-					"@type": "Organization",
-					"@id": "https://mobilitytrailblazers.de/#organization",
-					"name": "Mobility Trailblazers",
-					"url": "https://mobilitytrailblazers.de",
-					"logo": {
-						"@type": "ImageObject",
-						"url": "https://mobilitytrailblazers.de/images/logo.webp",
-						"width": 300,
-						"height": 300
-					},
-					"description": "25 Mobility Trailblazers in 25 – Weil mobiler Wandel Mut braucht. Initiative zur Auszeichnung von Vorreitern der Mobilitätswende.",
-					"sameAs": [
-						"https://www.linkedin.com/company/mobility-trailblazers"
-					]
-				},
-				{
-					"@type": "Event",
-					"@id": "https://mobilitytrailblazers.de/#event",
-					"name": "25 Mobility Trailblazers in 25 Awards",
-					"description": "Auszeichnung der 25 wichtigsten Vorreiter der Mobilitätswende in Deutschland für das Jahr 2025.",
-					"startDate": "2025-10-30",
-					"eventStatus": "https://schema.org/EventScheduled",
-					"eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-					"location": {
-						"@type": "Place",
-						"name": "Deutschland",
-						"addressCountry": "DE"
-					},
-					"organizer": {
-						"@id": "https://mobilitytrailblazers.de/#organization"
-					},
-					"offers": {
-						"@type": "Offer",
-						"price": "0",
-						"priceCurrency": "EUR",
-						"availability": "https://schema.org/InStock",
-						"validFrom": "2025-01-01"
-					}
-				}
-			]
-		}
-		</script>
 	</head>
 	<body>
 		<slot />

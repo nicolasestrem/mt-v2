@@ -50,7 +50,8 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(powershell:*)",
       "Bash(mkdir:*)",
-      "Bash(npm run preview:*)"
+      "Bash(npm run preview:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://mobilitytrailblazers.de/sitemap-index.xml
+
+# Disallow admin areas if they exist
+Disallow: /admin/
+
+# Allow search engines to crawl CSS and JS
+Allow: /*.css
+Allow: /*.js
+
+# Crawl delay (optional, remove if not needed)
+# Crawl-delay: 1
