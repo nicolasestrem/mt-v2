@@ -25,10 +25,11 @@ import products from '../data/shop-products.json';
 				{products.length > 0 ? (
 					<div class="products-grid">
 						{products.map((product) => (
-							<a href={product.url} 
+							<a href={`${product.url}?utm_source=mobilitytrailblazers&utm_medium=website&utm_campaign=shop-products`} 
 							   target="_blank" 
 							   rel="noopener noreferrer"
-							   class="product-card">
+							   class="product-card" 
+							   data-track="spreadshop-product">
 								<div class="product-image">
 									<img src={product.image} alt={product.name} loading="lazy" />
 									<div class="product-overlay">
@@ -73,10 +74,11 @@ import products from '../data/shop-products.json';
 				)}
 				
 				<div class="shop-cta">
-					<a href="https://award-mobility-trailblazers.myspreadshop.de/" 
+					<a href="https://award-mobility-trailblazers.myspreadshop.de/?utm_source=mobilitytrailblazers&utm_medium=website&utm_campaign=shop-main" 
 					   target="_blank" 
 					   rel="noopener noreferrer"
-					   class="shop-button">
+					   class="shop-button" 
+					   data-track="spreadshop-main">
 						<span>Alle Produkte im Shop ansehen</span>
 						<Icons name="arrow-right" />
 					</a>
@@ -499,6 +501,20 @@ import products from '../data/shop-products.json';
 			// Process would go here if CORS allowed
 		} catch (error) {
 			console.log('Client-side product fetch not available due to CORS');
+		}
+	});
+	
+	// Track Spreadshop clicks specifically
+	document.addEventListener('click', function(e) {
+		const target = e.target.closest('[data-track="spreadshop-product"], [data-track="spreadshop-main"]');
+		if (target && typeof window.trackEvent === 'function') {
+			const trackType = target.dataset.track;
+			window.trackEvent('outbound_spreadshop_click', {
+				event_category: 'engagement',
+				event_label: trackType,
+				link_url: target.href,
+				link_text: target.textContent.trim()
+			});
 		}
 	});
 </script>

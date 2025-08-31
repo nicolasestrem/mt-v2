@@ -1,0 +1,150 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  noindex?: boolean;
+  article?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    author?: string;
+  };
+}
+
+const {
+  title = '25 Mobility Trailblazers in 25 – Weil mobiler Wandel Mut braucht.',
+  description = 'Wir zeichnen 25 Trailblazer der Mobilitätswende im DACH-Raum aus. Eine Initiative des Instituts für Mobilität der Universität St. Gallen.',
+  image = '/images/og-image.jpg',
+  canonical,
+  noindex = false,
+  article
+} = Astro.props;
+
+const siteUrl = 'https://mobilitytrailblazers.de';
+const canonicalURL = canonical || new URL(Astro.url.pathname, siteUrl).toString();
+const imageURL = new URL(image, siteUrl).toString();
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph / LinkedIn -->
+<meta property="og:type" content={article ? 'article' : 'website'} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageURL} />
+<meta property="og:image:width" content="1120" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="de_DE" />
+<meta property="og:site_name" content="Mobility Trailblazers" />
+
+{article && (
+  <>
+    {article.publishedTime && <meta property="article:published_time" content={article.publishedTime} />}
+    {article.modifiedTime && <meta property="article:modified_time" content={article.modifiedTime} />}
+    {article.author && <meta property="article:author" content={article.author} />}
+  </>
+)}
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "url": siteUrl,
+      "name": "Mobility Trailblazers",
+      "alternateName": "MT Awards",
+      "description": "Initiative zur Auszeichnung von 25 Vorreitern der Mobilitätswende im DACH-Raum",
+      "inLanguage": "de-DE",
+      "publisher": {
+        "@id": `${siteUrl}/#organization`
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      "name": "Mobility Trailblazers",
+      "url": siteUrl,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteUrl}/images/logo.webp`,
+        "width": 512,
+        "height": 512
+      },
+      "description": "Eine Initiative des Instituts für Mobilität der Universität St. Gallen zur Auszeichnung von Vorreitern der Mobilitätswende.",
+      "sameAs": [
+        "https://www.linkedin.com/company/mobility-trailblazers"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": ["German", "English"],
+        "email": "info@mobilitytrailblazers.de"
+      }
+    },
+    {
+      "@type": "Event",
+      "@id": `${siteUrl}/#event-2025`,
+      "name": "Mobility Trailblazers Awards 2025",
+      "description": "Preisverleihung der 25 wichtigsten Vorreiter der Mobilitätswende im DACH-Raum für das Jahr 2025.",
+      "startDate": "2025-10-30",
+      "endDate": "2025-10-30",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Berlin",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Berlin",
+          "addressRegion": "Berlin",
+          "addressCountry": "DE"
+        }
+      },
+      "organizer": {
+        "@id": `${siteUrl}/#organization`
+      },
+      "sponsor": [
+        {
+          "@type": "Organization",
+          "name": "Institut für Mobilität der Universität St. Gallen",
+          "url": "https://imo.unisg.ch"
+        },
+        {
+          "@type": "Organization", 
+          "name": "Tomczak-Gross & Partners AG",
+          "url": "https://tomczak-gross.com"
+        },
+        {
+          "@type": "Organization",
+          "name": "Handelsblatt",
+          "url": "https://www.handelsblatt.com"
+        }
+      ],
+      "offers": {
+        "@type": "Offer",
+        "name": "Nomination",
+        "price": "0",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "validFrom": "2025-01-01",
+        "validThrough": "2025-09-30",
+        "url": `${siteUrl}/#nominierung`
+      },
+      "image": [
+        `${siteUrl}/images/og-image.jpg`
+      ]
+    }
+  ]
+})}
+</script>
