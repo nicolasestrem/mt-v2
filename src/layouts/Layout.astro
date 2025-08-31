@@ -55,6 +55,79 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 
 		<title>{title}</title>
 		
+		<!-- Tarteaucitron Cookie Consent -->
+		<script is:inline src="/tarteaucitron/tarteaucitron.js"></script>
+		<script is:inline>
+			tarteaucitron.init({
+				"privacyUrl": "/datenschutz", /* Privacy policy URL */
+				"bodyPosition": "bottom", /* Banner position */
+				"hashtag": "#tarteaucitron", /* Open panel with hashtag */
+				"cookieName": "tarteaucitron", /* Cookie name */
+				"orientation": "bottom", /* Banner orientation */
+				"groupServices": true, /* Group services by category */
+				"showDetailsOnClick": true, /* Show service details on click */
+				"serviceDefaultState": "wait", /* Default state: 'wait', 'true' or 'false' */
+				"showAlertSmall": true, /* Show small banner at bottom */
+				"cookieslist": true, /* Show cookies list */
+				"showIcon": true, /* Show cookie icon */
+				"iconPosition": "BottomLeft", /* Icon position */
+				"adblocker": false, /* Show warning if adblocker detected */
+				"DenyAllCta": true, /* Add deny all button */
+				"AcceptAllCta": true, /* Add accept all button */
+				"highPrivacy": true, /* Disable auto consent */
+				"alwaysNeedConsent": false, /* Always ask for consent */
+				"handleBrowserDNTRequest": false, /* Handle Do Not Track */
+				"removeCredit": false, /* Remove tarteaucitron credit */
+				"moreInfoLink": true, /* Show more info link */
+				"useExternalCss": false, /* Use external CSS */
+				"useExternalJs": false, /* Use external JS */
+				"readmoreLink": "/datenschutz", /* Read more link */
+				"mandatory": false, /* Show mandatory message */
+				"mandatoryCta": true, /* Mandatory accept button */
+				"googleConsentMode": true, /* Enable Google Consent Mode v2 */
+				"partnersList": false /* Hide partners list */
+			});
+			
+			// Custom service for SociableKit
+			tarteaucitron.services.sociablekit = {
+				"key": "sociablekit",
+				"type": "social",
+				"name": "SociableKit LinkedIn Feed",
+				"uri": "https://www.sociablekit.com",
+				"needConsent": true,
+				"cookies": ['sk_*'],
+				"js": function () {
+					"use strict";
+					tarteaucitron.fallback(['sociablekit-placeholder'], function (x) {
+						var frame = x.getAttribute("data-frame"),
+							width = x.getAttribute("data-width"),
+							height = x.getAttribute("data-height");
+						
+						if (frame) {
+							return '<iframe src="' + frame + '" width="' + width + '" height="' + height + '" frameborder="0" loading="lazy" class="linkedin-iframe" title="Mobility Trailblazers LinkedIn Feed"></iframe>';
+						}
+					});
+				},
+				"fallback": function () {
+					"use strict";
+					var id = 'sociablekit-placeholder';
+					tarteaucitron.fallback(['sociablekit-placeholder'], function (elem) {
+						elem.style.display = 'block';
+						return '';
+					});
+				}
+			};
+			
+			// Google Analytics
+			tarteaucitron.user.gtagUa = 'G-492443780';
+			(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+			
+			// Google Tag Manager
+			tarteaucitron.user.googletagmanagerId = 'GTM-WDRKWCN7';
+			(tarteaucitron.job = tarteaucitron.job || []).push('googletagmanager');
+		</script>
+		
+		
 		<!-- Inline critical CSS for hero text -->
 		<style>
 			.hero-subtitle {
@@ -117,6 +190,9 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 	<body>
 		<slot />
 		<ScrollToTop />
+		
+		<!-- Custom CSS for tarteaucitron positioning (loads after tarteaucitron) -->
+		<link rel="stylesheet" href="/tarteaucitron-custom.css">
 		
 		<!-- Enhanced scroll behavior for internal links -->
 		<script is:inline>

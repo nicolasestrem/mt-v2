@@ -1,0 +1,119 @@
+/* Custom positioning for tarteaucitron elements - side by side layout */
+
+/* Position the cookie icon on the far left */
+#tarteaucitronIcon {
+    left: 20px;
+    bottom: 20px;
+}
+
+/* Position the alert notification to the right of the icon (approximately 80px for icon + spacing) */
+/* CRITICAL: Target the BASE alert element (not just the Bottom variant) */
+/* This is the key - the library sets right:0 on #tarteaucitronAlertSmall */
+html body #tarteaucitronAlertSmall {
+    left: 100px; /* Position to the right of the icon */
+    right: auto;
+    bottom: 20px; /* Same level as icon */
+    margin-left: 0;
+    margin-right: auto;
+    max-width: 350px;
+}
+
+/* Also target with the Root container for higher specificity */
+html body #tarteaucitronRoot #tarteaucitronAlertSmall {
+    left: 100px; /* Position to the right of the icon */
+    right: auto;
+    bottom: 20px; /* Same level as icon */
+}
+
+/* Target when it has the bottom orientation class */
+html body #tarteaucitronAlertSmall.tarteaucitronAlertSmallBottom {
+    left: 100px; /* Position to the right of the icon */
+    right: auto;
+    bottom: 20px; /* Same level as icon */
+}
+
+/* Target with all possible selector combinations for maximum coverage */
+html body div#tarteaucitronRoot div#tarteaucitronAlertSmall.tarteaucitronAlertSmallBottom {
+    left: 100px; /* Position to the right of the icon */
+    right: auto;
+    bottom: 20px; /* Same level as icon */
+}
+
+/* Fix animations to slide from left instead of right */
+@keyframes slideInFromLeft {
+    from {
+        left: -400px;
+        opacity: 0;
+    }
+    to {
+        left: 100px; /* Match the new position */
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutToLeft {
+    from {
+        left: 100px; /* Match the new position */
+        opacity: 1;
+    }
+    to {
+        left: -400px;
+        opacity: 0;
+    }
+}
+
+/* Apply animation when alert is displayed */
+html body #tarteaucitronAlertSmall.tarteaucitronAlertSmallBottom.tarteaucitronAlertSmallDisplayed {
+    animation: slideInFromLeft 0.5s ease-out forwards;
+}
+
+/* Ensure positioning even with inline styles */
+html body #tarteaucitronAlertSmall[style] {
+    left: 100px; /* Position to the right of the icon */
+    right: auto;
+}
+
+/* Extra specificity for the alert small element specifically */
+#tarteaucitronAlertSmall#tarteaucitronAlertSmall {
+    left: 100px; /* Position to the right of the icon */
+    right: auto;
+    bottom: 20px; /* Same level as icon */
+}
+
+/* Move the tarteaucitron manager panel to the left side */
+#tarteaucitronManager {
+    left: 0;
+    right: auto;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* Higher specificity for manager panel */
+html body #tarteaucitronManager {
+    left: 0;
+    right: auto;
+}
+
+/* Target the manager panel with all variations */
+html body div#tarteaucitronRoot #tarteaucitronManager {
+    left: 0;
+    right: auto;
+}
+
+/* Ensure manager panel button (if exists) is also on the left */
+#tarteaucitronManagerButton {
+    left: 20px;
+    right: auto;
+}
+
+/* Target the back button in manager */
+#tarteaucitronBack {
+    left: 20px;
+    right: auto;
+}
+
+/* Also ensure the close button for manager is positioned correctly */
+#tarteaucitronClosePanel {
+    right: 20px;
+    left: auto;
+}

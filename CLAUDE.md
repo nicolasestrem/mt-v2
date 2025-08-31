@@ -184,4 +184,76 @@ The site underwent a spacing reduction update to fix excessive vertical spacing:
 - Hero: Reduced from 100vh to 80vh height
 - Section padding: Standardized to 3rem (48px)
 - Component padding: Reduced from 64-96px to 32-48px
-- Always use specialised agents and sequential thinking for complex tasks.
+
+## Privacy & Cookie Consent System
+
+### Tarteaucitron.io Integration
+Implemented comprehensive GDPR-compliant cookie consent management using tarteaucitron.io (French privacy-focused library).
+
+#### Core Configuration (`Layout.astro` lines 58-128)
+```javascript
+tarteaucitron.init({
+    "privacyUrl": "/datenschutz",
+    "serviceDefaultState": "wait",    // No tracking without explicit consent
+    "highPrivacy": true,             // Disable auto consent
+    "googleConsentMode": true,       // Enable Google Consent Mode v2
+    "DenyAllCta": true,              // Add deny all button
+    "AcceptAllCta": true,            // Add accept all button
+    "iconPosition": "BottomLeft",    // Cookie icon position
+    "showAlertSmall": true           // Show small banner at bottom
+});
+```
+
+#### Integrated Services
+**Google Analytics**: `G-492443780` (gtag service)
+**Google Tag Manager**: `GTM-WDRKWCN7` (googletagmanager service)
+**SociableKit LinkedIn**: Custom service for LinkedIn feed consent
+
+#### Custom SociableKit Service
+Created custom tarteaucitron service for LinkedIn widget consent:
+- Service key: `sociablekit`
+- Type: `social`
+- Placeholder fallback with manual consent button
+- Dynamic iframe loading after consent
+
+#### Privacy Pages
+**New Pages Created**:
+- `/datenschutz` - Complete GDPR-compliant privacy policy
+- `/impressum` - Legal imprint (German requirement)
+
+**Privacy Policy Coverage**:
+- Cloudflare Pages hosting details
+- Web3Forms data processing
+- Google Analytics/GTM tracking
+- SociableKit LinkedIn integration
+- User rights under GDPR
+
+#### Custom CSS Positioning (`/public/tarteaucitron-custom.css`)
+**Side-by-Side Layout**:
+- Cookie icon: Bottom-left (20px from edges)
+- Alert banner: Positioned 100px from left (next to icon)
+- Manager panel: Left-aligned (not right-aligned default)
+
+**High Specificity Selectors**:
+```css
+html body #tarteaucitronAlertSmall {
+    left: 100px;
+    right: auto;
+    bottom: 20px;
+}
+```
+
+**Custom Animations**:
+- `slideInFromLeft` - Banner enters from left instead of right
+- Matches new positioning system
+
+#### Form Integration
+**Web3Forms Consent**: Forms automatically work without additional consent (legitimate interest for contact processing)
+**LinkedIn Feed Consent**: Requires explicit user consent before loading SociableKit widget
+
+#### Technical Implementation Notes
+- Loads before other tracking scripts
+- Uses `is:inline` directive for immediate execution
+- German language by default (`/tarteaucitron/lang/tarteaucitron.de.js`)
+- Fallback placeholders prevent layout shift
+- Consent state persists across sessions
