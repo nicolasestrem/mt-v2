@@ -193,37 +193,49 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 		
 		<!-- Custom CSS for tarteaucitron positioning (loads after tarteaucitron) -->
 		<link rel="stylesheet" href="/tarteaucitron-custom.css">
+		
+		<!-- Enhanced scroll behavior for internal links -->
 		<script is:inline>
 		(function() {
+			// Header height offset (approximately 89px + 11px buffer = 100px)
 			var HEADER_OFFSET = 100;
 			
+			// Function to smoothly scroll to element with offset
 			function smoothScrollToElement(targetId) {
 				var target = document.getElementById(targetId);
 				if (!target) return false;
 				
 				var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
 				
+				// Use modern scrollTo with smooth behavior if supported
 				if ('scrollBehavior' in document.documentElement.style) {
-					window.scrollTo({top: targetPosition, behavior: 'smooth'});
+					window.scrollTo({
+						top: targetPosition,
+						behavior: 'smooth'
+					});
 				} else {
+					// Fallback for older browsers
 					window.scrollTo(0, targetPosition);
 				}
 				return true;
 			}
 			
+			// Handle internal link clicks
 			function handleInternalLinks() {
 				var links = document.querySelectorAll('a[href^="#"], a[href^="/#"]');
 				
 				for (var i = 0; i < links.length; i++) {
 					links[i].addEventListener('click', function(e) {
 						var href = this.getAttribute('href');
-						var targetId = href.replace(/^\/?#/, '');
+						var targetId = href.replace(/^\/?#/, ''); // Remove leading /# or #
 						
 						if (targetId && smoothScrollToElement(targetId)) {
 							e.preventDefault();
+							// Update URL without jumping
 							if (history.pushState) {
 								history.pushState(null, null, '#' + targetId);
 							} else {
+								// Fallback for older browsers
 								window.location.hash = targetId;
 							}
 						}
@@ -231,15 +243,18 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 				}
 			}
 			
+			// Initialize when DOM is ready
 			if (document.readyState === 'loading') {
 				document.addEventListener('DOMContentLoaded', handleInternalLinks);
 			} else {
 				handleInternalLinks();
 			}
 			
+			// Handle direct hash navigation on page load
 			if (window.location.hash) {
 				setTimeout(function() {
-					smoothScrollToElement(window.location.hash.substring(1));
+					var targetId = window.location.hash.substring(1);
+					smoothScrollToElement(targetId);
 				}, 100);
 			}
 		})();
@@ -247,3 +262,114 @@ const { title, description = "25 Mobility Trailblazers in 25 – Weil mobiler Wa
 	</body>
 </html>
 
+<style is:global>
+	/* CSS Variables removed from Layout.astro - now using global.css as single source of truth */
+
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		background-color: #F8F0E3;
+	}
+
+	body {
+		font-family: var(--font-primary);
+		line-height: 1.6;
+		color: var(--color-text);
+		background-color: #F8F0E3;
+		margin: 0;
+		padding: 0;
+		overflow-x: hidden;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: var(--font-primary);
+		font-weight: 600;
+		line-height: 1.2;
+		margin: 0 0 1rem 0;
+	}
+
+	h1 { font-size: 3.5rem; }
+	h2 { font-size: 2.5rem; }
+	h3 { font-size: 2rem; }
+	h4 { font-size: 1.5rem; }
+	h5 { font-size: 1.25rem; }
+	h6 { font-size: 1rem; }
+
+	p {
+		margin: 0 0 1rem 0;
+	}
+
+	a {
+		color: var(--color-accent);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	a:hover {
+		color: var(--color-primary);
+	}
+
+	button {
+		font-family: var(--font-primary);
+		cursor: pointer;
+		border: none;
+		background: none;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1rem;
+	}
+
+	.btn {
+		display: inline-block;
+		padding: 1rem 2rem;
+		background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+		color: white;
+		border-radius: 50px;
+		font-weight: 600;
+		text-decoration: none;
+		transition: all 0.3s ease;
+		border: none;
+		cursor: pointer;
+	}
+
+	.btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+		color: white;
+	}
+
+	.section {
+		padding: 4rem 0;
+	}
+
+	.text-center {
+		text-align: center;
+	}
+
+	.text-left {
+		text-align: left;
+	}
+
+	.text-right {
+		text-align: right;
+	}
+
+	@media (max-width: 768px) {
+		h1 { font-size: 2.5rem; }
+		h2 { font-size: 2rem; }
+		h3 { font-size: 1.5rem; }
+		
+		.section {
+			padding: 2rem 0;
+		}
+		
+		.container {
+			padding: 0 0.5rem;
+		}
+	}
+</style>
