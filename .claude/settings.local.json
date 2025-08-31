@@ -45,7 +45,12 @@
       "Bash(git fetch:*)",
       "Bash(node:*)",
       "Bash(del test-web3forms.js test-web3forms-fetch.js)",
-      "WebFetch(domain:docs.web3forms.com)"
+      "WebFetch(domain:docs.web3forms.com)",
+      "WebFetch(domain:tarteaucitron.io)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(powershell:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm run preview:*)"
     ],
     "deny": [],
     "ask": []
