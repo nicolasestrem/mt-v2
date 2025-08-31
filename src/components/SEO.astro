@@ -34,7 +34,7 @@ const imageURL = new URL(image, siteUrl).toString();
 
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-<!-- Open Graph / Facebook -->
+<!-- Open Graph / LinkedIn -->
 <meta property="og:type" content={article ? 'article' : 'website'} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
@@ -52,13 +52,6 @@ const imageURL = new URL(image, siteUrl).toString();
     {article.author && <meta property="article:author" content={article.author} />}
   </>
 )}
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content={canonicalURL} />
-<meta name="twitter:title" content={title} />
-<meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={imageURL} />
 
 <!-- Structured Data -->
 <script type="application/ld+json">
