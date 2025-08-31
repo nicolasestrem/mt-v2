@@ -1,0 +1,55 @@
+---
+// GA4 Measurement ID - Replace with your actual GA4 ID
+const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT'; 
+
+// Load GA in production OR if explicitly enabled
+const isProduction = import.meta.env.PROD;
+const enableGA = isProduction || import.meta.env.PUBLIC_ENABLE_GA_DEV === 'true';
+---
+
+{enableGA && (
+  <>
+    <!-- Google Analytics 4 -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+    <script set:html={`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${GA_MEASUREMENT_ID}', {
+        page_path: window.location.pathname,
+        send_page_view: true
+      });
+      
+      // Custom event helper function
+      window.trackEvent = function(eventName, eventParams) {
+        if (typeof gtag !== 'undefined') {
+          gtag('event', eventName, eventParams);
+          console.log('GA4 Event:', eventName, eventParams);
+        }
+      };
+      
+      // Track outbound clicks
+      document.addEventListener('click', function(e) {
+        const target = e.target.closest('a');
+        if (target && target.href && !target.href.startsWith(window.location.origin)) {
+          const url = new URL(target.href);
+          
+          // Track Spreadshop clicks specifically
+          if (url.hostname.includes('spreadshop') || url.hostname.includes('spreadshirt')) {
+            window.trackEvent('outbound_spreadshop_click', {
+              link_url: target.href,
+              link_text: target.textContent,
+              link_domain: url.hostname
+            });
+          } else {
+            // Track other outbound clicks
+            window.trackEvent('outbound_click', {
+              link_url: target.href,
+              link_domain: url.hostname
+            });
+          }
+        }
+      });
+    `}></script>
+  </>
+)}
