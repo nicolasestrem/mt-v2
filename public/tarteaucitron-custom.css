@@ -1,9 +1,9 @@
 /* Custom positioning for tarteaucitron elements - side by side layout */
 
-/* Position the cookie icon on the far left */
+/* Position the cookie icon on the far left, stuck to bottom */
 #tarteaucitronIcon {
     left: 20px;
-    bottom: 20px;
+    bottom: 0;
 }
 
 /* Position the alert notification to the right of the icon (approximately 80px for icon + spacing) */
@@ -12,7 +12,7 @@
 html body #tarteaucitronAlertSmall {
     left: 100px; /* Position to the right of the icon */
     right: auto;
-    bottom: 20px; /* Same level as icon */
+    bottom: 0; /* Stick to bottom */
     margin-left: 0;
     margin-right: auto;
     max-width: 350px;
@@ -22,21 +22,21 @@ html body #tarteaucitronAlertSmall {
 html body #tarteaucitronRoot #tarteaucitronAlertSmall {
     left: 100px; /* Position to the right of the icon */
     right: auto;
-    bottom: 20px; /* Same level as icon */
+    bottom: 0; /* Stick to bottom */
 }
 
 /* Target when it has the bottom orientation class */
 html body #tarteaucitronAlertSmall.tarteaucitronAlertSmallBottom {
     left: 100px; /* Position to the right of the icon */
     right: auto;
-    bottom: 20px; /* Same level as icon */
+    bottom: 0; /* Stick to bottom */
 }
 
 /* Target with all possible selector combinations for maximum coverage */
 html body div#tarteaucitronRoot div#tarteaucitronAlertSmall.tarteaucitronAlertSmallBottom {
     left: 100px; /* Position to the right of the icon */
     right: auto;
-    bottom: 20px; /* Same level as icon */
+    bottom: 0; /* Stick to bottom */
 }
 
 /* Fix animations to slide from left instead of right */
@@ -77,7 +77,7 @@ html body #tarteaucitronAlertSmall[style] {
 #tarteaucitronAlertSmall#tarteaucitronAlertSmall {
     left: 100px; /* Position to the right of the icon */
     right: auto;
-    bottom: 20px; /* Same level as icon */
+    bottom: 0; /* Stick to bottom */
 }
 
 /* Move the tarteaucitron manager panel to the left side */
