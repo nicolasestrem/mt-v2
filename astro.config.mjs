@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://mobilitytrailblazers.de',
   output: 'static',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/danke-') })],
   vite: {
     plugins: [tailwindcss()],
     build: {

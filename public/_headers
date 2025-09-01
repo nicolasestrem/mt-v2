@@ -7,7 +7,7 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()
   
   # Content Security Policy
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://widgets.sociablekit.com https://www.linkedin.com https://platform.linkedin.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://api.web3forms.com https://widgets.sociablekit.com; frame-src 'self' https://www.linkedin.com https://widgets.sociablekit.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com;
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://widgets.sociablekit.com https://www.linkedin.com https://platform.linkedin.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://api.web3forms.com https://widgets.sociablekit.com https://www.google-analytics.com; frame-src 'self' https://www.linkedin.com https://widgets.sociablekit.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com;
 
 # Cache Control for HTML
 /
@@ -41,6 +41,10 @@
   
 /*.js
   Cache-Control: public, max-age=31536000, immutable
+
+# Thank-you pages - noindex
+/danke-*
+  X-Robots-Tag: noindex
 
 # Preconnect and preload critical resources
 /
