@@ -55,6 +55,8 @@ body {
 	background-color: #F8F0E3;
 	margin: 0;
 	padding: 0;
+	text-rendering: optimizeSpeed;
+	font-kerning: auto;
 }
 
 /* Typography */
