@@ -20,7 +20,7 @@ export default defineConfig({
     }
   },
   build: {
-    inlineStylesheets: 'always',
+    inlineStylesheets: 'auto', // Changed from 'always' to reduce blocking CSS
     assets: '_assets'
   },
   image: {
