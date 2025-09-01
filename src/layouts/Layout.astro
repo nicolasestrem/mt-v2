@@ -51,8 +51,8 @@ const isHomepage = Astro.url.pathname === '/';
 		<!-- Preload critical images for homepage only -->
 		{isHomepage && (
 			<>
-				<link rel="preload" as="image" href="/images/about/fernsehturm-berlin.jpg" fetchpriority="high">
-				<link rel="preload" as="image" href="/images/logo.webp">
+				<link rel="preload" as="image" href="/images/about/fernsehturm-berlin.jpg" fetchpriority="high" media="(min-width: 768px)">
+				<link rel="preload" as="image" href="/images/logo.webp" fetchpriority="high">
 			</>
 		)}
 		
