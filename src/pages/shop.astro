@@ -25,7 +25,7 @@ import products from '../data/shop-products.json';
 				{products.length > 0 ? (
 					<div class="products-grid">
 						{products.map((product) => (
-							<a href={`${product.url}?utm_source=mobilitytrailblazers&utm_medium=website&utm_campaign=shop-products`} 
+							<a href={`${product.url}${product.url.includes('?') ? '&' : '?'}utm_source=mobilitytrailblazers&utm_medium=website&utm_campaign=shop-products`} 
 							   target="_blank" 
 							   rel="noopener noreferrer"
 							   class="product-card" 
