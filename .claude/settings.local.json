@@ -9,7 +9,17 @@
       "mcp__kapture__elements",
       "mcp__sequential-thinking__sequentialthinking",
       "Bash(git checkout:*)",
-      "WebFetch(domain:award-mobility-trailblazers.myspreadshop.de)"
+      "WebFetch(domain:award-mobility-trailblazers.myspreadshop.de)",
+      "Read(C:\\Users\\nicol\\.claude\\projects/**)",
+      "Read(C:\\Users\\nicol\\.claude\\projects\\C--Users-nicol-Desktop-mt-v2/**)",
+      "Read(C:\\Users\\nicol\\.local/**)",
+      "Read(C:\\Users\\nicol\\.local\\share/**)",
+      "Read(C:\\Users\\nicol\\.local\\share\\claude/**)",
+      "Bash(ls:*)",
+      "Read(C:\\Users\\nicol\\AppData\\Roaming\\Claude/**)",
+      "Read(C:\\Users\\nicol\\AppData\\Roaming\\Claude/**)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)"
     ],
     "deny": [],
     "ask": []
