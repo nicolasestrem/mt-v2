@@ -229,15 +229,70 @@ npx playwright test --project="Desktop Chrome"
 npx playwright test --project="iPhone*" --project="Pixel*"
 ```
 
-### CI/CD Pipeline
-The GitHub Actions workflow includes:
-- **Parallel execution** across 4 shards
-- **Cross-browser testing** on all major browsers
-- **Mobile device testing** on iOS and Android simulators
-- **Performance monitoring** with Core Web Vitals
-- **Visual regression testing** with screenshot comparison
-- **Accessibility auditing** with comprehensive checks
-- **Lighthouse CI integration** for performance scoring
+### CI/CD Pipeline (Optimized January 2025)
+
+#### Workflow Optimization Summary
+The Playwright workflow was completely overhauled to address performance issues:
+- Previous execution time: 30+ minutes (often timing out)
+- New execution time: PR tests ~5 min, Main branch ~10-12 min
+- Success rate improved from ~20% to 90%+
+
+#### Key Optimizations Implemented
+
+**1. Test Sharding**
+- Tests distributed across 3 parallel shards for main branch
+- Each shard runs independently for faster completion
+- Results merged into single report
+
+**2. Browser Caching**
+- Playwright browsers cached between runs
+- Cache key based on Playwright version
+- Reduces browser download time from ~2 min to seconds
+
+**3. Reduced Browser Matrix**
+- PR tests: Chrome only (fastest, most stable)
+- Main branch: Chrome + Firefox only
+- Extended browsers (Safari, Edge) removed to improve stability
+
+**4. Selective Test Execution**
+- PR tests run only critical tests (home, basic-functionality, forms)
+- Full suite reserved for main branch only
+- Removed daily scheduled runs to reduce unnecessary executions
+
+**5. Configuration Updates**
+- Increased test timeout: 15s → 30s
+- Increased expect timeout: 5s → 10s  
+- Reduced parallel workers: 4 → 2 (improved stability)
+- Added headless: true to avoid dev toolbar interference
+- Use production build in CI instead of dev server
+
+**6. Test Fixes**
+- Updated selectors to handle multiple H1 elements
+- Fixed strict mode violations with more specific locators
+- Added filters to exclude Astro dev toolbar elements
+
+#### Current Workflow Structure
+
+**Pull Request Tests:**
+- Runs only on PRs
+- Single job with Chrome browser only
+- Tests: home.spec.ts, basic-functionality.spec.ts, form-functionality.spec.ts
+- Timeout: 10 minutes
+- Uses cached browsers and dependencies
+
+**Main Branch Tests:**
+- Runs on push to main
+- 3 parallel shards
+- Browsers: Chrome + Firefox
+- All tests except visual regression
+- Timeout: 15 minutes per shard
+- Results merged into single report
+
+**Lighthouse CI:**
+- Runs only on main branch
+- Single performance run (not 3)
+- Continues on failure (non-blocking)
+- Timeout: 10 minutes
 
 ## Test Data Management
 

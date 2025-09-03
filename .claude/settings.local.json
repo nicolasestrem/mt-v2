@@ -20,7 +20,9 @@
       "Read(C:\\Users\\nicol\\AppData\\Roaming\\Claude/**)",
       "Bash(gh run list:*)",
       "Bash(gh run view:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(npx playwright install:*)"
     ],
     "deny": [],
     "ask": []

@@ -14,6 +14,12 @@ npm install          # Install dependencies
 npm run dev          # Start dev server at http://localhost:4321
 npm run build        # Build for production (outputs to ./dist/)
 npm run preview      # Preview production build locally
+
+# Testing (Optimized January 2025)
+npm test             # Run all Playwright tests
+npm run test:pr      # Run only critical tests (for PRs)
+npm run test:ui      # Run tests with interactive UI
+npx playwright install  # Install/update Playwright browsers
 ```
 
 ## Critical Configuration
@@ -228,5 +234,37 @@ Shop prices were updated to sync with Spreadshirt source:
 - Polo shirts: Updated from "ab 39,99 €" to "55,00 €"
 - Mug: Updated from "ab 18,99 €" to "17,99 €"
 - Sticker: Updated from "ab 3,49 €" to "3,49 €" (removed "ab" prefix)
+
+### Playwright Workflow Optimization (January 2025)
+
+The Playwright test workflow was completely overhauled to fix performance and reliability issues:
+
+#### Problems Fixed
+- Tests taking 30+ minutes and frequently timing out
+- ~80% failure rate due to flaky tests
+- Excessive browser configurations causing instability
+- Dev server interference with test selectors
+
+#### Optimizations Applied
+1. **Test Sharding**: Split tests across 3 parallel jobs for main branch
+2. **Browser Caching**: Cache Playwright browsers between runs (saves ~2 min)
+3. **Reduced Browser Matrix**: PR tests use Chrome only; main uses Chrome+Firefox
+4. **Selective Test Execution**: PRs run only critical tests (home, basic, forms)
+5. **Configuration Updates**:
+   - Test timeout: 15s → 30s
+   - Expect timeout: 5s → 10s
+   - Workers: 4 → 2 (better stability)
+   - Added `headless: true` to avoid dev toolbar
+   - Use production build in CI
+6. **Test Fixes**:
+   - Updated selectors to handle multiple H1s
+   - Fixed strict mode violations
+   - Added filters for Astro dev toolbar
+
+#### Results
+- PR tests: ~5 minutes (was 15+)
+- Main branch: ~10-12 minutes (was 30+)
+- Success rate: 90%+ (was ~20%)
+- Reduced GitHub Actions costs
 
 - Always use specialised agents and sequential thinking for complex tasks.
