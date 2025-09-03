@@ -19,7 +19,8 @@
       "Read(C:\\Users\\nicol\\AppData\\Roaming\\Claude/**)",
       "Read(C:\\Users\\nicol\\AppData\\Roaming\\Claude/**)",
       "Bash(gh run list:*)",
-      "Bash(gh run view:*)"
+      "Bash(gh run view:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []

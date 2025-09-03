@@ -4,12 +4,268 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icons from '../components/Icons.astro';
 import products from '../data/shop-products.json';
+import '../styles/shop.css';
+
+// SEO Meta Data
+const pageTitle = "Mobility Trailblazers Shop - Nachhaltige Merchandise & Premium Poloshirts";
+const pageDescription = "Entdecken Sie exklusive Mobility Trailblazers Merchandise - nachhaltig produzierte Craft Core Unify Poloshirts, Tassen & Sticker. Unterstützen Sie die Mobilitätswende mit hochwertigen Produkten. ✓ On-Demand Produktion ✓ 30 Tage Rückgaberecht";
+const canonicalURL = "https://mobilitytrailblazers.de/shop";
+
+// Enhanced product descriptions for SEO
+const enhancedDescriptions = {
+  "Mobility Trailblazers Pionierserie I": "Exklusives Design der Pionierserie I - Symbol für Mut und Innovation in der Mobilitätswende. Perfekt für Mobility-Professionals und Nachhaltigkeitsexperten.",
+  "Mobilität durch Mut - Mobilitas per Audaciam": "Unser Leitmotiv als hochwertiges Poloshirt. Das lateinische Motto symbolisiert den Mut zur Veränderung im Verkehrssektor.",
+  "Logo Mobility Trailblazers": "Das offizielle Mobility Trailblazers Logo - Erkennungszeichen für Vorreiter der nachhaltigen Mobilität."
+};
+
+// Robust price parsing function with fallback
+function parsePrice(priceString: string): string {
+  try {
+    // Extract numeric value with comma/period handling
+    const match = priceString.match(/[\d,]+(?:[.,]\d{1,2})?/);
+    if (match) {
+      // Replace comma with period for decimal parsing
+      const normalizedPrice = match[0].replace(',', '.');
+      const parsedValue = parseFloat(normalizedPrice);
+      
+      // Validate the parsed value
+      if (!isNaN(parsedValue) && parsedValue >= 0) {
+        return parsedValue.toFixed(2);
+      }
+    }
+    
+    // Fallback to 0.00 if parsing fails
+    console.warn(`Failed to parse price: "${priceString}"`);
+    return "0.00";
+  } catch (error) {
+    console.error(`Error parsing price: "${priceString}"`, error);
+    return "0.00";
+  }
+}
+
+// Validate product data structure
+function validateProduct(product: any): boolean {
+  const requiredFields = ['name', 'description', 'price', 'image', 'url'];
+  return requiredFields.every(field => 
+    product.hasOwnProperty(field) && 
+    product[field] !== null && 
+    product[field] !== undefined && 
+    product[field] !== ''
+  );
+}
+
+// Safe products with validation
+const validProducts = products.filter(product => {
+  const isValid = validateProduct(product);
+  if (!isValid) {
+    console.warn('Invalid product data detected:', product);
+  }
+  return isValid;
+});
+
+// Product Schema generation with error handling
+const productSchema = validProducts.map((product, index) => ({
+  "@type": "Product",
+  "position": index + 1,
+  "name": product.name + " - " + product.description,
+  "description": enhancedDescriptions[product.description] || product.description,
+  "image": product.image,
+  "brand": {
+    "@type": "Brand",
+    "name": "Mobility Trailblazers"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": product.url,
+    "price": parsePrice(product.price),
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "Spreadshirt"
+    },
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "3.99",
+        "currency": "EUR"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "businessDays": {
+          "@type": "QuantitativeValue",
+          "minValue": 3,
+          "maxValue": 5
+        }
+      }
+    }
+  }
+}));
+
+const shopSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Mobility Trailblazers Shop Kollektion",
+  "description": "Nachhaltig produzierte Merchandise-Artikel für Vorreiter der Mobilitätswende",
+  "numberOfItems": validProducts.length,
+  "itemListElement": productSchema
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://mobilitytrailblazers.de/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Shop",
+      "item": "https://mobilitytrailblazers.de/shop"
+    }
+  ]
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie werden die Mobility Trailblazers Produkte hergestellt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Alle Produkte werden on-demand von Spreadshirt produziert, wodurch Überproduktion vermieden und Nachhaltigkeit gefördert wird."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie lange dauert die Lieferung?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die Lieferung erfolgt innerhalb von 3-5 Werktagen direkt von Spreadshirt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich die Produkte zurückgeben?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, Sie haben 30 Tage Rückgaberecht bei Nichtgefallen über Spreadshirt."
+      }
+    }
+  ]
+};
+
+// Schema validation function to ensure safe JSON.stringify
+function validateSchema(schema: any): boolean {
+  if (!schema || typeof schema !== 'object') return false;
+  if (!schema['@context'] || !schema['@type']) return false;
+  
+  // Basic type checking for common schema properties
+  const allowedTypes = ['string', 'number', 'boolean', 'object'];
+  
+  function validateObject(obj: any, isRoot = false): boolean {
+    for (const key in obj) {
+      const value = obj[key];
+      if (value === null || value === undefined) continue;
+      
+      const valueType = typeof value;
+      
+      if (Array.isArray(value)) {
+        // Recursively validate array items
+        for (const item of value) {
+          if (typeof item === 'object' && item !== null) {
+            // For nested schema objects, check if they have @type
+            if (item['@type'] && !validateObject(item)) return false;
+            // Otherwise just validate as regular object
+            else if (!item['@type'] && !validateObject(item)) return false;
+          }
+        }
+      } else if (valueType === 'object') {
+        // Skip validation for @context as it's a special case
+        if (key === '@context') continue;
+        // Recursively validate nested objects
+        if (!validateObject(value)) return false;
+      } else if (!allowedTypes.includes(valueType)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  return validateObject(schema, true);
+}
+
+// Safe JSON stringify with validation
+function safeJsonStringify(schema: any): string {
+  try {
+    if (!validateSchema(schema)) {
+      console.warn('Schema validation failed, returning empty object');
+      return '{}';
+    }
+    return JSON.stringify(schema);
+  } catch (error) {
+    console.error('Error stringifying schema:', error);
+    return '{}';
+  }
+}
 ---
 
-<Layout title="Shop - Mobility Trailblazers">
+<Layout 
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonicalURL}
+  ogType="website"
+  ogImage="https://mobilitytrailblazers.de/og-shop.jpg"
+>
+  <Fragment slot="head">
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://image.spreadshirtmedia.net" crossorigin>
+    <link rel="dns-prefetch" href="https://award-mobility-trailblazers.myspreadshop.de">
+    
+    <!-- Shop Schema Markup -->
+    <script type="application/ld+json" set:html={safeJsonStringify(shopSchema)} />
+    
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json" set:html={safeJsonStringify(breadcrumbSchema)} />
+    
+    <!-- FAQ Schema -->
+    <script type="application/ld+json" set:html={safeJsonStringify(faqSchema)} />
+    
+    <!-- Additional Meta Tags -->
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="product:brand" content="Mobility Trailblazers" />
+    <meta property="product:availability" content="in stock" />
+    <meta property="product:condition" content="new" />
+    <meta property="product:price:currency" content="EUR" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+  </Fragment>
+
 	<Header />
 	
 	<main class="shop-page">
+		<!-- Breadcrumb Navigation -->
+		<nav aria-label="Breadcrumb" class="breadcrumb">
+			<div class="container">
+				<ol>
+					<li><a href="/">Home</a></li>
+					<li><span aria-current="page">Shop</span></li>
+				</ol>
+			</div>
+		</nav>
+
 		<div class="shop-hero">
 			<div class="container">
 				<h1>Mobility Trailblazers Shop</h1>
@@ -19,30 +275,85 @@ import products from '../data/shop-products.json';
 
 		<div class="products-section">
 			<div class="container">
-				<h2>Unsere Kollektion</h2>
-				<p class="collection-note">Alle Produkte werden über unseren offiziellen Spreadshirt-Shop verkauft und versendet.</p>
+				<h2>Unsere Premium Kollektion</h2>
+				<p class="collection-note">
+					Nachhaltig produzierte Merchandise-Artikel für Vorreiter der Mobilitätswende. 
+					Alle Produkte werden on-demand über unseren offiziellen Spreadshirt-Shop gefertigt und versendet.
+				</p>
 				
 				{products.length > 0 ? (
-					<div class="products-grid">
-						{products.map((product) => (
-							<a href={`${product.url}${product.url.includes('?') ? '&' : '?'}utm_source=mobilitytrailblazers&utm_medium=website&utm_campaign=shop-products`} 
-							   target="_blank" 
-							   rel="noopener noreferrer"
-							   class="product-card" 
-							   data-track="spreadshop-product">
-								<div class="product-image">
-									<img src={product.image} alt={product.name} loading="lazy" />
-									<div class="product-overlay">
-										<span class="view-product">Produkt ansehen →</span>
+					<div class="products-grid" role="list">
+						{validProducts.length > 0 ? validProducts.map((product, index) => (
+							<article 
+								class="product-card-wrapper" 
+								role="listitem"
+								itemscope 
+								itemtype="https://schema.org/Product"
+							>
+								<a href={`${product.url}${product.url.includes('?') ? '&' : '?'}utm_source=mobilitytrailblazers&utm_medium=website&utm_campaign=shop-products`} 
+								   target="_blank" 
+								   rel="noopener noreferrer"
+								   class="product-card" 
+								   data-track="spreadshop-product"
+								   aria-label={`${product.name} - ${product.description}, Preis: ${product.price}, Jetzt bei Spreadshirt ansehen`}>
+									<div class="product-image">
+										<img 
+											src={product.image}
+											alt={`${product.name} - ${product.description} - Nachhaltige Mobility Trailblazers Merchandise`}
+											loading={index < 3 ? "eager" : "lazy"}
+											fetchpriority={index < 3 ? "high" : "auto"}
+											width="500"
+											height="500"
+											itemprop="image"
+										/>
+										<div class="product-overlay">
+											<span class="view-product">Produkt ansehen →</span>
+										</div>
+									</div>
+									<div class="product-info">
+										<h3 itemprop="name">{product.name}</h3>
+										<p class="product-description" itemprop="description">
+											{product.description}
+											{enhancedDescriptions[product.description] && (
+												<span class="product-description-extended">
+													{" - " + enhancedDescriptions[product.description]}
+												</span>
+											)}
+										</p>
+										<div class="product-meta">
+											{product.price && (
+												<p class="product-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+													<span itemprop="price">{product.price}</span>
+													<meta itemprop="priceCurrency" content="EUR" />
+													<meta itemprop="availability" content="https://schema.org/InStock" />
+												</p>
+											)}
+											<div class="product-badges">
+												<span class="badge badge-sustainable">Nachhaltig</span>
+												<span class="badge badge-ondemand">On-Demand</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</article>
+						)) : (
+							<div class="products-fallback">
+								<div class="fallback-content">
+									<Icons name="alert" />
+									<h3>Produktdaten werden geladen...</h3>
+									<p>Es gab ein Problem beim Laden der Produktdaten. Bitte besuchen Sie unseren Shop direkt.</p>
+									<div class="shop-cta">
+										<a href="https://award-mobility-trailblazers.myspreadshop.de" 
+										   target="_blank" 
+										   rel="noopener noreferrer" 
+										   class="shop-button">
+											<Icons name="external-link" />
+											<span>Zum Spreadshirt Shop</span>
+										</a>
 									</div>
 								</div>
-								<div class="product-info">
-									<h3>{product.name}</h3>
-									<p class="product-description">{product.description}</p>
-									{product.price && <p class="product-price">{product.price}</p>}
-								</div>
-							</a>
-						))}
+							</div>
+						)}
 					</div>
 				) : (
 					<div class="products-fallback">
@@ -86,6 +397,31 @@ import products from '../data/shop-products.json';
 			</div>
 		</div>
 
+		<!-- FAQ Section -->
+		<section class="shop-faq">
+			<div class="container">
+				<h2>Häufige Fragen zum Shop</h2>
+				<div class="faq-grid">
+					<div class="faq-item">
+						<h3>Wie werden die Produkte hergestellt?</h3>
+						<p>Alle Mobility Trailblazers Produkte werden on-demand von Spreadshirt produziert. Dies reduziert Überproduktion und fördert nachhaltige Herstellungsprozesse.</p>
+					</div>
+					<div class="faq-item">
+						<h3>Wie lange dauert die Lieferung?</h3>
+						<p>Die Lieferung erfolgt innerhalb von 3-5 Werktagen direkt von Spreadshirt. Der Versand erfolgt klimaneutral.</p>
+					</div>
+					<div class="faq-item">
+						<h3>Welche Zahlungsmethoden werden akzeptiert?</h3>
+						<p>Spreadshirt akzeptiert alle gängigen Zahlungsmethoden inkl. PayPal, Kreditkarte und Sofortüberweisung.</p>
+					</div>
+					<div class="faq-item">
+						<h3>Gibt es ein Rückgaberecht?</h3>
+						<p>Ja, Sie haben 30 Tage Rückgaberecht bei Nichtgefallen. Die Abwicklung erfolgt problemlos über Spreadshirt.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
 		<div class="shop-info">
 			<div class="container">
 				<div class="info-grid">
@@ -117,404 +453,94 @@ import products from '../data/shop-products.json';
 	<Footer />
 </Layout>
 
-<style>
-	.shop-page {
-		padding-top: 100px;
-		min-height: 100vh;
-		background: #F8F0E3;
-	}
-
-	.shop-hero {
-		background: linear-gradient(135deg, #003C3D 0%, #004C5F 100%);
-		padding: 3rem 0;
-		text-align: center;
-		margin-bottom: 4rem;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.shop-hero::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: url('/images/pattern.svg') repeat;
-		opacity: 0.05;
-	}
-
-	.shop-hero h1 {
-		font-family: 'Poppins', sans-serif;
-		font-size: 3rem;
-		font-weight: 700;
-		background: linear-gradient(135deg, #FFF8F0DD 0%, #A4DCD5 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-		margin-bottom: 1rem;
-		text-transform: uppercase;
-		letter-spacing: 2px;
-		position: relative;
-	}
-
-	.shop-hero .subtitle {
-		font-size: 1.2rem;
-		color: #F8F0E3;
-		max-width: 600px;
-		margin: 0 auto;
-		opacity: 0.95;
-		font-family: 'Roboto', sans-serif;
-		position: relative;
-	}
-
-	.products-section {
-		padding: 0 1rem 4rem;
-	}
-
-	.products-section h2 {
-		font-family: 'Trebuchet MS', sans-serif;
-		font-size: 2.5rem;
-		color: #004C5F;
-		text-align: center;
-		margin-bottom: 1rem;
-	}
-
-	.collection-note {
-		text-align: center;
-		color: #4a5568;
-		font-size: 1rem;
-		margin-bottom: 3rem;
-		font-style: italic;
-		font-family: 'Roboto', sans-serif;
-	}
-
-	.products-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-		gap: 2rem;
-		max-width: 1200px;
-		margin: 0 auto 3rem;
-	}
-
-	.product-card {
-		background: white;
-		border-radius: 12px;
-		overflow: hidden;
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-		transition: all 0.3s ease;
-		text-decoration: none;
-		display: block;
-	}
-
-	.product-card:hover {
-		transform: translateY(-5px);
-		box-shadow: 0 8px 35px rgba(0, 0, 0, 0.12);
-	}
-
-	.product-image {
-		position: relative;
-		padding-top: 100%; /* 1:1 aspect ratio */
-		overflow: hidden;
-		background: #f5f5f5;
-	}
-
-	.product-image img {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform 0.3s ease;
-	}
-
-	.product-card:hover .product-image img {
-		transform: scale(1.05);
-	}
-
-	.product-overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: linear-gradient(135deg, rgba(193, 105, 60, 0.9), rgba(0, 76, 95, 0.9));
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		opacity: 0;
-		transition: opacity 0.3s ease;
-	}
-
-	.product-card:hover .product-overlay {
-		opacity: 1;
-	}
-
-	.view-product {
-		color: white;
-		font-size: 1.1rem;
-		font-weight: 600;
-		font-family: 'Cabin', sans-serif;
-	}
-
-	.product-info {
-		padding: 1.5rem;
-	}
-
-	.product-info h3 {
-		font-family: 'Cabin', sans-serif;
-		font-size: 1.1rem;
-		color: #004C5F;
-		margin-bottom: 0.3rem;
-		font-weight: 600;
-		line-height: 1.3;
-	}
-
-	.product-description {
-		font-family: 'Roboto', sans-serif;
-		font-size: 0.85rem;
-		color: #4a5568;
-		margin-bottom: 0.5rem;
-		line-height: 1.3;
-	}
-
-	.product-price {
-		font-family: 'Roboto', sans-serif;
-		font-size: 1.1rem;
-		color: #C1693C;
-		font-weight: 600;
-		margin: 0;
-	}
-
-	/* Fallback display when products can't be loaded */
-	.products-fallback {
-		background: white;
-		border-radius: 20px;
-		padding: 4rem 2rem;
-		max-width: 800px;
-		margin: 0 auto 3rem;
-		text-align: center;
-		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-	}
-
-	.fallback-content i {
-		font-size: 4rem;
-		color: #C1693C;
-		margin-bottom: 1.5rem;
-	}
-
-	.fallback-content h3 {
-		font-family: 'Trebuchet MS', sans-serif;
-		font-size: 1.8rem;
-		color: #004C5F;
-		margin-bottom: 1rem;
-	}
-
-	.fallback-content p {
-		font-family: 'Roboto', sans-serif;
-		font-size: 1.1rem;
-		color: #4a5568;
-		margin-bottom: 2rem;
-		max-width: 500px;
-		margin-left: auto;
-		margin-right: auto;
-		line-height: 1.6;
-	}
-
-	.product-categories {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-		gap: 1rem;
-		max-width: 500px;
-		margin: 0 auto;
-	}
-
-	.category {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 1rem;
-		background: #F8F0E3;
-		border-radius: 8px;
-		transition: all 0.3s ease;
-	}
-
-	.category:hover {
-		background: #efe5d3;
-		transform: translateY(-3px);
-	}
-
-	.category i {
-		font-size: 1.8rem;
-		color: #C1693C;
-	}
-
-	.category span {
-		font-family: 'Cabin', sans-serif;
-		font-size: 0.9rem;
-		color: #004C5F;
-		font-weight: 600;
-	}
-
-	.shop-cta {
-		text-align: center;
-		margin-top: 3rem;
-	}
-
-	.shop-button {
-		display: inline-flex;
-		align-items: center;
-		gap: 1rem;
-		padding: 1.2rem 2.5rem;
-		background: linear-gradient(135deg, #C1693C, #d17f52);
-		color: white;
-		text-decoration: none;
-		border-radius: 50px;
-		font-family: 'Cabin', sans-serif;
-		font-size: 1.15rem;
-		font-weight: 600;
-		transition: all 0.3s ease;
-		box-shadow: 0 5px 20px rgba(193, 105, 60, 0.3);
-	}
-
-	.shop-button:hover {
-		transform: translateY(-3px);
-		box-shadow: 0 10px 35px rgba(193, 105, 60, 0.4);
-		background: linear-gradient(135deg, #d17f52, #C1693C);
-	}
-
-	.shop-button i {
-		transition: transform 0.3s ease;
-	}
-
-	.shop-button:hover i {
-		transform: translateX(5px);
-	}
-
-	.shop-info {
-		padding: 3rem 0;
-		background: white;
-	}
-
-	.info-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 1.5rem;
-		max-width: 1100px;
-		margin: 0 auto;
-	}
-
-	.info-card {
-		text-align: center;
-		padding: 2rem 1.5rem;
-		background: #F8F0E3;
-		border-radius: 12px;
-		transition: transform 0.3s ease;
-	}
-
-	.info-card:hover {
-		transform: translateY(-5px);
-	}
-
-	.info-card i {
-		font-size: 2.5rem;
-		color: #C1693C;
-		margin-bottom: 1rem;
-	}
-
-	.info-card h3 {
-		font-family: 'Trebuchet MS', sans-serif;
-		font-size: 1.3rem;
-		color: #004C5F;
-		margin-bottom: 0.5rem;
-	}
-
-	.info-card p {
-		font-family: 'Roboto', sans-serif;
-		color: #4a5568;
-		font-size: 0.95rem;
-		line-height: 1.5;
-	}
-
-	/* Mobile styles */
-	@media (max-width: 768px) {
-		.shop-hero h1 {
-			font-size: 2rem;
-		}
-
-		.shop-hero .subtitle {
-			font-size: 1rem;
-			padding: 0 1rem;
-		}
-
-		.products-section h2 {
-			font-size: 2rem;
-		}
-
-		.products-grid {
-			grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-			gap: 1rem;
-		}
-
-		.product-info {
-			padding: 1rem;
-		}
-
-		.product-info h3 {
-			font-size: 0.95rem;
-		}
-
-		.shop-button {
-			padding: 1rem 2rem;
-			font-size: 1rem;
-			width: 90%;
-			justify-content: center;
-		}
-
-		.info-grid {
-			grid-template-columns: 1fr;
-			gap: 1rem;
-		}
-
-		.info-card {
-			padding: 1.5rem;
-		}
-	}
-</style>
+<!-- CSP Header Recommendations for external CDN content:
+Content-Security-Policy: 
+  default-src 'self'; 
+  img-src 'self' https://image.spreadshirtmedia.net; 
+  script-src 'self' 'unsafe-inline'; 
+  style-src 'self' 'unsafe-inline';
+-->
 
 <!-- Client-side enhancement to fetch fresh products -->
-<script>
-	// Optional: Add client-side fetching for dynamic updates
-	document.addEventListener('DOMContentLoaded', async () => {
-		// Check if we need to update products
-		const productsGrid = document.querySelector('.products-grid');
-		if (!productsGrid || productsGrid.children.length > 0) return;
-		
-		// If no products were loaded at build time, try client-side
-		try {
-			// Note: This will likely fail due to CORS, but included for completeness
-			const response = await fetch('https://award-mobility-trailblazers.myspreadshop.de/');
-			if (!response.ok) throw new Error('Failed to fetch');
-			
-			// Process would go here if CORS allowed
-		} catch (error) {
-			console.log('Client-side product fetch not available due to CORS');
-		}
-	});
-	
-	// Track Spreadshop clicks specifically
-	document.addEventListener('click', function(e) {
-		const target = e.target.closest('[data-track="spreadshop-product"], [data-track="spreadshop-main"]');
-		if (target && typeof window.trackEvent === 'function') {
-			const trackType = target.dataset.track;
-			window.trackEvent('outbound_spreadshop_click', {
-				event_category: 'engagement',
-				event_label: trackType,
-				link_url: target.href,
-				link_text: target.textContent.trim()
+<script defer>
+	// Lazy-load analytics functionality
+	function initializeAnalytics() {
+		// Enhanced tracking with e-commerce data
+		// Track product impressions
+		const productCards = document.querySelectorAll('.product-card');
+		const products = Array.from(productCards).map((card, index) => ({
+			name: card.querySelector('h3')?.textContent || '',
+			price: card.querySelector('.product-price span')?.textContent || '',
+			position: index + 1
+		}));
+
+		if (typeof window.trackEvent === 'function' && products.length > 0) {
+			window.trackEvent('view_item_list', {
+				event_category: 'ecommerce',
+				item_list_name: 'Shop Page',
+				items: products
 			});
 		}
+
+		// Track product clicks
+		document.addEventListener('click', function(e) {
+			const target = e.target.closest('[data-track="spreadshop-product"], [data-track="spreadshop-main"]');
+			if (target && typeof window.trackEvent === 'function') {
+				const trackType = target.dataset.track;
+				const productName = target.querySelector('h3')?.textContent || 'Shop Main';
+				const productPrice = target.querySelector('.product-price span')?.textContent || '';
+				
+				window.trackEvent('select_item', {
+					event_category: 'ecommerce',
+					event_label: trackType,
+					item_list_name: 'Shop Page',
+					items: [{
+						name: productName,
+						price: productPrice
+					}],
+					link_url: target.href
+				});
+			}
+		});
+
+		// Intersection Observer for lazy loading enhancement
+		if ('IntersectionObserver' in window) {
+			const imageObserver = new IntersectionObserver((entries, observer) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						const img = entry.target;
+						if (img.dataset.src && !img.src) {
+							img.src = img.dataset.src;
+							img.removeAttribute('data-src');
+							observer.unobserve(img);
+						}
+					}
+				});
+			}, {
+				rootMargin: '50px 0px',
+				threshold: 0.01
+			});
+
+			document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+				imageObserver.observe(img);
+			});
+		}
+	}
+
+	// Initialize analytics when user interacts or after delay
+	let analyticsInitialized = false;
+	function lazyLoadAnalytics() {
+		if (!analyticsInitialized) {
+			analyticsInitialized = true;
+			initializeAnalytics();
+		}
+	}
+
+	// Load analytics on user interaction or after 3 seconds
+	['scroll', 'click', 'touchstart'].forEach(event => {
+		document.addEventListener(event, lazyLoadAnalytics, { once: true, passive: true });
 	});
+
+	// Fallback: Load after 3 seconds if no user interaction
+	setTimeout(lazyLoadAnalytics, 3000);
 </script>
