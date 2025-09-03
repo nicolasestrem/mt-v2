@@ -18,8 +18,53 @@ const enhancedDescriptions = {
   "Logo Mobility Trailblazers": "Das offizielle Mobility Trailblazers Logo - Erkennungszeichen für Vorreiter der nachhaltigen Mobilität."
 };
 
-// Product Schema generation
-const productSchema = products.map((product, index) => ({
+// Robust price parsing function with fallback
+function parsePrice(priceString: string): string {
+  try {
+    // Extract numeric value with comma/period handling
+    const match = priceString.match(/[\d,]+(?:[.,]\d{1,2})?/);
+    if (match) {
+      // Replace comma with period for decimal parsing
+      const normalizedPrice = match[0].replace(',', '.');
+      const parsedValue = parseFloat(normalizedPrice);
+      
+      // Validate the parsed value
+      if (!isNaN(parsedValue) && parsedValue >= 0) {
+        return parsedValue.toFixed(2);
+      }
+    }
+    
+    // Fallback to 0.00 if parsing fails
+    console.warn(`Failed to parse price: "${priceString}"`);
+    return "0.00";
+  } catch (error) {
+    console.error(`Error parsing price: "${priceString}"`, error);
+    return "0.00";
+  }
+}
+
+// Validate product data structure
+function validateProduct(product: any): boolean {
+  const requiredFields = ['name', 'description', 'price', 'image', 'url'];
+  return requiredFields.every(field => 
+    product.hasOwnProperty(field) && 
+    product[field] !== null && 
+    product[field] !== undefined && 
+    product[field] !== ''
+  );
+}
+
+// Safe products with validation
+const validProducts = products.filter(product => {
+  const isValid = validateProduct(product);
+  if (!isValid) {
+    console.warn('Invalid product data detected:', product);
+  }
+  return isValid;
+});
+
+// Product Schema generation with error handling
+const productSchema = validProducts.map((product, index) => ({
   "@type": "Product",
   "position": index + 1,
   "name": product.name + " - " + product.description,
@@ -32,7 +77,7 @@ const productSchema = products.map((product, index) => ({
   "offers": {
     "@type": "Offer",
     "url": product.url,
-    "price": product.price.replace(/[^\d,]/g, '').replace(',', '.'),
+    "price": parsePrice(product.price),
     "priceCurrency": "EUR",
     "availability": "https://schema.org/InStock",
     "seller": {
@@ -63,7 +108,7 @@ const shopSchema = {
   "@type": "ItemList",
   "name": "Mobility Trailblazers Shop Kollektion",
   "description": "Nachhaltig produzierte Merchandise-Artikel für Vorreiter der Mobilitätswende",
-  "numberOfItems": products.length,
+  "numberOfItems": validProducts.length,
   "itemListElement": productSchema
 };
 
@@ -238,7 +283,7 @@ function safeJsonStringify(schema: any): string {
 				
 				{products.length > 0 ? (
 					<div class="products-grid" role="list">
-						{products.map((product, index) => (
+						{validProducts.length > 0 ? validProducts.map((product, index) => (
 							<article 
 								class="product-card-wrapper" 
 								role="listitem"
@@ -291,7 +336,24 @@ function safeJsonStringify(schema: any): string {
 									</div>
 								</a>
 							</article>
-						))}
+						)) : (
+							<div class="products-fallback">
+								<div class="fallback-content">
+									<Icons name="alert" />
+									<h3>Produktdaten werden geladen...</h3>
+									<p>Es gab ein Problem beim Laden der Produktdaten. Bitte besuchen Sie unseren Shop direkt.</p>
+									<div class="shop-cta">
+										<a href="https://award-mobility-trailblazers.myspreadshop.de" 
+										   target="_blank" 
+										   rel="noopener noreferrer" 
+										   class="shop-button">
+											<Icons name="external-link" />
+											<span>Zum Spreadshirt Shop</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
 				) : (
 					<div class="products-fallback">

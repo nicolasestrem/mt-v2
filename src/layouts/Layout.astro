@@ -55,6 +55,9 @@ const isHomepage = Astro.url.pathname === '/';
 				<link rel="preload" as="image" href="/images/logo.webp" fetchpriority="high">
 			</>
 		)}
+
+		<!-- Page-specific head content -->
+		<slot name="head" />
 		
 		<!-- Inline critical CSS with optimized font loading -->
 		<style>
