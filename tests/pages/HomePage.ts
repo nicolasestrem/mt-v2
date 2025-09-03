@@ -74,9 +74,9 @@ export class HomePage {
   constructor(page: Page) {
     this.page = page;
     
-    // Header elements
-    this.header = page.locator('header');
-    this.navigation = page.locator('nav');
+    // Header elements - use more specific selectors to avoid conflicts
+    this.header = page.locator('header.header').first();
+    this.navigation = page.locator('nav').first();
     this.logo = page.locator('header img, header .logo');
     this.mobileMenuButton = page.locator('.nav-toggle');
     this.navMenu = page.locator('.nav-menu');
