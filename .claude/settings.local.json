@@ -8,7 +8,8 @@
       "mcp__kapture__screenshot",
       "mcp__kapture__elements",
       "mcp__sequential-thinking__sequentialthinking",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "WebFetch(domain:award-mobility-trailblazers.myspreadshop.de)"
     ],
     "deny": [],
     "ask": []
