@@ -22,7 +22,8 @@
       "Bash(gh run view:*)",
       "Bash(grep:*)",
       "Bash(npx playwright test:*)",
-      "Bash(npx playwright install:*)"
+      "Bash(npx playwright install:*)",
+      "mcp__time-server__get_current_time"
     ],
     "deny": [],
     "ask": []
