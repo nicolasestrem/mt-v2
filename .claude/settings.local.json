@@ -23,7 +23,8 @@
       "Bash(grep:*)",
       "Bash(npx playwright test:*)",
       "Bash(npx playwright install:*)",
-      "mcp__time-server__get_current_time"
+      "mcp__time-server__get_current_time",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

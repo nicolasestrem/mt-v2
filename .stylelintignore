@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+.astro/
+.output/
+
+# Public assets
+public/
+
+# Test files
+coverage/
+test-results/
+playwright-report/
+
+# Configuration files
+*.config.js
+*.config.mjs
+*.config.ts
+
+# Third-party styles
+**/*.min.css
+**/vendor/**/*.css
+
+# Generated files
+**/*.generated.css
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

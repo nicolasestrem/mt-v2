@@ -1,0 +1,92 @@
+name: Stylelint
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - '**.css'
+      - '**.astro'
+      - '.stylelintrc.json'
+      - 'package.json'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - '**.css'
+      - '**.astro'
+      - '.stylelintrc.json'
+      - 'package.json'
+
+jobs:
+  stylelint:
+    name: Run Stylelint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 'lts/*'
+        cache: 'npm'
+    
+    # Cache dependencies
+    - name: Get npm cache directory
+      id: npm-cache-dir
+      shell: bash
+      run: echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
+    
+    - name: Cache npm dependencies
+      uses: actions/cache@v4
+      id: npm-cache
+      with:
+        path: ${{ steps.npm-cache-dir.outputs.dir }}
+        key: ${{ runner.os }}-node-stylelint-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-stylelint-
+          ${{ runner.os }}-node-
+    
+    # Cache Stylelint cache
+    - name: Cache Stylelint
+      uses: actions/cache@v4
+      with:
+        path: .stylelintcache
+        key: ${{ runner.os }}-stylelint-${{ hashFiles('**/*.css', '**/*.astro', '.stylelintrc.json') }}
+        restore-keys: |
+          ${{ runner.os }}-stylelint-
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run Stylelint
+      run: npm run lint:css
+      continue-on-error: false
+    
+    - name: Generate Stylelint Report
+      if: always()
+      run: |
+        echo "## Stylelint Report" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        if [ "${{ job.status }}" == "success" ]; then
+          echo "✅ All styles passed Stylelint checks!" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Style issues detected. Please run \`npm run lint:css:fix\` locally to fix auto-fixable issues." >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Checked Files" >> $GITHUB_STEP_SUMMARY
+        echo "- CSS files in \`src/\`" >> $GITHUB_STEP_SUMMARY
+        echo "- Astro component styles" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Comment PR (if failed)
+      if: failure() && github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '❌ **Stylelint Check Failed**\n\nStyle issues were detected in this PR. Please run the following command locally to fix auto-fixable issues:\n\n```bash\nnpm run lint:css:fix\n```\n\nThen review any remaining issues with:\n\n```bash\nnpm run lint:css\n```'
+          })
