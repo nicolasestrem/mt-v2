@@ -25,7 +25,22 @@ const isHomepage = Astro.url.pathname === '/';
 		<meta name="theme-color" content="#F8F0E3" />
 		<!-- Prevent Android's auto-zoom on form focus -->
 		<meta name="format-detection" content="telephone=no" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<!-- Favicon configuration for all platforms -->
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+		<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+		
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="/manifest.json" />
+		
+		<!-- iOS PWA Support -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<meta name="apple-mobile-web-app-title" content="Mobility Trailblazers" />
+		
 		<meta name="generator" content={Astro.generator} />
 		
 		<!-- SEO Component handles all meta tags -->
@@ -63,15 +78,16 @@ const isHomepage = Astro.url.pathname === '/';
 		<style>
 			/* Critical Roboto font-face declarations with font-display: swap */
 			@font-face {
-				font-family: 'Roboto';
+				font-family: Roboto;
 				font-style: normal;
 				font-weight: 400;
 				font-display: swap;
 				src: url('https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Mu4mxK.woff2') format('woff2');
 				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 			}
+
 			@font-face {
-				font-family: 'Roboto';
+				font-family: Roboto;
 				font-style: normal;
 				font-weight: 700;
 				font-display: swap;
@@ -81,7 +97,7 @@ const isHomepage = Astro.url.pathname === '/';
 			
 			/* Critical hero subtitle styles with performance optimizations */
 			.hero-subtitle {
-				font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+				font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 				font-size: 1.25rem;
 				font-weight: 400;
 				margin-bottom: 2rem;
@@ -90,7 +106,7 @@ const isHomepage = Astro.url.pathname === '/';
 				contain: layout style;
 				will-change: auto;
 				font-kerning: auto;
-				text-rendering: optimizeSpeed;
+				text-rendering: optimizespeed;
 			}
 			
 			/* Responsive font sizes */
@@ -171,6 +187,186 @@ const isHomepage = Astro.url.pathname === '/';
 			}
 		})();
 		</script>
+		
+		<!-- Service Worker Registration and PWA Install -->
+		<script is:inline>
+		(function() {
+			// Register service worker
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', function() {
+					navigator.serviceWorker.register('/service-worker.js')
+						.then(function(registration) {
+							console.log('ServiceWorker registration successful');
+							
+							// Check for updates periodically
+							setInterval(function() {
+								registration.update();
+							}, 300000); // Check every 5 minutes
+						})
+						.catch(function(err) {
+							console.log('ServiceWorker registration failed: ', err);
+						});
+				});
+			}
+			
+			// Handle PWA install prompt
+			let deferredPrompt;
+			let installButton = null;
+			
+			window.addEventListener('beforeinstallprompt', function(e) {
+				// Prevent Chrome 67 and earlier from automatically showing the prompt
+				e.preventDefault();
+				// Stash the event so it can be triggered later
+				deferredPrompt = e;
+				
+				// Create or show install button if not already installed
+				if (!window.matchMedia('(display-mode: standalone)').matches) {
+					showInstallButton();
+				}
+			});
+			
+			function showInstallButton() {
+				// Check if button already exists
+				if (document.getElementById('pwa-install-button')) return;
+				
+				// Create install button
+				var button = document.createElement('button');
+				button.id = 'pwa-install-button';
+				button.innerHTML = '📱 Als App installieren';
+				button.style.cssText = `
+					position: fixed;
+					bottom: 20px;
+					right: 20px;
+					background: linear-gradient(135deg, #003C3D, #C1693C);
+					color: #fff;
+					border: none;
+					padding: 12px 24px;
+					border-radius: 50px;
+					font-weight: 600;
+					cursor: pointer;
+					z-index: 9999;
+					box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+					transition: all 0.3s ease;
+					font-family: system-ui, -apple-system, sans-serif;
+				`;
+				
+				// Add hover effect
+				button.addEventListener('mouseenter', function() {
+					this.style.transform = 'translateY(-2px)';
+					this.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
+				});
+				
+				button.addEventListener('mouseleave', function() {
+					this.style.transform = 'translateY(0)';
+					this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+				});
+				
+				// Handle install click
+				button.addEventListener('click', function() {
+					if (deferredPrompt) {
+						// Show the install prompt
+						deferredPrompt.prompt();
+						// Wait for the user to respond to the prompt
+						deferredPrompt.userChoice.then(function(choiceResult) {
+							if (choiceResult.outcome === 'accepted') {
+								console.log('User accepted the install prompt');
+								// Hide the button
+								button.style.display = 'none';
+							}
+							deferredPrompt = null;
+						});
+					}
+				});
+				
+				document.body.appendChild(button);
+				
+				// Add close button functionality
+				var closeBtn = document.createElement('span');
+				closeBtn.innerHTML = '×';
+				closeBtn.style.cssText = `
+					position: absolute;
+					top: -5px;
+					right: -5px;
+					background: #ff4444;
+					color: #fff;
+					width: 20px;
+					height: 20px;
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					cursor: pointer;
+					font-size: 16px;
+					line-height: 1;
+				`;
+				closeBtn.addEventListener('click', function(e) {
+					e.stopPropagation();
+					button.style.display = 'none';
+				});
+				button.appendChild(closeBtn);
+				
+				// Hide button after 30 seconds if not clicked
+				setTimeout(function() {
+					if (button && button.style.display !== 'none') {
+						button.style.opacity = '0';
+						setTimeout(function() {
+							if (button.parentNode) {
+								button.parentNode.removeChild(button);
+							}
+						}, 300);
+					}
+				}, 30000);
+			}
+			
+			// Check if app is already installed
+			window.addEventListener('appinstalled', function() {
+				console.log('PWA was installed');
+				var button = document.getElementById('pwa-install-button');
+				if (button) {
+					button.style.display = 'none';
+				}
+			});
+			
+			// iOS install instructions (since it doesn't support beforeinstallprompt)
+			if (navigator.standalone === false && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+				// Show iOS-specific install instructions after 10 seconds
+				setTimeout(function() {
+					if (!localStorage.getItem('ios-install-dismissed')) {
+						showIOSInstallInstructions();
+					}
+				}, 10000);
+			}
+			
+			function showIOSInstallInstructions() {
+				var banner = document.createElement('div');
+				banner.id = 'ios-install-banner';
+				banner.style.cssText = `
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					background: white;
+					padding: 15px;
+					box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+					z-index: 9999;
+					font-family: system-ui, -apple-system, sans-serif;
+					text-align: center;
+				`;
+				banner.innerHTML = `
+					<p style="margin: 0 0 10px 0; color: #333;">
+						Diese Seite als App installieren: Tippen Sie auf 
+						<span style="display: inline-block; width: 20px; height: 20px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23007AFF"><path d="M12 2L8 6h3v9h2V6h3l-4-4zm-8 16v2h16v-2H4z"/></svg>') center/contain no-repeat; vertical-align: middle;"></span>
+						und dann "Zum Home-Bildschirm"
+					</p>
+					<button onclick="this.parentElement.remove(); localStorage.setItem('ios-install-dismissed', 'true');" 
+							style="background: #007AFF; color: #fff; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer;">
+						Verstanden
+					</button>
+				`;
+				document.body.appendChild(banner);
+			}
+		})();
+		</script>
 	</body>
 </html>
 
@@ -199,7 +395,7 @@ const isHomepage = Astro.url.pathname === '/';
 		font-family: var(--font-primary);
 		font-weight: 600;
 		line-height: 1.2;
-		margin: 0 0 1rem 0;
+		margin: 0 0 1rem;
 	}
 
 	h1 { font-size: 3.5rem; }
@@ -210,7 +406,7 @@ const isHomepage = Astro.url.pathname === '/';
 	h6 { font-size: 1rem; }
 
 	p {
-		margin: 0 0 1rem 0;
+		margin: 0 0 1rem;
 	}
 
 	a {
@@ -240,7 +436,7 @@ const isHomepage = Astro.url.pathname === '/';
 		display: inline-block;
 		padding: 1rem 2rem;
 		background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-		color: white;
+		color: #fff;
 		border-radius: 50px;
 		font-weight: 600;
 		text-decoration: none;
@@ -252,7 +448,7 @@ const isHomepage = Astro.url.pathname === '/';
 	.btn:hover {
 		transform: translateY(-2px);
 		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-		color: white;
+		color: #fff;
 	}
 
 	.section {

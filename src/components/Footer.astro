@@ -63,8 +63,8 @@ import Icons from './Icons.astro';
 <style>
 	.footer {
 		background: var(--color-primary);
-		color: white;
-		padding: 3rem 0 1rem 0;
+		color: #fff;
+		padding: 3rem 0 1rem;
 	}
 
 	.footer-content {
@@ -136,7 +136,7 @@ import Icons from './Icons.astro';
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		color: white;
+		color: #fff;
 		text-decoration: none;
 		font-size: 0.9rem;
 		transition: color 0.3s ease;
@@ -164,8 +164,21 @@ import Icons from './Icons.astro';
 		margin-bottom: 0.5rem;
 	}
 
+	.footer-legal-links {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.footer-legal-links a {
+		color: #fff;
+		text-decoration: none;
+		font-size: 0.8rem;
+		opacity: 0.7;
+		transition: opacity 0.3s ease;
+	}
+
 	.footer-links a {
-		color: white;
+		color: #fff;
 		text-decoration: none;
 		font-size: 0.9rem;
 		transition: color 0.3s ease;
@@ -194,19 +207,6 @@ import Icons from './Icons.astro';
 		font-size: 0.8rem;
 		opacity: 0.7;
 		margin: 0;
-	}
-
-	.footer-legal-links {
-		display: flex;
-		gap: 1rem;
-	}
-
-	.footer-legal-links a {
-		color: white;
-		text-decoration: none;
-		font-size: 0.8rem;
-		opacity: 0.7;
-		transition: opacity 0.3s ease;
 	}
 
 	.footer-legal-links a:hover {

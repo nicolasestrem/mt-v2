@@ -144,6 +144,31 @@ The `/Media` directory contains WordPress migration artifacts and should be igno
 
 ## Recent Updates
 
+### PWA Implementation (January 2025)
+The site now supports Progressive Web App (PWA) functionality, making it installable as a native app on mobile and desktop devices.
+
+#### Features Implemented:
+- **Custom Favicon Setup**: Multi-platform favicon support with ICO and PNG formats for all devices
+- **PWA Manifest**: Complete app configuration with icons, theme colors, and display settings
+- **Service Worker**: Offline caching for static assets with network-first strategy
+- **Install Prompts**: 
+  - Auto-appearing install button for Chrome/Edge (10-second display)
+  - iOS-specific instructions for Safari users
+  - Detection of already-installed state
+- **Offline Support**: Cached pages and assets available without internet connection
+
+#### Files Added/Modified:
+- `/public/manifest.json` - PWA configuration
+- `/public/service-worker.js` - Offline caching logic
+- `/src/layouts/Layout.astro` - Enhanced with PWA meta tags and install handling
+- Added favicon assets: `favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`, `android-chrome-192x192.png`, `android-chrome-512x512.png`
+
+#### Testing PWA:
+1. Build site: `npm run build`
+2. Preview: `npm run preview`
+3. Open in Chrome/Edge and look for install prompt
+4. Test offline mode by disabling network in DevTools
+
 ### Visual Enhancements (January 2025)
 
 #### AboutSection Component (Added January 2025)
