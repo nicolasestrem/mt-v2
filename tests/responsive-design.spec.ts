@@ -49,27 +49,231 @@ test.describe('Responsive Design Tests', () => {
     });
   });
 
-  test('mobile navigation works correctly', async ({ page }) => {
-    // Test on mobile viewport
-    await page.setViewportSize({ width: 375, height: 667 });
-    await homePage.navigateToHome();
+  test.describe('Mobile Menu Functionality', () => {
+    test('mobile menu button is visible on mobile and hidden on desktop', async ({ page }) => {
+      // Test mobile viewport
+      await page.setViewportSize({ width: 375, height: 667 });
+      await homePage.navigateToHome();
 
-    // Look for mobile menu trigger (hamburger menu)
-    const mobileMenuTrigger = page.locator('button[aria-label*="menu"], .hamburger, [class*="mobile-menu"]').first();
-    
-    if (await mobileMenuTrigger.count() > 0) {
-      await expect(mobileMenuTrigger).toBeVisible();
+      // Check that mobile menu button is visible
+      await expect(homePage.mobileMenuButton).toBeVisible();
       
-      // Test menu interaction
-      await mobileMenuTrigger.click();
-      await page.waitForTimeout(300); // Wait for animation
-      
-      // Check if menu opens
-      const mobileMenu = page.locator('nav[class*="open"], .mobile-menu[class*="open"], [aria-expanded="true"]').first();
-      if (await mobileMenu.count() > 0) {
-        await expect(mobileMenu).toBeVisible();
+      // Check that it has the hamburger lines
+      const hamburgerLines = homePage.mobileMenuButton.locator('span');
+      const lineCount = await hamburgerLines.count();
+      if (lineCount > 0) {
+        expect(lineCount).toBe(3);
       }
-    }
+      
+      // Check that desktop menu is hidden on mobile
+      await expect(homePage.navMenu).not.toBeVisible();
+      
+      // Switch to desktop viewport
+      await page.setViewportSize({ width: 1920, height: 1080 });
+      
+      // Mobile menu button should not be visible on desktop
+      await expect(homePage.mobileMenuButton).not.toBeVisible();
+      
+      // Desktop menu should be visible
+      await expect(homePage.navMenu).toBeVisible();
+    });
+
+    test('mobile menu toggles open and closed correctly', async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 667 });
+      await homePage.navigateToHome();
+
+      // Initially menu should be hidden
+      await expect(homePage.navMenu).not.toBeVisible();
+      
+      // Click the hamburger button
+      await homePage.mobileMenuButton.click();
+      await page.waitForTimeout(300);
+      
+      // Menu should be visible
+      await expect(homePage.navMenu).toBeVisible();
+      
+      // Button should have active state
+      const buttonClass = await homePage.mobileMenuButton.getAttribute('class');
+      if (buttonClass) {
+        expect(buttonClass).toMatch(/active|open/);
+      }
+      
+      // Click again to close
+      await homePage.mobileMenuButton.click();
+      await page.waitForTimeout(300);
+      
+      // Menu should be hidden again
+      await expect(homePage.navMenu).not.toBeVisible();
+    });
+
+    test('mobile menu works with touch events', async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 667 });
+      await homePage.navigateToHome();
+
+      // Use tap instead of click (simulates touch)
+      await homePage.mobileMenuButton.tap();
+      await page.waitForTimeout(300);
+      
+      // Menu should be visible
+      await expect(homePage.navMenu).toBeVisible();
+      
+      // Tap again to close
+      await homePage.mobileMenuButton.tap();
+      await page.waitForTimeout(300);
+      
+      // Menu should be hidden
+      await expect(homePage.navMenu).not.toBeVisible();
+    });
+
+    test('menu closes when clicking outside', async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 667 });
+      await homePage.navigateToHome();
+
+      // Open menu
+      await homePage.mobileMenuButton.click();
+      await page.waitForTimeout(300);
+      await expect(homePage.navMenu).toBeVisible();
+      
+      // Click outside the menu (on the body)
+      await page.click('body', { position: { x: 10, y: 300 } });
+      await page.waitForTimeout(300);
+      
+      // Menu should close
+      await expect(homePage.navMenu).not.toBeVisible();
+    });
+
+    test('hamburger animation works correctly', async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 667 });
+      await homePage.navigateToHome();
+
+      const hamburgerLines = homePage.mobileMenuButton.locator('span');
+      const lineCount = await hamburgerLines.count();
+      
+      if (lineCount >= 3) {
+        // Get initial styles
+        const initialStyles = await hamburgerLines.evaluateAll(elements => 
+          elements.map(el => window.getComputedStyle(el).transform)
+        );
+        
+        // Click to open
+        await homePage.mobileMenuButton.click();
+        await page.waitForTimeout(300);
+        
+        // Get animated styles
+        const animatedStyles = await hamburgerLines.evaluateAll(elements => 
+          elements.map(el => window.getComputedStyle(el).transform)
+        );
+        
+        // Styles should be different (animated)
+        expect(animatedStyles).not.toEqual(initialStyles);
+      }
+    });
+
+    test('menu accessibility attributes are correct', async ({ page }) => {
+      await page.setViewportSize({ width: 375, height: 667 });
+      await homePage.navigateToHome();
+
+      // Check aria-label or similar accessibility attribute
+      const ariaLabel = await homePage.mobileMenuButton.getAttribute('aria-label');
+      const title = await homePage.mobileMenuButton.getAttribute('title');
+      expect(ariaLabel || title).toBeTruthy();
+      
+      // Menu should be properly hidden/shown
+      await expect(homePage.navMenu).not.toBeVisible();
+      
+      // Open menu
+      await homePage.mobileMenuButton.click();
+      await page.waitForTimeout(300);
+      
+      // Check menu is accessible
+      await expect(homePage.navMenu).toBeVisible();
+      
+      // Navigation links should be focusable when menu is open
+      const linkCount = await homePage.navLinks.count();
+      for (let i = 0; i < Math.min(linkCount, 3); i++) {
+        const link = homePage.navLinks.nth(i);
+        if (await link.isVisible()) {
+          await link.focus();
+          await expect(link).toBeFocused();
+        }
+      }
+    });
+
+    test('menu works across different mobile device sizes', async ({ page }) => {
+      const mobileDevices = [
+        { name: 'iPhone SE', width: 375, height: 667 },
+        { name: 'iPhone 12', width: 390, height: 844 },
+        { name: 'Pixel 5', width: 393, height: 851 },
+        { name: 'Galaxy S20', width: 360, height: 800 }
+      ];
+
+      for (const device of mobileDevices) {
+        await page.setViewportSize({ width: device.width, height: device.height });
+        await homePage.navigateToHome();
+        
+        // Check mobile menu button is visible
+        await expect(homePage.mobileMenuButton).toBeVisible();
+        
+        // Test toggle functionality
+        await homePage.mobileMenuButton.click();
+        await page.waitForTimeout(300);
+        await expect(homePage.navMenu).toBeVisible();
+        
+        await homePage.mobileMenuButton.click();
+        await page.waitForTimeout(300);
+        await expect(homePage.navMenu).not.toBeVisible();
+      }
+    });
+
+    test('menu works in landscape orientation', async ({ page }) => {
+      // Mobile landscape
+      await page.setViewportSize({ width: 667, height: 375 });
+      await homePage.navigateToHome();
+
+      // Mobile menu button should still be visible
+      await expect(homePage.mobileMenuButton).toBeVisible();
+      
+      // Test functionality
+      await homePage.mobileMenuButton.click();
+      await page.waitForTimeout(300);
+      await expect(homePage.navMenu).toBeVisible();
+      
+      // Menu should fit in landscape view
+      const menuBox = await homePage.navMenu.boundingBox();
+      if (menuBox) {
+        expect(menuBox.height).toBeLessThan(375); // Should fit in viewport height
+      }
+    });
+
+    test('menu transitions correctly between viewports', async ({ page }) => {
+      await homePage.navigateToHome();
+
+      // Start with mobile
+      await page.setViewportSize({ width: 375, height: 667 });
+      await expect(homePage.mobileMenuButton).toBeVisible();
+      await expect(homePage.navMenu).not.toBeVisible();
+      
+      // Open mobile menu
+      await homePage.mobileMenuButton.click();
+      await page.waitForTimeout(300);
+      await expect(homePage.navMenu).toBeVisible();
+      
+      // Resize to desktop
+      await page.setViewportSize({ width: 1920, height: 1080 });
+      await page.waitForTimeout(500);
+      
+      // Desktop menu should be visible, mobile button hidden
+      await expect(homePage.mobileMenuButton).not.toBeVisible();
+      await expect(homePage.navMenu).toBeVisible();
+      
+      // Resize back to mobile
+      await page.setViewportSize({ width: 375, height: 667 });
+      await page.waitForTimeout(500);
+      
+      // Should return to mobile state
+      await expect(homePage.mobileMenuButton).toBeVisible();
+      await expect(homePage.navMenu).not.toBeVisible();
+    });
   });
 
   test('form layout adapts to mobile screens', async ({ page }) => {
@@ -198,6 +402,15 @@ test.describe('Responsive Design Tests', () => {
     // Test touch scrolling
     await page.touchscreen.tap(200, 300);
     await page.mouse.wheel(0, 500);
+    
+    // Test mobile menu with touch
+    await homePage.mobileMenuButton.tap();
+    await page.waitForTimeout(300);
+    await expect(homePage.navMenu).toBeVisible();
+    
+    await homePage.mobileMenuButton.tap();
+    await page.waitForTimeout(300);
+    await expect(homePage.navMenu).not.toBeVisible();
     
     // Test form interactions with touch
     await homePage.scrollToSection(homePage.nominationForm);

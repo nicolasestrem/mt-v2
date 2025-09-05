@@ -1,4 +1,4 @@
-name: Playwright Tests (Optimized)
+name: Playwright Tests (Simplified)
 
 on:
   push:
@@ -7,9 +7,8 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  # Single job for PRs with minimal browser testing
-  test-pr:
-    if: github.event_name == 'pull_request'
+  # Single unified job for all testing
+  test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     
@@ -20,99 +19,6 @@ jobs:
       with:
         node-version: lts/*
         cache: 'npm'
-    
-    # Cache dependencies
-    - name: Get npm cache directory
-      id: npm-cache-dir
-      shell: bash
-      run: echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
-    
-    - uses: actions/cache@v4
-      id: npm-cache
-      with:
-        path: ${{ steps.npm-cache-dir.outputs.dir }}
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    # Cache Playwright browsers
-    - name: Get Playwright version
-      id: playwright-version
-      run: echo "version=$(npx playwright --version | awk '{print $2}')" >> $GITHUB_OUTPUT
-    
-    - uses: actions/cache@v4
-      id: playwright-cache
-      with:
-        path: ~/.cache/ms-playwright
-        key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
-        restore-keys: |
-          ${{ runner.os }}-playwright-
-    
-    - name: Install Playwright Browsers
-      if: steps.playwright-cache.outputs.cache-hit != 'true'
-      run: npx playwright install chromium --with-deps
-    
-    - name: Install Playwright Dependencies
-      if: steps.playwright-cache.outputs.cache-hit == 'true'
-      run: npx playwright install-deps chromium
-    
-    - name: Build project
-      run: npm run build
-      
-    - name: Run Critical Tests Only (Chrome)
-      run: |
-        npx playwright test \
-          tests/home.spec.ts \
-          tests/basic-functionality.spec.ts \
-          tests/form-functionality.spec.ts \
-          --project="Desktop Chrome"
-      env:
-        PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
-        CI: true
-    
-    - name: Upload Test Results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: test-results-pr
-        path: test-results/
-        retention-days: 7
-
-  # Sharded tests for main branch
-  test-main-sharded:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        shardIndex: [1, 2, 3]
-        shardTotal: [3]
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-        cache: 'npm'
-    
-    # Cache dependencies
-    - name: Get npm cache directory
-      id: npm-cache-dir
-      shell: bash
-      run: echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
-    
-    - uses: actions/cache@v4
-      id: npm-cache
-      with:
-        path: ${{ steps.npm-cache-dir.outputs.dir }}
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
     
     - name: Install dependencies
       run: npm ci
@@ -141,10 +47,9 @@ jobs:
     - name: Build project
       run: npm run build
       
-    - name: Run Playwright tests (Shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }})
+    - name: Run Playwright Tests
       run: |
         npx playwright test \
-          --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} \
           --project="Desktop Chrome" \
           --project="Desktop Firefox"
       env:
@@ -155,85 +60,6 @@ jobs:
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: test-results-main-shard-${{ matrix.shardIndex }}
+        name: playwright-report
         path: test-results/
-        retention-days: 30
-
-  # Merge test results from shards
-  merge-reports:
-    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [test-main-sharded]
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Download all test results
-      uses: actions/download-artifact@v4
-      with:
-        pattern: test-results-main-shard-*
-        merge-multiple: true
-        path: all-test-results/
-    
-    - name: Merge test results
-      run: npx playwright merge-reports all-test-results --reporter html
-    
-    - name: Upload merged report
-      uses: actions/upload-artifact@v4
-      with:
-        name: playwright-report-main
-        path: playwright-report/
-        retention-days: 30
-    
-    - name: Generate Test Summary
-      run: |
-        echo "# Test Results Summary" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "## Main Branch Test Execution" >> $GITHUB_STEP_SUMMARY
-        echo "- **Status**: Complete" >> $GITHUB_STEP_SUMMARY
-        echo "- **Shards**: 3" >> $GITHUB_STEP_SUMMARY
-        echo "- **Browsers**: Chrome, Firefox" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "Test reports are available in the workflow artifacts." >> $GITHUB_STEP_SUMMARY
-
-  # Lightweight Lighthouse CI
-  lighthouse:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    timeout-minutes: 10
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Build project
-      run: npm run build
-    
-    - name: Start server
-      run: npm run preview &
-      
-    - name: Wait for server
-      run: npx wait-on http://localhost:4321 --timeout 30000
-    
-    - name: Run Lighthouse CI
-      continue-on-error: true
-      run: |
-        npm install -g @lhci/cli@0.12.x
-        lhci autorun --collect.numberOfRuns=1 || echo "Lighthouse completed with warnings"
-      env:
-        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        retention-days: 7

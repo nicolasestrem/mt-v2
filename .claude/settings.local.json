@@ -26,7 +26,8 @@
       "mcp__time-server__get_current_time",
       "Bash(npm install:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(del:*)"
     ],
     "deny": [],
     "ask": []

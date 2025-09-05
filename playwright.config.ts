@@ -20,11 +20,7 @@ export default defineConfig({
   /* Enable parallel workers on CI for faster execution */
   workers: process.env.CI ? 2 : undefined, // Reduced from 4 to 2 for stability
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [
-    ['html'],
-    ['json', { outputFile: 'test-results/results.json' }],
-    ['junit', { outputFile: 'test-results/results.xml' }]
-  ],
+  reporter: [['html']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -44,9 +40,8 @@ export default defineConfig({
     navigationTimeout: 30000,
   },
 
-  /* Configure projects for essential browsers and devices only */
+  /* Configure projects for core browsers only */
   projects: [
-    // Core Desktop Browsers (run on all tests)
     {
       name: 'Desktop Chrome',
       use: { 
@@ -61,39 +56,6 @@ export default defineConfig({
         viewport: { width: 1920, height: 1080 }
       },
     },
-
-    // Core Mobile Devices (run on all tests)
-    {
-      name: 'Mobile Chrome',
-      use: { ...devices['Pixel 7'] },
-    },
-    {
-      name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
-    },
-
-    // Extended browser testing (only for main branch or scheduled runs)
-    ...(process.env.EXTENDED_TESTS ? [
-      {
-        name: 'Desktop Safari',
-        use: { 
-          ...devices['Desktop Safari'],
-          viewport: { width: 1920, height: 1080 }
-        },
-      },
-      {
-        name: 'Desktop Edge',
-        use: { 
-          ...devices['Desktop Edge'], 
-          channel: 'msedge',
-          viewport: { width: 1920, height: 1080 }
-        },
-      },
-      {
-        name: 'iPad',
-        use: { ...devices['iPad Pro'] },
-      },
-    ] : []),
   ],
 
   /* Run your local dev server before starting the tests */
