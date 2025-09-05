@@ -54,8 +54,7 @@ const imageURL = new URL(image, siteUrl).toString();
 )}
 
 <!-- Structured Data -->
-<script type="application/ld+json">
-{JSON.stringify({
+<script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -146,5 +145,5 @@ const imageURL = new URL(image, siteUrl).toString();
       ]
     }
   ]
-})}
+})} />
 </script>
