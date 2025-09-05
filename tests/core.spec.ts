@@ -260,15 +260,18 @@ test.describe('Core Functionality Tests', () => {
       await expect(homePage.countdownMinutes).toBeVisible();
       await expect(homePage.countdownSeconds).toBeVisible();
       
-      // Check if items are properly arranged (might wrap on mobile)
+      // Check if items are properly arranged (uses grid on mobile)
       const container = homePage.countdownContainer;
       const containerStyles = await container.evaluate((el) => {
         return window.getComputedStyle(el);
       });
       
-      // Should use flexbox with wrap
-      expect(containerStyles.display).toBe('flex');
-      expect(containerStyles.flexWrap).toMatch(/wrap/);
+      // Should use grid layout on mobile (375px width)
+      expect(containerStyles.display).toBe('grid');
+      // Check that it has two equal columns (computed styles will be in pixels)
+      const columns = containerStyles.gridTemplateColumns.split(' ');
+      expect(columns).toHaveLength(2);
+      expect(columns[0]).toBe(columns[1]); // Should be equal width
     });
   });
 });
