@@ -24,7 +24,9 @@
       "Bash(npx playwright test:*)",
       "Bash(npx playwright install:*)",
       "mcp__time-server__get_current_time",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

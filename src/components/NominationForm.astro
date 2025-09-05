@@ -232,7 +232,7 @@ import Icons from './Icons.astro';
 	}
 
 	.nomination-form {
-		background: white;
+		background: #fff;
 		border-radius: 20px;
 		padding: 2.5rem;
 		box-shadow: 
@@ -269,7 +269,7 @@ import Icons from './Icons.astro';
 		padding: 0.8rem 1rem;
 		border: 2px solid #e5e7eb;
 		border-radius: 8px;
-		background: white;
+		background: #fff;
 		color: var(--color-text);
 		font-size: 1rem;
 		transition: all 0.3s ease;
@@ -278,6 +278,11 @@ import Icons from './Icons.astro';
 			0 0 8px rgba(26, 54, 93, 0.2),
 			0 0 16px rgba(246, 173, 85, 0.15),
 			0 0 24px rgba(26, 54, 93, 0.1);
+	}
+
+	.form-group textarea {
+		resize: vertical;
+		min-height: 120px;
 	}
 
 	.form-group input:hover,
@@ -305,11 +310,6 @@ import Icons from './Icons.astro';
 			inset 0 0 15px rgba(246, 173, 85, 0.08);
 	}
 
-	.form-group textarea {
-		resize: vertical;
-		min-height: 120px;
-	}
-
 	.checkbox-group {
 		flex-direction: row;
 		align-items: center;
@@ -322,7 +322,7 @@ import Icons from './Icons.astro';
 		margin-bottom: 1.5rem;
 		font-size: 1rem;
 		text-align: center;
-		animation: slideDown 0.3s ease-out;
+		animation: slide-down 0.3s ease-out;
 	}
 
 	.success-message {
@@ -344,7 +344,7 @@ import Icons from './Icons.astro';
 		display: block;
 	}
 
-	@keyframes slideDown {
+	@keyframes slide-down {
 		from {
 			opacity: 0;
 			transform: translateY(-10px);
@@ -373,7 +373,7 @@ import Icons from './Icons.astro';
 
 	.nomination-btn {
 		background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-		color: white;
+		color: #fff;
 		border: none;
 		padding: 1rem 2rem;
 		border-radius: 50px;
