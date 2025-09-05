@@ -60,9 +60,11 @@ self.addEventListener('fetch', event => {
           .then(cache => {
             // Only cache GET requests
             if (event.request.method === 'GET') {
-              cache.put(event.request, responseToCache);
+              cache.put(event.request, responseToCache)
+                .catch(err => console.error('Cache put failed:', err));
             }
-          });
+          })
+          .catch(err => console.error('Cache open failed:', err));
 
         return response;
       })
@@ -75,7 +77,8 @@ self.addEventListener('fetch', event => {
             }
             
             // If requesting HTML and not cached, return offline page or home
-            if (event.request.headers.get('accept').includes('text/html')) {
+            const acceptHeader = event.request.headers.get('accept');
+            if (acceptHeader && acceptHeader.includes('text/html')) {
               return caches.match('/');
             }
           });

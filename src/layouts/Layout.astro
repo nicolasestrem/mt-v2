@@ -201,7 +201,7 @@ const isHomepage = Astro.url.pathname === '/';
 							// Check for updates periodically
 							setInterval(function() {
 								registration.update();
-							}, 60000); // Check every minute
+							}, 300000); // Check every 5 minutes
 						})
 						.catch(function(err) {
 							console.log('ServiceWorker registration failed: ', err);
@@ -280,7 +280,32 @@ const isHomepage = Astro.url.pathname === '/';
 				
 				document.body.appendChild(button);
 				
-				// Hide button after 10 seconds if not clicked
+				// Add close button functionality
+				var closeBtn = document.createElement('span');
+				closeBtn.innerHTML = '×';
+				closeBtn.style.cssText = `
+					position: absolute;
+					top: -5px;
+					right: -5px;
+					background: #ff4444;
+					color: #fff;
+					width: 20px;
+					height: 20px;
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					cursor: pointer;
+					font-size: 16px;
+					line-height: 1;
+				`;
+				closeBtn.addEventListener('click', function(e) {
+					e.stopPropagation();
+					button.style.display = 'none';
+				});
+				button.appendChild(closeBtn);
+				
+				// Hide button after 30 seconds if not clicked
 				setTimeout(function() {
 					if (button && button.style.display !== 'none') {
 						button.style.opacity = '0';
@@ -290,7 +315,7 @@ const isHomepage = Astro.url.pathname === '/';
 							}
 						}, 300);
 					}
-				}, 10000);
+				}, 30000);
 			}
 			
 			// Check if app is already installed
@@ -304,12 +329,12 @@ const isHomepage = Astro.url.pathname === '/';
 			
 			// iOS install instructions (since it doesn't support beforeinstallprompt)
 			if (navigator.standalone === false && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
-				// Show iOS-specific install instructions after 3 seconds
+				// Show iOS-specific install instructions after 10 seconds
 				setTimeout(function() {
 					if (!localStorage.getItem('ios-install-dismissed')) {
 						showIOSInstallInstructions();
 					}
-				}, 3000);
+				}, 10000);
 			}
 			
 			function showIOSInstallInstructions() {
