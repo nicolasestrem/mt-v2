@@ -251,6 +251,7 @@ test.describe('Core Functionality Tests', () => {
     test('countdown should be responsive', async ({ page }) => {
       // Test mobile viewport
       await page.setViewportSize({ width: 375, height: 667 });
+      await homePage.navigateToHome();
       await homePage.waitForCountdownToLoad();
       
       // All elements should still be visible
@@ -263,15 +264,27 @@ test.describe('Core Functionality Tests', () => {
       // Check if items are properly arranged (uses grid on mobile)
       const container = homePage.countdownContainer;
       const containerStyles = await container.evaluate((el) => {
-        return window.getComputedStyle(el);
+        const styles = window.getComputedStyle(el);
+        return {
+          display: styles.display,
+          gridTemplateColumns: styles.gridTemplateColumns,
+          flexWrap: styles.flexWrap,
+          justifyContent: styles.justifyContent
+        };
       });
       
       // Should use grid layout on mobile (375px width)
       expect(containerStyles.display).toBe('grid');
+      // Check that it has grid template columns defined
+      expect(containerStyles.gridTemplateColumns).toBeDefined();
+      expect(containerStyles.gridTemplateColumns).not.toBe('none');
+      
       // Check that it has two equal columns (computed styles will be in pixels)
-      const columns = containerStyles.gridTemplateColumns.split(' ');
-      expect(columns).toHaveLength(2);
-      expect(columns[0]).toBe(columns[1]); // Should be equal width
+      if (containerStyles.gridTemplateColumns && containerStyles.gridTemplateColumns !== 'none') {
+        const columns = containerStyles.gridTemplateColumns.split(' ');
+        expect(columns).toHaveLength(2);
+        expect(columns[0]).toBe(columns[1]); // Should be equal width
+      }
     });
   });
 });
