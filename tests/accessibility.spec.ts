@@ -20,17 +20,45 @@ test.describe('Accessibility Tests', () => {
     expect(h1Text?.toLowerCase()).toMatch(/mobility|trailblazers|kriterien/);
 
     // Check heading hierarchy (H2 should come after H1, H3 after H2, etc.)
+    // Filter out dev toolbar headings completely - they're not part of the actual page content
     const headings = await page.locator('h1, h2, h3, h4, h5, h6').all();
+    const contentHeadings = [];
+    
+    for (const heading of headings) {
+      const text = (await heading.textContent())?.trim() || '';
+      // Filter out known dev toolbar headings
+      const isDevToolbar = text.includes('Settings') || 
+                          text.includes('Placement') || 
+                          text.includes('Featured integrations') ||
+                          text.includes('No islands detected') ||
+                          text.includes('Audit') ||
+                          text.includes('No accessibility or performance issues detected') ||
+                          text.length === 0;
+      
+      if (!isDevToolbar) {
+        contentHeadings.push(heading);
+      }
+    }
     
     let currentLevel = 0;
-    for (const heading of headings) {
+    for (let i = 0; i < contentHeadings.length; i++) {
+      const heading = contentHeadings[i];
       const tagName = await heading.evaluate(el => el.tagName.toLowerCase());
       const level = parseInt(tagName.charAt(1));
+      const text = (await heading.textContent())?.substring(0, 50) || '';
+      
+      console.log(`Heading ${i + 1}: ${tagName.toUpperCase()} (level ${level}) - "${text}"`);
       
       if (level === 1) {
         currentLevel = 1;
       } else if (currentLevel > 0) {
+        const levelJump = level - currentLevel;
+        console.log(`  Jump from level ${currentLevel} to ${level} = ${levelJump}`);
+        
         // Heading level should not skip more than one level
+        if (levelJump > 1) {
+          console.error(`❌ PROBLEM: Heading "${text}" jumps from H${currentLevel} to H${level} (jump of ${levelJump})`);
+        }
         expect(level - currentLevel).toBeLessThanOrEqual(1);
         currentLevel = level;
       }

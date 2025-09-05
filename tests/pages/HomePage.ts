@@ -74,10 +74,10 @@ export class HomePage {
   constructor(page: Page) {
     this.page = page;
     
-    // Header elements - use more specific selectors to avoid conflicts
-    this.header = page.locator('header.header').first();
-    this.navigation = page.locator('nav').first();
-    this.logo = page.locator('header img, header .logo');
+    // Header elements - match actual DOM structure
+    this.header = page.locator('header.header');
+    this.navigation = page.locator('nav.nav');
+    this.logo = page.locator('.logo img');
     this.mobileMenuButton = page.locator('.nav-toggle');
     this.navMenu = page.locator('.nav-menu');
     this.navSocial = page.locator('.nav-social');
@@ -85,9 +85,9 @@ export class HomePage {
     
     // Hero section
     this.heroSection = page.locator('section.hero');
-    this.heroTitle = page.locator('.hero-title');
-    this.heroSubtitle = page.locator('.hero-subtitle');
-    this.heroTagline = page.locator('.hero-tagline');
+    this.heroTitle = page.locator('h1').first();
+    this.heroSubtitle = page.locator('.hero p, .hero-subtitle');
+    this.heroTagline = page.locator('h2').first();
     this.countdownContainer = page.locator('.countdown-container');
     this.countdownDays = page.locator('#days');
     this.countdownHours = page.locator('#hours');
@@ -100,16 +100,16 @@ export class HomePage {
     this.missionContent = this.missionSection.locator('.mission-description, .mission-box p');
     
     // About section - use class selector
-    this.aboutSection = page.locator('section.about-section');
-    this.aboutTitle = page.locator('.closing-title');
-    this.aboutContent = this.aboutSection.locator('.about-text, .about-intro');
-    this.partnerCards = page.locator('.partner-card');
-    this.berlinImage = page.locator('.about-image img');
+    this.aboutSection = page.locator('section.about-section, section').filter({ hasText: 'Wer steht hinter' });
+    this.aboutTitle = page.locator('h3').filter({ hasText: 'Wer steht hinter' });
+    this.aboutContent = this.aboutSection.locator('p');
+    this.partnerCards = page.locator('.partner-card, .partner');
+    this.berlinImage = page.locator('img[alt*="Fernsehturm"], img[alt*="Berlin"]');
     
-    // Criteria section - use ID selector
+    // Criteria section - use ID selector to avoid matching nomination section
     this.criteriaSection = page.locator('section#kriterien');
-    this.criteriaTitle = page.locator('h1').filter({ hasText: /5 Kriterien/i });
-    this.criteriaCards = page.locator('.criteria-card');
+    this.criteriaTitle = page.locator('h2').filter({ hasText: /Auswahlkriterien|Kriterien/i });
+    this.criteriaCards = page.locator('section#kriterien .criteria-card');
     
     // Jury section - use class selector
     this.jurySection = page.locator('section.jury');
@@ -188,11 +188,14 @@ export class HomePage {
       throw new Error(`Section not found: ${sectionLocator}`);
     }
     
+    // If multiple elements match, use the first one
+    const targetElement = count > 1 ? sectionLocator.first() : sectionLocator;
+    
     // Wait for the section to be visible with a timeout
-    await sectionLocator.waitFor({ state: 'visible', timeout: 10000 });
+    await targetElement.waitFor({ state: 'visible', timeout: 10000 });
     
     // Now scroll to it
-    await sectionLocator.scrollIntoViewIfNeeded();
+    await targetElement.scrollIntoViewIfNeeded();
     await this.page.waitForTimeout(500); // Allow for scroll animations
   }
 
