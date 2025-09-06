@@ -232,7 +232,7 @@ const isHomepage = Astro.url.pathname === '/';
 				// Create install button
 				var button = document.createElement('button');
 				button.id = 'pwa-install-button';
-				button.innerHTML = '📱 Als App installieren';
+				button.innerHTML = 'App installieren';
 				button.style.cssText = `
 					position: fixed;
 					bottom: 20px;
@@ -327,14 +327,29 @@ const isHomepage = Astro.url.pathname === '/';
 				}
 			});
 			
+			// Platform-specific install instructions
+			var isIOS = navigator.standalone === false && /iPhone|iPad|iPod/.test(navigator.userAgent);
+			var isAndroid = /Android/.test(navigator.userAgent);
+			var isChrome = /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent);
+			
 			// iOS install instructions (since it doesn't support beforeinstallprompt)
-			if (navigator.standalone === false && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+			if (isIOS) {
 				// Show iOS-specific install instructions after 10 seconds
 				setTimeout(function() {
 					if (!localStorage.getItem('ios-install-dismissed')) {
 						showIOSInstallInstructions();
 					}
 				}, 10000);
+			}
+			
+			// Android Chrome install instructions (as fallback if beforeinstallprompt doesn't fire)
+			if (isAndroid && isChrome && !window.matchMedia('(display-mode: standalone)').matches) {
+				setTimeout(function() {
+					// Only show if no install prompt appeared and not dismissed
+					if (!deferredPrompt && !localStorage.getItem('android-install-dismissed')) {
+						showAndroidInstallInstructions();
+					}
+				}, 15000); // Wait longer to see if beforeinstallprompt fires
 			}
 			
 			function showIOSInstallInstructions() {
@@ -354,12 +369,41 @@ const isHomepage = Astro.url.pathname === '/';
 				`;
 				banner.innerHTML = `
 					<p style="margin: 0 0 10px 0; color: #333;">
-						Diese Seite als App installieren: Tippen Sie auf 
+						Diese Seite als App installieren. Tippen Sie auf das Teilen-Symbol 
 						<span style="display: inline-block; width: 20px; height: 20px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23007AFF"><path d="M12 2L8 6h3v9h2V6h3l-4-4zm-8 16v2h16v-2H4z"/></svg>') center/contain no-repeat; vertical-align: middle;"></span>
-						und dann "Zum Home-Bildschirm"
+						und wählen Sie „Zum Home-Bildschirm".
 					</p>
 					<button onclick="this.parentElement.remove(); localStorage.setItem('ios-install-dismissed', 'true');" 
 							style="background: #007AFF; color: #fff; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer;">
+						Verstanden
+					</button>
+				`;
+				document.body.appendChild(banner);
+			}
+			
+			function showAndroidInstallInstructions() {
+				var banner = document.createElement('div');
+				banner.id = 'android-install-banner';
+				banner.style.cssText = `
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					background: white;
+					padding: 15px;
+					box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+					z-index: 9999;
+					font-family: system-ui, -apple-system, sans-serif;
+					text-align: center;
+				`;
+				banner.innerHTML = `
+					<p style="margin: 0 0 10px 0; color: #333;">
+						Diese Seite als App installieren. Öffnen Sie das Menü 
+						<span style="display: inline-block; width: 20px; height: 20px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23666"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>') center/contain no-repeat; vertical-align: middle;"></span>
+						und wählen Sie „Zum Startbildschirm hinzufügen".
+					</p>
+					<button onclick="this.parentElement.remove(); localStorage.setItem('android-install-dismissed', 'true');" 
+							style="background: #4CAF50; color: #fff; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer;">
 						Verstanden
 					</button>
 				`;
