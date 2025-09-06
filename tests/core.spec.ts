@@ -263,7 +263,12 @@ test.describe('Core Functionality Tests', () => {
       // Check if items are properly arranged (uses grid on mobile)
       const container = homePage.countdownContainer;
       const containerStyles = await container.evaluate((el) => {
-        return window.getComputedStyle(el);
+        const styles = window.getComputedStyle(el);
+        return {
+          display: styles.display,
+          gridTemplateColumns: styles.gridTemplateColumns,
+          gridTemplateRows: styles.gridTemplateRows
+        };
       });
       
       // Should use grid layout on mobile (375px width)
@@ -271,7 +276,10 @@ test.describe('Core Functionality Tests', () => {
       // Check that it has two equal columns (computed styles will be in pixels)
       const columns = containerStyles.gridTemplateColumns.split(' ');
       expect(columns).toHaveLength(2);
-      expect(columns[0]).toBe(columns[1]); // Should be equal width
+      // Both columns should have the same width (allowing for minor rounding differences)
+      const col1Width = parseFloat(columns[0]);
+      const col2Width = parseFloat(columns[1]);
+      expect(Math.abs(col1Width - col2Width)).toBeLessThan(1); // Allow 1px difference for rounding
     });
   });
 });
