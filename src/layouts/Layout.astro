@@ -46,8 +46,80 @@ const isHomepage = Astro.url.pathname === '/';
 		<!-- SEO Component handles all meta tags -->
 		<SEO title={title} description={description} image={image} noindex={noindex} />
 		
-		<!-- Google Analytics 4 -->
-		<GoogleAnalytics />
+		<!-- Google Analytics 4 - Disabled in favor of privacy-controlled version -->
+		<!-- <GoogleAnalytics /> -->
+
+		<!-- Tarteaucitron Cookie Consent System -->
+		<script is:inline src="/tarteaucitron/tarteaucitron.js"></script>
+		<script is:inline>
+			tarteaucitron.init({
+				"privacyUrl": "/datenschutz",
+				"bodyPosition": "bottom",
+				"hashtag": "#tarteaucitron", 
+				"cookieName": "tarteaucitron",
+				"orientation": "bottom",
+				"groupServices": true,
+				"showDetailsOnClick": true,
+				"serviceDefaultState": "wait", // No tracking without explicit consent
+				"showAlertSmall": true,
+				"cookieslist": true,
+				"showIcon": true,
+				"iconPosition": "BottomLeft",
+				"adblocker": false,
+				"DenyAllCta": true,
+				"AcceptAllCta": true,
+				"highPrivacy": true, // Disable auto consent
+				"alwaysNeedConsent": false,
+				"handleBrowserDNTRequest": false,
+				"removeCredit": false,
+				"moreInfoLink": true,
+				"useExternalCss": false,
+				"useExternalJs": false,
+				"readmoreLink": "/datenschutz",
+				"mandatory": false,
+				"mandatoryCta": true,
+				"googleConsentMode": true, // Enable Google Consent Mode v2
+				"partnersList": false
+			});
+			
+			// Custom service for SociableKit LinkedIn Feed
+			tarteaucitron.services.sociablekit = {
+				"key": "sociablekit",
+				"type": "social",
+				"name": "SociableKit LinkedIn Feed",
+				"uri": "https://www.sociablekit.com",
+				"needConsent": true,
+				"cookies": ['sk_*'],
+				"js": function () {
+					"use strict";
+					tarteaucitron.fallback(['sociablekit-placeholder'], function (x) {
+						var frame = x.getAttribute("data-frame"),
+							width = x.getAttribute("data-width"),
+							height = x.getAttribute("data-height");
+						
+						if (frame) {
+							return '<iframe src="' + frame + '" width="' + width + '" height="' + height + '" frameborder="0" loading="lazy" class="linkedin-iframe" title="Mobility Trailblazers LinkedIn Feed"></iframe>';
+						}
+					});
+				},
+				"fallback": function () {
+					"use strict";
+					var id = 'sociablekit-placeholder';
+					tarteaucitron.fallback(['sociablekit-placeholder'], function (elem) {
+						elem.style.display = 'block';
+						return '';
+					});
+				}
+			};
+			
+			// Google Analytics with consent management
+			tarteaucitron.user.gtagUa = 'G-492443780';
+			(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+			
+			// Google Tag Manager with consent management
+			tarteaucitron.user.googletagmanagerId = 'GTM-WDRKWCN7';
+			(tarteaucitron.job = tarteaucitron.job || []).push('googletagmanager');
+		</script>
 
 		<!-- Resource hints for performance -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -121,6 +193,9 @@ const isHomepage = Astro.url.pathname === '/';
 	<body>
 		<slot />
 		<ScrollToTop />
+		
+		<!-- Custom CSS for tarteaucitron positioning -->
+		<link rel="stylesheet" href="/tarteaucitron-custom.css">
 		
 		<!-- Enhanced scroll behavior for internal links -->
 		<script is:inline>

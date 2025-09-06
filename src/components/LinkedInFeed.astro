@@ -36,19 +36,31 @@ import Icons from './Icons.astro';
 			</p>
 		</div>
 		
-		<!-- SociableKit LinkedIn Feed Widget -->
+		<!-- SociableKit LinkedIn Feed Widget with Privacy Consent -->
 		<div class="linkedin-widget-container" id="linkedin-feed-container">
-			<!-- Direct iframe loading -->
-			<iframe 
-				id="linkedin-iframe"
-				src="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730"
-				frameborder="0"
-				width="100%"
-				height="1800"
-				loading="lazy"
-				class="linkedin-iframe"
-				title="Mobility Trailblazers LinkedIn Feed">
-			</iframe>
+			<!-- Privacy-controlled iframe with consent placeholder -->
+			<div class="sociablekit-placeholder" 
+				 data-frame="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730"
+				 data-width="100%"
+				 data-height="1800"
+				 style="display: none;">
+				<div class="consent-placeholder">
+					<div class="consent-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="#0077b5"/>
+						</svg>
+					</div>
+					<h3>LinkedIn Feed</h3>
+					<p>Zum Anzeigen der LinkedIn-Posts ist Ihre Einwilligung erforderlich.</p>
+					<button type="button" class="consent-button" onclick="tarteaucitron.userInterface.respond(this, true, 'sociablekit');">
+						LinkedIn-Feed laden
+					</button>
+					<p class="consent-note">
+						Durch das Laden werden Daten zwischen Ihrem Browser und LinkedIn ausgetauscht. 
+						Dabei gelten die <a href="https://www.linkedin.com/legal/privacy-policy" target="_blank">Datenschutzbestimmungen von LinkedIn</a>.
+					</p>
+				</div>
+			</div>
 		</div>
 
 		<!-- Follow CTA -->
@@ -128,6 +140,78 @@ import Icons from './Icons.astro';
 	.linkedin-iframe {
 		border-radius: 12px;
 		min-height: 600px;
+	}
+
+	/* Privacy consent placeholder styles */
+	.sociablekit-placeholder {
+		display: block !important; /* Override inline style when needed by tarteaucitron */
+	}
+
+	.consent-placeholder {
+		text-align: center;
+		padding: 3rem 2rem;
+		border: 2px dashed #ccc;
+		border-radius: 12px;
+		background-color: #f9f9f9;
+		min-height: 400px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.consent-icon svg {
+		opacity: 0.6;
+		margin-bottom: 0.5rem;
+	}
+
+	.consent-placeholder h3 {
+		color: #003C3D;
+		font-size: 1.5rem;
+		margin: 0;
+		font-family: 'Trebuchet MS', sans-serif;
+	}
+
+	.consent-placeholder p {
+		color: #666;
+		margin: 0;
+		max-width: 400px;
+		line-height: 1.6;
+	}
+
+	.consent-button {
+		background: linear-gradient(135deg, #0077b5, #0a66c2);
+		color: #fff;
+		border: none;
+		padding: 1rem 2rem;
+		border-radius: 25px;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);
+	}
+
+	.consent-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 25px rgba(0, 119, 181, 0.4);
+		background: linear-gradient(135deg, #0a66c2, #0077b5);
+	}
+
+	.consent-note {
+		font-size: 0.85rem;
+		color: #888;
+		max-width: 350px;
+	}
+
+	.consent-note a {
+		color: #0077b5;
+		text-decoration: none;
+	}
+
+	.consent-note a:hover {
+		text-decoration: underline;
 	}
 
 	.linkedin-follow-cta {
