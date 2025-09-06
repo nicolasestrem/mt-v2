@@ -51,9 +51,10 @@ import Icons from './Icons.astro';
 		
 		<script is:inline>
 			// Initialize SociableKit service with tarteaucitron
-			if (typeof tarteaucitron !== 'undefined') {
-				(tarteaucitron.job = tarteaucitron.job || []).push('sociablekit');
-			}
+			// Create job queue even if tarteaucitron isn't loaded yet
+			window.tarteaucitron = window.tarteaucitron || {};
+			window.tarteaucitron.job = window.tarteaucitron.job || [];
+			window.tarteaucitron.job.push('sociablekit');
 		</script>
 
 		<!-- Follow CTA -->
