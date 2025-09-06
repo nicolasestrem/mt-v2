@@ -38,7 +38,8 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:tarteaucitron.io)",
       "Bash(curl:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(npm run lint:*)"
     ],
     "deny": [],
     "ask": []
