@@ -2,7 +2,6 @@
 import '../styles/global.css';
 import ScrollToTop from '../components/ScrollToTop.astro';
 import SEO from '../components/SEO.astro';
-import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 
 export interface Props {
 	title: string;
@@ -46,8 +45,9 @@ const isHomepage = Astro.url.pathname === '/';
 		<!-- SEO Component handles all meta tags -->
 		<SEO title={title} description={description} image={image} noindex={noindex} />
 		
-		<!-- Google Analytics 4 -->
-		<GoogleAnalytics />
+		<!-- Tarteaucitron CSS -->
+		<link rel="stylesheet" href="/tarteaucitron/css/tarteaucitron.css">
+		<link rel="stylesheet" href="/tarteaucitron-custom.css">
 
 		<!-- Resource hints for performance -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -423,6 +423,102 @@ const isHomepage = Astro.url.pathname === '/';
 				document.body.appendChild(banner);
 			}
 		})();
+		</script>
+		
+		<!-- Tarteaucitron Cookie Consent -->
+		<script is:inline src="/tarteaucitron/tarteaucitron.js"></script>
+		<script is:inline src="/tarteaucitron/lang/tarteaucitron.de.js"></script>
+		<script is:inline src="/tarteaucitron/tarteaucitron.services.js"></script>
+		<script is:inline>
+		tarteaucitron.init({
+			"privacyUrl": "/datenschutz", /* Privacy policy URL */
+			"bodyPosition": "bottom", /* Banner position */
+			"hashtag": "#tarteaucitron", /* Open panel with this hashtag */
+			"cookieName": "tarteaucitron", /* Cookie name */
+			"orientation": "bottom", /* Banner orientation */
+			"groupServices": false, /* Group services */
+			"serviceDefaultState": "wait", /* Default state for services - GDPR compliant */
+			"showAlertSmall": true, /* Show small banner */
+			"cookieslist": true, /* Show cookies list */
+			"closePopup": false, /* Show close X on banner */
+			"showIcon": true, /* Show cookie icon */
+			"iconPosition": "BottomLeft", /* Icon position */
+			"adblocker": false, /* Show adblock warning */
+			"DenyAllCta": true, /* Show deny all button */
+			"AcceptAllCta": true, /* Show accept all button */
+			"highPrivacy": true, /* Disable auto consent */
+			"alwaysNeedConsent": false, /* Always ask for consent on each page */
+			"handleBrowserDNTRequest": false, /* Handle browser DNT */
+			"removeCredit": false, /* Remove tarteaucitron credit */
+			"moreInfoLink": true, /* Show more info link */
+			"useExternalCss": false, /* Use external CSS */
+			"useExternalJs": false, /* Use external JS */
+			"readmoreLink": "/datenschutz", /* Read more link */
+			"mandatory": true, /* Show mandatory message */
+			"mandatoryCta": true, /* Allow mandatory accept/deny */
+			"googleConsentMode": true, /* Enable Google Consent Mode v2 */
+			"partnersList": false /* Show partners list */
+		});
+		
+		// Google Consent Mode v2 default state
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		
+		// Set default consent state for Google
+		gtag('consent', 'default', {
+			'ad_storage': 'denied',
+			'ad_user_data': 'denied',
+			'ad_personalization': 'denied',
+			'analytics_storage': 'denied',
+			'functionality_storage': 'denied',
+			'personalization_storage': 'denied',
+			'security_storage': 'granted',
+			'wait_for_update': 500
+		});
+		
+		// Google Analytics configuration
+		tarteaucitron.user.gtagUa = 'G-0C23GHZJQT';
+		tarteaucitron.user.gtagCrossdomain = ['mobilitytrailblazers.de'];
+		tarteaucitron.user.gtagMore = function() { /* Additional config */ };
+		
+		// Initialize Google Analytics service
+		(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+		
+		// Custom service for LinkedIn/SociableKit widget
+		tarteaucitron.services.sociablekit = {
+			"key": "sociablekit",
+			"type": "social",
+			"name": "LinkedIn Feed (SociableKit)",
+			"uri": "https://sociablekit.com/privacy-policy/",
+			"needConsent": true,
+			"cookies": ['sk_*', 'linkedin_*'],
+			"js": function () {
+				"use strict";
+				// Load LinkedIn widget when consent is given
+				var linkedinContainers = document.querySelectorAll('.linkedin-feed-placeholder');
+				linkedinContainers.forEach(function(container) {
+					var iframe = document.createElement('iframe');
+					iframe.src = container.getAttribute('data-src');
+					iframe.className = container.getAttribute('data-class') || '';
+					iframe.setAttribute('loading', 'lazy');
+					iframe.setAttribute('title', 'LinkedIn Feed');
+					container.parentNode.replaceChild(iframe, container);
+				});
+			},
+			"fallback": function () {
+				"use strict";
+				// Show consent placeholder when consent is not given
+				var linkedinContainers = document.querySelectorAll('.linkedin-feed-placeholder');
+				linkedinContainers.forEach(function(container) {
+					if (!container.querySelector('.tarteaucitron-placeholder')) {
+						var placeholder = document.createElement('div');
+						placeholder.className = 'tarteaucitron-placeholder';
+						placeholder.innerHTML = '<strong>LinkedIn Feed</strong><br>Um den LinkedIn Feed anzuzeigen, müssen Sie die Cookies akzeptieren.';
+						container.appendChild(placeholder);
+					}
+				});
+			}
+		};
 		</script>
 	</body>
 </html>
