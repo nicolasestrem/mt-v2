@@ -8,32 +8,34 @@
     --tc-text: #302C37;
 }
 
-/* Cookie icon positioning and styling */
+/* Cookie icon positioning and styling - if ever re-enabled */
 #tarteaucitronIcon {
-    left: 20px !important;
-    right: auto !important;
+    right: 20px !important;
+    left: auto !important;
     bottom: 20px !important;
-    background: linear-gradient(135deg, var(--tc-primary), var(--tc-accent)) !important;
-    border: 2px solid var(--tc-beige) !important;
+    background: rgba(0, 60, 61, 0.9) !important;
+    border: 2px solid rgba(248, 240, 227, 0.3) !important;
+    backdrop-filter: blur(10px);
 }
 
-/* Alert banner positioning - side-by-side with icon */
+/* Alert banner - transparent background */
 #tarteaucitronAlertSmall {
-    left: 100px !important;
-    right: auto !important;
-    bottom: 0 !important;
+    right: 20px !important;
+    left: auto !important;
+    bottom: 20px !important;
     max-width: 400px !important;
-    background: var(--tc-beige) !important;
-    border: 2px solid var(--tc-accent) !important;
+    background: rgba(248, 240, 227, 0.95) !important;
+    border: 1px solid rgba(193, 105, 60, 0.3) !important;
     color: var(--tc-text) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Manager panel left alignment and styling */
+/* Manager panel with transparency */
 #tarteaucitron {
-    left: 0 !important;
-    right: auto !important;
-    background: var(--tc-beige) !important;
+    background: rgba(248, 240, 227, 0.98) !important;
     color: var(--tc-text) !important;
+    backdrop-filter: blur(10px);
 }
 
 #tarteaucitron #tarteaucitronServices .tarteaucitronLine {
@@ -41,25 +43,27 @@
     border: 1px solid var(--tc-accent) !important;
 }
 
-/* Button styling */
+/* Button styling - softer colors */
 .tarteaucitronAllow, 
 #tarteaucitronAllAllowed {
-    background: linear-gradient(135deg, var(--tc-primary), var(--tc-accent)) !important;
+    background: rgba(0, 60, 61, 0.9) !important;
     color: white !important;
     border: none !important;
     border-radius: 25px !important;
     padding: 10px 20px !important;
     font-weight: 600 !important;
+    backdrop-filter: blur(5px);
 }
 
 .tarteaucitronDeny,
 #tarteaucitronAllDenied {
-    background: #dc3545 !important;
+    background: rgba(193, 105, 60, 0.9) !important;
     color: white !important;
     border: none !important;
     border-radius: 25px !important;
     padding: 10px 20px !important;
     font-weight: 600 !important;
+    backdrop-filter: blur(5px);
 }
 
 /* Hover effects */
@@ -91,11 +95,26 @@
     color: var(--tc-primary) !important;
 }
 
-/* Headers */
+/* Headers with transparency */
 #tarteaucitronDisclaimerAlert,
 #tarteaucitronDisclaimerAlertSmall {
-    background: var(--tc-primary) !important;
+    background: rgba(0, 60, 61, 0.95) !important;
     color: white !important;
+    backdrop-filter: blur(10px);
+}
+
+/* Main consent banner - first visit */
+#tarteaucitronAlertBig {
+    background: rgba(248, 240, 227, 0.98) !important;
+    backdrop-filter: blur(15px);
+    border-top: 2px solid rgba(193, 105, 60, 0.3) !important;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+#tarteaucitronAlertBig #tarteaucitronDisclaimerAlert {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(193, 105, 60, 0.2) !important;
+    color: var(--tc-primary) !important;
 }
 
 /* Animation adjustments for left positioning */

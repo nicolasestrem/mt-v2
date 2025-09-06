@@ -438,11 +438,11 @@ const isHomepage = Astro.url.pathname === '/';
 			"orientation": "bottom", /* Banner orientation */
 			"groupServices": false, /* Group services */
 			"serviceDefaultState": "wait", /* Default state for services - GDPR compliant */
-			"showAlertSmall": true, /* Show small banner */
+			"showAlertSmall": false, /* Hide small banner - only show on first visit */
 			"cookieslist": true, /* Show cookies list */
 			"closePopup": false, /* Show close X on banner */
-			"showIcon": true, /* Show cookie icon */
-			"iconPosition": "BottomLeft", /* Icon position */
+			"showIcon": false, /* Hide persistent cookie icon */
+			"iconPosition": "BottomRight", /* Icon position if ever enabled */
 			"adblocker": false, /* Show adblock warning */
 			"DenyAllCta": true, /* Show deny all button */
 			"AcceptAllCta": true, /* Show accept all button */
