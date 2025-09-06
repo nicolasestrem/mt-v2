@@ -2,6 +2,9 @@
 // LinkedIn Feed component for Mobility Trailblazers
 // Uses SociableKit widget for displaying LinkedIn posts (same as production site)
 // 
+// SECURITY WARNING: Currently using production widget ID (25576730) from another site
+// TODO: Create dedicated widget for this site to avoid potential data leakage
+// 
 // SETUP INSTRUCTIONS:
 // 1. Go to https://www.sociablekit.com
 // 2. Click "Create a Widget" and select "LinkedIn Page Posts"
@@ -17,7 +20,7 @@
 // - Basic customization options
 // 
 // NOTE: The widget ID 25576730 is from the production site.
-// To use your own feed, create a new widget and replace this ID.
+// RECOMMENDATION: Create a dedicated widget or implement direct LinkedIn API integration
 import Icons from './Icons.astro';
 ---
 
