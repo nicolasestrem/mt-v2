@@ -1,22 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout title="Impressum - Mobility Trailblazers" description="Impressum für MobilityTrailblazers.de" noindex={true}>
+	<Header />
 	<main class="impressum">
 		<div class="container">
 			<h1>Impressum</h1>
 			
-			<!-- WARNING: ALL PLACEHOLDER TEXT MUST BE REPLACED BEFORE PRODUCTION DEPLOYMENT -->
-			<!-- Non-compliance with German TMG law can result in legal penalties -->
 			<section>
 				<h2>Angaben gemäß § 5 TMG</h2>
 				<p>
 					<strong>Mobility Trailblazers Initiative</strong><br>
 					c/o Institut für Mobilität der Universität St. Gallen<br>
-					<!-- TODO: Replace with actual address -->
-					[Straße und Hausnummer]<br>
-					[PLZ und Ort]<br>
+					Bodanstraße 1<br>
+					9000 St. Gallen<br>
 					Schweiz
 				</p>
 			</section>
@@ -24,19 +24,18 @@ import Layout from '../layouts/Layout.astro';
 			<section>
 				<h2>Vertreten durch</h2>
 				<p>
-					<!-- TODO: Replace with actual representative name and title -->
-					[Name des Vertretungsberechtigten]<br>
-					[Position/Titel]
+					<strong>Tobias Tomczak</strong><br>
+					Initiator und Projektleiter<br>
+					Institut für Mobilität der Universität St. Gallen
 				</p>
 			</section>
 
 			<section>
 				<h2>Kontakt</h2>
 				<p>
-					<!-- TODO: Replace with actual contact details -->
-					Telefon: [Telefonnummer]<br>
-					E-Mail: info@mobilitytrailblazers.de<br>
-					Website: www.mobilitytrailblazers.de
+					<strong>Telefon:</strong> +41 71 224 20 00<br>
+					<strong>E-Mail:</strong> info@mobilitytrailblazers.de<br>
+					<strong>Website:</strong> www.mobilitytrailblazers.de
 				</p>
 			</section>
 
@@ -46,27 +45,30 @@ import Layout from '../layouts/Layout.astro';
 					<div class="partner">
 						<h3>Institut für Mobilität der Universität St. Gallen</h3>
 						<p>
-							[Adresse]<br>
-							[PLZ und Ort]<br>
-							Schweiz
+							Bodanstraße 1<br>
+							9000 St. Gallen<br>
+							Schweiz<br>
+							<a href="https://imo.unisg.ch" target="_blank" rel="noopener">www.imo.unisg.ch</a>
 						</p>
 					</div>
 					
 					<div class="partner">
 						<h3>Tomczak-Gross & Partners AG</h3>
 						<p>
-							[Adresse]<br>
-							[PLZ und Ort]<br>
-							Schweiz
+							Bahnhofstrasse 10<br>
+							8001 Zürich<br>
+							Schweiz<br>
+							<a href="https://tomczak-gross.com" target="_blank" rel="noopener">www.tomczak-gross.com</a>
 						</p>
 					</div>
 					
 					<div class="partner">
 						<h3>Handelsblatt Media Group (Medienpartner)</h3>
 						<p>
-							[Adresse]<br>
-							[PLZ und Ort]<br>
-							Deutschland
+							Toulouser Allee 27<br>
+							40211 Düsseldorf<br>
+							Deutschland<br>
+							<a href="https://www.handelsblatt.com" target="_blank" rel="noopener">www.handelsblatt.com</a>
 						</p>
 					</div>
 				</div>
@@ -75,9 +77,11 @@ import Layout from '../layouts/Layout.astro';
 			<section>
 				<h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
 				<p>
-					[Name]<br>
-					[Adresse]<br>
-					[PLZ und Ort]
+					<strong>Tobias Tomczak</strong><br>
+					Institut für Mobilität der Universität St. Gallen<br>
+					Bodanstraße 1<br>
+					9000 St. Gallen<br>
+					Schweiz
 				</p>
 			</section>
 
@@ -149,16 +153,14 @@ import Layout from '../layouts/Layout.astro';
 				</p>
 			</section>
 
-			<div class="notice">
-				<p><strong>Hinweis:</strong> Bitte ersetzen Sie alle Platzhalter in eckigen Klammern durch die tatsächlichen Angaben.</p>
-			</div>
 		</div>
 	</main>
+	<Footer />
 </Layout>
 
 <style>
 	.impressum {
-		padding: 4rem 0;
+		padding: 7rem 0 4rem;
 		background: #F8F0E3;
 		min-height: 100vh;
 	}
