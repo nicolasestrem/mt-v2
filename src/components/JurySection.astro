@@ -1,6 +1,253 @@
 ---
-// Jury section component for Mobility Trailblazers
+// Jury section component for Mobility Trailblazers with progressive disclosure
 import Icons from './Icons.astro';
+
+// Define jury members data structure
+interface JuryMember {
+	id: string;
+	name: string;
+	title: string;
+	role: string;
+	organization: string;
+	bio: string;
+	image: string;
+	linkedin?: string;
+	isPlaceholder?: boolean;
+}
+
+// Complete jury members data based on available images
+const juryMembers: JuryMember[] = [
+	{
+		id: 'winfried-hermann',
+		name: 'Winfried Hermann',
+		title: '',
+		role: 'Schirmherr',
+		organization: 'Verkehrsminister Baden-Württemberg',
+		bio: 'Verkehrsminister von Baden-Württemberg und Schirmherr der Mobility Trailblazers Initiative',
+		image: '/images/jury/Winfried Hermann.webp',
+		linkedin: ''
+	},
+	{
+		id: 'prof-dr-andreas-herrmann',
+		name: 'Prof. Dr. Andreas Herrmann',
+		title: 'Prof. Dr.',
+		role: 'Präsident',
+		organization: 'Institut für Mobilität, Universität St. Gallen',
+		bio: 'Gründer und Direktor des Instituts für Mobilität an der Universität St. Gallen. Führender Experte für Mobilität und Automotive',
+		image: '/images/jury/Prof. Dr. Andreas Herrmann.webp',
+		linkedin: 'https://www.linkedin.com/in/andreas-herrmann-4053541/'
+	},
+	{
+		id: 'torsten-tomczak',
+		name: 'Torsten Tomczak',
+		title: 'Prof. Dr. Dr. h.c.',
+		role: 'Vize-Präsident',
+		organization: 'Institut für Mobilität, Universität St. Gallen',
+		bio: 'Gründer des Instituts für Mobilität an der Universität St. Gallen und anerkannter Experte für strategisches Marketing und Mobilität',
+		image: '/images/jury/Torsten Tomczak.webp',
+		linkedin: 'https://www.linkedin.com/in/torstentomczak/'
+	},
+	{
+		id: 'peter-grunenfelder',
+		name: 'Peter Grünenfelder',
+		title: '',
+		role: 'Jury',
+		organization: 'Auto-Schweiz',
+		bio: 'Präsident von Auto-Schweiz, dem Verband der Schweizer Automobilimporteure',
+		image: '/images/jury/Peter Grünenfelder.webp',
+		linkedin: 'https://www.linkedin.com/in/peter-gr%C3%BCnenfelder-797a9523'
+	},
+	{
+		id: 'katja-busch',
+		name: 'Katja Busch',
+		title: '',
+		role: 'Jury',
+		organization: 'DHL Group',
+		bio: 'Chief Commercial Officer und Head Customer Solutions & Innovation bei der DHL Group, verantwortet innovative Lösungen in der globalen Logistik',
+		image: '/images/jury/Katja Busch.webp',
+		linkedin: 'https://www.linkedin.com/in/katja-busch-39aa7b53/'
+	},
+	{
+		id: 'dr-sabine-stock',
+		name: 'Dr. Sabine Stock',
+		title: 'Dr.',
+		role: 'Jury',
+		organization: 'ÖBB-Personenverkehr AG',
+		bio: 'Vorständin der ÖBB-Personenverkehr AG und führende Expertin für Bahnverkehr und Technologie',
+		image: '/images/jury/Dr. Sabine Stock.webp',
+		linkedin: 'https://www.linkedin.com/in/sabinestock/'
+	},
+	{
+		id: 'jurgen-stackmann',
+		name: 'Jürgen Stackmann',
+		title: '',
+		role: 'Jury',
+		organization: 'Automobil-Experte',
+		bio: 'Automobil-Experte und ehemaliger Vorstandsvorsitzender von SEAT sowie Ex-Markenvorstand bei Volkswagen',
+		image: '/images/jury/Jürgen Stackmann.webp',
+		linkedin: 'https://www.linkedin.com/in/juergenstackmann/'
+	},
+	{
+		id: 'felix-neureuther',
+		name: 'Felix Neureuther',
+		title: '',
+		role: 'Jury',
+		organization: 'Unternehmer & Nachhaltigkeits-Experte',
+		bio: 'Ehemaliger Spitzenathlet im alpinen Skisport und heute erfolgreicher Unternehmer mit Fokus auf Nachhaltigkeit',
+		image: '/images/jury/Felix Neureuther.webp',
+		linkedin: 'https://www.linkedin.com/in/felix-neureuther-4bb72829a/'
+	},
+	{
+		id: 'dr-astrid-fontaine',
+		name: 'Dr. Astrid Fontaine',
+		title: 'Dr.',
+		role: 'Jury',
+		organization: 'Schaeffler Gruppe',
+		bio: 'Vorständin der Schaeffler Gruppe und verantwortet HR und Nachhaltigkeit in einem der weltweit führenden Automobilzulieferer',
+		image: '/images/jury/Dr. Astrid Fontaine.webp',
+		linkedin: 'https://www.linkedin.com/in/dr-astrid-fontaine-28374519/'
+	},
+	{
+		id: 'dr-kjell-gruner',
+		name: 'Dr. Kjell Gruner',
+		title: 'Dr.',
+		role: 'Jury',
+		organization: 'Volkswagen Group of America',
+		bio: 'CEO & President der Volkswagen Group of America und verantwortet das Nordamerika-Geschäft des Volkswagen Konzerns',
+		image: '/images/jury/Dr. Kjell Gruner.webp',
+		linkedin: 'https://www.linkedin.com/in/dr-kjell-gruner-364a65b/'
+	},
+	{
+		id: 'dr-philipp-rosler',
+		name: 'Dr. Philipp Rösler',
+		title: 'Dr.',
+		role: 'Jury',
+		organization: 'Consessor AG',
+		bio: 'CEO der Consessor AG und ehemaliger Vize-Kanzler der Bundesrepublik Deutschland',
+		image: '/images/jury/Dr. Philipp Rösler.webp',
+		linkedin: 'https://www.linkedin.com/in/dr-philipp-r%C3%B6sler-852401233'
+	},
+	{
+		id: 'eberhard-weiblen',
+		name: 'Eberhard Weiblen',
+		title: '',
+		role: 'Jury',
+		organization: 'Porsche Consulting',
+		bio: 'Chairman of the Executive Board of Porsche Consulting und renommierter Experte für Mobilität und Innovation',
+		image: '/images/jury/Eberhard Weiblen.webp',
+		linkedin: 'https://www.linkedin.com/in/eberhard-weiblen-849b7b117'
+	},
+	{
+		id: 'hans-peter-kleebinder',
+		name: 'Hans-Peter Kleebinder',
+		title: '',
+		role: 'Jury',
+		organization: 'Independent Expert',
+		bio: 'Independent Expert SMARTMobility | SMARTCity | SMARTData | Sustainable Mobility | EV ▶️ as Keynote-Speaker | Moderator | Content-Creator ex-MINI BMW Audi ▶️ KLEEBINDER.net',
+		image: '/images/jury/Hans-Peter Kleebinder.webp',
+		linkedin: 'https://www.linkedin.com/in/kleebinder/'
+	},
+	{
+		id: 'helmut-ruhl',
+		name: 'Helmut Ruhl',
+		title: '',
+		role: 'Jury',
+		organization: 'AMAG Group AG',
+		bio: 'Group CEO at AMAG Group AG',
+		image: '/images/jury/Helmut Ruhl.webp',
+		linkedin: 'https://www.linkedin.com/in/helmutruhl/'
+	},
+	{
+		id: 'johann-jungwirth',
+		name: 'Johann Jungwirth',
+		title: '',
+		role: 'Jury',
+		organization: 'Mobileye',
+		bio: 'Executive Vice President bei Mobileye und führender Experte für autonome Fahrtechnologien und Innovation',
+		image: '/images/jury/Johann Jungwirth.webp',
+		linkedin: 'https://www.linkedin.com/in/johannjungwirth'
+	},
+	{
+		id: 'laura-meyer',
+		name: 'Laura Meyer',
+		title: '',
+		role: 'Jury',
+		organization: 'Hotelplan Gruppe',
+		bio: 'CEO der Hotelplan Gruppe und führende Expertin für Tourismus und Digitalisierung',
+		image: '/images/jury/Laura Meyer.webp',
+		linkedin: 'https://www.linkedin.com/in/laurasilvameyer/'
+	},
+	{
+		id: 'prof-dr-nikolaus-lang',
+		name: 'Prof. Dr. Nikolaus Lang',
+		title: 'Prof. Dr.',
+		role: 'Jury',
+		organization: 'BCG Center for Mobility Innovation',
+		bio: 'Founder & Director of BCG’s Center for Mobility Innovation und Global Leader des BCG Henderson Institute',
+		image: '/images/jury/Prof. Dr. Nikolaus Lang.webp',
+		linkedin: 'https://www.linkedin.com/in/nikolauslang'
+	},
+	{
+		id: 'prof-dr-oliver-gassmann',
+		name: 'Prof. Dr. Oliver Gassmann',
+		title: 'Prof. Dr.',
+		role: 'Jury',
+		organization: 'Institut für Technologiemanagement, Universität St. Gallen',
+		bio: 'Direktor des Instituts für Technologiemanagement an der Universität St. Gallen und führender Experte für Innovation und Geschäftsmodelle',
+		image: '/images/jury/Prof. Dr. Oliver Gassmann.webp',
+		linkedin: 'https://www.linkedin.com/in/olivergassmann/'
+	},
+	{
+		id: 'prof-dr-wolfgang-jenewein',
+		name: 'Prof. Dr. Wolfgang Jenewein',
+		title: 'Prof. Dr.',
+		role: 'Jury',
+		organization: 'Jenewein AG',
+		bio: 'Geschäftsführender Inhaber der Jenewein AG und renommierter Experte für Transformation und Leadership',
+		image: '/images/jury/Prof. Dr. Wolfgang Jenewein.webp',
+		linkedin: 'https://www.linkedin.com/in/wolfgangjenewein'
+	},
+	{
+		id: 'prof-dr-zheng-han',
+		name: 'Prof. Dr. Zheng Han',
+		title: 'Prof. Dr.',
+		role: 'Jury',
+		organization: 'Tongji University Shanghai',
+		bio: 'Professor für Innovation & Unternehmertum an der Tongji University in Shanghai und Experte für den chinesischen Mobilitätsmarkt',
+		image: '/images/jury/Prof. Dr. Zheng Han.webp',
+		linkedin: 'https://www.linkedin.com/in/profhanzheng'
+	},
+	{
+		id: 'susann-schramm',
+		name: 'Susann Schramm',
+		title: '',
+		role: 'Jury',
+		organization: 'Motel One',
+		bio: 'CMO von Motel One und führende Expertin für Hotellerie und Marketing',
+		image: '/images/jury/Susann Schramm.webp',
+		linkedin: 'https://www.linkedin.com/in/susan-schramm/'
+	}
+];
+
+// Define initial display counts for different screen sizes
+const INITIAL_DISPLAY = {
+	desktop: 6,
+	tablet: 4,
+	mobile: 2
+};
+
+// Function to shuffle array
+function shuffleArray<T>(array: T[]): T[] {
+	const shuffled = [...array];
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	return shuffled;
+}
+
+// Randomly shuffle jury members for initial display
+const shuffledMembers = shuffleArray(juryMembers);
 ---
 
 <section class="jury" id="jury">
@@ -16,50 +263,96 @@ import Icons from './Icons.astro';
 			<p class="jury-subtitle">Expertinnen und Experten aus Wirtschaft, Wissenschaft und Politik.</p>
 		</div>
 		
-		<div class="jury-members">
-			<div class="jury-member">
-				<div class="member-image">
-					<img src="/images/jury/andreas-herrmann.webp" alt="Prof. Dr. Andreas Herrmann, Präsident und Direktor des Instituts für Mobilität an der Universität St. Gallen" width="300" height="300" loading="lazy">
-				</div>
-				<div class="member-info">
-					<h3 class="member-name">Andreas Herrmann</h3>
-					<h4 class="member-role">Präsident</h4>
-					<p class="member-bio">Prof. Dr. Andreas Herrmann Gründer und Direktor des Instituts für Mobilität an der Universität St. Gallen</p>
-					<div class="member-social">
-						<a href="https://www.linkedin.com/in/andreas-herrmann-4053541/" target="_blank" rel="noopener noreferrer" class="social-link">
-							<Icons name="linkedin" />
-						</a>
+		<div class="jury-members" id="jury-members-container">
+			<!-- Initially visible members (random selection) -->
+			<div class="jury-members-visible">
+				{shuffledMembers.slice(0, INITIAL_DISPLAY.desktop).map((member) => (
+					<div class="jury-member" data-member-id={member.id}>
+						<div class="member-image">
+							<img 
+								src={member.image} 
+								alt={`${member.title ? member.title + ' ' : ''}${member.name}, ${member.role} - ${member.organization}`}
+								width="300" 
+								height="300" 
+								loading="lazy"
+							/>
+						</div>
+						<div class="member-info">
+							<h3 class="member-name">{member.name}</h3>
+							<h4 class="member-role">{member.role}</h4>
+							<p class="member-bio">{member.bio}</p>
+							{member.linkedin && member.linkedin !== '' && (
+								<div class="member-social">
+									<a 
+										href={member.linkedin} 
+										target="_blank" 
+										rel="noopener noreferrer" 
+										class="social-link"
+										aria-label={`LinkedIn Profil von ${member.name}`}
+									>
+										<Icons name="linkedin" />
+									</a>
+								</div>
+							)}
+						</div>
 					</div>
-				</div>
+				))}
 			</div>
 			
-			<div class="jury-member">
-				<div class="member-image">
-					<img src="/images/jury/torsten-tomczak.webp" alt="Prof. Dr. Dr. h.c. Torsten Tomczak, Vize-Präsident und Gründer des Instituts für Mobilität an der Universität St. Gallen" width="300" height="300" loading="lazy">
-				</div>
-				<div class="member-info">
-					<h3 class="member-name">Torsten Tomczak</h3>
-					<h4 class="member-role">Vize-Präsident</h4>
-					<p class="member-bio">Prof. Dr. Dr. h.c. Torsten Tomczak Gründer des Instituts für Mobilität an der Universität St. Gallen</p>
-					<div class="member-social">
-						<a href="https://www.linkedin.com/in/torstentomczak/" target="_blank" rel="noopener noreferrer" class="social-link">
-							<Icons name="linkedin" />
-						</a>
+			<!-- Hidden additional members (remaining from random selection) -->
+			<div class="jury-members-hidden" id="jury-members-hidden" aria-hidden="true">
+				{shuffledMembers.slice(INITIAL_DISPLAY.desktop).map((member) => (
+					<div class="jury-member" data-member-id={member.id}>
+						<div class="member-image">
+							<img 
+								src={member.image} 
+								alt={`${member.title ? member.title + ' ' : ''}${member.name}, ${member.role} - ${member.organization}`}
+								width="300" 
+								height="300" 
+								loading="lazy"
+							/>
+						</div>
+						<div class="member-info">
+							<h3 class="member-name">{member.name}</h3>
+							<h4 class="member-role">{member.role}</h4>
+							<p class="member-bio">{member.bio}</p>
+							{member.linkedin && member.linkedin !== '' && (
+								<div class="member-social">
+									<a 
+										href={member.linkedin} 
+										target="_blank" 
+										rel="noopener noreferrer" 
+										class="social-link"
+										aria-label={`LinkedIn Profil von ${member.name}`}
+									>
+										<Icons name="linkedin" />
+									</a>
+								</div>
+							)}
+						</div>
 					</div>
-				</div>
-			</div>
-			
-			<div class="jury-member">
-				<div class="member-image">
-					<img src="/images/jury/astronaut.svg" alt="Platzhalter für weitere Jury-Mitglieder, die in Kürze bekannt gegeben werden" width="300" height="300" loading="lazy">
-				</div>
-				<div class="member-info">
-					<h3 class="member-name">Weitere Jury-Mitglieder</h3>
-					<h4 class="member-role">Jurymitglied</h4>
-					<p class="member-bio">Die weiteren Jury-Mitglieder werden in Kürze bekannt gegeben.</p>
-				</div>
+				))}
 			</div>
 		</div>
+		
+		<!-- Show More/Less Button -->
+		{shuffledMembers.length > INITIAL_DISPLAY.desktop && (
+			<div class="jury-toggle-container">
+				<button 
+					class="jury-toggle-btn"
+					id="jury-toggle-btn"
+					aria-expanded="false"
+					aria-controls="jury-members-hidden"
+					type="button"
+				>
+					<span class="toggle-text-show">Alle Jury-Mitglieder anzeigen</span>
+					<span class="toggle-text-hide">Weniger anzeigen</span>
+					<svg class="toggle-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M12 15L7 10H17L12 15Z" fill="currentColor"/>
+					</svg>
+				</button>
+			</div>
+		)}
 	</div>
 </section>
 
@@ -68,7 +361,8 @@ import Icons from './Icons.astro';
 		background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
 		color: #fff;
 		position: relative;
-		padding: 3rem 0;
+		padding: 3rem 0 4rem 0; /* Extra bottom padding */
+		overflow: visible; /* Ensure content isn't clipped */
 	}
 
 	.section-divider-top {
@@ -128,11 +422,31 @@ import Icons from './Icons.astro';
 	}
 
 	.jury-members {
+		position: relative;
+		z-index: 2;
+	}
+
+	.jury-members-visible,
+	.jury-members-hidden {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 		gap: 3rem;
-		position: relative;
-		z-index: 2;
+	}
+
+	.jury-members-hidden {
+		max-height: 0;
+		overflow: hidden;
+		opacity: 0;
+		transition: max-height 0.8s ease-out, opacity 0.3s ease-out, margin-top 0.3s ease-out;
+		margin-top: 0;
+	}
+
+	.jury-members-hidden.active {
+		max-height: none; /* Remove height restriction */
+		overflow: visible;
+		opacity: 1;
+		margin-top: 3rem;
+		transition: max-height 0.8s ease-in, opacity 0.3s ease-in, margin-top 0.3s ease-in;
 	}
 
 	.jury-member {
@@ -140,9 +454,13 @@ import Icons from './Icons.astro';
 		backdrop-filter: blur(10px);
 		border-radius: 20px;
 		padding: 2rem;
+		min-height: 420px; /* Ensure minimum height for content */
 		text-align: center;
 		transition: transform 0.3s ease, box-shadow 0.3s ease;
 		border: 1px solid rgba(255, 255, 255, 0.2);
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	}
 
 	.jury-member:hover {
@@ -152,6 +470,7 @@ import Icons from './Icons.astro';
 
 	.member-image {
 		margin-bottom: 1.5rem;
+		flex-shrink: 0;
 	}
 
 	.member-image img {
@@ -159,8 +478,16 @@ import Icons from './Icons.astro';
 		height: 200px;
 		border-radius: 50%;
 		object-fit: cover;
+		object-position: center;
 		border: 4px solid var(--color-accent);
 		transition: transform 0.3s ease;
+	}
+	
+	.member-info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
 	}
 
 	.jury-member:hover .member-image img {
@@ -188,6 +515,11 @@ import Icons from './Icons.astro';
 		line-height: 1.6;
 		margin-bottom: 1.5rem;
 		opacity: 0.9;
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-line-clamp: 3; /* Limit to 3 lines */
+		-webkit-box-orient: vertical;
+		flex-grow: 1;
 	}
 
 	.member-social {
@@ -220,6 +552,94 @@ import Icons from './Icons.astro';
 		height: 1.2rem;
 	}
 
+	/* Toggle Button Styles */
+	.jury-toggle-container {
+		display: flex;
+		justify-content: center;
+		margin-top: 3rem;
+		position: relative;
+		z-index: 2;
+	}
+
+	.jury-toggle-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		padding: 1rem 2rem;
+		background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-gradient-end) 100%);
+		color: white;
+		border: none;
+		border-radius: 10px;
+		font-size: 1.1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 15px rgba(193, 105, 60, 0.3);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.jury-toggle-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 25px rgba(193, 105, 60, 0.4);
+	}
+
+	.jury-toggle-btn:focus {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 3px;
+	}
+
+	.jury-toggle-btn::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 0;
+		height: 0;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.2);
+		transform: translate(-50%, -50%);
+		transition: width 0.6s, height 0.6s;
+	}
+
+	.jury-toggle-btn:hover::before {
+		width: 300px;
+		height: 300px;
+	}
+
+	.toggle-text-show {
+		display: inline;
+	}
+
+	.toggle-text-hide {
+		display: none;
+	}
+
+	.jury-toggle-btn.expanded .toggle-text-show {
+		display: none;
+	}
+
+	.jury-toggle-btn.expanded .toggle-text-hide {
+		display: inline;
+	}
+
+	.toggle-icon {
+		transition: transform 0.3s ease;
+	}
+
+	.jury-toggle-btn.expanded .toggle-icon {
+		transform: rotate(180deg);
+	}
+
+	/* Responsive Styles */
+	@media (max-width: 1023px) {
+		.jury-members-visible,
+		.jury-members-hidden {
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		}
+	}
+
 	@media (max-width: 768px) {
 		.jury-title {
 			font-size: 2rem;
@@ -229,7 +649,8 @@ import Icons from './Icons.astro';
 			font-size: 1rem;
 		}
 
-		.jury-members {
+		.jury-members-visible,
+		.jury-members-hidden {
 			grid-template-columns: 1fr;
 			gap: 2rem;
 		}
@@ -242,5 +663,158 @@ import Icons from './Icons.astro';
 			width: 150px;
 			height: 150px;
 		}
+
+		.jury-toggle-btn {
+			padding: 0.875rem 1.5rem;
+			font-size: 1rem;
+		}
+
+		.jury-toggle-container {
+			margin-top: 2rem;
+		}
+	}
+
+	/* Hide extra members on smaller screens initially */
+	@media (max-width: 1023px) {
+		.jury-members-visible .jury-member:nth-child(n+5) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.jury-members-visible .jury-member:nth-child(n+3) {
+			display: none;
+		}
 	}
 </style>
+
+<script is:inline>
+	// Jury progressive disclosure script - ES5 compatible
+	(function() {
+		function initJuryToggle() {
+			// Find elements
+			var toggleBtn = document.getElementById('jury-toggle-btn');
+			var hiddenMembers = document.getElementById('jury-members-hidden');
+			var visibleContainer = document.querySelector('.jury-members-visible');
+			
+			if (!toggleBtn || !hiddenMembers) {
+				// Elements not found, retry
+				setTimeout(initJuryToggle, 100);
+				return;
+			}
+			
+			// Check if already initialized
+			if (toggleBtn.hasAttribute('data-listener-added')) {
+				return;
+			}
+			toggleBtn.setAttribute('data-listener-added', 'true');
+			
+			// Get initial display counts based on viewport
+			function getInitialCount() {
+				var width = window.innerWidth;
+				if (width <= 767) return 2;
+				if (width <= 1023) return 4;
+				return 6;
+			}
+			
+			// Adjust visible members based on screen size
+			function adjustVisibleMembers() {
+				if (!visibleContainer) return;
+				
+				var members = visibleContainer.querySelectorAll('.jury-member');
+				var count = getInitialCount();
+				var isExpanded = toggleBtn.classList.contains('expanded');
+				
+				// Only adjust if not expanded
+				if (!isExpanded) {
+					for (var i = 0; i < members.length; i++) {
+						if (i < count) {
+							members[i].style.display = '';
+						} else {
+							members[i].style.display = 'none';
+						}
+					}
+					
+					// Move hidden members to the hidden container if needed
+					var hiddenStart = count;
+					var allHiddenMembers = hiddenMembers.querySelectorAll('.jury-member');
+					
+					// Show all members in hidden container when appropriate
+					for (var j = 0; j < allHiddenMembers.length; j++) {
+						allHiddenMembers[j].style.display = '';
+					}
+				}
+			}
+			
+			// Initial adjustment (no localStorage - always start collapsed for random display)
+			adjustVisibleMembers();
+			
+			// Toggle function
+			function toggleMembers(e) {
+				if (e) {
+					e.preventDefault();
+				}
+				
+				var isExpanded = toggleBtn.classList.contains('expanded');
+				
+				if (isExpanded) {
+					// Collapse
+					toggleBtn.classList.remove('expanded');
+					toggleBtn.setAttribute('aria-expanded', 'false');
+					hiddenMembers.classList.remove('active');
+					hiddenMembers.setAttribute('aria-hidden', 'true');
+					
+					// Re-apply responsive hiding
+					adjustVisibleMembers();
+					
+					// Smooth scroll to jury section
+					var jurySection = document.getElementById('jury');
+					if (jurySection) {
+						var offset = jurySection.offsetTop - 100;
+						window.scrollTo({
+							top: offset,
+							behavior: 'smooth'
+						});
+					}
+				} else {
+					// Expand
+					toggleBtn.classList.add('expanded');
+					toggleBtn.setAttribute('aria-expanded', 'true');
+					hiddenMembers.classList.add('active');
+					hiddenMembers.setAttribute('aria-hidden', 'false');
+					
+					// Show all visible members when expanded
+					var members = visibleContainer.querySelectorAll('.jury-member');
+					for (var i = 0; i < members.length; i++) {
+						members[i].style.display = '';
+					}
+				}
+			}
+			
+			// Add event listeners
+			toggleBtn.addEventListener('click', toggleMembers);
+			
+			// Handle resize events
+			var resizeTimer;
+			window.addEventListener('resize', function() {
+				clearTimeout(resizeTimer);
+				resizeTimer = setTimeout(adjustVisibleMembers, 250);
+			});
+			
+			// Keyboard support
+			toggleBtn.addEventListener('keydown', function(e) {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					toggleMembers(e);
+				}
+			});
+		}
+		
+		// Initialize when DOM is ready
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initJuryToggle);
+		} else {
+			initJuryToggle();
+		}
+	})();
+</script>

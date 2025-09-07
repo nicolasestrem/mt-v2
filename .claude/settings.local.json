@@ -29,7 +29,9 @@
       "Bash(git commit:*)",
       "Bash(del:*)",
       "Bash(npm test)",
-      "Bash(npx playwright show-report:*)"
+      "Bash(npx playwright show-report:*)",
+      "WebFetch(domain:www.linkedin.com)",
+      "mcp__desktop-commander-global__start_process"
     ],
     "deny": [],
     "ask": []
