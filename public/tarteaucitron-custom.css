@@ -1,0 +1,151 @@
+/* Custom positioning and branding for tarteaucitron */
+
+/* Brand colors */
+:root {
+    --tc-primary: #003C3D;
+    --tc-accent: #C1693C;
+    --tc-beige: #F8F0E3;
+    --tc-text: #302C37;
+}
+
+/* Cookie icon positioning and styling - if ever re-enabled */
+#tarteaucitronIcon {
+    right: 20px !important;
+    left: auto !important;
+    bottom: 20px !important;
+    background: rgba(0, 60, 61, 0.9) !important;
+    border: 2px solid rgba(248, 240, 227, 0.3) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* Alert banner - transparent background */
+#tarteaucitronAlertSmall {
+    right: 20px !important;
+    left: auto !important;
+    bottom: 20px !important;
+    max-width: 400px !important;
+    background: rgba(248, 240, 227, 0.95) !important;
+    border: 1px solid rgba(193, 105, 60, 0.3) !important;
+    color: var(--tc-text) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Manager panel with transparency */
+#tarteaucitron {
+    background: rgba(248, 240, 227, 0.98) !important;
+    color: var(--tc-text) !important;
+    backdrop-filter: blur(10px);
+}
+
+#tarteaucitron #tarteaucitronServices .tarteaucitronLine {
+    background: white !important;
+    border: 1px solid var(--tc-accent) !important;
+}
+
+/* Button styling - softer colors */
+.tarteaucitronAllow, 
+#tarteaucitronAllAllowed {
+    background: rgba(0, 60, 61, 0.9) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+    backdrop-filter: blur(5px);
+}
+
+.tarteaucitronDeny,
+#tarteaucitronAllDenied {
+    background: rgba(193, 105, 60, 0.9) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+    backdrop-filter: blur(5px);
+}
+
+/* Hover effects */
+.tarteaucitronAllow:hover,
+#tarteaucitronAllAllowed:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+.tarteaucitronDeny:hover,
+#tarteaucitronAllDenied:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3) !important;
+}
+
+/* Info button */
+#tarteaucitronInfo,
+.tarteaucitronInfoBox {
+    background: var(--tc-accent) !important;
+    color: white !important;
+}
+
+/* Links */
+#tarteaucitron a {
+    color: var(--tc-accent) !important;
+}
+
+#tarteaucitron a:hover {
+    color: var(--tc-primary) !important;
+}
+
+/* Headers with transparency */
+#tarteaucitronDisclaimerAlert,
+#tarteaucitronDisclaimerAlertSmall {
+    background: rgba(0, 60, 61, 0.95) !important;
+    color: white !important;
+    backdrop-filter: blur(10px);
+}
+
+/* Main consent banner - first visit */
+#tarteaucitronAlertBig {
+    background: rgba(248, 240, 227, 0.98) !important;
+    backdrop-filter: blur(15px);
+    border-top: 2px solid rgba(193, 105, 60, 0.3) !important;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+#tarteaucitronAlertBig #tarteaucitronDisclaimerAlert {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(193, 105, 60, 0.2) !important;
+    color: var(--tc-primary) !important;
+}
+
+/* Animation adjustments for left positioning */
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#tarteaucitronAlertSmall {
+    animation: slideInFromLeft 0.3s ease-out;
+}
+
+/* Service placeholders */
+.tarteaucitron-placeholder {
+    background: linear-gradient(135deg, var(--tc-beige), white) !important;
+    border: 2px dashed var(--tc-accent) !important;
+    color: var(--tc-text) !important;
+    padding: 2rem !important;
+    text-align: center !important;
+    border-radius: 10px !important;
+}
+
+.tarteaucitron-placeholder strong {
+    color: var(--tc-primary) !important;
+    font-size: 1.2rem !important;
+    display: block !important;
+    margin-bottom: 1rem !important;
+}

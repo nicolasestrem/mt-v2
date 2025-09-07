@@ -32,6 +32,17 @@ The nomination form won't work without configuring the Web3Forms key:
    - `src/components/Newsletter.astro` (line ~43)
    - The key is also stored in `.env` as `PUBLIC_WEB3FORMS_KEY`
 
+### Google Analytics Configuration
+- GA Measurement ID is configured via environment variable: `PUBLIC_GA_MEASUREMENT_ID`
+- Default value: `G-0C23GHZJQT`
+- Cookie consent required for tracking (GDPR compliance via tarteaucitron)
+
+### Cookie Consent System (January 2025)
+- Minimal tarteaucitron implementation (5 files, ~430KB)
+- No persistent UI elements - access via footer link
+- Google Consent Mode v2 for GDPR compliance
+- German language support
+
 ### Deployment to Cloudflare Pages
 ```bash
 npm run build
@@ -126,6 +137,20 @@ Two approaches configured in `LinkedInFeed.astro`:
 - Inline critical CSS (`inlineStylesheets: 'auto'`)
 - Minimal JavaScript (only countdown timer and form handling)
 - CDN-ready static files
+
+## Legal Compliance Requirements
+
+### IMPORTANT: Placeholder Text Must Be Replaced
+The following files contain placeholder text that MUST be replaced before production deployment:
+- `/src/pages/datenschutz.astro` - Privacy policy with placeholder addresses
+- `/src/pages/impressum.astro` - Legal notice with placeholder contact details
+
+**WARNING**: Non-compliance with German TMG law and GDPR can result in legal penalties.
+
+### LinkedIn Widget Security
+- Currently using production widget ID (25576730) from another site
+- **TODO**: Create dedicated SociableKit widget for this site
+- See `/src/components/LinkedInFeed.astro` for setup instructions
 
 ## Project Constraints
 

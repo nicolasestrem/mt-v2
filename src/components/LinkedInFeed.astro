@@ -2,6 +2,9 @@
 // LinkedIn Feed component for Mobility Trailblazers
 // Uses SociableKit widget for displaying LinkedIn posts (same as production site)
 // 
+// SECURITY WARNING: Currently using production widget ID (25576730) from another site
+// TODO: Create dedicated widget for this site to avoid potential data leakage
+// 
 // SETUP INSTRUCTIONS:
 // 1. Go to https://www.sociablekit.com
 // 2. Click "Create a Widget" and select "LinkedIn Page Posts"
@@ -17,7 +20,7 @@
 // - Basic customization options
 // 
 // NOTE: The widget ID 25576730 is from the production site.
-// To use your own feed, create a new widget and replace this ID.
+// RECOMMENDATION: Create a dedicated widget or implement direct LinkedIn API integration
 import Icons from './Icons.astro';
 ---
 
@@ -36,20 +39,23 @@ import Icons from './Icons.astro';
 			</p>
 		</div>
 		
-		<!-- SociableKit LinkedIn Feed Widget -->
+		<!-- SociableKit LinkedIn Feed Widget with Consent -->
 		<div class="linkedin-widget-container" id="linkedin-feed-container">
-			<!-- Direct iframe loading -->
-			<iframe 
-				id="linkedin-iframe"
-				src="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730"
-				frameborder="0"
-				width="100%"
-				height="1800"
-				loading="lazy"
-				class="linkedin-iframe"
-				title="Mobility Trailblazers LinkedIn Feed">
-			</iframe>
+			<!-- Placeholder for consent -->
+			<div class="linkedin-feed-placeholder" 
+				 data-src="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730"
+				 data-class="linkedin-iframe">
+				<!-- Tarteaucitron will replace this with iframe or consent message -->
+			</div>
 		</div>
+		
+		<script is:inline>
+			// Initialize SociableKit service with tarteaucitron
+			// Create job queue even if tarteaucitron isn't loaded yet
+			window.tarteaucitron = window.tarteaucitron || {};
+			window.tarteaucitron.job = window.tarteaucitron.job || [];
+			window.tarteaucitron.job.push('sociablekit');
+		</script>
 
 		<!-- Follow CTA -->
 		<div class="linkedin-follow-cta">
@@ -128,6 +134,20 @@ import Icons from './Icons.astro';
 	.linkedin-iframe {
 		border-radius: 12px;
 		min-height: 600px;
+		width: 100%;
+		height: 1800px;
+		border: 0;
+	}
+	
+	.linkedin-feed-placeholder {
+		min-height: 600px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #f5f5f5;
+		border-radius: 12px;
+		padding: 2rem;
+		text-align: center;
 	}
 
 	.linkedin-follow-cta {
