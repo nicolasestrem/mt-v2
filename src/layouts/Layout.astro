@@ -386,7 +386,7 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 				banner.innerHTML = `
 					<p style="margin: 0 0 10px 0; color: #333;">
 						Diese Seite als App installieren. Tippen Sie auf das Teilen-Symbol 
-						<span style="display: inline-block; width: 20px; height: 20px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23007AFF"><path d="M12 2L8 6h3v9h2V6h3l-4-4zm-8 16v2h16v-2H4z"/></svg>') center/contain no-repeat; vertical-align: middle;"></span>
+						<span style="display: inline-block; font-size: 20px; vertical-align: middle;">⬆️</span>
 						und wählen Sie „Zum Home-Bildschirm".
 					</p>
 					<button onclick="this.parentElement.remove(); localStorage.setItem('ios-install-dismissed', 'true');" 
@@ -415,7 +415,7 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 				banner.innerHTML = `
 					<p style="margin: 0 0 10px 0; color: #333;">
 						Diese Seite als App installieren. Öffnen Sie das Menü 
-						<span style="display: inline-block; width: 20px; height: 20px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23666"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>') center/contain no-repeat; vertical-align: middle;"></span>
+						<span style="display: inline-block; font-size: 20px; vertical-align: middle;">⋮</span>
 						und wählen Sie „Zum Startbildschirm hinzufügen".
 					</p>
 					<button onclick="this.parentElement.remove(); localStorage.setItem('android-install-dismissed', 'true');" 
@@ -488,41 +488,8 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 		// Initialize Google Analytics service
 		(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
 		
-		// Custom service for LinkedIn/SociableKit widget
-		tarteaucitron.services.sociablekit = {
-			"key": "sociablekit",
-			"type": "social",
-			"name": "LinkedIn Feed (SociableKit)",
-			"uri": "https://sociablekit.com/privacy-policy/",
-			"needConsent": true,
-			"cookies": ['sk_*', 'linkedin_*'],
-			"js": function () {
-				"use strict";
-				// Load LinkedIn widget when consent is given
-				var linkedinContainers = document.querySelectorAll('.linkedin-feed-placeholder');
-				linkedinContainers.forEach(function(container) {
-					var iframe = document.createElement('iframe');
-					iframe.src = container.getAttribute('data-src');
-					iframe.className = container.getAttribute('data-class') || '';
-					iframe.setAttribute('loading', 'lazy');
-					iframe.setAttribute('title', 'LinkedIn Feed');
-					container.parentNode.replaceChild(iframe, container);
-				});
-			},
-			"fallback": function () {
-				"use strict";
-				// Show consent placeholder when consent is not given
-				var linkedinContainers = document.querySelectorAll('.linkedin-feed-placeholder');
-				linkedinContainers.forEach(function(container) {
-					if (!container.querySelector('.tarteaucitron-placeholder')) {
-						var placeholder = document.createElement('div');
-						placeholder.className = 'tarteaucitron-placeholder';
-						placeholder.innerHTML = '<strong>LinkedIn Feed</strong><br>Um den LinkedIn Feed anzuzeigen, müssen Sie die Cookies akzeptieren.';
-						container.appendChild(placeholder);
-					}
-				});
-			}
-		};
+		// Initialize SociableKit service (defined in tarteaucitron.services.minimal.js)
+		(tarteaucitron.job = tarteaucitron.job || []).push('sociablekit');
 		</script>
 	</body>
 </html>
