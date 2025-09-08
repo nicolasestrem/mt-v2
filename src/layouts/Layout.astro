@@ -488,77 +488,8 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 		// Initialize Google Analytics service
 		(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
 		
-		// Custom service for LinkedIn/SociableKit widget
-		tarteaucitron.services.sociablekit = {
-			"key": "sociablekit",
-			"type": "social",
-			"name": "LinkedIn Feed (SociableKit)",
-			"uri": "https://sociablekit.com/privacy-policy/",
-			"needConsent": true,
-			"cookies": ['sk_*', 'linkedin_*'],
-			"js": function () {
-				"use strict";
-				// Detect Brave browser
-				var isBrave = (navigator.brave && typeof navigator.brave.isBrave === 'function') || false;
-				
-				// Load LinkedIn widget when consent is given
-				var linkedinContainers = document.querySelectorAll('.linkedin-feed-placeholder');
-				linkedinContainers.forEach(function(container) {
-					// Store parent reference before replacing container
-					var parent = container.parentNode;
-					
-					var iframe = document.createElement('iframe');
-					iframe.src = container.getAttribute('data-src');
-					iframe.className = container.getAttribute('data-class') || '';
-					iframe.setAttribute('loading', 'lazy');
-					iframe.setAttribute('title', 'LinkedIn Feed');
-					
-					// Add error handling for iframe loading
-					iframe.onerror = function() {
-						console.warn('LinkedIn widget failed to load');
-						// Show fallback for failed load
-						var fallbackMsg = document.createElement('div');
-						fallbackMsg.className = 'linkedin-fallback-message';
-						fallbackMsg.innerHTML = '<p style="text-align: center; padding: 2rem;">Das LinkedIn-Widget konnte nicht geladen werden.<br><a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" style="color: #0077b5; text-decoration: underline;">Besuchen Sie uns direkt auf LinkedIn →</a></p>';
-						// Use the iframe's parent since iframe is now in the DOM
-						if (iframe.parentNode) {
-							iframe.parentNode.replaceChild(fallbackMsg, iframe);
-						}
-					};
-					
-					// For Brave browser, add a timeout check
-					if (isBrave) {
-						setTimeout(function() {
-							// Check if iframe actually loaded content
-							try {
-								var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-								if (!iframeDoc || iframeDoc.body.innerHTML === '') {
-									iframe.onerror();
-								}
-							} catch(e) {
-								// Cross-origin, assume it loaded
-							}
-						}, 3000);
-					}
-					
-					// Replace container with iframe
-					parent.replaceChild(iframe, container);
-				});
-			},
-			"fallback": function () {
-				"use strict";
-				// Show consent placeholder when consent is not given
-				var linkedinContainers = document.querySelectorAll('.linkedin-feed-placeholder');
-				linkedinContainers.forEach(function(container) {
-					if (!container.querySelector('.tarteaucitron-placeholder')) {
-						var placeholder = document.createElement('div');
-						placeholder.className = 'tarteaucitron-placeholder';
-						placeholder.innerHTML = '<strong>LinkedIn Feed</strong><br>Um den LinkedIn Feed anzuzeigen, müssen Sie die Cookies akzeptieren.';
-						container.appendChild(placeholder);
-					}
-				});
-			}
-		};
+		// Initialize SociableKit service (defined in tarteaucitron.services.minimal.js)
+		(tarteaucitron.job = tarteaucitron.job || []).push('sociablekit');
 		</script>
 	</body>
 </html>
