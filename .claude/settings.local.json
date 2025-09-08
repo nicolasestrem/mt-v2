@@ -32,7 +32,8 @@
       "Bash(npx playwright show-report:*)",
       "WebFetch(domain:www.linkedin.com)",
       "mcp__desktop-commander-global__start_process",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(gh pr view:*)"
     ],
     "deny": [],
     "ask": []
