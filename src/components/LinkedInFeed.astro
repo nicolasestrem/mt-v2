@@ -46,6 +46,14 @@ import Icons from './Icons.astro';
 				 data-src="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730"
 				 data-class="linkedin-iframe">
 				<!-- Tarteaucitron will replace this with iframe or consent message -->
+				<noscript>
+					<p style="text-align: center; padding: 2rem;">
+						JavaScript ist erforderlich, um den LinkedIn-Feed anzuzeigen.<br>
+						<a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" style="color: #0077b5;">
+							Besuchen Sie uns auf LinkedIn →
+						</a>
+					</p>
+				</noscript>
 			</div>
 		</div>
 		
@@ -55,6 +63,25 @@ import Icons from './Icons.astro';
 			window.tarteaucitron = window.tarteaucitron || {};
 			window.tarteaucitron.job = window.tarteaucitron.job || [];
 			window.tarteaucitron.job.push('sociablekit');
+			
+			// Additional fallback for privacy-focused browsers
+			setTimeout(function() {
+				var container = document.querySelector('.linkedin-feed-placeholder');
+				if (container && !container.querySelector('iframe') && !container.querySelector('.tarteaucitron-placeholder')) {
+					// Check if we're on a privacy-focused browser
+					var isBrave = (navigator.brave && typeof navigator.brave.isBrave === 'function');
+					var isPrivacyMode = navigator.doNotTrack === "1" || window.doNotTrack === "1";
+					
+					if (isBrave || isPrivacyMode) {
+						container.innerHTML = '<div style="text-align: center; padding: 3rem; background: #f9f9f9; border-radius: 12px;">' +
+							'<p style="margin-bottom: 1rem; color: #666;">Ihr Browser blockiert möglicherweise Drittanbieter-Inhalte.</p>' +
+							'<a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" ' +
+							'style="display: inline-block; padding: 0.75rem 2rem; background: #0077b5; color: white; ' +
+							'text-decoration: none; border-radius: 25px; font-weight: 600;">LinkedIn-Seite öffnen →</a>' +
+							'</div>';
+					}
+				}
+			}, 5000); // Wait 5 seconds to see if widget loads
 		</script>
 
 		<!-- Follow CTA -->
