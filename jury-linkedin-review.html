@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jury LinkedIn URLs - Review & Edit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #003C3D;
+            border-bottom: 3px solid #C1693C;
+            padding-bottom: 10px;
+        }
+        .instructions {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background: #003C3D;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background: #f8f8f8;
+        }
+        .name {
+            font-weight: bold;
+            color: #003C3D;
+        }
+        .org {
+            color: #666;
+            font-size: 0.9em;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #C1693C;
+            background: #fffef5;
+        }
+        .valid {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        .empty {
+            border-color: #ffc107;
+            background: #fffef5;
+        }
+        .copy-btn {
+            background: #003C3D;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        .copy-btn:hover {
+            background: #C1693C;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+        #output {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            display: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Jury LinkedIn URLs - Review & Edit</h1>
+    
+    <div class="instructions">
+        <strong>📝 Instructions:</strong>
+        <ul>
+            <li>Review each jury member's proposed LinkedIn URL</li>
+            <li>Edit any incorrect URLs directly in the input fields</li>
+            <li>Leave blank if no LinkedIn profile exists</li>
+            <li>URLs should start with: https://www.linkedin.com/in/ or https://linkedin.com/in/</li>
+            <li>Click "Generate Code" when done to get the updated array</li>
+        </ul>
+    </div>
+
+    <button class="copy-btn" onclick="generateCode()">📋 Generate Code for JurySection.astro</button>
+    <div class="status" id="status"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="25%">Name</th>
+                <th width="30%">Organization</th>
+                <th width="45%">LinkedIn URL (edit as needed)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="name">Winfried Hermann</div>
+                    <div class="org">Schirmherr</div>
+                </td>
+                <td>Verkehrsminister Baden-Württemberg</td>
+                <td><input type="text" id="winfried-hermann" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/winfried-hermann-5a5b4b20/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Prof. Dr. Andreas Herrmann</div>
+                    <div class="org">Präsident</div>
+                </td>
+                <td>Institut für Mobilität, Universität St. Gallen</td>
+                <td><input type="text" id="prof-dr-andreas-herrmann" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/andreas-herrmann-9154301/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Torsten Tomczak</div>
+                    <div class="org">Vize-Präsident</div>
+                </td>
+                <td>Institut für Mobilität, Universität St. Gallen</td>
+                <td><input type="text" id="torsten-tomczak" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/torsten-tomczak/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Peter Grünenfelder</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Avenir Suisse</td>
+                <td><input type="text" id="peter-grunenfelder" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/peter-gr%C3%BCnenfelder-93912a22/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Katja Busch</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>DHL Group</td>
+                <td><input type="text" id="katja-busch" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/katja-busch-8a6ba315/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Dr. Sabine Stock</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>ÖBB-Personenverkehr AG</td>
+                <td><input type="text" id="dr-sabine-stock" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/sabine-stock-51659b157/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Jürgen Stackmann</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Automobil-Experte</td>
+                <td><input type="text" id="jurgen-stackmann" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/j%C3%BCrgen-stackmann-55692a7/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Felix Neureuther</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>ARD-Experte & Skirennläufer</td>
+                <td><input type="text" id="felix-neureuther" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/felix-neureuther-8837a5165/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Dr. Astrid Fontaine</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Bentley Motors</td>
+                <td><input type="text" id="dr-astrid-fontaine" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/astridfontaine/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Dr. Kjell Gruner</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Porsche Cars North America</td>
+                <td><input type="text" id="dr-kjell-gruner" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/kjellgruner/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Dr. Philipp Rösler</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Fortum</td>
+                <td><input type="text" id="dr-philipp-rosler" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/philipp-r%C3%B6sler-453a7650/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Eberhard Weiblen</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Porsche Consulting</td>
+                <td><input type="text" id="eberhard-weiblen" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/eberhard-weiblen-649b6917/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Hans-Peter Kleebinder</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>AUDI AG</td>
+                <td><input type="text" id="hans-peter-kleebinder" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/hans-peter-kleebinder-3584b4162/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Helmut Ruhl</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>N26</td>
+                <td><input type="text" id="helmut-ruhl" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/helmut-ruhl-6a60492/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Johann Jungwirth</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Mobileye</td>
+                <td><input type="text" id="johann-jungwirth" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/johannjungwirth/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Laura Meyer</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>HOLON</td>
+                <td><input type="text" id="laura-meyer" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/laura-meyer-holon/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Prof. Dr. Nikolaus Lang</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>BCG</td>
+                <td><input type="text" id="prof-dr-nikolaus-lang" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/nikolaus-lang-3524361/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Prof. Dr. Oliver Gassmann</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Universität St. Gallen</td>
+                <td><input type="text" id="prof-dr-oliver-gassmann" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/oliver-gassmann-3196992/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Prof. Dr. Wolfgang Jenewein</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Universität St. Gallen</td>
+                <td><input type="text" id="prof-dr-wolfgang-jenewein" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/wolfgang-jenewein-4305881a/"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Prof. Dr. Zheng Han</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Tongji University</td>
+                <td><input type="text" id="prof-dr-zheng-han" placeholder="https://www.linkedin.com/in/..." value=""></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="name">Susann Schramm</div>
+                    <div class="org">Jury</div>
+                </td>
+                <td>Daimler Truck</td>
+                <td><input type="text" id="susann-schramm" placeholder="https://www.linkedin.com/in/..." value="https://www.linkedin.com/in/susann-schramm-15b34116b/"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="copy-btn" onclick="generateCode()">📋 Generate Code for JurySection.astro</button>
+    
+    <div id="output"></div>
+
+    <script>
+        function generateCode() {
+            const juryData = [
+                { id: 'winfried-hermann', name: 'Winfried Hermann' },
+                { id: 'prof-dr-andreas-herrmann', name: 'Prof. Dr. Andreas Herrmann' },
+                { id: 'torsten-tomczak', name: 'Torsten Tomczak' },
+                { id: 'peter-grunenfelder', name: 'Peter Grünenfelder' },
+                { id: 'katja-busch', name: 'Katja Busch' },
+                { id: 'dr-sabine-stock', name: 'Dr. Sabine Stock' },
+                { id: 'jurgen-stackmann', name: 'Jürgen Stackmann' },
+                { id: 'felix-neureuther', name: 'Felix Neureuther' },
+                { id: 'dr-astrid-fontaine', name: 'Dr. Astrid Fontaine' },
+                { id: 'dr-kjell-gruner', name: 'Dr. Kjell Gruner' },
+                { id: 'dr-philipp-rosler', name: 'Dr. Philipp Rösler' },
+                { id: 'eberhard-weiblen', name: 'Eberhard Weiblen' },
+                { id: 'hans-peter-kleebinder', name: 'Hans-Peter Kleebinder' },
+                { id: 'helmut-ruhl', name: 'Helmut Ruhl' },
+                { id: 'johann-jungwirth', name: 'Johann Jungwirth' },
+                { id: 'laura-meyer', name: 'Laura Meyer' },
+                { id: 'prof-dr-nikolaus-lang', name: 'Prof. Dr. Nikolaus Lang' },
+                { id: 'prof-dr-oliver-gassmann', name: 'Prof. Dr. Oliver Gassmann' },
+                { id: 'prof-dr-wolfgang-jenewein', name: 'Prof. Dr. Wolfgang Jenewein' },
+                { id: 'prof-dr-zheng-han', name: 'Prof. Dr. Zheng Han' },
+                { id: 'susann-schramm', name: 'Susann Schramm' }
+            ];
+
+            let output = '// LinkedIn URLs for each jury member\n';
+            output += '// Copy these updates to the juryMembers array in JurySection.astro\n\n';
+
+            juryData.forEach(person => {
+                const input = document.getElementById(person.id);
+                const url = input.value.trim();
+                output += `// ${person.name}\n`;
+                output += `linkedin: '${url}',\n\n`;
+            });
+
+            const outputDiv = document.getElementById('output');
+            outputDiv.textContent = output;
+            outputDiv.style.display = 'block';
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(output).then(() => {
+                const status = document.getElementById('status');
+                status.className = 'status success';
+                status.textContent = '✅ Code copied to clipboard! Paste it into your editor.';
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 5000);
+            });
+
+            // Scroll to output
+            outputDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Add input validation
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value.trim() === '') {
+                    this.className = 'empty';
+                } else if (this.value.includes('linkedin.com/in/')) {
+                    this.className = 'valid';
+                } else {
+                    this.className = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
