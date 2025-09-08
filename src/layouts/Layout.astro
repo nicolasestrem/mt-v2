@@ -504,6 +504,9 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 				// Load LinkedIn widget when consent is given
 				var linkedinContainers = document.querySelectorAll('.linkedin-feed-placeholder');
 				linkedinContainers.forEach(function(container) {
+					// Store parent reference before replacing container
+					var parent = container.parentNode;
+					
 					var iframe = document.createElement('iframe');
 					iframe.src = container.getAttribute('data-src');
 					iframe.className = container.getAttribute('data-class') || '';
@@ -517,7 +520,10 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 						var fallbackMsg = document.createElement('div');
 						fallbackMsg.className = 'linkedin-fallback-message';
 						fallbackMsg.innerHTML = '<p style="text-align: center; padding: 2rem;">Das LinkedIn-Widget konnte nicht geladen werden.<br><a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" style="color: #0077b5; text-decoration: underline;">Besuchen Sie uns direkt auf LinkedIn →</a></p>';
-						container.parentNode.replaceChild(fallbackMsg, iframe);
+						// Use the iframe's parent since iframe is now in the DOM
+						if (iframe.parentNode) {
+							iframe.parentNode.replaceChild(fallbackMsg, iframe);
+						}
 					};
 					
 					// For Brave browser, add a timeout check
@@ -535,7 +541,8 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 						}, 3000);
 					}
 					
-					container.parentNode.replaceChild(iframe, container);
+					// Replace container with iframe
+					parent.replaceChild(iframe, container);
 				});
 			},
 			"fallback": function () {
