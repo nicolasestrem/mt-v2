@@ -8,6 +8,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "playwright test",
+    "test:pr": "playwright test --grep @critical --project=\"Desktop Chrome\"",
+    "test:full": "playwright test",
     "test:ui": "playwright test --ui",
     "test:chrome": "playwright test --project=\"Desktop Chrome\"",
     "test:report": "playwright show-report",
@@ -21,18 +23,18 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.5.1",
-    "@tailwindcss/vite": "^4.1.12",
-    "astro": "^5.13.3",
+    "@tailwindcss/vite": "^4.1.13",
+    "astro": "^5.13.5",
     "sharp": "^0.34.3",
-    "tailwindcss": "^4.1.12"
+    "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
     "postcss-html": "^1.8.0",
     "postcss-scss": "^4.0.9",
-    "stylelint": "^15.11.0",
+    "stylelint": "^16.24.0",
     "stylelint-config-html": "^1.1.0",
-    "stylelint-config-standard": "^34.0.0",
-    "stylelint-order": "^6.0.4"
+    "stylelint-config-standard": "^39.0.0",
+    "stylelint-order": "^7.0.0"
   }
 }

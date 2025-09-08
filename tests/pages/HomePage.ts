@@ -146,6 +146,24 @@ export class HomePage {
   async navigateToHome() {
     await this.page.goto('/');
     await this.page.waitForLoadState('networkidle');
+    
+    // Check and dismiss cookie banner if present
+    await this.dismissCookieBannerIfPresent();
+  }
+  
+  async dismissCookieBannerIfPresent() {
+    try {
+      // Check for tarteaucitron cookie banner
+      const acceptButton = this.page.locator('#tarteaucitronAllAllowed, .tarteaucitronAllow').first();
+      const bannerVisible = await acceptButton.isVisible({ timeout: 2000 });
+      
+      if (bannerVisible) {
+        await acceptButton.click();
+        await this.page.waitForTimeout(500); // Wait for banner to disappear
+      }
+    } catch {
+      // Cookie banner not present or already dismissed
+    }
   }
 
   async waitForCountdownToLoad() {

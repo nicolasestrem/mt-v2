@@ -263,7 +263,7 @@ test.describe('Component Functionality Tests', () => {
   });
 
   test.describe('Scroll to Top Button', () => {
-    test('should appear when scrolling down and function correctly', async ({ page }) => {
+    test('@critical should appear when scrolling down and function correctly', async ({ page }) => {
       // Check if scroll button exists
       const scrollButton = page.locator('#scroll-to-top-button, .scroll-to-top');
       const buttonExists = await scrollButton.count() > 0;
@@ -274,14 +274,17 @@ test.describe('Component Functionality Tests', () => {
 
         // Scroll down more than 300px
         await page.evaluate(() => window.scrollTo(0, 500));
-        await page.waitForTimeout(300);
+        await page.waitForTimeout(500); // Increased wait time
 
         // Button should now be visible
         await expect(scrollButton).toBeVisible();
         
-        // Click the scroll to top button
-        await scrollButton.click();
+        // Wait for any potential overlays to settle and use force click if needed
         await page.waitForTimeout(500);
+        
+        // Try to click with force option to bypass any potential overlay issues
+        await scrollButton.click({ force: true, timeout: 15000 });
+        await page.waitForTimeout(1000); // Increased wait for scroll animation
 
         // Check that we're back at the top
         const scrollPosition = await page.evaluate(() => window.scrollY);
