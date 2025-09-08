@@ -10,7 +10,7 @@ test.describe('Form Functionality Tests', () => {
     await homePage.scrollToSection(homePage.nominationForm);
   });
 
-  test('form validation works correctly', async ({ page }) => {
+  test('@critical form validation works correctly', async ({ page }) => {
     // Test required field validation
     await homePage.submitButton.click();
     

@@ -10,7 +10,7 @@ test.describe('Core Functionality Tests', () => {
   });
 
   test.describe('Page Load and Basic Structure', () => {
-    test('should load successfully with correct title and structure', async ({ page }) => {
+    test('@critical should load successfully with correct title and structure', async ({ page }) => {
       // Check that the page loads with correct title
       await expect(page).toHaveTitle(/25 Mobility Trailblazers|Mobility/i);
       
@@ -20,7 +20,7 @@ test.describe('Core Functionality Tests', () => {
       await expect(homePage.footer).toBeVisible();
     });
 
-    test('should have all main sections present and visible', async () => {
+    test('@critical should have all main sections present and visible', async () => {
       // Test each section by scrolling to it
       const sections = [
         { section: homePage.heroSection, name: 'Hero' },
