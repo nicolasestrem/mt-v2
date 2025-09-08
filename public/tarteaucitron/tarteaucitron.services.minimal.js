@@ -80,6 +80,12 @@ tarteaucitron.services.sociablekit = {
             iframe.className = container.getAttribute('data-class') || '';
             iframe.setAttribute('loading', 'lazy');
             iframe.setAttribute('title', 'LinkedIn Feed');
+            // Set explicit dimensions since Astro scoped styles won't apply
+            iframe.style.width = '100%';
+            iframe.style.height = window.innerWidth <= 768 ? '1200px' : '1800px';
+            iframe.style.border = '0';
+            iframe.style.borderRadius = '12px';
+            iframe.style.minHeight = '600px';
             
             // Add error handling for iframe loading
             iframe.onerror = function() {
