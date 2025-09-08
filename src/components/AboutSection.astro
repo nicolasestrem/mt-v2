@@ -108,21 +108,6 @@ import Icons from './Icons.astro';
 			</div>
 		</div>
 		
-		<!-- Closing statement -->
-		<div class="closing-statement">
-			<!-- Creative zigzag divider at top -->
-			<svg class="shape-divider" viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-				<path d="M0,30 L100,10 L200,30 L300,10 L400,30 L500,10 L600,30 L700,10 L800,30 L900,10 L1000,30 L1100,10 L1200,30 L1200,60 L0,60 Z" fill="currentColor" opacity="0.1"></path>
-				<path d="M0,30 L100,10 L200,30 L300,10 L400,30 L500,10 L600,30 L700,10 L800,30 L900,10 L1000,30 L1100,10 L1200,30" stroke="currentColor" stroke-width="2" fill="none" opacity="0.3"></path>
-			</svg>
-			<h2 class="closing-title">Gemeinsam wollen wir zeigen:</h2>
-			<p class="closing-text">
-				Mobilität verändert sich – weil Menschen den Mut haben, sie zu gestalten.
-			</p>
-			<a href="#vorschlagen" class="btn btn-accent">
-				Mobility Trailblazer vorschlagen <Icons name="arrow-right" class="btn-icon" />
-			</a>
-		</div>
 	</div>
 </section>
 
@@ -193,7 +178,7 @@ import Icons from './Icons.astro';
 		background: transparent;
 		color: var(--color-primary);
 		transform: translateY(-2px);
-		box-shadow: 0 10px 30px rgba(0, 60, 61, 0.2);
+		box-shadow: 0 10px 30px rgb(0, 60, 61, 0.2);
 	}
 	
 	.btn-secondary {
@@ -206,7 +191,7 @@ import Icons from './Icons.astro';
 		background: var(--color-primary);
 		color: #fff;
 		transform: translateY(-2px);
-		box-shadow: 0 10px 30px rgba(0, 60, 61, 0.2);
+		box-shadow: 0 10px 30px rgb(0, 60, 61, 0.2);
 	}
 	
 	.btn-accent {
@@ -221,14 +206,14 @@ import Icons from './Icons.astro';
 		background: transparent;
 		color: var(--color-accent);
 		transform: translateY(-2px);
-		box-shadow: 0 10px 30px rgba(193, 105, 60, 0.2);
+		box-shadow: 0 10px 30px rgb(193, 105, 60, 0.2);
 	}
 	
 	.about-image {
 		position: relative;
 		overflow: hidden;
 		border-radius: 20px;
-		box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+		box-shadow: 0 30px 60px rgb(0, 0, 0, 0.15);
 	}
 	
 	.about-image img {
@@ -259,7 +244,7 @@ import Icons from './Icons.astro';
 		background: #fff;
 		border-radius: 20px;
 		padding: 2.5rem;
-		box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 15px 40px rgb(0, 0, 0, 0.1);
 		transition: all 0.3s ease;
 		display: flex;
 		flex-direction: column;
@@ -269,7 +254,7 @@ import Icons from './Icons.astro';
 	
 	.partner-card:hover {
 		transform: translateY(-5px);
-		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+		box-shadow: 0 20px 50px rgb(0, 0, 0, 0.15);
 	}
 	
 	.partner-logo {
@@ -328,9 +313,9 @@ import Icons from './Icons.astro';
 	.closing-statement {
 		text-align: center;
 		padding: 5rem 2rem 3rem;
-		background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 240, 227, 0.6));
+		background: linear-gradient(135deg, rgb(255, 255, 255, 0.9), rgb(248, 240, 227, 0.6));
 		border-radius: 30px;
-		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+		box-shadow: 0 20px 50px rgb(0, 0, 0, 0.08);
 		position: relative;
 		overflow: hidden;
 	}
@@ -352,7 +337,6 @@ import Icons from './Icons.astro';
 		font-weight: 700;
 		margin-bottom: 1rem;
 		background: linear-gradient(135deg, #C1693C, #004C5F);
-		-webkit-background-clip: text;
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
 		position: relative;

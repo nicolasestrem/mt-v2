@@ -49,9 +49,11 @@ jobs:
       
     - name: Run Playwright Tests
       run: |
-        npx playwright test \
-          --project="Desktop Chrome" \
-          --project="Desktop Firefox"
+        if [ "${{ github.event_name }}" == "pull_request" ]; then
+          npm run test:pr
+        else
+          npm run test:full
+        fi
       env:
         PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
         CI: true
@@ -61,5 +63,41 @@ jobs:
       if: always()
       with:
         name: playwright-report
-        path: test-results/
+        path: |
+          playwright-report/
+          test-results/
         retention-days: 7
+    
+    - name: Upload HTML Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-html-report
+        path: playwright-report/
+        retention-days: 30
+    
+    - name: Test Summary
+      if: always()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          // Create summary
+          let summary = '## 🎭 Playwright Test Results\n\n';
+          
+          if (${{ job.status == 'success' }}) {
+            summary += '✅ All tests passed!\n';
+          } else {
+            summary += '❌ Some tests failed. Check the artifacts for details.\n';
+          }
+          
+          summary += '\n### 📊 Test Artifacts\n';
+          summary += '- [Download HTML Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n';
+          summary += '- Check the "Artifacts" section above for detailed reports\n';
+          
+          // Write to summary
+          await core.summary
+            .addRaw(summary)
+            .write();

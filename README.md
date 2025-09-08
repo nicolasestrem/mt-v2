@@ -21,7 +21,7 @@ This is a complete reimplementation of the MobilityTrailblazers WordPress site u
 - **Hosting**: Cloudflare Pages (FREE)
 - **Forms**: Web3Forms (FREE up to 250 submissions/month)
 - **Performance**: 10x faster than WordPress (0.5s vs 3.8s load time)
-- **Cost**: €0/month vs €16/month for WordPress
+
 
 ## 📁 Project Structure
 

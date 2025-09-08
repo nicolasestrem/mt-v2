@@ -33,7 +33,16 @@
       "WebFetch(domain:www.linkedin.com)",
       "mcp__desktop-commander-global__start_process",
       "Bash(npm run build:*)",
-      "Bash(gh pr view:*)"
+      "Bash(gh pr view:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(git log:*)",
+      "Bash(gh pr list:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:tarteaucitron.io)",
+      "Bash(curl:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm run lint:*)"
     ],
     "deny": [],
     "ask": []

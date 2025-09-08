@@ -19,7 +19,6 @@
     "color-hex-length": null,
     "color-named": ["never", { "severity": "warning" }],
     "color-no-invalid-hex": true,
-    "color-hex-case": null,
     "color-function-notation": null,
     "alpha-value-notation": null,
     "media-feature-range-notation": null,
