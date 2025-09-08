@@ -247,6 +247,10 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 // Randomly shuffle jury members for initial display
+// Note: This randomization happens server-side at build time. Mobile/tablet users see 
+// the first 2/4 of the same 6 desktop members, not a truly independent random selection.
+// For true viewport-based randomization, we would need client-side detection,
+// which would add complexity and potential layout shift issues.
 const shuffledMembers = shuffleArray(juryMembers);
 ---
 
@@ -439,6 +443,7 @@ const shuffledMembers = shuffleArray(juryMembers);
 		opacity: 0;
 		transition: max-height 0.8s ease-out, opacity 0.3s ease-out, margin-top 0.3s ease-out;
 		margin-top: 0;
+		pointer-events: none; /* Prevent interaction when collapsed */
 	}
 
 	.jury-members-hidden.active {
@@ -447,6 +452,7 @@ const shuffledMembers = shuffleArray(juryMembers);
 		opacity: 1;
 		margin-top: 3rem;
 		transition: max-height 0.8s ease-in, opacity 0.3s ease-in, margin-top 0.3s ease-in;
+		pointer-events: auto; /* Re-enable interaction when expanded */
 	}
 
 	.jury-member {
@@ -738,6 +744,11 @@ const shuffledMembers = shuffleArray(juryMembers);
 			// Initial adjustment (no localStorage - always start collapsed for random display)
 			adjustVisibleMembers();
 			
+			// Set initial inert state
+			if (hiddenMembers && 'inert' in hiddenMembers) {
+				hiddenMembers.inert = true;
+			}
+			
 			// Toggle function
 			function toggleMembers(e) {
 				if (e) {
@@ -752,6 +763,11 @@ const shuffledMembers = shuffleArray(juryMembers);
 					toggleBtn.setAttribute('aria-expanded', 'false');
 					hiddenMembers.classList.remove('active');
 					hiddenMembers.setAttribute('aria-hidden', 'true');
+					
+					// Add inert to prevent keyboard navigation
+					if ('inert' in hiddenMembers) {
+						hiddenMembers.inert = true;
+					}
 					
 					// Re-apply responsive hiding
 					adjustVisibleMembers();
@@ -771,6 +787,11 @@ const shuffledMembers = shuffleArray(juryMembers);
 					toggleBtn.setAttribute('aria-expanded', 'true');
 					hiddenMembers.classList.add('active');
 					hiddenMembers.setAttribute('aria-hidden', 'false');
+					
+					// Remove inert to allow keyboard navigation
+					if ('inert' in hiddenMembers) {
+						hiddenMembers.inert = false;
+					}
 					
 					// Show all visible members when expanded
 					var members = visibleContainer.querySelectorAll('.jury-member');
