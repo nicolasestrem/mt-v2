@@ -292,16 +292,16 @@ import Icons from './Icons.astro';
 	(function() {
 		function initMobileMenu() {
 			// Find elements
-			var header = document.querySelector('.header');
+                        const header = document.querySelector('.header');
 			if (!header) {
 				console.log('Header not found, retrying...');
 				setTimeout(initMobileMenu, 100);
 				return;
 			}
 			
-			var navToggle = header.querySelector('.nav-toggle');
-			var navMenu = header.querySelector('.nav-menu');
-			var navSocial = header.querySelector('.nav-social');
+                        const navToggle = header.querySelector('.nav-toggle');
+                        const navMenu = header.querySelector('.nav-menu');
+                        const navSocial = header.querySelector('.nav-social');
 			
 			if (!navToggle || !navMenu) {
 				console.log('Menu elements not found');
@@ -334,7 +334,7 @@ import Icons from './Icons.astro';
 					navToggle.classList.add('active');
 					navToggle.setAttribute('aria-expanded', 'true');
 					// Focus first menu item for keyboard navigation
-					var firstLink = navMenu.querySelector('.nav-list a');
+                                        const firstLink = navMenu.querySelector('.nav-list a');
 					if (firstLink) firstLink.focus();
 				}
 			}
@@ -347,8 +347,8 @@ import Icons from './Icons.astro';
 			});
 			
 			// Close menu when clicking on a link
-			var navLinks = header.querySelectorAll('.nav-list a');
-			for (var i = 0; i < navLinks.length; i++) {
+                        const navLinks = header.querySelectorAll('.nav-list a');
+                        for (let i = 0; i < navLinks.length; i++) {
 				navLinks[i].addEventListener('click', function() {
 					if (window.innerWidth <= 768) {
 						navMenu.classList.remove('active');

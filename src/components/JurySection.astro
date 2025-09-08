@@ -688,9 +688,9 @@ const shuffledMembers = shuffleArray(juryMembers);
 	(function() {
 		function initJuryToggle() {
 			// Find elements
-			var toggleBtn = document.getElementById('jury-toggle-btn');
-			var hiddenMembers = document.getElementById('jury-members-hidden');
-			var visibleContainer = document.querySelector('.jury-members-visible');
+                        const toggleBtn = document.getElementById('jury-toggle-btn');
+                        const hiddenMembers = document.getElementById('jury-members-hidden');
+                        const visibleContainer = document.querySelector('.jury-members-visible');
 			
 			if (!toggleBtn || !hiddenMembers) {
 				// Elements not found, retry
@@ -706,7 +706,7 @@ const shuffledMembers = shuffleArray(juryMembers);
 			
 			// Get initial display counts based on viewport
 			function getInitialCount() {
-				var width = window.innerWidth;
+                                const width = window.innerWidth;
 				if (width <= 767) return 2;
 				if (width <= 1023) return 4;
 				return 6;
@@ -716,13 +716,13 @@ const shuffledMembers = shuffleArray(juryMembers);
 			function adjustVisibleMembers() {
 				if (!visibleContainer) return;
 				
-				var members = visibleContainer.querySelectorAll('.jury-member');
-				var count = getInitialCount();
-				var isExpanded = toggleBtn.classList.contains('expanded');
+                                const members = visibleContainer.querySelectorAll('.jury-member');
+                                const count = getInitialCount();
+                                const isExpanded = toggleBtn.classList.contains('expanded');
 				
 				// Only adjust if not expanded
 				if (!isExpanded) {
-					for (var i = 0; i < members.length; i++) {
+                                        for (let i = 0; i < members.length; i++) {
 						if (i < count) {
 							members[i].style.display = '';
 						} else {
@@ -731,11 +731,11 @@ const shuffledMembers = shuffleArray(juryMembers);
 					}
 					
 					// Move hidden members to the hidden container if needed
-					var hiddenStart = count;
-					var allHiddenMembers = hiddenMembers.querySelectorAll('.jury-member');
+                                        const hiddenStart = count;
+                                        const allHiddenMembers = hiddenMembers.querySelectorAll('.jury-member');
 					
 					// Show all members in hidden container when appropriate
-					for (var j = 0; j < allHiddenMembers.length; j++) {
+                                        for (let j = 0; j < allHiddenMembers.length; j++) {
 						allHiddenMembers[j].style.display = '';
 					}
 				}
@@ -755,7 +755,7 @@ const shuffledMembers = shuffleArray(juryMembers);
 					e.preventDefault();
 				}
 				
-				var isExpanded = toggleBtn.classList.contains('expanded');
+                                const isExpanded = toggleBtn.classList.contains('expanded');
 				
 				if (isExpanded) {
 					// Collapse
@@ -773,9 +773,9 @@ const shuffledMembers = shuffleArray(juryMembers);
 					adjustVisibleMembers();
 					
 					// Smooth scroll to jury section
-					var jurySection = document.getElementById('jury');
+                                        const jurySection = document.getElementById('jury');
 					if (jurySection) {
-						var offset = jurySection.offsetTop - 100;
+                                                const offset = jurySection.offsetTop - 100;
 						window.scrollTo({
 							top: offset,
 							behavior: 'smooth'
@@ -794,8 +794,8 @@ const shuffledMembers = shuffleArray(juryMembers);
 					}
 					
 					// Show all visible members when expanded
-					var members = visibleContainer.querySelectorAll('.jury-member');
-					for (var i = 0; i < members.length; i++) {
+                                        const members = visibleContainer.querySelectorAll('.jury-member');
+                                        for (let i = 0; i < members.length; i++) {
 						members[i].style.display = '';
 					}
 				}
@@ -805,7 +805,7 @@ const shuffledMembers = shuffleArray(juryMembers);
 			toggleBtn.addEventListener('click', toggleMembers);
 			
 			// Handle resize events
-			var resizeTimer;
+                        let resizeTimer;
 			window.addEventListener('resize', function() {
 				clearTimeout(resizeTimer);
 				resizeTimer = setTimeout(adjustVisibleMembers, 250);

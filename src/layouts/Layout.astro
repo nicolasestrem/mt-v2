@@ -129,14 +129,14 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 		<script is:inline>
 		(function() {
 			// Header height offset (approximately 89px + 11px buffer = 100px)
-			var HEADER_OFFSET = 100;
+                        const HEADER_OFFSET = 100;
 			
 			// Function to smoothly scroll to element with offset
 			function smoothScrollToElement(targetId) {
-				var target = document.getElementById(targetId);
+                                const target = document.getElementById(targetId);
 				if (!target) return false;
 				
-				var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
+                                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
 				
 				// Use modern scrollTo with smooth behavior if supported
 				if ('scrollBehavior' in document.documentElement.style) {
@@ -153,12 +153,12 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 			
 			// Handle internal link clicks
 			function handleInternalLinks() {
-				var links = document.querySelectorAll('a[href^="#"], a[href^="/#"]');
+                                const links = document.querySelectorAll('a[href^="#"], a[href^="/#"]');
 				
-				for (var i = 0; i < links.length; i++) {
+                                for (let i = 0; i < links.length; i++) {
 					links[i].addEventListener('click', function(e) {
-						var href = this.getAttribute('href');
-						var targetId = href.replace(/^\/?#/, ''); // Remove leading /# or #
+                                                const href = this.getAttribute('href');
+                                                const targetId = href.replace(/^\/?#/, ''); // Remove leading /# or #
 						
 						if (targetId && smoothScrollToElement(targetId)) {
 							e.preventDefault();
@@ -183,10 +183,10 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 			
 			// Handle direct hash navigation on page load
 			if (window.location.hash) {
-				setTimeout(function() {
-					var targetId = window.location.hash.substring(1);
-					smoothScrollToElement(targetId);
-				}, 100);
+                                setTimeout(function() {
+                                        const targetId = window.location.hash.substring(1);
+                                        smoothScrollToElement(targetId);
+                                }, 100);
 			}
 		})();
 		</script>
@@ -235,7 +235,7 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 				if (document.getElementById('pwa-install-button')) return;
 				
 				// Create install button
-				var button = document.createElement('button');
+                                const button = document.createElement('button');
 				button.id = 'pwa-install-button';
 				button.innerHTML = 'App installieren';
 				button.style.cssText = `
@@ -273,7 +273,7 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 						button.style.display = 'none';
 						
 						// Hide any Android banner if it exists
-						var androidBanner = document.getElementById('android-install-banner');
+                                                const androidBanner = document.getElementById('android-install-banner');
 						if (androidBanner) {
 							androidBanner.remove();
 						}
@@ -296,7 +296,7 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 				document.body.appendChild(button);
 				
 				// Add close button functionality
-				var closeBtn = document.createElement('span');
+                                const closeBtn = document.createElement('span');
 				closeBtn.innerHTML = '×';
 				closeBtn.style.cssText = `
 					position: absolute;
@@ -336,16 +336,16 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 			// Check if app is already installed
 			window.addEventListener('appinstalled', function() {
 				console.log('PWA was installed');
-				var button = document.getElementById('pwa-install-button');
+                                const button = document.getElementById('pwa-install-button');
 				if (button) {
 					button.style.display = 'none';
 				}
 			});
 			
 			// Platform-specific install instructions
-			var isIOS = navigator.standalone === false && /iPhone|iPad|iPod/.test(navigator.userAgent);
-			var isAndroid = /Android/.test(navigator.userAgent);
-			var isChrome = /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent);
+                        const isIOS = navigator.standalone === false && /iPhone|iPad|iPod/.test(navigator.userAgent);
+                        const isAndroid = /Android/.test(navigator.userAgent);
+                        const isChrome = /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent);
 			
 			// iOS install instructions (since it doesn't support beforeinstallprompt)
 			if (isIOS) {
@@ -369,7 +369,7 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 			}
 			
 			function showIOSInstallInstructions() {
-				var banner = document.createElement('div');
+                                const banner = document.createElement('div');
 				banner.id = 'ios-install-banner';
 				banner.style.cssText = `
 					position: fixed;
@@ -398,7 +398,7 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 			}
 			
 			function showAndroidInstallInstructions() {
-				var banner = document.createElement('div');
+                                const banner = document.createElement('div');
 				banner.id = 'android-install-banner';
 				banner.style.cssText = `
 					position: fixed;
