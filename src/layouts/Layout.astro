@@ -192,25 +192,27 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 		</script>
 		
 		<!-- Service Worker Registration and PWA Install -->
-		<script is:inline>
-		(function() {
-			// Register service worker
-			if ('serviceWorker' in navigator) {
-				window.addEventListener('load', function() {
-					navigator.serviceWorker.register('/service-worker.js')
-						.then(function(registration) {
-							console.log('ServiceWorker registration successful');
+               <script is:inline>
+               (function() {
+                       const DEBUG = import.meta.env.DEV;
+
+                       // Register service worker
+                       if ('serviceWorker' in navigator) {
+                               window.addEventListener('load', function() {
+                                       navigator.serviceWorker.register('/service-worker.js')
+                                               .then(function(registration) {
+                                                       if (DEBUG) console.log('ServiceWorker registration successful');
 							
 							// Check for updates periodically
 							setInterval(function() {
 								registration.update();
 							}, 300000); // Check every 5 minutes
 						})
-						.catch(function(err) {
-							console.log('ServiceWorker registration failed: ', err);
-						});
-				});
-			}
+                                               .catch(function(err) {
+                                                       if (DEBUG) console.log('ServiceWorker registration failed: ', err);
+                                               });
+                               });
+                       }
 			
 			// Handle PWA install prompt
 			let deferredPrompt;
@@ -280,18 +282,18 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 						
 						// Show the install prompt
 						deferredPrompt.prompt();
-						// Wait for the user to respond to the prompt
-						deferredPrompt.userChoice.then(function(choiceResult) {
-							if (choiceResult.outcome === 'accepted') {
-								console.log('User accepted the install prompt');
-							} else {
-								// Show button again if user declined
-								button.style.display = 'block';
-							}
-							deferredPrompt = null;
-						});
-					}
-				});
+                                               // Wait for the user to respond to the prompt
+                                               deferredPrompt.userChoice.then(function(choiceResult) {
+                                                       if (choiceResult.outcome === 'accepted') {
+                                                               if (DEBUG) console.log('User accepted the install prompt');
+                                                       } else {
+                                                               // Show button again if user declined
+                                                               button.style.display = 'block';
+                                                       }
+                                                       deferredPrompt = null;
+                                               });
+                                       }
+                               });
 				
 				document.body.appendChild(button);
 				
@@ -333,14 +335,14 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 				}, 30000);
 			}
 			
-			// Check if app is already installed
-			window.addEventListener('appinstalled', function() {
-				console.log('PWA was installed');
-				var button = document.getElementById('pwa-install-button');
-				if (button) {
-					button.style.display = 'none';
-				}
-			});
+                       // Check if app is already installed
+                       window.addEventListener('appinstalled', function() {
+                               if (DEBUG) console.log('PWA was installed');
+                               var button = document.getElementById('pwa-install-button');
+                               if (button) {
+                                       button.style.display = 'none';
+                               }
+                       });
 			
 			// Platform-specific install instructions
 			var isIOS = navigator.standalone === false && /iPhone|iPad|iPod/.test(navigator.userAgent);
