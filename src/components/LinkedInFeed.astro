@@ -39,22 +39,24 @@ import Icons from './Icons.astro';
 			</p>
 		</div>
 		
-		<!-- SociableKit LinkedIn Feed Widget with Consent -->
+		<!-- SociableKit LinkedIn Feed Widget (No consent required) -->
 		<div class="linkedin-widget-container" id="linkedin-feed-container">
-			<!-- Placeholder for consent -->
-			<div class="linkedin-feed-placeholder" 
-				 data-src="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730"
-				 data-class="linkedin-iframe">
-				<!-- Tarteaucitron will replace this with iframe or consent message -->
-				<noscript>
-					<p style="text-align: center; padding: 2rem;">
-						JavaScript ist erforderlich, um den LinkedIn-Feed anzuzeigen.<br>
-						<a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" style="color: #0077b5;">
-							Besuchen Sie uns auf LinkedIn →
-						</a>
-					</p>
-				</noscript>
-			</div>
+			<!-- Direct iframe loading without consent requirement -->
+			<iframe 
+				src="https://widgets.sociablekit.com/linkedin-page-posts/iframe/25576730" 
+				class="linkedin-iframe"
+				loading="lazy"
+				title="LinkedIn Feed"
+				style="border: 0; border-radius: 12px;">
+			</iframe>
+			<noscript>
+				<p style="text-align: center; padding: 2rem;">
+					JavaScript ist erforderlich, um den LinkedIn-Feed anzuzeigen.<br>
+					<a href="https://www.linkedin.com/showcase/mobility-trailblazers/" target="_blank" style="color: #0077b5;">
+						Besuchen Sie uns auf LinkedIn →
+					</a>
+				</p>
+			</noscript>
 		</div>
 		
 
