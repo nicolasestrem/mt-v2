@@ -283,6 +283,86 @@ test.describe('Responsive Design Tests', () => {
     });
   });
 
+  test('FAQ section is responsive and accessible on mobile', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await homePage.navigateToHome();
+    await homePage.scrollToSection(homePage.nominationSection);
+    
+    // Check FAQ section exists and is visible on mobile
+    const faqSection = page.locator('#faq');
+    await expect(faqSection).toBeVisible();
+    
+    // Check FAQ questions are readable on mobile
+    const faqQuestions = page.locator('.faq-section h3');
+    const questionCount = await faqQuestions.count();
+    expect(questionCount).toBeGreaterThanOrEqual(3);
+    
+    // Check each question is visible and has reasonable font size
+    for (let i = 0; i < Math.min(questionCount, 3); i++) {
+      const question = faqQuestions.nth(i);
+      await expect(question).toBeVisible();
+      
+      const fontSize = await question.evaluate((el) => {
+        return window.getComputedStyle(el).fontSize;
+      });
+      const fontSizeValue = parseFloat(fontSize);
+      expect(fontSizeValue).toBeGreaterThan(14); // Should be at least 14px on mobile
+    }
+    
+    // Check FAQ section doesn't overflow on mobile
+    const faqBox = await faqSection.boundingBox();
+    if (faqBox) {
+      expect(faqBox.width).toBeLessThanOrEqual(375 + 20); // Allow small margin for error
+    }
+  });
+
+  test('mobile navigation to #vorschlagen anchor works correctly', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await homePage.navigateToHome();
+    
+    // Navigate directly to #vorschlagen
+    await page.goto('/#vorschlagen');
+    await page.waitForTimeout(1000);
+    
+    // Check that we scrolled to the nomination section
+    const nominationSection = page.locator('#vorschlagen');
+    await expect(nominationSection).toBeVisible();
+    
+    // Check scroll position is approximately correct
+    const sectionBox = await nominationSection.boundingBox();
+    const scrollY = await page.evaluate(() => window.scrollY);
+    
+    if (sectionBox) {
+      expect(scrollY).toBeGreaterThan(Math.max(0, sectionBox.y - 200));
+    }
+  });
+
+  test('mobile menu contains Vorschlagen link and navigates correctly', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await homePage.navigateToHome();
+    
+    // Open mobile menu
+    await homePage.mobileMenuButton.click();
+    await page.waitForTimeout(300);
+    await expect(homePage.navMenu).toBeVisible();
+    
+    // Look for Vorschlagen link in mobile menu
+    const vorschlagenLink = homePage.navMenu.locator('a[href*="vorschlagen"], a[href*="#vorschlagen"]');
+    
+    if (await vorschlagenLink.count() > 0) {
+      // Click the link
+      await vorschlagenLink.first().click();
+      await page.waitForTimeout(500);
+      
+      // Check that we navigated to the form section
+      const nominationSection = page.locator('#vorschlagen');
+      await expect(nominationSection).toBeVisible();
+      
+      // Menu should close after navigation
+      await expect(homePage.navMenu).not.toBeVisible();
+    }
+  });
+
   test('form layout adapts to mobile screens', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await homePage.navigateToHome();
@@ -302,7 +382,7 @@ test.describe('Responsive Design Tests', () => {
       expect(firstNameBox.y).toBeLessThan(lastNameBox.y);
     }
 
-    // Test form filling on mobile
+    // Test form filling on mobile with 2026 content
     await homePage.fillNominationForm({
       firstName: 'Mobile',
       lastName: 'User',
@@ -314,6 +394,11 @@ test.describe('Responsive Design Tests', () => {
     await expect(homePage.nominatorFirstName).toHaveValue('Mobile');
     await expect(homePage.nominatorLastName).toHaveValue('User');
     await expect(homePage.nominatorEmail).toHaveValue('mobile@test.com');
+    
+    // Verify button contains 2026 text on mobile
+    const submitButton = homePage.submitButton;
+    const buttonText = await submitButton.textContent();
+    expect(buttonText).toContain('26 in 2026');
   });
 
   test('countdown timer layout adapts to different screen sizes', async ({ page }) => {

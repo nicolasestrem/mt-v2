@@ -322,6 +322,105 @@ test.describe('Component Functionality Tests', () => {
     });
   });
 
+  test.describe('New Content and FAQ Section', () => {
+    test('FAQ section should be visible and contain expected content', async ({ page }) => {
+      await homePage.scrollToSection(homePage.nominationSection);
+      
+      // Check if FAQ section exists
+      const faqSection = page.locator('#faq');
+      await expect(faqSection).toBeVisible();
+      
+      // Check for FAQ subsections
+      const faqWhoCanNominate = page.locator('#faq-who-can-nominate');
+      const faqMultipleNominations = page.locator('#faq-multiple-nominations');
+      const faqAfterSubmission = page.locator('#faq-after-submission');
+      
+      if (await faqWhoCanNominate.count() > 0) {
+        await expect(faqWhoCanNominate).toBeVisible();
+      }
+      if (await faqMultipleNominations.count() > 0) {
+        await expect(faqMultipleNominations).toBeVisible();
+      }
+      if (await faqAfterSubmission.count() > 0) {
+        await expect(faqAfterSubmission).toBeVisible();
+      }
+      
+      // Check content includes expected text in the FAQ section area
+      const faqContainer = homePage.nominationSection;
+      await expect(faqContainer).toContainText('Wer darf nominieren?');
+      await expect(faqContainer).toContainText('Kann ich mehrere Personen nominieren?');
+      await expect(faqContainer).toContainText('Was passiert nach der Einreichung?');
+    });
+    
+    test('should display "26 in 2026" content instead of old content', async ({ page }) => {
+      await homePage.scrollToSection(homePage.nominationSection);
+      
+      // Check for new "26 in 2026" content
+      const title = page.locator('h1.nomination-title');
+      await expect(title).toContainText('26 in 2026');
+      
+      // Check for updated process description
+      await expect(page.locator('#update-25-in-2025')).toBeVisible();
+      await expect(page.locator('#update-25-in-2025')).toContainText('Update: Prozess für 25 in 2025 abgeschlossen');
+      
+      // Ensure old content references 2026
+      const nominationContent = homePage.nominationSection;
+      await expect(nominationContent).toContainText('2026');
+      await expect(nominationContent).toContainText('26 in 2026');
+    });
+    
+    test('should have proper heading hierarchy with h1 as main title', async ({ page }) => {
+      await homePage.scrollToSection(homePage.nominationSection);
+      
+      // Check that the main title is h1
+      const mainTitle = page.locator('h1.nomination-title');
+      await expect(mainTitle).toBeVisible();
+      await expect(mainTitle).toContainText('26 in 2026');
+      
+      // Check h2 subheadings exist
+      const h2Headings = homePage.nominationSection.locator('h2');
+      const h2Count = await h2Headings.count();
+      expect(h2Count).toBeGreaterThan(0);
+      
+      // Check some specific h2 headings
+      await expect(page.locator('#eligibility')).toBeVisible();
+      await expect(page.locator('#criteria')).toBeVisible();
+      await expect(page.locator('#faq')).toBeVisible();
+    });
+    
+    test('navigation anchors should work correctly', async ({ page }) => {
+      // Test some key anchor links
+      const anchors = [
+        '#update-25-in-2025',
+        '#eligibility', 
+        '#criteria',
+        '#how-to-nominate',
+        '#why-it-matters',
+        '#faq',
+        '#cta-nominate-now'
+      ];
+      
+      for (const anchor of anchors) {
+        // Navigate to anchor
+        await page.goto(`/${anchor}`);
+        await page.waitForTimeout(500);
+        
+        // Check that the target element is visible
+        const targetElement = page.locator(anchor);
+        await expect(targetElement).toBeVisible();
+        
+        // Check we scrolled to approximately the right position
+        const elementBox = await targetElement.boundingBox();
+        const scrollY = await page.evaluate(() => window.scrollY);
+        
+        if (elementBox) {
+          // Should be somewhere near the element (within viewport)
+          expect(scrollY).toBeGreaterThan(Math.max(0, elementBox.y - 200));
+        }
+      }
+    });
+  });
+
   test.describe('Visual Effects and Styling', () => {
     test('header should have proper backdrop blur effect', async () => {
       const backdropFilter = await homePage.header.evaluate((el) => {
