@@ -44,7 +44,9 @@
       "Bash(mkdir:*)",
       "Bash(npm run lint:*)",
       "WebFetch(domain:www.npmjs.com)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(npx:*)",
+      "Bash(npm run test:pr:*)"
     ],
     "deny": [],
     "ask": []
