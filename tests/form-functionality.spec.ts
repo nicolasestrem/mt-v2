@@ -94,6 +94,9 @@ test.describe('Form Functionality Tests', () => {
     const buttonText = await homePage.submitButton.textContent();
     // Button should return to original text after submission
     expect(buttonText).not.toContain('Wird gesendet');
+    
+    // Check that button has correct text for 2026
+    expect(buttonText).toContain('26 in 2026');
   });
 
   test('form submission with network error', async ({ page }) => {
@@ -157,12 +160,32 @@ test.describe('Form Functionality Tests', () => {
     await expect(homePage.newsletterSignup).not.toBeChecked();
   });
 
+  test('form contains 2026 content and proper subject', async ({ page }) => {
+    // Check nomination form subject contains 2026
+    const subjectField = page.locator('#nominationForm input[name="subject"]');
+    if (await subjectField.count() > 0) {
+      const subjectValue = await subjectField.getAttribute('value');
+      expect(subjectValue).toContain('2026');
+    }
+    
+    // Check placeholder text contains 2026
+    const messageField = homePage.nominationMessage;
+    const placeholderText = await messageField.getAttribute('placeholder');
+    if (placeholderText) {
+      expect(placeholderText).toContain('2026');
+    }
+    
+    // Check button text contains correct text
+    const buttonText = await homePage.submitButton.textContent();
+    expect(buttonText).toContain('Jetzt für 26 in 2026 nominieren');
+  });
+
   test('form handles special characters and long text', async () => {
     const specialData = {
       firstName: 'José-María',
       lastName: 'O\'Connor-Smith',
       email: 'josé.maría@münchen-üöä.de',
-      message: 'This is a very long message that contains special characters like: äöüß, émojis 🚗🌍, numbers 12345, and various punctuation marks (!@#$%^&*()). It also contains line breaks.\n\nAnd multiple paragraphs to test the textarea handling of extensive content. This should all be properly handled by the form without any issues or character encoding problems.'
+      message: 'This is a very long message for 2026 nominations that contains special characters like: äöüß, émojis 🚗🌍, numbers 12345, and various punctuation marks (!@#$%^&*()). It also contains line breaks.\n\nAnd multiple paragraphs to test the textarea handling of extensive content for the 26 in 2026 initiative. This should all be properly handled by the form without any issues or character encoding problems.'
     };
 
     await homePage.nominatorFirstName.fill(specialData.firstName);

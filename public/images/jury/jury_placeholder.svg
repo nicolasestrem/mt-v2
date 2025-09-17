@@ -1,0 +1,14 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mtGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#003C3D"></stop>
+      <stop offset="100%" stop-color="#004C5F"></stop>
+    </linearGradient>
+  </defs>
+  <!-- Circle background -->
+  <circle cx="150" cy="150" r="140" fill="url(#mtGradient)" stroke="#C1693C" stroke-width="6"></circle>
+  <!-- Abstract silhouette: circle for head -->
+  <circle cx="150" cy="120" r="40" fill="#F8F0E3"></circle>
+  <!-- Abstract silhouette: shoulders -->
+  <path d="M80 220 Q150 170 220 220 Z" fill="#F8F0E3"></path>
+</svg>
