@@ -1,6 +1,9 @@
 ---
-// GA4 Measurement ID - Replace with your actual GA4 ID
-const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT'; 
+// GA4 Measurement ID (required)
+const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+if (!GA_MEASUREMENT_ID) {
+  throw new Error('PUBLIC_GA_MEASUREMENT_ID is required');
+}
 
 // Load GA in production OR if explicitly enabled
 const isProduction = import.meta.env.PROD;
@@ -24,7 +27,6 @@ const enableGA = isProduction || import.meta.env.PUBLIC_ENABLE_GA_DEV === 'true'
       window.trackEvent = function(eventName, eventParams) {
         if (typeof gtag !== 'undefined') {
           gtag('event', eventName, eventParams);
-          console.log('GA4 Event:', eventName, eventParams);
         }
       };
       
