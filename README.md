@@ -16,7 +16,7 @@ A high-performance, modern replacement for the WordPress MobilityTrailblazers.de
 
 This is a complete reimplementation of the MobilityTrailblazers WordPress site using modern web technologies:
 
-- **Framework**: Astro 4.0 (Static Site Generator)
+- **Framework**: Astro 5.13 (Static Site Generator)
 - **Styling**: Tailwind CSS with custom brand colors
 - **Hosting**: Cloudflare Pages (FREE)
 - **Forms**: Web3Forms (FREE up to 250 submissions/month)
@@ -29,18 +29,29 @@ This is a complete reimplementation of the MobilityTrailblazers WordPress site u
 mobility-astro/
 ├── src/
 │   ├── components/
-│   │   ├── Hero.astro              # Hero section with countdown timer
-│   │   ├── Mission.astro           # Mission statement section
 │   │   ├── AboutSection.astro      # About the initiative with partners
 │   │   ├── Criteria.astro          # Selection criteria with info boxes
-│   │   ├── NominationForm.astro    # Form with Web3Forms integration
-│   │   ├── JurySection.astro       # Jury members cards
+│   │   ├── Footer.astro            # Site footer
+│   │   ├── GoogleAnalytics.astro   # Google Analytics integration
+│   │   ├── Header.astro            # Site header and navigation
+│   │   ├── Hero.astro              # Hero section with countdown timer
+│   │   ├── Icons.astro             # SVG icon components
+│   │   ├── JurySection.astro       # Jury members (21 members, progressive disclosure)
 │   │   ├── LinkedInFeed.astro      # LinkedIn posts integration
-│   │   └── Footer.astro            # Site footer
+│   │   ├── Mission.astro           # Mission statement section
+│   │   ├── Newsletter.astro        # Newsletter signup form
+│   │   ├── NominationForm.astro    # Form with Web3Forms integration
+│   │   ├── ScrollToTop.astro       # Scroll to top button
+│   │   └── SEO.astro               # SEO meta tags and structured data
 │   ├── layouts/
 │   │   └── Layout.astro            # Base HTML layout
 │   ├── pages/
-│   │   └── index.astro             # Main landing page
+│   │   ├── index.astro             # Main landing page
+│   │   ├── shop.astro              # Merchandise shop
+│   │   ├── danke-nominierung.astro # Thank you page (nominations)
+│   │   ├── danke-newsletter.astro  # Thank you page (newsletter)
+│   │   ├── datenschutz.astro       # Privacy policy (German)
+│   │   └── impressum.astro         # Legal notice (German)
 │   └── styles/
 │       └── global.css              # Global styles and animations
 ├── public/                         # Static assets (images, favicon)
@@ -203,7 +214,7 @@ Comprehensive documentation is available in the `/docs/` folder:
 ### Setup & Deployment
 - [🚀 Quick Start Guide](docs/QUICK_START.md) - Fast setup and basic configuration
 - [📦 Deployment Guide](docs/DEPLOYMENT.md) - Complete deployment instructions for all platforms
-- [📧 Web3Forms Setup](docs/WEB3FORM_SETUP.md) - Form configuration and security
+- [📧 Forms Setup](docs/FORMS_SETUP.md) - Web3Forms configuration and usage
 
 ### Development
 - [🧱 Components Guide](docs/COMPONENTS.md) - Detailed component documentation
@@ -213,11 +224,12 @@ Comprehensive documentation is available in the `/docs/` folder:
 ### Social Integration
 - [📱 SociableKit Setup](docs/SOCIABLEKIT_SETUP.md) - LinkedIn feed integration
 
-### Migration & Features
-- [📋 Missing Features](docs/MISSING_FEATURES.md) - Features comparison with WordPress version
+### Migration & Performance
 - [🔄 WordPress Migration](docs/WORDPRESS-MIGRATION.md) - Complete migration documentation
 - [📊 Migration Summary](docs/MIGRATION_SUMMARY.md) - Performance improvements summary
-- [🖼️ Image Storage Summary](docs/IMAGE_STORAGE_SUMMARY.md) - Image handling overview
+- [🎨 Style Guide](docs/STYLE_GUIDE.md) - Design system and styling guidelines
+- [⚡ LCP Optimization](docs/LCP-OPTIMIZATION.md) - Core Web Vitals improvements
+- [🍪 Cookie Consent](docs/COOKIE_CONSENT_OPTIMIZATION.md) - Cookie consent implementation
 
 ## 👀 Learn More
 

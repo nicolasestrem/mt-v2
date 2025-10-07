@@ -1,6 +1,6 @@
 # Testing Setup
 
-This project uses Playwright for end-to-end testing and includes MCP (Model Context Protocol) configuration for enhanced development capabilities.
+This project uses Playwright for end-to-end testing with a comprehensive test suite covering accessibility, components, forms, and responsive design.
 
 ## Playwright Testing
 
@@ -15,15 +15,22 @@ npx playwright install
 
 ### Running Tests
 
-- **Run all tests**: `npm test`
-- **Run tests with UI**: `npm run test:ui`
-- **Run tests in headed mode**: `npm run test:headed`
-- **Run tests in debug mode**: `npm run test:debug`
+- **Run all tests**: `npm test` (Chrome + Firefox)
+- **Run PR tests**: `npm run test:pr` (Critical tests, Chrome only)
+- **Run full suite**: `npm run test:full` (All tests, all browsers)
+- **Run tests with UI**: `npm run test:ui` (Interactive mode)
+- **Run Chrome only**: `npm run test:chrome` (Faster execution)
+- **Show test report**: `npm run test:report` (HTML report)
 
 ### Test Structure
 
-Tests are located in the `tests/` directory:
-- `tests/home.spec.ts` - Basic home page tests
+Tests are located in the `tests/` directory (79 tests total):
+- `tests/accessibility.spec.ts` - WCAG compliance, heading hierarchy, keyboard navigation (15 tests)
+- `tests/components.spec.ts` - Component rendering, animations, hover effects (16 tests)
+- `tests/core.spec.ts` - Page structure, countdown timer, navigation (14 tests)
+- `tests/form-functionality.spec.ts` - Form validation, submission, mobile interactions (12 tests)
+- `tests/responsive-design.spec.ts` - Mobile/tablet/desktop responsive behavior (22 tests)
+- `tests/pages/HomePage.ts` - Page object model for home page
 
 ### Configuration
 
@@ -33,37 +40,16 @@ Playwright is configured in `playwright.config.ts` with:
 - HTML reporter
 - CI-friendly settings
 
-## MCP (Model Context Protocol) Configuration
+## Test Configuration
 
-### Kapture MCP Server
+The test suite is configured for optimal CI/CD performance:
+- **Timeout**: 30 seconds per test (10s for expects)
+- **Browsers**: Chrome + Firefox (Chrome only for PRs)
+- **Workers**: 2 parallel workers in CI for stability
+- **Retry**: 1 retry in CI environment
+- **Headless**: Always true to avoid dev toolbar issues
 
-The project includes Kapture MCP server configuration in `.cursor/mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "kapture": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-kapture"],
-      "env": {
-        "KAPTURE_API_KEY": "your-kapture-api-key-here"
-      }
-    }
-  }
-}
-```
-
-### Setup
-
-1. Replace `"your-kapture-api-key-here"` with your actual Kapture API key
-2. Restart Cursor to load the MCP configuration
-3. The Kapture server will be available for enhanced development capabilities
-
-### Features
-
-- **Knowledge Graph**: Access to a memory system for storing and retrieving project-related information
-- **Enhanced Context**: Better understanding of codebase structure and relationships
-- **Documentation Integration**: Automatic documentation updates and tracking
+See `playwright.config.ts` for full configuration details.
 
 ## Writing Tests
 
@@ -113,7 +99,8 @@ The Playwright configuration includes CI-friendly settings:
 
 ### Debug Mode
 
-Use `npm run test:debug` to run tests in debug mode with:
-- Slower execution
-- Visual feedback
-- Step-by-step debugging capabilities
+Use `npm run test:ui` to run tests in interactive mode with:
+- Visual feedback and step-by-step execution
+- Time travel debugging
+- Watch mode for development
+- Full test trace viewing

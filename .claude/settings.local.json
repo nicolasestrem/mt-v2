@@ -46,7 +46,8 @@
       "WebFetch(domain:www.npmjs.com)",
       "Bash(git stash:*)",
       "Bash(npx:*)",
-      "Bash(npm run test:pr:*)"
+      "Bash(npm run test:pr:*)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []

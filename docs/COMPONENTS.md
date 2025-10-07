@@ -110,26 +110,29 @@ const WEB3FORMS_KEY = "YOUR-ACCESS-KEY-HERE"; // Line 4
 
 ### 👥 JurySection.astro
 
-Grid display of jury members with gradient border cards.
+Grid display of 21 jury members with progressive disclosure functionality.
 
 **Features:**
-- Gradient border cards (`card-gradient-border`)
-- Circular profile images (placeholder)
-- LinkedIn links for each member
-- Hover glow effects
-- Shape divider at top
-- Responsive grid layout
+- 21 jury members with real photos and profiles
+- Random selection on each page load
+- Progressive disclosure: Shows 6 members initially, expandable to all
+- Responsive grid layout (6/4/2 members on desktop/tablet/mobile)
+- German language UI ("Alle Jury-Mitglieder anzeigen" / "Weniger anzeigen")
+- Hover effects and animations
+- LinkedIn placeholder links (ready for URLs)
 
 **Data Structure:**
 ```javascript
 const juryMembers = [
   {
-    name: "Dr. Sarah Schmidt",
-    role: "Mobilitätsforscherin",
-    organization: "Fraunhofer Institut",
-    image: "/images/jury/jury-1.jpg"
+    name: "Winfried Hermann",
+    role: "Schirmherr",
+    title: "Verkehrsminister Baden-Württemberg",
+    organization: "Ministerium für Verkehr Baden-Württemberg",
+    image: "/images/jury/Winfried Hermann.webp",
+    linkedIn: "#"
   },
-  // ... more members
+  // ... 20 more members
 ];
 ```
 
@@ -138,10 +141,11 @@ const juryMembers = [
 <JurySection />
 ```
 
-**Customization:**
-- Update jury members: Edit the data array
-- Add real images: Place in `public/images/jury/`
-- Modify card layout: Edit the grid classes
+**Implementation:**
+- All jury data embedded in component (no external API)
+- Vanilla JavaScript for maximum compatibility
+- WebP images optimized for web (400x400px)
+- ARIA attributes for accessibility
 
 ---
 
@@ -189,6 +193,141 @@ All LinkedIn styling is controlled through CSS variables defined in the componen
 
 ---
 
+
+### 🆕 Header.astro
+
+Site header with navigation and mobile menu.
+
+**Features:**
+- Responsive navigation menu
+- Mobile hamburger menu
+- Smooth scroll to sections
+- Brand logo
+- Sticky header option
+
+**Usage:**
+```astro
+<Header />
+```
+
+---
+
+### 🆕 GoogleAnalytics.astro
+
+Google Analytics integration with tarteaucitron cookie consent.
+
+**Features:**
+- GA4 tracking integration
+- GDPR-compliant cookie consent
+- German language support
+- Google Consent Mode v2
+
+**Configuration:**
+```astro
+const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
+```
+
+**Usage:**
+```astro
+<GoogleAnalytics />
+```
+
+---
+
+### 🆕 SEO.astro
+
+SEO meta tags and structured data component.
+
+**Features:**
+- Open Graph tags
+- Twitter Card meta tags
+- Canonical URLs
+- JSON-LD structured data
+- Sitemap integration
+
+**Props:**
+```typescript
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+}
+```
+
+**Usage:**
+```astro
+<SEO
+  title="Page Title"
+  description="Page description for SEO"
+  image="/images/og-image.jpg"
+/>
+```
+
+---
+
+### 🆕 Icons.astro
+
+SVG icon components for inline use.
+
+**Features:**
+- Inline SVG icons (no external icon fonts)
+- Customizable size and color
+- Accessible with ARIA labels
+- Lightweight and fast
+
+**Icons Available:**
+- Envelope
+- LinkedIn
+- Check/Exclamation circles
+- Arrows
+
+**Usage:**
+```astro
+import { EnvelopeIcon, LinkedInIcon } from './Icons.astro';
+```
+
+---
+
+### 🆕 ScrollToTop.astro
+
+Scroll to top button component.
+
+**Features:**
+- Appears when scrolling down
+- Smooth scroll animation
+- Accessible keyboard navigation
+- Fixed positioning
+
+**Usage:**
+```astro
+<ScrollToTop />
+```
+
+---
+
+### 🆕 Newsletter.astro
+
+Newsletter signup form with Web3Forms integration.
+
+**Features:**
+- Email input with validation
+- Privacy consent checkbox
+- Web3Forms API integration
+- Success/error messaging
+- Redirects to thank you page
+
+**Configuration:**
+```astro
+const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+```
+
+**Usage:**
+```astro
+<Newsletter />
+```
+
+---
 
 ### 🦶 Footer.astro
 
