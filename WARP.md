@@ -18,9 +18,11 @@ npm run preview      # Preview production build locally
 
 ### Testing (Playwright)
 ```powershell
-npm test             # Run all Playwright tests
+npm test             # Run all Playwright tests (all browsers)
+npm run test:pr      # Run only critical tests (for PRs - Chrome only)
+npm run test:full    # Run all tests on Chrome + Firefox
 npm run test:ui      # Run tests with interactive UI
-npm run test:chrome  # Run tests in Chrome only (faster for PRs)
+npm run test:chrome  # Run tests in Chrome only (faster)
 npm run test:report  # Show test report
 npx playwright install  # Install/update Playwright browsers
 ```
@@ -201,9 +203,12 @@ tests/
 
 ### Running Specific Test Suites
 ```powershell
-npx playwright test core.spec.ts        # Core functionality
-npx playwright test --grep "countdown"   # Countdown-related tests
+npx playwright test core.spec.ts             # Core functionality tests
+npx playwright test accessibility.spec.ts    # Accessibility tests
+npx playwright test form-functionality.spec.ts  # Form tests
+npx playwright test --grep "countdown"       # Countdown-related tests
 npx playwright test --project="Desktop Chrome"  # Chrome only
+npx playwright test --project="Desktop Firefox"  # Firefox only
 ```
 
 ## Deployment

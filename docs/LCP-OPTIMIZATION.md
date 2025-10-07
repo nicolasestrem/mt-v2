@@ -379,8 +379,8 @@ lighthouse https://mobilitytrailblazers.de --output=html --output-path=./lightho
 
 This optimization was implemented on the `optimize-lcp-hero-subtitle` branch and represents a comprehensive approach to Core Web Vitals improvement. The solution addresses the root causes of poor LCP performance while maintaining visual design integrity and functionality.
 
-**Branch**: `optimize-lcp-hero-subtitle`  
-**Implementation Date**: September 1, 2025  
-**Target Deployment**: Production (main branch merge)
+**Branch**: `optimize-lcp-hero-subtitle` (check if merged or active)
+**Implementation Date**: Early 2025 (planned optimization)
+**Status**: Review branch status and merge state before deployment
 
 For questions or issues, refer to the commit history or create an issue in the repository.

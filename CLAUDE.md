@@ -17,8 +17,11 @@ npm run preview      # Preview production build locally
 
 # Testing (Optimized January 2025)
 npm test             # Run all Playwright tests
-npm run test:pr      # Run only critical tests (for PRs)
+npm run test:pr      # Run only critical tests (for PRs - Chrome only)
+npm run test:full    # Run all tests on Chrome + Firefox
 npm run test:ui      # Run tests with interactive UI
+npm run test:chrome  # Run tests in Chrome only (faster)
+npm run test:report  # Show test report
 npx playwright install  # Install/update Playwright browsers
 ```
 
@@ -66,15 +69,23 @@ All components are `.astro` files using Astro's component syntax:
 - **Client scripts** in `<script>` tags
 
 ### Page Structure
-The site is a single landing page (`src/pages/index.astro`) composed of:
-1. **Hero** - Countdown timer to October 30, 2025 event
+The main landing page (`src/pages/index.astro`) is composed of:
+1. **Hero** - Countdown timer to October 30, 2025 event ("25 Mobility Trailblazers in 25")
 2. **Mission** - Mission statement and what defines Mobility Trailblazers
 3. **AboutSection** - Initiative overview with partner organizations (IMO, Tomczak-Gross, Handelsblatt)
 4. **Criteria** - 5 selection criteria with animated cards
-5. **NominationForm** - Multi-field form with Web3Forms integration
-6. **JurySection** - Jury member profiles
-7. **LinkedInFeed** - LinkedIn integration (EmbedSocial or direct embeds)
-8. **Footer** - Site footer
+5. **JurySection** - 21 jury member profiles with progressive disclosure
+6. **Newsletter** - Newsletter signup form
+7. **LinkedInFeed** - LinkedIn integration (SociableKit widget)
+8. **NominationForm** - Multi-field form with Web3Forms integration
+9. **Footer** - Site footer
+
+Additional pages:
+- `/shop` - Merchandise store with Spreadshirt integration
+- `/danke-nominierung` - Thank you page after nomination submission
+- `/danke-newsletter` - Thank you page after newsletter signup
+- `/datenschutz` - Privacy policy (German)
+- `/impressum` - Legal notice/imprint (German)
 
 ### Styling System
 
@@ -154,10 +165,12 @@ The following files contain placeholder text that MUST be replaced before produc
 
 ## Project Constraints
 
-### No Testing Framework
-The project has no test files or testing setup. All validation must be done through:
-- Build verification (`npm run build`)
-- Manual preview (`npm run preview`)
+### Comprehensive Testing Framework
+The project has a full Playwright test suite:
+- 79 tests across 5 test files (all passing)
+- Test categories: accessibility, components, core, form-functionality, responsive-design
+- Optimized CI/CD workflow with browser caching and parallel execution
+- See docs/TESTING.md for details
 
 ### Static-Only Architecture
 - No server-side processing or API routes
@@ -167,7 +180,13 @@ The project has no test files or testing setup. All validation must be done thro
 ### Media Files
 The `/Media` directory contains WordPress migration artifacts and should be ignored (in .gitignore). Only files in `/public` are served.
 
-## Recent Updates
+## Recent Updates (October 2025)
+
+### Documentation Cleanup
+- **DELETED**: Outdated documentation files (JURY_IMPLEMENTATION_SUMMARY.md, MISSING_FEATURES.md, PERFORMANCE_TEST_REPORT.md)
+- **NOTE**: Criteria component IS fully integrated and working (contrary to old MISSING_FEATURES.md)
+- **UPDATED**: All test commands to match package.json scripts
+- **CURRENT STATUS**: All 79 Playwright tests passing, 21 jury members implemented
 
 ### PWA Implementation (January 2025)
 The site now supports Progressive Web App (PWA) functionality, making it installable as a native app on mobile and desktop devices.
