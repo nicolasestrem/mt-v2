@@ -26,7 +26,7 @@ This is a complete reimplementation of the MobilityTrailblazers WordPress site u
 ## 📁 Project Structure
 
 ```
-mobility-astro/
+mt-v2/
 ├── src/
 │   ├── components/
 │   │   ├── AboutSection.astro      # About the initiative with partners
