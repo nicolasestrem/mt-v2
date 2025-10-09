@@ -13,6 +13,7 @@ interface JuryMember {
 	image: string;
 	linkedin?: string;
 	isPlaceholder?: boolean;
+	photoCredit?: string;
 }
 
 // Complete jury members data based on available images
@@ -24,7 +25,8 @@ const juryMembers: JuryMember[] = [
 		role: "Schirmherr",
 		organization: "Verkehrsminister Baden-Württemberg",
 		bio: "Verkehrsminister von Baden-Württemberg und Schirmherr der Mobility Trailblazers Initiative",
-		image: "/images/jury/jury_placeholder.svg",
+		image: "/images/jury/Pressebild_Winfried_Hermann_7563.webp",
+		photoCredit: "VM | Sebastian Berger",
 		linkedin: "",
 	},
 	{
@@ -105,7 +107,7 @@ const juryMembers: JuryMember[] = [
 		role: "Jury",
 		organization: "Schaeffler Gruppe",
 		bio: "Vorständin Personal und Arbeitsdirektorin Schaeffler AG",
-		image: "/images/jury/jury_placeholder.svg",
+		image: "/images/jury/Astrid-Fontaine.webp",
 		linkedin: "https://www.linkedin.com/in/dr-astrid-fontaine-28374519/",
 	},
 	{
@@ -217,7 +219,7 @@ const juryMembers: JuryMember[] = [
 		role: "Jury",
 		organization: "Motel One",
 		bio: "CMO von Motel One und führende Expertin für Hotellerie und Marketing",
-		image: "/images/jury/jury_placeholder.svg",
+		image: "/images/jury/SusanSchramm 2.webp",
 		linkedin: "https://www.linkedin.com/in/susan-schramm/",
 	},
 ];
@@ -283,6 +285,9 @@ const shuffledMembers = shuffleArray(juryMembers);
 										height="300"
 										loading="lazy"
 									/>
+									{member.photoCredit && (
+										<p class="photo-credit">{member.photoCredit}</p>
+									)}
 								</div>
 								<div class="member-info">
 									<h3 class="member-name">{member.name}</h3>
@@ -327,6 +332,9 @@ const shuffledMembers = shuffleArray(juryMembers);
 										height="300"
 										loading="lazy"
 									/>
+									{member.photoCredit && (
+										<p class="photo-credit">{member.photoCredit}</p>
+									)}
 								</div>
 								<div class="member-info">
 									<h3 class="member-name">{member.name}</h3>
@@ -517,6 +525,15 @@ const shuffledMembers = shuffleArray(juryMembers);
 	.member-image {
 		margin-bottom: 1.5rem;
 		flex-shrink: 0;
+	}
+
+	.photo-credit {
+		font-size: 0.75rem;
+		opacity: 0.7;
+		margin-top: 0.5rem;
+		margin-bottom: 0;
+		font-style: italic;
+		color: #fff;
 	}
 
 	.member-image img {
