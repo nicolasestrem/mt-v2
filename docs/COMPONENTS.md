@@ -2,6 +2,30 @@
 
 Detailed documentation for all Astro components in the MobilityTrailblazers site.
 
+## 🚀 TL;DR - Quick Reference
+
+**Component Locations**: `src/components/*.astro`
+
+**Key Components**:
+- `Hero.astro` - Main hero with countdown timer
+- `NominationForm.astro` - Form with Web3Forms (needs API key config)
+- `JurySection.astro` - 21 jury members with progressive disclosure
+- `AboutSection.astro` - Partner cards with Fernsehturm image
+- `Criteria.astro` - 5 animated selection criteria cards
+- `LinkedInFeed.astro` - Social feed (needs SociableKit or manual setup)
+- `Newsletter.astro` - Email signup with Web3Forms
+- `Footer.astro` - Site footer with links
+
+**Common Tasks**:
+- Import component: `import ComponentName from '../components/ComponentName.astro'`
+- Use component: `<ComponentName />`
+- Configure forms: Update Web3Forms API key in component file
+- Modify jury: Edit `juryMembers` array in JurySection.astro
+
+**Design System**: Brand colors in `tailwind.config.mjs` - See CLAUDE.md for values
+
+---
+
 ## 📦 Component Overview
 
 All components are in `src/components/` and use the `.astro` file extension.

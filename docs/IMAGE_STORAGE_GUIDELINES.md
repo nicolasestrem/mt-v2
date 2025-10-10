@@ -1,5 +1,38 @@
 # Image Storage Guidelines for MobilityTrailblazers Astro Site
 
+## 🚀 TL;DR - Quick Reference
+
+**Storage Location**: ALL images go in `public/images/` (never in `src/`)
+
+**Reference in Code**: Use `/images/filename.webp` (absolute path from public/)
+
+**Format Priority**: WebP > SVG > JPG > PNG
+
+**Key Folders**:
+- `public/images/jury/` - Jury member photos (300x300px, WebP)
+- `public/images/linkedin/` - Social feed images
+- `public/images/icons/` - SVG icons and decorative elements
+- `public/images/about/` - About section images
+
+**Quick Optimization**:
+```bash
+npm run optimize-images  # Batch optimize all images
+```
+
+**Common Sizes**:
+- Hero images: 1920x1080px max
+- Profile photos: 300x300px (square)
+- Social media: 1200x630px (16:9)
+- Icons: 64x64px max
+
+**Best Practices**:
+- Always add descriptive alt text
+- Use kebab-case filenames: `andreas-herrmann.webp`
+- Compress before adding (target 85% quality)
+- Prefer WebP format for 30-40% smaller files
+
+---
+
 ## 📁 Where to Store Images
 
 ### Primary Location: `public/images/`
