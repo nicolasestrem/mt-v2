@@ -1,10 +1,10 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with this repository.
 
 ## Project Overview
 
-MobilityTrailblazers.de - A modern static site built with Astro, migrated from WordPress for €0/month hosting with dramatically improved performance (0.5s load time vs 3.8s WordPress).
+MobilityTrailblazers.de - Static site built with Astro, migrated from WordPress. €0/month hosting, 0.5s load time (vs 3.8s WordPress).
 
 ## Essential Commands
 
@@ -15,77 +15,64 @@ npm run dev          # Start dev server at http://localhost:4321
 npm run build        # Build for production (outputs to ./dist/)
 npm run preview      # Preview production build locally
 
-# Testing (Optimized January 2025)
+# Testing
 npm test             # Run all Playwright tests
-npm run test:pr      # Run only critical tests (for PRs - Chrome only)
+npm run test:pr      # Run critical tests only (Chrome, for PRs)
 npm run test:full    # Run all tests on Chrome + Firefox
-npm run test:ui      # Run tests with interactive UI
-npm run test:chrome  # Run tests in Chrome only (faster)
-npm run test:report  # Show test report
 npx playwright install  # Install/update Playwright browsers
 ```
 
 ## Critical Configuration
 
 ### Web3Forms API Key (REQUIRED)
-The nomination form won't work without configuring the Web3Forms key:
-1. Get free key at https://web3forms.com/
-2. Both forms use the key directly in their HTML:
-   - `src/components/NominationForm.astro` (line ~57)
-   - `src/components/Newsletter.astro` (line ~43)
-   - The key is also stored in `.env` as `PUBLIC_WEB3FORMS_KEY`
+- Get free key at https://web3forms.com/
+- Configure in: `NominationForm.astro` (line ~57), `Newsletter.astro` (line ~43)
+- Environment variable: `PUBLIC_WEB3FORMS_KEY` in `.env`
 
-### Google Analytics Configuration
-- GA Measurement ID is configured via environment variable: `PUBLIC_GA_MEASUREMENT_ID`
-- Default value: `G-0C23GHZJQT`
-- Cookie consent required for tracking (GDPR compliance via tarteaucitron)
-
-### Cookie Consent System (January 2025)
-- Minimal tarteaucitron implementation (5 files, ~430KB)
-- No persistent UI elements - access via footer link
-- Google Consent Mode v2 for GDPR compliance
-- German language support
+### Google Analytics
+- Environment variable: `PUBLIC_GA_MEASUREMENT_ID` (default: `G-0C23GHZJQT`)
+- Cookie consent required (GDPR compliance via tarteaucitron)
 
 ### Deployment to Cloudflare Pages
 ```bash
 npm run build
-# Upload dist/ folder to pages.cloudflare.com OR
-# Connect GitHub repo with build command: npm run build, output: dist
+# Upload dist/ folder to pages.cloudflare.com
+# OR connect GitHub repo with build command: npm run build, output: dist
 ```
 
 ## Architecture
 
 ### Tech Stack
-- **Astro 5.13**: Static site generator with zero JavaScript by default
-- **Tailwind CSS v4**: Using Vite plugin integration
-- **TypeScript**: Strict mode enabled
+- **Astro 5.13**: Static site generator, zero JS by default
+- **Tailwind CSS v4**: Via Vite plugin
+- **TypeScript**: Strict mode
 - **Forms**: Web3Forms API (250 free submissions/month)
 
 ### Component Architecture
-All components are `.astro` files using Astro's component syntax:
-- **Frontend code** in component template (HTML-like)
-- **Server code** in frontmatter (`---` blocks)
-- **Scoped styles** in `<style>` tags
-- **Client scripts** in `<script>` tags
+`.astro` files with:
+- Frontend code in template
+- Server code in frontmatter (`---` blocks)
+- Scoped `<style>` tags
+- Client `<script>` tags
 
 ### Page Structure
-The main landing page (`src/pages/index.astro`) is composed of:
-1. **Hero** - Countdown timer to October 30, 2025 event ("25 Mobility Trailblazers in 25")
-2. **Mission** - Mission statement and what defines Mobility Trailblazers
-3. **AboutSection** - Initiative overview with partner organizations (IMO, Tomczak-Gross, Handelsblatt)
-4. **Criteria** - 5 selection criteria with animated cards
-5. **JurySection** - 21 jury member profiles with progressive disclosure
-6. **Newsletter** - Newsletter signup form
-7. **LinkedInFeed** - LinkedIn integration (SociableKit widget)
-8. **NominationForm** - Multi-field form with Web3Forms integration
-9. **Footer** - Site footer
+Main page (`src/pages/index.astro`):
+1. Hero - Countdown to October 30, 2025
+2. Mission - Mission statement
+3. AboutSection - Partners (IMO, Tomczak-Gross, Handelsblatt)
+4. Criteria - 5 selection criteria
+5. JurySection - 21 jury member profiles
+6. Newsletter - Signup form
+7. LinkedInFeed - SociableKit widget
+8. NominationForm - Multi-field form
+9. Footer
 
 Additional pages:
-- `/shop` - Merchandise store with Spreadshirt integration
-- `/danke-nominierung` - Thank you page after nomination submission
-- `/danke-newsletter` - Thank you page after newsletter signup
+- `/shop` - Merchandise store (Spreadshirt)
+- `/danke-nominierung` - Nomination thank you
+- `/danke-newsletter` - Newsletter thank you
 - `/datenschutz` - Privacy policy (German)
-- `/impressum` - Legal notice/imprint (German)
+- `/impressum` - Legal notice (German)
 
 ### Styling System
 
@@ -93,247 +80,75 @@ Additional pages:
 ```javascript
 colors: {
   'brand-primary': '#003C3D',     // Dark teal
-  'brand-accent': '#C1693C',      // Orange  
+  'brand-accent': '#C1693C',      // Orange
   'brand-beige': '#F8F0E3',       // Background
   'brand-text': '#302C37'         // Body text
 }
 ```
 
-#### Typography Hierarchy
-- H1: Poppins, 4em, uppercase with gradient effect
-- H2/H3: Trebuchet MS, 3.2em/2.4em with solid colors
+#### Typography
+- H1: Poppins, 4em, uppercase, gradient
+- H2/H3: Trebuchet MS, 3.2em/2.4em
 - H4: Cabin, 22px
 - Body: Roboto, 18px
 
-#### Gradient Color Scheme
-**H1 Titles:**
-- Light backgrounds: Gradient from #C1693C (orange) to #004C5F (dark teal)
-- Dark backgrounds: Gradient from #FFF8F0DD (light cream) to #A4DCD5 (light teal)
-
-**H2 Titles:**
-- Light backgrounds: Solid #004C5F (dark teal)
-- Dark backgrounds: Solid #C1693C (orange)
-
-#### CSS Architecture
-- **global.css**: Tailwind imports + custom animations/utilities
-- **Component styles**: Scoped styles in each `.astro` component
-- **Utility classes**: Tailwind utilities throughout components
-
 ### Build Configuration
 
-#### astro.config.mjs
 ```javascript
+// astro.config.mjs
 {
   site: 'https://mobilitytrailblazers.de',
-  output: 'static',                    // Pure static HTML
-  vite: { plugins: [tailwindcss()] },  // Tailwind v4 integration
-  build: { inlineStylesheets: 'auto' } // Inline critical CSS
+  output: 'static',
+  vite: { plugins: [tailwindcss()] },
+  build: { inlineStylesheets: 'auto' }
 }
 ```
 
-### Form Handling Pattern
-Forms use client-side JavaScript with Web3Forms API:
-1. Form submission prevented with `e.preventDefault()`
-2. FormData sent to Web3Forms endpoint
-3. Success/error UI updates without page reload
-4. See `NominationForm.astro` lines 174-227 for implementation
-
-### LinkedIn Integration
-Two approaches configured in `LinkedInFeed.astro`:
-1. **EmbedSocial** widget (lines 40-49) - Requires account setup
-2. **Direct iframe embeds** (lines 52-74) - Manual post embedding
-
-### Performance Optimizations
-- Static HTML generation (no server/database)
-- Inline critical CSS (`inlineStylesheets: 'auto'`)
-- Minimal JavaScript (only countdown timer and form handling)
-- CDN-ready static files
+### Form Handling
+- Client-side JS with Web3Forms API
+- `e.preventDefault()` → FormData to Web3Forms → UI update
+- Implementation: `NominationForm.astro` lines 174-227
 
 ## Legal Compliance Requirements
 
-### IMPORTANT: Placeholder Text Must Be Replaced
-The following files contain placeholder text that MUST be replaced before production deployment:
-- `/src/pages/datenschutz.astro` - Privacy policy with placeholder addresses
-- `/src/pages/impressum.astro` - Legal notice with placeholder contact details
+### ⚠️ IMPORTANT: Replace Placeholder Text
+**MUST replace before production deployment:**
+- `/src/pages/datenschutz.astro` - Placeholder addresses
+- `/src/pages/impressum.astro` - Placeholder contact details
 
 **WARNING**: Non-compliance with German TMG law and GDPR can result in legal penalties.
 
 ### LinkedIn Widget Security
-- Currently using production widget ID (25576730) from another site
-- **TODO**: Create dedicated SociableKit widget for this site
-- See `/src/components/LinkedInFeed.astro` for setup instructions
+- Currently using production widget ID from another site
+- **TODO**: Create dedicated SociableKit widget
+- See `/src/components/LinkedInFeed.astro` for setup
 
 ## Project Constraints
-
-### Comprehensive Testing Framework
-The project has a full Playwright test suite:
-- 79 tests across 5 test files (all passing)
-- Test categories: accessibility, components, core, form-functionality, responsive-design
-- Optimized CI/CD workflow with browser caching and parallel execution
-- See docs/TESTING.md for details
 
 ### Static-Only Architecture
 - No server-side processing or API routes
 - All dynamic behavior via client-side JavaScript
-- Form submissions handled by external service (Web3Forms)
+- Form submissions via Web3Forms
+
+### Testing
+- 79 Playwright tests across 5 test files
+- Optimized CI/CD with browser caching and parallel execution
+- See `docs/TESTING.md` for details
 
 ### Media Files
-The `/Media` directory contains WordPress migration artifacts and should be ignored (in .gitignore). Only files in `/public` are served.
+- `/Media` directory contains WordPress migration artifacts (ignored)
+- Only `/public` files are served
 
-## Recent Updates (October 2025)
+## Additional Documentation
 
-### Documentation Cleanup
-- **DELETED**: Outdated documentation files (JURY_IMPLEMENTATION_SUMMARY.md, MISSING_FEATURES.md, PERFORMANCE_TEST_REPORT.md)
-- **NOTE**: Criteria component IS fully integrated and working (contrary to old MISSING_FEATURES.md)
-- **UPDATED**: All test commands to match package.json scripts
-- **CURRENT STATUS**: All 79 Playwright tests passing, 21 jury members implemented
+- **Recent Updates & Changes**: See `CHANGELOG.md`
+- **PWA Implementation**: See `docs/PWA_GUIDE.md`
+- **Shop SEO Details**: See `docs/SHOP_SEO.md`
+- **Testing Guide**: See `docs/TESTING.md`
 
-### PWA Implementation (January 2025)
-The site now supports Progressive Web App (PWA) functionality, making it installable as a native app on mobile and desktop devices.
+## Notes
 
-#### Features Implemented:
-- **Custom Favicon Setup**: Multi-platform favicon support with ICO and PNG formats for all devices
-- **PWA Manifest**: Complete app configuration with icons, theme colors, and display settings
-- **Service Worker**: Offline caching for static assets with network-first strategy
-- **Install Prompts**: 
-  - Auto-appearing install button for Chrome/Edge (10-second display)
-  - iOS-specific instructions for Safari users
-  - Detection of already-installed state
-- **Offline Support**: Cached pages and assets available without internet connection
-
-#### Files Added/Modified:
-- `/public/manifest.json` - PWA configuration
-- `/public/service-worker.js` - Offline caching logic
-- `/src/layouts/Layout.astro` - Enhanced with PWA meta tags and install handling
-- Added favicon assets: `favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`, `android-chrome-192x192.png`, `android-chrome-512x512.png`
-
-#### Testing PWA:
-1. Build site: `npm run build`
-2. Preview: `npm run preview`
-3. Open in Chrome/Edge and look for install prompt
-4. Test offline mode by disabling network in DevTools
-
-### Visual Enhancements (January 2025)
-
-#### AboutSection Component (Added January 2025)
-New section added between Mission and Criteria sections featuring:
-- **50-50 Grid Layout**: Content on left, Fernsehturm Berlin image on right
-- **Partner Cards**: Three partner organizations displayed in responsive grid
-  - Institut für Mobilität der Universität St. Gallen
-  - Tomczak-Gross & Partners AG  
-  - Handelsblatt (Media Partner)
-- **Call-to-Action**: Two primary buttons linking to partner websites
-- **Closing Statement**: Motivational message with nomination prompt
-- **Images**: Located in `/public/images/about/`
-
-#### Section Dividers
-Added subtle SVG shape dividers between sections for improved visual flow:
-- **Mission**: Wave divider
-- **AboutSection**: Curved wave divider
-- **Jury**: Tilt/angle divider  
-- **Newsletter**: Curved arc with gradient
-- **LinkedIn Feed**: Zigzag pattern
-- **Nomination Form**: Stepped divider
-
-#### Form Glow Effects
-Implemented multi-colored glow effects on forms using brand colors:
-
-**Input Fields**:
-- Multi-layered box-shadows alternating between teal (#1a365d) and orange (#f6ad55)
-- Default: 3 layers (10-30px spread)
-- Hover: 4 layers (12-55px spread)
-- Focus: 6 layers (18-75px spread) with inner glow
-
-**Buttons**:
-- Teal glow (#1a365d) for contrast with orange buttons
-- Default: 40-50px spread at 30% opacity
-- Hover: Up to 100px spread at 60% opacity
-
-**Form Containers**:
-- Animated pulsing glow (3s cycle)
-- Border color transitions from 20% to 50% opacity
-- Multi-layer shadows for depth
-
-### Spacing Optimization
-The site underwent a spacing reduction update to fix excessive vertical spacing:
-- Hero: Reduced from 100vh to 80vh height
-- Section padding: Standardized to 3rem (48px)
-- Component padding: Reduced from 64-96px to 32-48px
-
-### Shop Page SEO Enhancements (January 2025)
-
-#### SEO Improvements Implemented
-The shop page (`/src/pages/shop.astro`) received comprehensive SEO optimizations:
-
-**1. Structured Data**
-- **Product Schema**: Added ItemList with 8 Product schemas including pricing, availability, and shipping details
-- **Breadcrumb Schema**: Implemented BreadcrumbList for improved navigation understanding
-- **FAQ Schema**: Added FAQPage schema with 4 common questions about shipping and returns
-
-**2. Meta Tags & Open Graph**
-- Enhanced title: "Mobility Trailblazers Shop - Nachhaltige Merchandise & Premium Poloshirts"
-- Detailed meta description with keywords and USPs (✓ On-Demand ✓ 30 Tage Rückgaberecht)
-- Product-specific Open Graph tags for social sharing
-- Twitter Card support for better social media presence
-
-**3. Content Enhancements**
-- **Enhanced Product Descriptions**: Added SEO-optimized descriptions for each product variant
-- **Alt Text Optimization**: Descriptive alt texts including product name, type, and "Nachhaltige Mobility Trailblazers Merchandise"
-- **FAQ Section**: Added visible FAQ section addressing common customer questions
-- **Product Badges**: Added "Nachhaltig" and "On-Demand" badges for trust signals
-
-**4. Technical Optimizations**
-- **Performance**: Added preconnect to Spreadshirt CDN and dns-prefetch for faster image loading
-- **Accessibility**: ARIA labels, semantic HTML, keyboard navigation support
-- **Mobile**: Responsive design with mobile-specific optimizations
-- **Analytics**: Enhanced e-commerce tracking for product impressions and clicks
-
-**5. Navigation & UX**
-- **Breadcrumb Navigation**: Visual breadcrumbs with proper schema markup
-- **Focus States**: Clear focus indicators for keyboard navigation
-- **Loading Priority**: First 3 products load eagerly with high fetchpriority
-
-#### Expected SEO Impact
-- **Short-term (1-3 months)**: Google Shopping eligibility, rich snippets, improved CTR
-- **Medium-term (3-6 months)**: 25-40% increase in organic traffic, better rankings for merchandise queries
-- **Long-term (6-12 months)**: Improved brand recognition, voice search visibility
-
-#### Price Updates (January 2025)
-Shop prices were updated to sync with Spreadshirt source:
-- Polo shirts: Updated from "ab 39,99 €" to "55,00 €"
-- Mug: Updated from "ab 18,99 €" to "17,99 €"
-- Sticker: Updated from "ab 3,49 €" to "3,49 €" (removed "ab" prefix)
-
-### Playwright Workflow Optimization (January 2025)
-
-The Playwright test workflow was completely overhauled to fix performance and reliability issues:
-
-#### Problems Fixed
-- Tests taking 30+ minutes and frequently timing out
-- ~80% failure rate due to flaky tests
-- Excessive browser configurations causing instability
-- Dev server interference with test selectors
-
-#### Optimizations Applied
-1. **Test Sharding**: Split tests across 3 parallel jobs for main branch
-2. **Browser Caching**: Cache Playwright browsers between runs (saves ~2 min)
-3. **Reduced Browser Matrix**: PR tests use Chrome only; main uses Chrome+Firefox
-4. **Selective Test Execution**: PRs run only critical tests (home, basic, forms)
-5. **Configuration Updates**:
-   - Test timeout: 15s → 30s
-   - Expect timeout: 5s → 10s
-   - Workers: 4 → 2 (better stability)
-   - Added `headless: true` to avoid dev toolbar
-   - Use production build in CI
-6. **Test Fixes**:
-   - Updated selectors to handle multiple H1s
-   - Fixed strict mode violations
-   - Added filters for Astro dev toolbar
-
-#### Results
-- PR tests: ~5 minutes (was 15+)
-- Main branch: ~10-12 minutes (was 30+)
-- Success rate: 90%+ (was ~20%)
-- Reduced GitHub Actions costs
-
-- Always use specialised agents and sequential thinking for complex tasks.
+- Site includes PWA support with offline caching
+- Visual enhancements: Section dividers, form glow effects
+- Optimized Playwright tests (90%+ success rate, ~5 min PR tests)
+- Always use specialized agents and sequential thinking for complex tasks

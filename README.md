@@ -224,12 +224,11 @@ Comprehensive documentation is available in the `/docs/` folder:
 ### Social Integration
 - [📱 SociableKit Setup](docs/SOCIABLEKIT_SETUP.md) - LinkedIn feed integration
 
-### Migration & Performance
-- [🔄 WordPress Migration](docs/WORDPRESS-MIGRATION.md) - Complete migration documentation
-- [📊 Migration Summary](docs/MIGRATION_SUMMARY.md) - Performance improvements summary
+### Performance & Optimization
+- [⚡ Optimizations Overview](docs/OPTIMIZATIONS.md) - Summary of all performance improvements
 - [🎨 Style Guide](docs/STYLE_GUIDE.md) - Design system and styling guidelines
-- [⚡ LCP Optimization](docs/LCP-OPTIMIZATION.md) - Core Web Vitals improvements
-- [🍪 Cookie Consent](docs/COOKIE_CONSENT_OPTIMIZATION.md) - Cookie consent implementation
+- [🔄 Migration History](docs/archive/WORDPRESS-MIGRATION.md) - WordPress to Astro migration (archived)
+- [📊 Optimization Reports](docs/optimization-reports/) - Detailed optimization implementations
 
 ## 👀 Learn More
 
