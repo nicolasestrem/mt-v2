@@ -26,6 +26,7 @@ pnpm-debug.log*
 # Playwright
 test-results/
 playwright/.cache/
+playwright-report/
 
 # Raw images (before optimization)
 raw-images/

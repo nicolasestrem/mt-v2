@@ -5,10 +5,10 @@
  * and a form for users to subscribe. The form is handled via an AJAX request
  * to Web3Forms and redirects to a thank you page on success.
  *
- * @component
  * @example
  * <Newsletter />
  */
+const web3FormsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || '3bae7bb8-eb67-4656-8ba3-900a0d95306a';
 ---
 
 <section class="newsletter" id="newsletter">
@@ -49,7 +49,7 @@
 				</div>
 				
 				<!-- Web3Forms Configuration -->
-				<input type="hidden" name="access_key" value="3bae7bb8-eb67-4656-8ba3-900a0d95306a">
+				<input type="hidden" name="access_key" value={web3FormsKey}>
 				<input type="hidden" name="subject" value="Neue Newsletter Anmeldung - Mobility Trailblazers">
 				<input type="hidden" name="from_name" value="Mobility Trailblazers Website">
 				
