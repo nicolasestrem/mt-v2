@@ -74,33 +74,43 @@ const imageTypes = {
 };
 
 /**
- * Detect image type based on filename or directory
+ * Detects the type of an image based on its filename.
+ * This function checks for keywords in the filename to determine the
+ * appropriate optimization settings.
+ * @param {string} filename - The filename of the image.
+ * @returns {string} The detected image type (e.g., 'logo', 'jury', 'background').
  */
 function detectImageType(filename) {
   const lowerFilename = filename.toLowerCase();
-  
+
   if (lowerFilename.includes('logo')) return 'logo';
   if (lowerFilename.includes('og') || lowerFilename.includes('social')) return 'ogImage';
   if (lowerFilename.includes('background') || lowerFilename.includes('bg')) return 'background';
   if (lowerFilename.includes('jury') || lowerFilename.includes('profile')) return 'jury';
   if (lowerFilename.includes('linkedin') || lowerFilename.includes('social')) return 'linkedin';
   if (lowerFilename.includes('icon') || lowerFilename.includes('svg')) return 'icon';
-  
+
   // Default to background for unknown types
   return 'background';
 }
 
 /**
- * Optimize a single image
+ * Optimizes a single image using Sharp.
+ * It resizes, converts, and compresses the image based on the detected image type
+ * and the configurations in `imageTypes`.
+ * @param {string} inputPath - The path to the source image.
+ * @param {string} outputPath - The path to save the optimized image.
+ * @param {string} imageType - The type of the image, used to determine optimization settings.
+ * @returns {Promise<void>} A promise that resolves when the image is optimized.
  */
 async function optimizeImage(inputPath, outputPath, imageType) {
   try {
     const config = imageTypes[imageType];
-    
+
     console.log(`Optimizing: ${path.basename(inputPath)} -> ${imageType} format`);
-    
+
     let sharpInstance = sharp(inputPath);
-    
+
     // Resize if dimensions are specified
     if (config.width && config.height) {
       sharpInstance = sharpInstance.resize(config.width, config.height, {
@@ -109,7 +119,7 @@ async function optimizeImage(inputPath, outputPath, imageType) {
         withoutEnlargement: true
       });
     }
-    
+
     // Apply format-specific optimizations
     switch (config.format) {
       case 'webp':
@@ -117,44 +127,49 @@ async function optimizeImage(inputPath, outputPath, imageType) {
           .webp({ quality: config.quality })
           .toFile(outputPath);
         break;
-        
+
       case 'jpg':
         await sharpInstance
           .jpeg({ quality: config.quality, progressive: true })
           .toFile(outputPath);
         break;
-        
+
       case 'png':
         await sharpInstance
           .png({ quality: config.quality, progressive: true })
           .toFile(outputPath);
         break;
-        
+
       case 'svg':
         // For SVG, just copy the file
         fs.copyFileSync(inputPath, outputPath);
         break;
-        
+
       default:
         await sharpInstance
           .webp({ quality: config.quality })
           .toFile(outputPath);
     }
-    
+
     // Get file sizes for comparison
     const inputStats = fs.statSync(inputPath);
     const outputStats = fs.statSync(outputPath);
     const savings = ((inputStats.size - outputStats.size) / inputStats.size * 100).toFixed(1);
-    
+
     console.log(`✅ ${path.basename(inputPath)}: ${(inputStats.size / 1024).toFixed(1)}KB -> ${(outputStats.size / 1024).toFixed(1)}KB (${savings}% smaller)`);
-    
+
   } catch (error) {
     console.error(`❌ Error optimizing ${inputPath}:`, error.message);
   }
 }
 
 /**
- * Process all images in a directory
+ * Processes all images in a specified input directory.
+ * It reads all supported image formats, creates the necessary output directories,
+ * and calls `optimizeImage` for each image.
+ * @param {string} inputDir - The directory containing the raw images.
+ * @param {string} outputDir - The root directory to save optimized images.
+ * @returns {Promise<void>} A promise that resolves when all images have been processed.
  */
 async function processDirectory(inputDir, outputDir) {
   if (!fs.existsSync(inputDir)) {
@@ -163,23 +178,23 @@ async function processDirectory(inputDir, outputDir) {
     console.log(`⚠️  Please add images to ${inputDir} and run the script again`);
     return;
   }
-  
+
   const files = fs.readdirSync(inputDir);
-  const imageFiles = files.filter(file => 
-    config.formats.some(format => 
+  const imageFiles = files.filter(file =>
+    config.formats.some(format =>
       file.toLowerCase().endsWith(`.${format}`)
     )
   );
-  
+
   if (imageFiles.length === 0) {
     console.log(`📁 No image files found in ${inputDir}`);
     console.log(`Supported formats: ${config.formats.join(', ')}`);
     return;
   }
-  
+
   console.log(`🖼️  Found ${imageFiles.length} image(s) to optimize`);
   console.log('');
-  
+
   // Create output directories
   const outputDirs = [
     outputDir,
@@ -189,19 +204,19 @@ async function processDirectory(inputDir, outputDir) {
     path.join(outputDir, 'uploads'),
     path.join(outputDir, 'uploads/nominations')
   ];
-  
+
   outputDirs.forEach(dir => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
   });
-  
+
   // Process each image
   for (const file of imageFiles) {
     const inputPath = path.join(inputDir, file);
     const imageType = detectImageType(file);
     const config = imageTypes[imageType];
-    
+
     // Determine output path based on image type
     let outputPath;
     switch (imageType) {
@@ -217,23 +232,25 @@ async function processDirectory(inputDir, outputDir) {
       default:
         outputPath = path.join(outputDir, file.replace(/\.[^/.]+$/, `.${config.format}`));
     }
-    
+
     await optimizeImage(inputPath, outputPath, imageType);
   }
-  
+
   console.log('');
   console.log('🎉 Image optimization complete!');
   console.log(`📁 Optimized images saved to: ${outputDir}`);
 }
 
 /**
- * Main function
+ * The main function to run the image optimization script.
+ * It initializes the process and handles any top-level errors.
+ * @returns {Promise<void>}
  */
 async function main() {
   console.log('🚀 MobilityTrailblazers Image Optimizer');
   console.log('=====================================');
   console.log('');
-  
+
   try {
     await processDirectory(config.inputDir, config.outputDir);
   } catch (error) {

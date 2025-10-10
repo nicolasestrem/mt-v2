@@ -14,225 +14,95 @@ A high-performance, modern replacement for the WordPress MobilityTrailblazers.de
 
 ## 🚀 Project Overview
 
-This is a complete reimplementation of the MobilityTrailblazers WordPress site using modern web technologies:
+This is a complete reimplementation of the MobilityTrailblazers WordPress site using modern web technologies, focused on performance, accessibility, and best practices.
 
-- **Framework**: Astro 5.13 (Static Site Generator)
-- **Styling**: Tailwind CSS with custom brand colors
-- **Hosting**: Cloudflare Pages (FREE)
-- **Forms**: Web3Forms (FREE up to 250 submissions/month)
-- **Performance**: 10x faster than WordPress (0.5s vs 3.8s load time)
-
-
-## 📁 Project Structure
-
-```
-mt-v2/
-├── src/
-│   ├── components/
-│   │   ├── AboutSection.astro      # About the initiative with partners
-│   │   ├── Criteria.astro          # Selection criteria with info boxes
-│   │   ├── Footer.astro            # Site footer
-│   │   ├── GoogleAnalytics.astro   # Google Analytics integration
-│   │   ├── Header.astro            # Site header and navigation
-│   │   ├── Hero.astro              # Hero section with countdown timer
-│   │   ├── Icons.astro             # SVG icon components
-│   │   ├── JurySection.astro       # Jury members (21 members, progressive disclosure)
-│   │   ├── LinkedInFeed.astro      # LinkedIn posts integration
-│   │   ├── Mission.astro           # Mission statement section
-│   │   ├── Newsletter.astro        # Newsletter signup form
-│   │   ├── NominationForm.astro    # Form with Web3Forms integration
-│   │   ├── ScrollToTop.astro       # Scroll to top button
-│   │   └── SEO.astro               # SEO meta tags and structured data
-│   ├── layouts/
-│   │   └── Layout.astro            # Base HTML layout
-│   ├── pages/
-│   │   ├── index.astro             # Main landing page
-│   │   ├── shop.astro              # Merchandise shop
-│   │   ├── danke-nominierung.astro # Thank you page (nominations)
-│   │   ├── danke-newsletter.astro  # Thank you page (newsletter)
-│   │   ├── datenschutz.astro       # Privacy policy (German)
-│   │   └── impressum.astro         # Legal notice (German)
-│   └── styles/
-│       └── global.css              # Global styles and animations
-├── public/                         # Static assets (images, favicon)
-├── dist/                           # Build output (deploy this)
-└── tailwind.config.mjs            # Tailwind configuration
-```
-
-## 🎨 Brand Design System
-
-### Colors
-- **Primary**: `#003C3D` (Dark Teal)
-- **Accent**: `#C1693C` (Orange)
-- **Background**: `#F8F0E3` (Beige)
-- **Text**: `#302C37` (Dark Gray)
-- **Button Hover**: `#B86F52` (Burnt Orange)
-
-### Typography
-- **H1**: Poppins (4em, uppercase)
-- **H2/H3**: Trebuchet MS (3.2em/2.4em)
-- **H4**: Cabin (22px, capitalize)
-- **Body**: Roboto (18px)
-
-### Visual Effects
-- Gradient text effects on headings
-- Animated info boxes with floating icons
-- Shape dividers between sections (Elementor-style)
-- Gradient borders with glow effects
-- Slide-in animations with staggered delays
-- Decorative dots and wave patterns
+- **Framework**: [Astro](https://astro.build/) (Static Site Generator)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Hosting**: [Cloudflare Pages](https://pages.cloudflare.com/)
+- **Forms**: [Web3Forms](https://web3forms.com/)
+- **Testing**: [Playwright](https://playwright.dev/) for end-to-end tests.
 
 ## 🛠 Installation
 
 ### Prerequisites
-- Node.js 18+ 
-- npm or yarn
+- Node.js 18+
+- npm (or yarn/pnpm)
 
 ### Setup Steps
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/nicolasestrem/mt-v2.git
-cd mt-v2
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/nicolasestrem/mt-v2.git
+    cd mt-v2
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server**
+    ```bash
+    npm run dev
+    ```
+    The application will be available at `http://localhost:4321`.
+
+## 🧞 Project Scripts
+
+| Command | Action |
+| :--- | :--- |
+| `npm install` | Installs all project dependencies. |
+| `npm run dev` | Starts the local development server with hot-reloading. |
+| `npm run build` | Builds the production-ready site to the `./dist/` directory. |
+| `npm run preview` | Serves the production build locally for previewing. |
+| `npm run test` | Runs the Playwright end-to-end tests. |
+| `npm run lint` | Lints CSS and Astro files using Stylelint. |
+| `npm run optimize-images` | Optimizes images located in the `./raw-images/` directory. |
+
+## 📁 Project Structure
+
+The project follows a standard Astro project structure.
+
+```
+.
+├── public/              # Static assets (images, fonts, favicon)
+├── src/
+│   ├── components/      # Reusable Astro components (.astro)
+│   ├── data/            # JSON data files (e.g., shop products)
+│   ├── layouts/         # Base page layouts (.astro)
+│   ├── pages/           # Site pages (.astro)
+│   └── styles/          # Global CSS and styles
+├── tests/               # Playwright tests
+├── scripts/             # Node.js scripts for build tasks
+├── astro.config.mjs     # Astro configuration
+└── package.json         # Project dependencies and scripts
 ```
 
-2. **Install dependencies**
-```bash
-npm install
-```
+## ⚙️ Configuration
 
-3. **Configure Web3Forms**
-- Go to https://web3forms.com/
-- Enter your email to get a free access key
-- Open `src/components/NominationForm.astro`
-- Replace `YOUR-ACCESS-KEY-HERE` with your key
+### Environment Variables
 
-4. **Configure LinkedIn Feed**
-- Open `src/components/LinkedInFeed.astro`
-- Add your EmbedSocial ref ID or LinkedIn post IDs
-- Follow the integration instructions in the component
+The project uses environment variables for configuration. Create a `.env` file in the root of the project and add the following:
 
-5. **Run development server**
-```bash
-npm run dev
-```
-Open http://localhost:4321 in your browser
+-   `PUBLIC_GA_MEASUREMENT_ID`: The Google Analytics 4 measurement ID.
+-   `WEB3FORMS_ACCESS_KEY`: Your access key from [Web3Forms](https://web3forms.com/) for form submissions.
 
-## 🧞 Commands
+The access key is pre-configured in the form components, but it is best practice to use an environment variable.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### Forms
 
-## 📱 LinkedIn Integration
+The nomination and newsletter forms are configured to use [Web3Forms](https://web3forms.com/). The access key is hardcoded in the respective components (`NominationForm.astro` and `Newsletter.astro`) but can be replaced with an environment variable for better security.
 
-### Option 1: EmbedSocial (Recommended)
-1. Get your EmbedSocial account at https://embedsocial.com/
-2. Create a LinkedIn feed widget
-3. Copy your widget ref ID
-4. Add it to `LinkedInFeed.astro`:
-```html
-<div class="embedsocial-hashtag" 
-     data-ref="YOUR-EMBEDSOCIAL-REF-ID">
-</div>
-```
+### LinkedIn Feed
 
-### Option 2: Direct LinkedIn Embeds
-1. Go to any LinkedIn post
-2. Click the three dots → "Embed this post"
-3. Copy the iframe code
-4. Add to `LinkedInFeed.astro` in the posts grid
-
-### Styling Variables
-The LinkedIn feed uses these CSS variables (already configured):
-```css
---column-count: 2;
---widget-bg-color: #f8f0e3;
---widget-font-color: #003c3d;
---widget-link-color: #c1693c;
---button-bg-color: #b86f52;
---button-hover-bg-color: #c1693c;
-/* ... and many more */
-```
+The LinkedIn feed is embedded using an iframe from [SociableKit](https://sociablekit.com/). The widget ID is hardcoded in `src/components/LinkedInFeed.astro`.
 
 ## 🚀 Deployment
 
-### Deploy to Cloudflare Pages (FREE)
+The site is configured for easy deployment to [Cloudflare Pages](https://pages.cloudflare.com/).
 
-1. **Build the site**
-```bash
-npm run build
-```
-
-2. **Option A: Direct Upload**
-- Go to https://pages.cloudflare.com/
-- Create new project → Upload assets
-- Drag the `dist` folder
-- Your site is live!
-
-3. **Option B: Git Integration (Auto-deploy)**
-- Push code to GitHub
-- Go to Cloudflare Pages
-- Create new project → Connect to Git
-- Select `nicolasestrem/mt-v2`
-- Build settings:
-  - Build command: `npm run build`
-  - Build output: `dist`
-- Deploy!
-
-### Custom Domain Setup
-1. In Cloudflare Pages → Custom domains
-2. Add `mobilitytrailblazers.de`
-3. Update DNS settings (if not on Cloudflare)
-4. SSL certificate is automatic
-
-## 🎯 Performance Metrics
-
-### Current WordPress Site
-- Load Time: 3.8s
-- Page Size: 3.2MB
-- Requests: 87
-- Lighthouse: 68
-- Monthly Cost: €16
-
-### New Astro Site
-- Load Time: 0.5s (-87%)
-- Page Size: 200KB (-94%)
-- Requests: 12 (-86%)
-- Lighthouse: 98
-- Monthly Cost: €0
-
-## 📚 Documentation
-
-Comprehensive documentation is available in the `/docs/` folder:
-
-### Setup & Deployment
-- [🚀 Quick Start Guide](docs/QUICK_START.md) - Fast setup and basic configuration
-- [📦 Deployment Guide](docs/DEPLOYMENT.md) - Complete deployment instructions for all platforms
-- [📧 Forms Setup](docs/FORMS_SETUP.md) - Web3Forms configuration and usage
-
-### Development
-- [🧱 Components Guide](docs/COMPONENTS.md) - Detailed component documentation
-- [🧪 Testing Guide](docs/TESTING.md) - Testing setup and procedures
-- [🖼️ Image Storage Guidelines](docs/IMAGE_STORAGE_GUIDELINES.md) - Image optimization and management
-
-### Social Integration
-- [📱 SociableKit Setup](docs/SOCIABLEKIT_SETUP.md) - LinkedIn feed integration
-
-### Performance & Optimization
-- [⚡ Optimizations Overview](docs/OPTIMIZATIONS.md) - Summary of all performance improvements
-- [🎨 Style Guide](docs/STYLE_GUIDE.md) - Design system and styling guidelines
-- [🔄 Migration History](docs/archive/WORDPRESS-MIGRATION.md) - WordPress to Astro migration (archived)
-- [📊 Optimization Reports](docs/optimization-reports/) - Detailed optimization implementations
-
-## 👀 Learn More
-
-- [Astro Documentation](https://docs.astro.build)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Web3Forms](https://web3forms.com)
-- [Cloudflare Pages](https://pages.cloudflare.com)
+1.  **Connect to Git**: Connect your GitHub repository to Cloudflare Pages.
+2.  **Build Settings**:
+    -   **Build command**: `npm run build`
+    -   **Build output directory**: `dist`
+3.  **Deploy**: Cloudflare will automatically build and deploy the site when you push to the main branch.

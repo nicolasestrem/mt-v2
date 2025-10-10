@@ -5,9 +5,17 @@ import path from 'path';
 const INPUT_IMAGE = 'public/images/about/fernsehturm-berlin.jpg';
 const OUTPUT_DIR = 'public/images/about';
 
+/**
+ * Optimizes the main hero image for the website.
+ * This function creates multiple responsive versions of the hero image in both
+ * WebP and JPEG formats. It also generates a highly optimized full-size WebP image.
+ * The input image and output directory are defined by the `INPUT_IMAGE` and
+ * `OUTPUT_DIR` constants.
+ * @returns {Promise<void>} A promise that resolves when all image versions have been created.
+ */
 async function optimizeImage() {
   console.log('Starting image optimization...');
-  
+
   const inputPath = path.join(process.cwd(), INPUT_IMAGE);
   const image = sharp(inputPath);
   const metadata = await image.metadata();

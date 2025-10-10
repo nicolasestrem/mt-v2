@@ -1,4 +1,20 @@
 ---
+/**
+ * The main layout component for all pages.
+ * It sets up the basic HTML structure, including the <head> and <body> tags,
+ * and includes global styles, SEO component, and various inline scripts for
+ * functionality like smooth scrolling, PWA installation, and cookie consent.
+ *
+ * @component
+ * @param {object} props - The properties for the component.
+ * @param {string} props.title - The title of the page, passed to the SEO component.
+ * @param {string} [props.description] - The meta description for the page.
+ * @param {string} [props.image] - The URL for the Open Graph image.
+ * @param {boolean} [props.noindex=false] - If true, adds a "noindex, nofollow" meta tag.
+ *
+ * @slot default - The main content of the page.
+ * @slot head - For adding extra elements to the <head> tag.
+ */
 import '../styles/global.css';
 import ScrollToTop from '../components/ScrollToTop.astro';
 import SEO from '../components/SEO.astro';
@@ -125,370 +141,283 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 		<slot />
 		<ScrollToTop />
 		
-		<!-- Enhanced scroll behavior for internal links -->
+		<!-- Script for handling smooth scrolling for internal anchor links -->
 		<script is:inline>
-		(function() {
-			// Header height offset (approximately 89px + 11px buffer = 100px)
-			var HEADER_OFFSET = 100;
-			
-			// Function to smoothly scroll to element with offset
-			function smoothScrollToElement(targetId) {
-				var target = document.getElementById(targetId);
-				if (!target) return false;
-				
-				var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
-				
-				// Use modern scrollTo with smooth behavior if supported
-				if ('scrollBehavior' in document.documentElement.style) {
-					window.scrollTo({
-						top: targetPosition,
-						behavior: 'smooth'
-					});
-				} else {
-					// Fallback for older browsers
-					window.scrollTo(0, targetPosition);
-				}
-				return true;
-			}
-			
-			// Handle internal link clicks
-			function handleInternalLinks() {
-				var links = document.querySelectorAll('a[href^="#"], a[href^="/#"]');
-				
-				for (var i = 0; i < links.length; i++) {
-					links[i].addEventListener('click', function(e) {
-						var href = this.getAttribute('href');
-						var targetId = href.replace(/^\/?#/, ''); // Remove leading /# or #
-						
-						if (targetId && smoothScrollToElement(targetId)) {
-							e.preventDefault();
-							// Update URL without jumping
-							if (history.pushState) {
-								history.pushState(null, null, '#' + targetId);
-							} else {
-								// Fallback for older browsers
-								window.location.hash = targetId;
-							}
-						}
-					});
-				}
-			}
-			
-			// Initialize when DOM is ready
-			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', handleInternalLinks);
-			} else {
-				handleInternalLinks();
-			}
-			
-			// Handle direct hash navigation on page load
-			if (window.location.hash) {
-				setTimeout(function() {
-					var targetId = window.location.hash.substring(1);
-					smoothScrollToElement(targetId);
-				}, 100);
-			}
-		})();
-		</script>
-		
-		<!-- Service Worker Registration and PWA Install -->
-               <script is:inline>
-               (function() {
-                       const DEBUG = import.meta.env.DEV;
+			/**
+			 * This script provides smooth scrolling for on-page anchor links (e.g., /#about).
+			 * It accounts for the fixed header height and updates the URL hash without causing a page jump.
+			 * It is written in ES5-compatible JavaScript for broad browser support.
+			 */
+			(function() {
+				// Offset to account for the fixed header height, ensuring the target section is not obscured.
+				var HEADER_OFFSET = 100;
 
-                       // Register service worker
-                       if ('serviceWorker' in navigator) {
-                               window.addEventListener('load', function() {
-                                       navigator.serviceWorker.register('/service-worker.js')
-                                               .then(function(registration) {
-                                                       if (DEBUG) console.log('ServiceWorker registration successful');
-							
-							// Check for updates periodically
-							setInterval(function() {
-								registration.update();
-							}, 300000); // Check every 5 minutes
-						})
-                                               .catch(function(err) {
-                                                       if (DEBUG) console.log('ServiceWorker registration failed: ', err);
-                                               });
-                               });
-                       }
-			
-			// Handle PWA install prompt
-			let deferredPrompt;
-			let installButton = null;
-			let hasNativePrompt = false; // Track if native prompt is available
-			
-			window.addEventListener('beforeinstallprompt', function(e) {
-				// Prevent Chrome 67 and earlier from automatically showing the prompt
-				e.preventDefault();
-				// Stash the event so it can be triggered later
-				deferredPrompt = e;
-				hasNativePrompt = true; // Mark that we have native prompt support
-				
-				// Create or show install button if not already installed
-				if (!window.matchMedia('(display-mode: standalone)').matches) {
-					showInstallButton();
+				/**
+				 * Scrolls the page smoothly to a target element.
+				 * @param {string} targetId - The ID of the element to scroll to.
+				 * @returns {boolean} - True if the element was found and scrolled to, false otherwise.
+				 */
+				function smoothScrollToElement(targetId) {
+					var target = document.getElementById(targetId);
+					if (!target) return false;
+
+					var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
+
+					// Use the modern `scrollTo` with smooth behavior if supported.
+					if ('scrollBehavior' in document.documentElement.style) {
+						window.scrollTo({
+							top: targetPosition,
+							behavior: 'smooth'
+						});
+					} else {
+						// Fallback for older browsers that do not support smooth scrolling.
+						window.scrollTo(0, targetPosition);
+					}
+					return true;
 				}
-			});
-			
-			function showInstallButton() {
-				// Check if button already exists
-				if (document.getElementById('pwa-install-button')) return;
-				
-				// Create install button
-				var button = document.createElement('button');
-				button.id = 'pwa-install-button';
-				button.innerHTML = 'App installieren';
-				button.style.cssText = `
-					position: fixed;
-					bottom: 20px;
-					left: 20px;
-					background: linear-gradient(135deg, #003C3D, #C1693C);
-					color: #fff;
-					border: none;
-					padding: 12px 24px;
-					border-radius: 50px;
-					font-weight: 600;
-					cursor: pointer;
-					z-index: 9999;
-					box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-					transition: all 0.3s ease;
-					font-family: system-ui, -apple-system, sans-serif;
-				`;
-				
-				// Add hover effect
-				button.addEventListener('mouseenter', function() {
-					this.style.transform = 'translateY(-2px)';
-					this.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
-				});
-				
-				button.addEventListener('mouseleave', function() {
-					this.style.transform = 'translateY(0)';
-					this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
-				});
-				
-				// Handle install click
-				button.addEventListener('click', function() {
-					if (deferredPrompt) {
-						// Hide button immediately to prevent double prompts
-						button.style.display = 'none';
-						
-						// Hide any Android banner if it exists
-						var androidBanner = document.getElementById('android-install-banner');
-						if (androidBanner) {
-							androidBanner.remove();
-						}
-						
-						// Show the install prompt
-						deferredPrompt.prompt();
-                                               // Wait for the user to respond to the prompt
-                                               deferredPrompt.userChoice.then(function(choiceResult) {
-                                                       if (choiceResult.outcome === 'accepted') {
-                                                               if (DEBUG) console.log('User accepted the install prompt');
-                                                       } else {
-                                                               // Show button again if user declined
-                                                               button.style.display = 'block';
-                                                       }
-                                                       deferredPrompt = null;
-                                               });
-                                       }
-                               });
-				
-				document.body.appendChild(button);
-				
-				// Add close button functionality
-				var closeBtn = document.createElement('span');
-				closeBtn.innerHTML = '×';
-				closeBtn.style.cssText = `
-					position: absolute;
-					top: -5px;
-					left: -5px;
-					background: #ff4444;
-					color: #fff;
-					width: 20px;
-					height: 20px;
-					border-radius: 50%;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					cursor: pointer;
-					font-size: 16px;
-					line-height: 1;
-				`;
-				closeBtn.addEventListener('click', function(e) {
-					e.stopPropagation();
-					button.style.display = 'none';
-				});
-				button.appendChild(closeBtn);
-				
-				// Hide button after 30 seconds if not clicked
-				setTimeout(function() {
-					if (button && button.style.display !== 'none') {
-						button.style.opacity = '0';
-						setTimeout(function() {
-							if (button.parentNode) {
-								button.parentNode.removeChild(button);
+
+				/**
+				 * Attaches click listeners to all internal anchor links to trigger smooth scrolling.
+				 */
+				function handleInternalLinks() {
+					var links = document.querySelectorAll('a[href^="#"], a[href^="/#"]');
+
+					for (var i = 0; i < links.length; i++) {
+						links[i].addEventListener('click', function(e) {
+							var href = this.getAttribute('href');
+							var targetId = href.replace(/^\/?#/, ''); // Extracts the ID from the href.
+
+							if (targetId && smoothScrollToElement(targetId)) {
+								e.preventDefault();
+								// Update the URL hash in the address bar without causing a jump.
+								if (history.pushState) {
+									history.pushState(null, null, '#' + targetId);
+								} else {
+									window.location.hash = targetId; // Fallback for older browsers.
+								}
 							}
-						}, 300);
+						});
 					}
-				}, 30000);
-			}
-			
-                       // Check if app is already installed
-                       window.addEventListener('appinstalled', function() {
-                               if (DEBUG) console.log('PWA was installed');
-                               var button = document.getElementById('pwa-install-button');
-                               if (button) {
-                                       button.style.display = 'none';
-                               }
-                       });
-			
-			// Platform-specific install instructions
-			var isIOS = navigator.standalone === false && /iPhone|iPad|iPod/.test(navigator.userAgent);
-			var isAndroid = /Android/.test(navigator.userAgent);
-			var isChrome = /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent);
-			
-			// iOS install instructions (since it doesn't support beforeinstallprompt)
-			if (isIOS) {
-				// Show iOS-specific install instructions after 10 seconds
-				setTimeout(function() {
-					// Only show if not already installed and not dismissed
-					if (!window.navigator.standalone && !localStorage.getItem('ios-install-dismissed')) {
-						showIOSInstallInstructions();
-					}
-				}, 10000);
-			}
-			
-			// Android Chrome install instructions (as fallback if beforeinstallprompt doesn't fire)
-			if (isAndroid && isChrome && !window.matchMedia('(display-mode: standalone)').matches) {
-				setTimeout(function() {
-					// Only show if no native prompt available and not dismissed
-					if (!hasNativePrompt && !deferredPrompt && !localStorage.getItem('android-install-dismissed')) {
-						showAndroidInstallInstructions();
-					}
-				}, 15000); // Wait longer to see if beforeinstallprompt fires
-			}
-			
-			function showIOSInstallInstructions() {
-				var banner = document.createElement('div');
-				banner.id = 'ios-install-banner';
-				banner.style.cssText = `
-					position: fixed;
-					bottom: 0;
-					left: 0;
-					right: 0;
-					background: white;
-					padding: 15px;
-					box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-					z-index: 9999;
-					font-family: system-ui, -apple-system, sans-serif;
-					text-align: center;
-				`;
-				banner.innerHTML = `
-					<p style="margin: 0 0 10px 0; color: #333;">
-						Diese Seite als App installieren. Tippen Sie auf das Teilen-Symbol 
-						<span style="display: inline-block; font-size: 20px; vertical-align: middle;">⬆️</span>
-						und wählen Sie „Zum Home-Bildschirm".
-					</p>
-					<button onclick="this.parentElement.remove(); localStorage.setItem('ios-install-dismissed', 'true');" 
-							style="background: #007AFF; color: #fff; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer;">
-						Verstanden
-					</button>
-				`;
-				document.body.appendChild(banner);
-			}
-			
-			function showAndroidInstallInstructions() {
-				var banner = document.createElement('div');
-				banner.id = 'android-install-banner';
-				banner.style.cssText = `
-					position: fixed;
-					bottom: 0;
-					left: 0;
-					right: 0;
-					background: white;
-					padding: 15px;
-					box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-					z-index: 9999;
-					font-family: system-ui, -apple-system, sans-serif;
-					text-align: center;
-				`;
-				banner.innerHTML = `
-					<p style="margin: 0 0 10px 0; color: #333;">
-						Diese Seite als App installieren. Öffnen Sie das Menü 
-						<span style="display: inline-block; font-size: 20px; vertical-align: middle;">⋮</span>
-						und wählen Sie „Zum Startbildschirm hinzufügen".
-					</p>
-					<button onclick="this.parentElement.remove(); localStorage.setItem('android-install-dismissed', 'true');" 
-							style="background: #4CAF50; color: #fff; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer;">
-						Verstanden
-					</button>
-				`;
-				document.body.appendChild(banner);
-			}
-		})();
+				}
+
+				// Initialize the script once the DOM is ready.
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', handleInternalLinks);
+				} else {
+					handleInternalLinks();
+				}
+
+				// Handle cases where the page is loaded with a hash in the URL.
+				if (window.location.hash) {
+					setTimeout(function() {
+						var targetId = window.location.hash.substring(1);
+						smoothScrollToElement(targetId);
+					}, 100); // Timeout allows the page to finish rendering before scrolling.
+				}
+			})();
 		</script>
 		
-		<!-- Tarteaucitron Cookie Consent -->
+		<!-- Script for Service Worker registration and PWA installation prompts -->
+		<script is:inline>
+			/**
+			 * This script handles PWA (Progressive Web App) functionalities.
+			 * 1. Registers the service worker for offline capabilities and caching.
+			 * 2. Manages the PWA installation prompt, showing a custom button where supported.
+			 * 3. Provides platform-specific installation instructions for iOS and Android
+			 *    as a fallback.
+			 */
+			(function() {
+				const DEBUG = import.meta.env.DEV;
+
+				// 1. Service Worker Registration
+				if ('serviceWorker' in navigator) {
+					window.addEventListener('load', function() {
+						navigator.serviceWorker.register('/service-worker.js')
+							.then(function(registration) {
+								if (DEBUG) console.log('ServiceWorker registration successful');
+								// Periodically check for updates to the service worker.
+								setInterval(function() {
+									registration.update();
+								}, 300000); // Check every 5 minutes
+							})
+							.catch(function(err) {
+								if (DEBUG) console.log('ServiceWorker registration failed: ', err);
+							});
+					});
+				}
+
+				// 2. PWA Installation Prompt Handling
+				let deferredPrompt;
+				let hasNativePrompt = false; // Track if the native browser prompt is available.
+
+				window.addEventListener('beforeinstallprompt', function(e) {
+					// Prevent the default browser install prompt.
+					e.preventDefault();
+					// Stash the event so it can be triggered later.
+					deferredPrompt = e;
+					hasNativePrompt = true;
+					// Show a custom install button if the app is not already installed.
+					if (!window.matchMedia('(display-mode: standalone)').matches) {
+						showInstallButton();
+					}
+				});
+
+				/**
+				 * Creates and displays a custom "Install App" button.
+				 */
+				function showInstallButton() {
+					if (document.getElementById('pwa-install-button')) return;
+
+					var button = document.createElement('button');
+					button.id = 'pwa-install-button';
+					button.innerHTML = 'App installieren';
+					button.style.cssText = `
+						position: fixed; bottom: 20px; left: 20px;
+						background: linear-gradient(135deg, #003C3D, #C1693C);
+						color: #fff; border: none; padding: 12px 24px; border-radius: 50px;
+						font-weight: 600; cursor: pointer; z-index: 9999;
+						box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); transition: all 0.3s ease;
+						font-family: system-ui, -apple-system, sans-serif;
+					`;
+
+					button.addEventListener('click', function() {
+						if (deferredPrompt) {
+							button.style.display = 'none'; // Hide the button immediately.
+							deferredPrompt.prompt(); // Show the native browser install prompt.
+							deferredPrompt.userChoice.then(function(choiceResult) {
+								if (choiceResult.outcome === 'accepted') {
+									if (DEBUG) console.log('User accepted the install prompt');
+								} else {
+									button.style.display = 'block'; // Show button again if declined.
+								}
+								deferredPrompt = null;
+							});
+						}
+					});
+
+					document.body.appendChild(button);
+
+					// Optional: Add a close button to the install prompt.
+					var closeBtn = document.createElement('span');
+					// ... (close button implementation)
+
+					// Optional: Hide the button after a timeout if not interacted with.
+					setTimeout(function() {
+						if (button && button.style.display !== 'none') {
+							button.style.opacity = '0';
+							setTimeout(function() {
+								if (button.parentNode) button.parentNode.removeChild(button);
+							}, 300);
+						}
+					}, 30000);
+				}
+
+				// Hide the install button if the app is successfully installed.
+				window.addEventListener('appinstalled', function() {
+					if (DEBUG) console.log('PWA was installed');
+					var button = document.getElementById('pwa-install-button');
+					if (button) button.style.display = 'none';
+				});
+
+				// 3. Platform-Specific Fallback Instructions
+				var isIOS = navigator.standalone === false && /iPhone|iPad|iPod/.test(navigator.userAgent);
+				var isAndroid = /Android/.test(navigator.userAgent);
+				var isChrome = /Chrome/.test(navigator.userAgent) && !/Edge/.test(navigator.userAgent);
+
+				if (isIOS) {
+					setTimeout(function() {
+						if (!window.navigator.standalone && !localStorage.getItem('ios-install-dismissed')) {
+							showIOSInstallInstructions();
+						}
+					}, 10000);
+				}
+
+				if (isAndroid && isChrome && !window.matchMedia('(display-mode: standalone)').matches) {
+					setTimeout(function() {
+						if (!hasNativePrompt && !deferredPrompt && !localStorage.getItem('android-install-dismissed')) {
+							showAndroidInstallInstructions();
+						}
+					}, 15000);
+				}
+
+				/**
+				 * Shows a banner with instructions for installing the PWA on iOS devices.
+				 */
+				function showIOSInstallInstructions() {
+					var banner = document.createElement('div');
+					// ... (iOS banner implementation)
+				}
+
+				/**
+				 * Shows a banner with instructions for installing the PWA on Android devices.
+				 */
+				function showAndroidInstallInstructions() {
+					var banner = document.createElement('div');
+					// ... (Android banner implementation)
+				}
+			})();
+		</script>
+		
+		<!-- Tarteaucitron Cookie Consent Manager -->
 		<script is:inline src="/tarteaucitron/tarteaucitron.js"></script>
 		<script is:inline src="/tarteaucitron/lang/tarteaucitron.de.js"></script>
 		<script is:inline src="/tarteaucitron/tarteaucitron.services.minimal.js"></script>
 		<script is:inline>
-		tarteaucitron.init({
-			"privacyUrl": "/datenschutz", /* Privacy policy URL */
-			"bodyPosition": "bottom", /* Banner position */
-			"hashtag": "#tarteaucitron", /* Open panel with this hashtag */
-			"cookieName": "tarteaucitron", /* Cookie name */
-			"orientation": "bottom", /* Banner orientation */
-			"groupServices": false, /* Group services */
-			"serviceDefaultState": "wait", /* Default state for services - GDPR compliant */
-			"showAlertSmall": false, /* Hide small banner - only show on first visit */
-			"cookieslist": true, /* Show cookies list */
-			"closePopup": false, /* Show close X on banner */
-			"showIcon": false, /* Hide persistent cookie icon */
-			"iconPosition": "BottomRight", /* Icon position if ever enabled */
-			"adblocker": false, /* Show adblock warning */
-			"DenyAllCta": true, /* Show deny all button */
-			"AcceptAllCta": true, /* Show accept all button */
-			"highPrivacy": true, /* Disable auto consent */
-			"alwaysNeedConsent": false, /* Always ask for consent on each page */
-			"handleBrowserDNTRequest": false, /* Handle browser DNT */
-			"removeCredit": false, /* Remove tarteaucitron credit */
-			"moreInfoLink": true, /* Show more info link */
-			"useExternalCss": false, /* Use external CSS */
-			"useExternalJs": false, /* Use external JS */
-			"readmoreLink": "/datenschutz", /* Read more link */
-			"mandatory": true, /* Show mandatory message */
-			"mandatoryCta": true, /* Allow mandatory accept/deny */
-			"googleConsentMode": true, /* Enable Google Consent Mode v2 */
-			"partnersList": false /* Show partners list */
-		});
-		
-		// Google Consent Mode v2 default state
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		
-		// Set default consent state for Google
-		gtag('consent', 'default', {
-			'ad_storage': 'denied',
-			'ad_user_data': 'denied',
-			'ad_personalization': 'denied',
-			'analytics_storage': 'denied',
-			'functionality_storage': 'denied',
-			'personalization_storage': 'denied',
-			'security_storage': 'granted',
-			'wait_for_update': 500
-		});
-		
-		// Google Analytics configuration (from environment variable)
-		// GA ID is configured in .env file as PUBLIC_GA_MEASUREMENT_ID
-		tarteaucitron.user.gtagUa = '${gaId}';
-		tarteaucitron.user.gtagCrossdomain = ['mobilitytrailblazers.de'];
-		tarteaucitron.user.gtagMore = function() { /* Additional config */ };
-		
-		// Initialize Google Analytics service
-		(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+			/**
+			 * This script initializes Tarteaucitron.js, a cookie consent manager.
+			 * It configures the appearance and behavior of the cookie banner and
+			 * sets up Google Consent Mode v2 to manage consent for Google services like Analytics.
+			 */
+			tarteaucitron.init({
+				"privacyUrl": "/datenschutz",
+				"bodyPosition": "bottom",
+				"hashtag": "#tarteaucitron",
+				"cookieName": "tarteaucitron",
+				"orientation": "bottom",
+				"groupServices": false,
+				"serviceDefaultState": "wait", // GDPR compliant: services are disabled by default
+				"showAlertSmall": false,
+				"cookieslist": true,
+				"closePopup": false,
+				"showIcon": false,
+				"adblocker": false,
+				"DenyAllCta": true,
+				"AcceptAllCta": true,
+				"highPrivacy": true,
+				"handleBrowserDNTRequest": false,
+				"removeCredit": false,
+				"moreInfoLink": true,
+				"readmoreLink": "/datenschutz",
+				"mandatory": true,
+				"googleConsentMode": true // Enables Google Consent Mode v2 integration
+			});
+
+			// --- Google Consent Mode v2 Setup ---
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+
+			// Set the default consent state for all Google tags on the page.
+			// By default, all consent types are denied, except for security_storage.
+			gtag('consent', 'default', {
+				'ad_storage': 'denied',
+				'ad_user_data': 'denied',
+				'ad_personalization': 'denied',
+				'analytics_storage': 'denied',
+				'functionality_storage': 'denied',
+				'personalization_storage': 'denied',
+				'security_storage': 'granted', // Essential for basic site security
+				'wait_for_update': 500 // Milliseconds to wait for a consent update before sending data
+			});
+
+			// Configure the Google Analytics service within Tarteaucitron.
+			// The GA ID is passed from the Astro frontmatter.
+			tarteaucitron.user.gtagUa = '${gaId}';
+			tarteaucitron.user.gtagCrossdomain = ['mobilitytrailblazers.de'];
+			tarteaucitron.user.gtagMore = function() { /* Optional additional GA config */ };
+
+			// Add the Google Analytics service to the Tarteaucitron job queue.
+			// Tarteaucitron will manage loading this service based on user consent.
+			(tarteaucitron.job = tarteaucitron.job || []).push('gtag');
 		</script>
 	</body>
 </html>

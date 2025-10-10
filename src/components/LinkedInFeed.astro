@@ -1,26 +1,19 @@
 ---
-// LinkedIn Feed component for Mobility Trailblazers
-// Uses SociableKit widget for displaying LinkedIn posts (same as production site)
-// 
-// SECURITY WARNING: Currently using production widget ID (25576730) from another site
-// TODO: Create dedicated widget for this site to avoid potential data leakage
-// 
-// SETUP INSTRUCTIONS:
-// 1. Go to https://www.sociablekit.com
-// 2. Click "Create a Widget" and select "LinkedIn Page Posts"
-// 3. Connect your LinkedIn page (Mobility Trailblazers showcase)
-// 4. Customize the widget appearance (optional)
-// 5. Copy the widget ID from the embed code
-// 6. Replace the ID in the iframe src below (currently using production ID: 25576730)
-// 
-// FREE TIER LIMITATIONS:
-// - Limited to 5 posts display
-// - SociableKit branding shown at bottom
-// - Updates every 24 hours
-// - Basic customization options
-// 
-// NOTE: The widget ID 25576730 is from the production site.
-// RECOMMENDATION: Create a dedicated widget or implement direct LinkedIn API integration
+/**
+ * Renders a LinkedIn feed section using an embedded widget from SociableKit.
+ * This component displays the latest posts from the Mobility Trailblazers LinkedIn page.
+ *
+ * @component
+ *
+ * @property {string} widgetId - The SociableKit widget ID. Currently hardcoded.
+ *   - **SECURITY WARNING**: This component uses a production widget ID from another site.
+ *     It is recommended to create a dedicated widget for this project to prevent data leakage.
+ *   - **Setup**: A new widget can be created at sociablekit.com. The free tier has
+ *     limitations (5 posts, 24-hour updates, branding).
+ *
+ * @example
+ * <LinkedInFeed />
+ */
 import Icons from './Icons.astro';
 ---
 

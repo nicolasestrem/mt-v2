@@ -1,5 +1,14 @@
 ---
-// Scroll to Top button component
+/**
+ * Renders a "Scroll to Top" button that appears when the user scrolls down the page.
+ * The button is fixed to the bottom-right corner of the screen and provides a
+ * smooth scrolling animation to the top of the page when clicked.
+ * It respects the `prefers-reduced-motion` media query for accessibility.
+ *
+ * @component
+ * @example
+ * <ScrollToTop />
+ */
 ---
 
 <button
@@ -107,10 +116,18 @@
 </style>
 
 <script>
+  /**
+   * Manages the behavior of the "Scroll to Top" button.
+   * This includes showing/hiding the button based on scroll position and
+   * handling the scroll-to-top action on click or keypress.
+   */
   const scrollToTopButton = document.getElementById('scrollToTop');
-  
+
   if (scrollToTopButton) {
-    // Show/hide button based on scroll position
+    /**
+     * Toggles the visibility of the button based on the window's scroll position.
+     * The button becomes visible when the user has scrolled more than 300 pixels down.
+     */
     const toggleVisibility = () => {
       if (window.scrollY > 300) {
         scrollToTopButton.classList.add('visible');
@@ -119,7 +136,7 @@
       }
     };
 
-    // Throttle scroll event for better performance
+    // Use requestAnimationFrame to throttle the scroll event handler for performance.
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
@@ -131,27 +148,24 @@
       }
     };
 
-    // Scroll to top functionality
+    /**
+     * Scrolls the window to the top of the page.
+     * It respects the user's motion preferences, providing a smooth scroll
+     * by default and an instant scroll if reduced motion is preferred.
+     */
     const scrollToTop = () => {
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      
-      if (prefersReducedMotion) {
-        // Instant scroll for users who prefer reduced motion
-        window.scrollTo(0, 0);
-      } else {
-        // Smooth scroll for others
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      }
+      window.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+      });
     };
 
-    // Event listeners
-    window.addEventListener('scroll', handleScroll);
+    // Attach event listeners for scroll and click events.
+    window.addEventListener('scroll', handleScroll, { passive: true });
     scrollToTopButton.addEventListener('click', scrollToTop);
 
-    // Keyboard support (Enter and Space keys)
+    // Add keyboard support for accessibility (Enter and Space keys).
     scrollToTopButton.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -159,7 +173,7 @@
       }
     });
 
-    // Initial check
+    // Perform an initial check to set the button's visibility on page load.
     toggleVisibility();
   }
 </script>

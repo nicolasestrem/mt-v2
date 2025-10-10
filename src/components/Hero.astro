@@ -1,5 +1,13 @@
 ---
-// Hero section component for Mobility Trailblazers
+/**
+ * Renders the hero section for the homepage.
+ * This component displays the main headline, a subtitle, a tagline,
+ * and a countdown timer to a specific event date.
+ *
+ * @component
+ * @example
+ * <Hero />
+ */
 ---
 
 <section class="hero">
@@ -232,29 +240,37 @@
 </style>
 
 <script>
-	// Countdown timer functionality
+	/**
+	 * Updates the countdown timer on the hero section.
+	 * Calculates the time remaining until a target date and updates the
+	 * corresponding DOM elements for days, hours, minutes, and seconds.
+	 */
 	function updateCountdown() {
+		// Set the target date and time for the countdown.
 		const targetDate = new Date('2025-10-30T16:00:00').getTime();
 		const now = new Date().getTime();
 		const distance = targetDate - now;
 
+		// Get the DOM elements for the countdown numbers.
 		const daysEl = document.getElementById('days');
 		const hoursEl = document.getElementById('hours');
 		const minutesEl = document.getElementById('minutes');
 		const secondsEl = document.getElementById('seconds');
 
 		if (distance > 0) {
+			// Calculate the time units.
 			const days = Math.floor(distance / (1000 * 60 * 60 * 24));
 			const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 			const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 			const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+			// Update the text content of the elements, padding with a '0' if needed.
 			if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
 			if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
 			if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
 			if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
 		} else {
-			// Event has passed
+			// If the event has passed, display all zeros.
 			if (daysEl) daysEl.textContent = '00';
 			if (hoursEl) hoursEl.textContent = '00';
 			if (minutesEl) minutesEl.textContent = '00';
@@ -262,7 +278,8 @@
 		}
 	}
 
-	// Update countdown every second
+	// Set an interval to update the countdown every second.
 	setInterval(updateCountdown, 1000);
-	updateCountdown(); // Initial call
+	// Call the function immediately to avoid a 1-second delay on page load.
+	updateCountdown();
 </script>

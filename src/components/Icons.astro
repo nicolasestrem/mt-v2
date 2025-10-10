@@ -1,7 +1,21 @@
 ---
-// Icon component with inline SVGs to replace Font Awesome
+/**
+ * Renders an inline SVG icon based on the provided name.
+ * This component serves as a replacement for a font icon library,
+ * ensuring that icons are rendered quickly and efficiently.
+ *
+ * @component
+ * @param {object} props - The properties for the component.
+ * @param {string} props.name - The name of the icon to render.
+ * @param {string} [props.class] - Optional CSS class to apply to the SVG element.
+ * @param {string} [props.width='1em'] - The width of the SVG icon.
+ * @param {string} [props.height='1em'] - The height of the SVG icon.
+ *
+ * @example
+ * <Icons name="linkedin" class="social-icon" />
+ */
 export interface Props {
-  name: 'envelope' | 'linkedin' | 'check-circle' | 'exclamation-circle' | 'circle' | 'arrow-right' | 
+  name: 'envelope' | 'linkedin' | 'check-circle' | 'exclamation-circle' | 'circle' | 'arrow-right' |
         'store' | 'tshirt' | 'mug-hot' | 'bag-shopping' | 'gift' | 'truck' | 'shield-alt' | 'leaf' | 'undo';
   class?: string;
   width?: string;

@@ -1,5 +1,13 @@
 ---
-// Header component for Mobility Trailblazers
+/**
+ * Renders the main header for the website.
+ * It includes the site logo, primary navigation, social media links,
+ * and a mobile menu toggle. The header is fixed to the top of the viewport.
+ *
+ * @component
+ * @example
+ * <Header />
+ */
 import Icons from './Icons.astro';
 ---
 
@@ -288,99 +296,109 @@ import Icons from './Icons.astro';
 </style>
 
 <script is:inline>
-	// Mobile menu script - ES5 compatible for all browsers
+	/**
+	 * Handles the mobile navigation menu functionality.
+	 * This script is written in ES5-compatible JavaScript for broad browser support.
+	 * It includes toggling the menu, closing it on link clicks, and closing it on outside clicks.
+	 */
 	(function() {
+		/**
+		 * Initializes the mobile menu listeners and functionality.
+		 */
 		function initMobileMenu() {
-			// Find elements
+			// Find all necessary elements within the header.
+			const header = document.querySelector('.header');
+			if (!header) {
+				// If the header isn't available yet, retry shortly.
+				setTimeout(initMobileMenu, 100);
+				return;
+			}
 
-                        const header = document.querySelector('.header');
-                        if (!header) {
-                                setTimeout(initMobileMenu, 100);
-                                return;
-                        }
+			const navToggle = header.querySelector('.nav-toggle');
+			const navMenu = header.querySelector('.nav-menu');
+			const navSocial = header.querySelector('.nav-social');
 
-                        const navToggle = header.querySelector('.nav-toggle');
-                        const navMenu = header.querySelector('.nav-menu');
-                        const navSocial = header.querySelector('.nav-social');
+			// Exit if essential elements are not found.
+			if (!navToggle || !navMenu) {
+				return;
+			}
 
-                        if (!navToggle || !navMenu) {
-                                return;
-                        }
-			
-			// Check if already initialized
+			// Prevent re-initializing the listeners.
 			if (navToggle.hasAttribute('data-listener-added')) {
 				return;
 			}
-                        navToggle.setAttribute('data-listener-added', 'true');
-			
-			// Toggle menu function
+			navToggle.setAttribute('data-listener-added', 'true');
+
+			/**
+			 * Toggles the visibility of the mobile navigation menu and social links.
+			 * @param {Event} e - The event object.
+			 */
 			function toggleMenu(e) {
 				if (e) {
 					e.preventDefault();
 					e.stopPropagation();
 				}
-				
-				if (navMenu.classList.contains('active')) {
+
+				const isActive = navMenu.classList.contains('active');
+				if (isActive) {
+					// Close the menu
 					navMenu.classList.remove('active');
 					if (navSocial) navSocial.classList.remove('active');
 					navToggle.classList.remove('active');
 					navToggle.setAttribute('aria-expanded', 'false');
 				} else {
+					// Open the menu
 					navMenu.classList.add('active');
 					if (navSocial) navSocial.classList.add('active');
 					navToggle.classList.add('active');
 					navToggle.setAttribute('aria-expanded', 'true');
-					// Focus first menu item for keyboard navigation
-                                        const firstLink = navMenu.querySelector('.nav-list a');
-                                        if (firstLink) firstLink.focus();
+					// Focus the first link for accessibility.
+					const firstLink = navMenu.querySelector('.nav-list a');
+					if (firstLink) firstLink.focus();
 				}
 			}
-			
-			// Add both click and touch events
+
+			// Attach event listeners for both click and touch to the toggle button.
 			navToggle.addEventListener('click', toggleMenu);
 			navToggle.addEventListener('touchstart', function(e) {
 				e.preventDefault();
 				toggleMenu(e);
 			});
-			
-			// Close menu when clicking on a link
-                        const navLinks = header.querySelectorAll('.nav-list a');
-                        for (let i = 0; i < navLinks.length; i++) {
+
+			// Add event listeners to close the menu when a navigation link is clicked on mobile.
+			const navLinks = header.querySelectorAll('.nav-list a');
+			for (let i = 0; i < navLinks.length; i++) {
 				navLinks[i].addEventListener('click', function() {
 					if (window.innerWidth <= 768) {
-						navMenu.classList.remove('active');
-						if (navSocial) navSocial.classList.remove('active');
-						navToggle.classList.remove('active');
-						navToggle.setAttribute('aria-expanded', 'false');
+						if (navMenu.classList.contains('active')) {
+							toggleMenu();
+						}
 					}
 				});
 			}
-			
-			// Close menu when clicking outside
-			document.addEventListener('click', function(e) {
+
+			/**
+			 * Closes the menu if a click occurs outside the header.
+			 * @param {Event} e - The event object.
+			 */
+			function closeMenuIfOutside(e) {
 				if (!header.contains(e.target)) {
-					navMenu.classList.remove('active');
-					if (navSocial) navSocial.classList.remove('active');
-					navToggle.classList.remove('active');
-					navToggle.setAttribute('aria-expanded', 'false');
+					if (navMenu.classList.contains('active')) {
+						toggleMenu();
+					}
 				}
-			});
-			
-			document.addEventListener('touchstart', function(e) {
-				if (!header.contains(e.target)) {
-					navMenu.classList.remove('active');
-					if (navSocial) navSocial.classList.remove('active');
-					navToggle.classList.remove('active');
-					navToggle.setAttribute('aria-expanded', 'false');
-				}
-			});
+			}
+
+			// Attach event listeners to the document to close the menu on outside clicks.
+			document.addEventListener('click', closeMenuIfOutside);
+			document.addEventListener('touchstart', closeMenuIfOutside);
 		}
-		
-		// Initialize when DOM is ready
+
+		// Initialize the script once the DOM is fully loaded.
 		if (document.readyState === 'loading') {
 			document.addEventListener('DOMContentLoaded', initMobileMenu);
 		} else {
-			// DOM is already ready
+			// The DOM is already ready.
 			initMobileMenu();
 		}
 	})();

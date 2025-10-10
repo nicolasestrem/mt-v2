@@ -1,4 +1,27 @@
 ---
+/**
+ * Manages all SEO-related meta tags for a page.
+ * This component handles the title, description, canonical URL, Open Graph tags,
+ * and structured data (JSON-LD) for the website, an organization, and an event.
+ *
+ * @component
+ * @param {object} props - The properties for the component.
+ * @param {string} [props.title] - The title of the page.
+ * @param {string} [props.description] - The meta description for the page.
+ * @param {string} [props.image] - The URL for the Open Graph image.
+ * @param {string} [props.canonical] - The canonical URL for the page.
+ * @param {boolean} [props.noindex=false] - If true, adds a "noindex, nofollow" meta tag.
+ * @param {object} [props.article] - If the page is an article, provide details.
+ * @param {string} [props.article.publishedTime] - The ISO 8601 publication date.
+ * @param {string} [props.article.modifiedTime] - The ISO 8601 modification date.
+ * @param {string} [props.article.author] - The author of the article.
+ *
+ * @example
+ * <SEO
+ *   title="About Us"
+ *   description="Learn more about the Mobility Trailblazers initiative."
+ * />
+ */
 export interface Props {
   title?: string;
   description?: string;

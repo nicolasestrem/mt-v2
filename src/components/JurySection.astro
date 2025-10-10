@@ -1,5 +1,13 @@
 ---
-// Jury section component for Mobility Trailblazers with progressive disclosure
+/**
+ * Renders the jury section, displaying a list of jury members for the awards.
+ * This component features a "show more" functionality to progressively disclose
+ * the full list of members. The initial view shows a random subset of the jury.
+ *
+ * @component
+ * @example
+ * <JurySection />
+ */
 import Icons from "./Icons.astro";
 
 // Define jury members data structure
@@ -741,37 +749,48 @@ const shuffledMembers = shuffleArray(juryMembers);
 </style>
 
 <script is:inline>
-	// Jury progressive disclosure script - ES5 compatible
+	/**
+	 * Manages the progressive disclosure of the jury members list.
+	 * This script handles the "show more" and "show less" functionality,
+	 * adjusting the number of visible members based on screen size and user interaction.
+	 */
 	(function () {
+		/**
+		 * Initializes the jury toggle functionality.
+		 */
 		function initJuryToggle() {
-			// Find elements
+			// Find the necessary DOM elements.
 			var toggleBtn = document.getElementById("jury-toggle-btn");
 			var hiddenMembers = document.getElementById("jury-members-hidden");
-			var visibleContainer = document.querySelector(
-				".jury-members-visible",
-			);
+			var visibleContainer = document.querySelector(".jury-members-visible");
 
+			// If elements aren't found, retry after a short delay.
 			if (!toggleBtn || !hiddenMembers) {
-				// Elements not found, retry
 				setTimeout(initJuryToggle, 100);
 				return;
 			}
 
-			// Check if already initialized
+			// Prevent re-initialization.
 			if (toggleBtn.hasAttribute("data-listener-added")) {
 				return;
 			}
 			toggleBtn.setAttribute("data-listener-added", "true");
 
-			// Get initial display counts based on viewport
+			/**
+			 * Determines the number of jury members to show initially based on viewport width.
+			 * @returns {number} The number of members to display.
+			 */
 			function getInitialCount() {
 				var width = window.innerWidth;
-				if (width <= 767) return 2;
-				if (width <= 1023) return 4;
-				return 6;
+				if (width <= 767) return 2; // Mobile
+				if (width <= 1023) return 4; // Tablet
+				return 6; // Desktop
 			}
 
-			// Adjust visible members based on screen size
+			/**
+			 * Adjusts the visibility of jury members based on the screen size.
+			 * This is only active when the list is collapsed.
+			 */
 			function adjustVisibleMembers() {
 				if (!visibleContainer) return;
 
@@ -779,100 +798,71 @@ const shuffledMembers = shuffleArray(juryMembers);
 				var count = getInitialCount();
 				var isExpanded = toggleBtn.classList.contains("expanded");
 
-				// Only adjust if not expanded
 				if (!isExpanded) {
 					for (var i = 0; i < members.length; i++) {
-						if (i < count) {
-							members[i].style.display = "";
-						} else {
-							members[i].style.display = "none";
-						}
-					}
-
-					// Move hidden members to the hidden container if needed
-					var hiddenStart = count;
-					var allHiddenMembers =
-						hiddenMembers.querySelectorAll(".jury-member");
-
-					// Show all members in hidden container when appropriate
-					for (var j = 0; j < allHiddenMembers.length; j++) {
-						allHiddenMembers[j].style.display = "";
+						members[i].style.display = i < count ? "" : "none";
 					}
 				}
 			}
 
-			// Initial adjustment (no localStorage - always start collapsed for random display)
+			// Set the initial state on page load.
 			adjustVisibleMembers();
-
-			// Set initial inert state
 			if (hiddenMembers && "inert" in hiddenMembers) {
 				hiddenMembers.inert = true;
 			}
 
-			// Toggle function
+			/**
+			 * Toggles the expanded/collapsed state of the jury list.
+			 * @param {Event} [e] - The event object.
+			 */
 			function toggleMembers(e) {
-				if (e) {
-					e.preventDefault();
-				}
+				if (e) e.preventDefault();
 
 				var isExpanded = toggleBtn.classList.contains("expanded");
 
 				if (isExpanded) {
-					// Collapse
+					// Collapse the list.
 					toggleBtn.classList.remove("expanded");
 					toggleBtn.setAttribute("aria-expanded", "false");
 					hiddenMembers.classList.remove("active");
 					hiddenMembers.setAttribute("aria-hidden", "true");
+					if ("inert" in hiddenMembers) hiddenMembers.inert = true;
 
-					// Add inert to prevent keyboard navigation
-					if ("inert" in hiddenMembers) {
-						hiddenMembers.inert = true;
-					}
+					adjustVisibleMembers(); // Re-apply responsive hiding.
 
-					// Re-apply responsive hiding
-					adjustVisibleMembers();
-
-					// Smooth scroll to jury section
+					// Scroll to the top of the section for better user experience.
 					var jurySection = document.getElementById("jury");
 					if (jurySection) {
 						var offset = jurySection.offsetTop - 100;
-						window.scrollTo({
-							top: offset,
-							behavior: "smooth",
-						});
+						window.scrollTo({ top: offset, behavior: "smooth" });
 					}
 				} else {
-					// Expand
+					// Expand the list.
 					toggleBtn.classList.add("expanded");
 					toggleBtn.setAttribute("aria-expanded", "true");
 					hiddenMembers.classList.add("active");
 					hiddenMembers.setAttribute("aria-hidden", "false");
+					if ("inert" in hiddenMembers) hiddenMembers.inert = false;
 
-					// Remove inert to allow keyboard navigation
-					if ("inert" in hiddenMembers) {
-						hiddenMembers.inert = false;
-					}
-
-					// Show all visible members when expanded
-					var members =
-						visibleContainer.querySelectorAll(".jury-member");
-					for (var i = 0; i < members.length; i++) {
-						members[i].style.display = "";
+					// Ensure all initially "visible" members are actually visible.
+					var visibleMembers = visibleContainer.querySelectorAll(".jury-member");
+					for (var i = 0; i < visibleMembers.length; i++) {
+						visibleMembers[i].style.display = "";
 					}
 				}
 			}
 
-			// Add event listeners
+			// Attach event listeners.
 			toggleBtn.addEventListener("click", toggleMembers);
 
-			// Handle resize events
+			// Adjust visible members on window resize.
 			var resizeTimer;
 			window.addEventListener("resize", function () {
 				clearTimeout(resizeTimer);
 				resizeTimer = setTimeout(adjustVisibleMembers, 250);
 			});
 
-			// Keyboard support
+			// Add keyboard support for the toggle button.
 			toggleBtn.addEventListener("keydown", function (e) {
 				if (e.key === "Enter" || e.key === " ") {
 					e.preventDefault();
@@ -881,7 +871,7 @@ const shuffledMembers = shuffleArray(juryMembers);
 			});
 		}
 
-		// Initialize when DOM is ready
+		// Initialize the script once the DOM is ready.
 		if (document.readyState === "loading") {
 			document.addEventListener("DOMContentLoaded", initJuryToggle);
 		} else {
