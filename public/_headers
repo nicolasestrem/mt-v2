@@ -1,205 +1,135 @@
+# Cloudflare Pages Headers Configuration for SEO Optimization
+# This file optimizes caching, security, and performance for mobilitytrailblazers.de
+
+# ========================================
+# General Security Headers (All Pages)
+# ========================================
 /*
-  # Security Headers
+  # Security Headers - Strengthened per security audit
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()
-  
-  # Content Security Policy
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://widgets.sociablekit.com https://www.linkedin.com https://platform.linkedin.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://api.web3forms.com https://widgets.sociablekit.com https://www.google-analytics.com; frame-src 'self' https://www.linkedin.com https://widgets.sociablekit.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com;
-
-  # Cloudflare-specific performance headers
-  CF-Cache-Status: HIT
-  Cloudflare-CDN-Cache-Control: public, max-age=31536000
-  
-  # Performance and optimization headers
-  X-DNS-Prefetch-Control: on
+  X-Content-Type-Options: nosniff
   X-XSS-Protection: 1; mode=block
-  
-# Cache Control for HTML (with Early Hints)
-/
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
-  CDN-Cache-Control: public, max-age=3600
-  Cloudflare-CDN-Cache-Control: public, max-age=3600
-  # Early Hints for critical resources (103 Early Hints)
-  Link: <https://fonts.googleapis.com>; rel=preconnect
-  Link: <https://fonts.gstatic.com>; rel=preconnect; crossorigin=anonymous
-  Link: <https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Mu4mxK.woff2>; rel=preload; as=font; type=font/woff2; crossorigin=anonymous
-  Link: <https://fonts.gstatic.com/s/roboto/v32/KFOlCnqEu92Fr1MmEU9fBBc4.woff2>; rel=preload; as=font; type=font/woff2; crossorigin=anonymous
-  Link: </images/logo.webp>; rel=preload; as=image; fetchpriority=high
-  Link: </images/about/fernsehturm-berlin.jpg>; rel=preload; as=image; fetchpriority=high
-  Link: <https://api.web3forms.com>; rel=preconnect
-  Link: <https://widgets.sociablekit.com>; rel=dns-prefetch
-  Link: <https://www.linkedin.com>; rel=dns-prefetch
-  
-/*.html
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
-  CDN-Cache-Control: public, max-age=3600
-  Cloudflare-CDN-Cache-Control: public, max-age=3600
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
 
-# Cache Control for static assets with Cloudflare optimizations
+  # Content Security Policy - Balanced security with third-party requirements
+  # Note: 'unsafe-inline' required for tarteaucitron and inline scripts
+  # 'unsafe-eval' removed - not required by current dependencies
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://widgets.sociablekit.com https://cdn.tarteaucitron.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tarteaucitron.io; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com https://api.web3forms.com; frame-src https://www.linkedin.com https://widgets.sociablekit.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com
+
+  # Preconnect hints for performance
+  Link: <https://fonts.googleapis.com>; rel=preconnect; crossorigin
+  Link: <https://fonts.gstatic.com>; rel=preconnect; crossorigin
+  Link: <https://www.google-analytics.com>; rel=dns-prefetch
+  Link: <https://widgets.sociablekit.com>; rel=dns-prefetch
+
+# ========================================
+# HTML Pages - Cache for 1 hour with revalidation
+# ========================================
+/*.html
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Main pages
+/
+  Cache-Control: public, max-age=1800, must-revalidate
+  Link: </images/logo.webp>; rel=preload; as=image
+  Link: </images/about/fernsehturm-berlin.jpg>; rel=preload; as=image; media=(min-width: 768px)
+
+/shop
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/datenschutz
+  Cache-Control: public, max-age=7200, must-revalidate
+  X-Robots-Tag: noindex
+
+/impressum
+  Cache-Control: public, max-age=7200, must-revalidate
+  X-Robots-Tag: noindex
+
+/danke-nominierung
+  Cache-Control: public, max-age=3600, must-revalidate
+  X-Robots-Tag: noindex
+
+/danke-newsletter
+  Cache-Control: public, max-age=3600, must-revalidate
+  X-Robots-Tag: noindex
+
+# ========================================
+# Static Assets - Aggressive Caching
+# ========================================
+
+# Images - 1 year cache
 /images/*
   Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  Cloudflare-CDN-Cache-Control: public, max-age=31536000, immutable
-  CF-Cache-Tag: static-images
-  Vary: Accept-Encoding, Accept
-  
-# Specific optimization for hero and critical images
-/images/logo.webp
-  Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  CF-Cache-Tag: critical-images
-  CF-Polish: lossy
-  CF-Resize: fit=scale-down,width=400,quality=85
-  
-/images/about/fernsehturm-berlin*.{jpg,webp}
-  Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  CF-Cache-Tag: critical-images
-  CF-Polish: lossy
-  
-/images/background.webp
-  Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  CF-Cache-Tag: critical-images
-  CF-Polish: lossless
-  
-/assets/*
-  Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  Cloudflare-CDN-Cache-Control: public, max-age=31536000, immutable
-  CF-Cache-Tag: static-assets
-  Vary: Accept-Encoding
-  
-/_assets/*
-  Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  Cloudflare-CDN-Cache-Control: public, max-age=31536000, immutable
-  CF-Cache-Tag: static-assets
-  Vary: Accept-Encoding
 
-# Font files with aggressive caching and CORS
-/*.woff2
-  Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  Cloudflare-CDN-Cache-Control: public, max-age=31536000, immutable
-  Access-Control-Allow-Origin: *
-  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
-  Access-Control-Max-Age: 31536000
-  CF-Cache-Tag: fonts
-  Vary: Origin, Accept-Encoding
-  X-Content-Type-Options: nosniff
-  Timing-Allow-Origin: *
-  
-/*.woff
-  Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  Cloudflare-CDN-Cache-Control: public, max-age=31536000, immutable
-  Access-Control-Allow-Origin: *
-  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
-  Access-Control-Max-Age: 31536000
-  CF-Cache-Tag: fonts
-  Vary: Origin, Accept-Encoding
-  X-Content-Type-Options: nosniff
-  Timing-Allow-Origin: *
-
-# Font files from Google Fonts (proxy through Cloudflare for better caching)
+# Fonts - 1 year cache
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  Access-Control-Allow-Origin: *
-  CF-Cache-Tag: fonts
-  Vary: Accept-Encoding
 
-# CSS and JS files with Cloudflare optimizations
-/*.css
-  Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  Cloudflare-CDN-Cache-Control: public, max-age=31536000, immutable
-  CF-Cache-Tag: styles
-  Vary: Accept-Encoding
-  X-Content-Type-Options: nosniff
-  
+# CSS & JS - 1 year cache (fingerprinted files)
 /_assets/*.css
   Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  CF-Cache-Tag: styles
-  CF-Minify: css
-  Vary: Accept-Encoding
-  
-/*.js
-  Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  Cloudflare-CDN-Cache-Control: public, max-age=31536000, immutable
-  CF-Cache-Tag: scripts
-  Vary: Accept-Encoding
-  X-Content-Type-Options: nosniff
-  
+  Content-Type: text/css; charset=utf-8
+
 /_assets/*.js
   Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: public, max-age=31536000, immutable
-  CF-Cache-Tag: scripts
-  CF-Minify: javascript
-  CF-Rocket-Loader: off
-  Vary: Accept-Encoding
+  Content-Type: application/javascript; charset=utf-8
 
-# Service Worker and Progressive Web App support
-/sw.js
-  Cache-Control: public, max-age=0, must-revalidate
-  Service-Worker-Allowed: /
+# ========================================
+# SEO-Critical Files
+# ========================================
 
-/manifest.json
-  Cache-Control: public, max-age=3600
-  CDN-Cache-Control: public, max-age=3600
-
-# Thank-you pages - noindex
-/danke-*
+# Sitemap - Cache for 1 day
+/sitemap-*.xml
+  Cache-Control: public, max-age=86400, must-revalidate
+  Content-Type: application/xml; charset=utf-8
   X-Robots-Tag: noindex
-  Cache-Control: public, max-age=0, s-maxage=3600
 
-# API endpoints (if any)
+# Robots.txt - Cache for 1 day
+/robots.txt
+  Cache-Control: public, max-age=86400, must-revalidate
+  Content-Type: text/plain; charset=utf-8
+
+# Manifest for PWA
+/manifest.json
+  Cache-Control: public, max-age=86400, must-revalidate
+  Content-Type: application/manifest+json
+
+# Service Worker - No cache
+/service-worker.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Content-Type: application/javascript; charset=utf-8
+
+# ========================================
+# API Endpoints & Forms
+# ========================================
+
+# Web3Forms submissions (if proxied through Cloudflare)
 /api/*
   Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
 
-# Cloudflare Page Rules simulation via headers
-# Disable Rocket Loader for critical inline scripts (countdown timer)
-/index.html
-  CF-Rocket-Loader: off
+# ========================================
+# Special Media Types
+# ========================================
 
-# Enable Rocket Loader for other JS files
-/*.js
-  CF-Rocket-Loader: on
+# WebP images
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/webp
 
-# Enable Auto Minify
-/*
-  CF-Minify: html,css,javascript
+# SVG files
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/svg+xml
 
-# Enable Brotli compression
-/*
-  CF-Brotli: on
-  Accept-Encoding: gzip, deflate, br
+# AVIF images (future-proofing)
+/*.avif
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: image/avif
 
-# WebP support through Polish
-/images/*.{jpg,jpeg,png}
-  CF-Polish: lossy
-  CF-WebP: on
-  Vary: Accept, Accept-Encoding
-
-# Critical CSS and fonts bypass
-/_assets/*.css
-  CF-Cache-Level: aggressive
-  CF-Edge-Cache: 1month
-
-# Enable HTTP/3 and QUIC
-/*
-  Alt-Svc: h3=":443"; ma=86400
-  
-# Performance timing headers
-/*
-  Server-Timing: cdn-cache;desc="HIT", edge;dur=1, origin;dur=100
-  NEL: {"report_to":"cf-nel","max_age":604800}
-  Report-To: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v3"}]}
+# ========================================
+# Tarteaucitron Cookie Consent Files
+# ========================================
+/tarteaucitron/*
+  Cache-Control: public, max-age=2592000, must-revalidate
