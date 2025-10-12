@@ -13,9 +13,9 @@ export interface Props {
 }
 
 const {
-  title = 'Mobility Trailblazers – Nominierung für 26 in 2026 | Mobilitätswende im DACH-Raum',
-  description = 'Nominieren Sie mutige Persönlichkeiten für 26 in 2026 Mobility Trailblazers Awards. Jetzt Vorreiter der Mobilitätswende im DACH-Raum vorschlagen!',
-  image = '/images/og-image.jpg',
+  title = 'Mobility Trailblazers Nominierung 2026',
+  description = 'Nominieren Sie jetzt Macherinnen und Macher der Mobilitätswende im DACH-Raum. Reichen Sie einen Vorschlag ein und erhalten Sie Neuigkeiten zum Award.',
+  image = '/images/og-image.webp',
   canonical,
   noindex = false,
   article
@@ -52,6 +52,16 @@ const imageURL = new URL(image, siteUrl).toString();
     {article.author && <meta property="article:author" content={article.author} />}
   </>
 )}
+
+<!-- Twitter Card Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
+
+<!-- Hreflang for German language targeting -->
+<link rel="alternate" hreflang="de-DE" href={canonicalURL} />
+<link rel="alternate" hreflang="x-default" href={canonicalURL} />
 
 <!-- Enhanced Structured Data with FAQPage, HowTo, and BreadcrumbList -->
 <script type="application/ld+json" set:html={JSON.stringify({
