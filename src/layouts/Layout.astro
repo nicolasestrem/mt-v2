@@ -7,10 +7,16 @@ export interface Props {
 	title: string;
 	description?: string;
 	image?: string;
+	canonical?: string;
 	noindex?: boolean;
+	article?: {
+		publishedTime?: string;
+		modifiedTime?: string;
+		author?: string;
+	};
 }
 
-const { title, description = "Nominieren Sie jetzt Macherinnen und Macher der Mobilitätswende im DACH-Raum. Reichen Sie einen Vorschlag ein und erhalten Sie Neuigkeiten zum Award.", image = "/images/og-image.webp", noindex = false } = Astro.props;
+const { title, description = "Nominieren Sie jetzt Macherinnen und Macher der Mobilitätswende im DACH-Raum. Reichen Sie einen Vorschlag ein und erhalten Sie Neuigkeiten zum Award.", image = "/images/og-image.webp", canonical, noindex = false, article } = Astro.props;
 const isHomepage = Astro.url.pathname === '/';
 
 // Get GA ID from environment variable
@@ -46,7 +52,7 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 		<meta name="generator" content={Astro.generator} />
 		
 		<!-- SEO Component handles all meta tags -->
-		<SEO title={title} description={description} image={image} noindex={noindex} />
+		<SEO title={title} description={description} image={image} canonical={canonical} noindex={noindex} article={article} />
 		
 		<!-- Tarteaucitron CSS -->
 		<link rel="stylesheet" href="/tarteaucitron/css/tarteaucitron.css">
