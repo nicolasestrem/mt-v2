@@ -13,9 +13,9 @@ export interface Props {
 }
 
 const {
-  title = 'Mobility Trailblazers – Nominierung für 26 in 2026 | Mobilitätswende im DACH-Raum',
-  description = 'Nominieren Sie mutige Persönlichkeiten für 26 in 2026 Mobility Trailblazers Awards. Jetzt Vorreiter der Mobilitätswende im DACH-Raum vorschlagen!',
-  image = '/images/og-image.jpg',
+  title = 'Mobility Trailblazers Nominierung 2026',
+  description = 'Nominieren Sie jetzt Macherinnen und Macher der Mobilitätswende im DACH-Raum. Reichen Sie einen Vorschlag ein und erhalten Sie Neuigkeiten zum Award.',
+  image = '/images/og-image.webp',
   canonical,
   noindex = false,
   article
@@ -52,6 +52,16 @@ const imageURL = new URL(image, siteUrl).toString();
     {article.author && <meta property="article:author" content={article.author} />}
   </>
 )}
+
+<!-- Twitter Card Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
+
+<!-- Hreflang for German language targeting -->
+<link rel="alternate" hreflang="de-DE" href={canonicalURL} />
+<link rel="alternate" hreflang="x-default" href={canonicalURL} />
 
 <!-- Enhanced Structured Data with FAQPage, HowTo, and BreadcrumbList -->
 <script type="application/ld+json" set:html={JSON.stringify({
@@ -163,41 +173,56 @@ const imageURL = new URL(image, siteUrl).toString();
       "mainEntity": [
         {
           "@type": "Question",
+          "@id": `${siteUrl}/#faq-wer-darf-nominieren`,
           "name": "Wer darf nominieren?",
+          "url": `${siteUrl}/#faq-wer-darf-nominieren`,
           "acceptedAnswer": {
             "@type": "Answer",
+            "@id": `${siteUrl}/#faq-wer-darf-nominieren-antwort`,
             "text": "Jede Person kann Kandidaten für die Mobility Trailblazers Awards nominieren. Selbstnominierungen sind ausdrücklich möglich und werden gleichwertig behandelt."
           }
         },
         {
           "@type": "Question",
+          "@id": `${siteUrl}/#faq-mehrere-nominierungen`,
           "name": "Kann ich mehrere Personen nominieren?",
+          "url": `${siteUrl}/#faq-mehrere-nominierungen`,
           "acceptedAnswer": {
             "@type": "Answer",
+            "@id": `${siteUrl}/#faq-mehrere-nominierungen-antwort`,
             "text": "Ja, Sie können mehrere Personen nominieren. Bitte reichen Sie für jede nominierte Person eine separate Nominierung über das Formular ein."
           }
         },
         {
           "@type": "Question",
+          "@id": `${siteUrl}/#faq-nach-einreichung`,
           "name": "Was passiert nach der Einreichung meiner Nominierung?",
+          "url": `${siteUrl}/#faq-nach-einreichung`,
           "acceptedAnswer": {
             "@type": "Answer",
+            "@id": `${siteUrl}/#faq-nach-einreichung-antwort`,
             "text": "Nach der Einreichung prüft unser Team alle Vorschläge sorgfältig. Bei Rückfragen werden die nominierten Personen kontaktiert. Eine unabhängige Jury wählt 2026 die 26 Mobility Trailblazers aus. Details zum Zeitplan werden rechtzeitig veröffentlicht."
           }
         },
         {
           "@type": "Question",
+          "@id": `${siteUrl}/#faq-auswahlkriterien`,
           "name": "Welche Kriterien werden bei der Auswahl berücksichtigt?",
+          "url": `${siteUrl}/#faq-auswahlkriterien`,
           "acceptedAnswer": {
             "@type": "Answer",
+            "@id": `${siteUrl}/#faq-auswahlkriterien-antwort`,
             "text": "Die Jury bewertet fünf Hauptkriterien: Mut & Pioniergeist, Innovationsgrad, Wirkung & Umsetzung, Relevanz für die Mobilitätswende sowie Vorbildfunktion & Persönlichkeit. Alle Kriterien werden gleichwertig in die Gesamtbewertung einbezogen."
           }
         },
         {
           "@type": "Question",
+          "@id": `${siteUrl}/#faq-wer-kann-nominiert-werden`,
           "name": "Wer kann als Mobility Trailblazer nominiert werden?",
+          "url": `${siteUrl}/#faq-wer-kann-nominiert-werden`,
           "acceptedAnswer": {
             "@type": "Answer",
+            "@id": `${siteUrl}/#faq-wer-kann-nominiert-werden-antwort`,
             "text": "Nominiert werden können Personen, die 2026 mit konkreten Projekten oder Initiativen den mobilen Wandel im DACH-Raum beschleunigen, durch Innovationskraft und Umsetzungskompetenz überzeugen und die Mobilitätswende aktiv gestalten – branchenunabhängig und hierarchiefrei."
           }
         }
