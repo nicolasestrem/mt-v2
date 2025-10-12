@@ -15,7 +15,7 @@ export interface Props {
 const {
   title = 'Mobility Trailblazers Nominierung 2026',
   description = 'Nominieren Sie jetzt Macherinnen und Macher der Mobilitätswende im DACH-Raum. Reichen Sie einen Vorschlag ein und erhalten Sie Neuigkeiten zum Award.',
-  image = '/images/og-image.webp',
+  image = '/images/og-image.jpg',
   canonical,
   noindex = false,
   article
@@ -157,6 +157,7 @@ const imageURL = new URL(image, siteUrl).toString();
         "url": `${siteUrl}/#nominierung`
       },
       "image": [
+        `${siteUrl}/images/og-image.jpg`,
         `${siteUrl}/images/og-image.webp`
       ]
     },

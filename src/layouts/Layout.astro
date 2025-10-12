@@ -16,7 +16,7 @@ export interface Props {
 	};
 }
 
-const { title, description = "Nominieren Sie jetzt Macherinnen und Macher der Mobilitätswende im DACH-Raum. Reichen Sie einen Vorschlag ein und erhalten Sie Neuigkeiten zum Award.", image = "/images/og-image.webp", canonical, noindex = false, article } = Astro.props;
+const { title, description = "Nominieren Sie jetzt Macherinnen und Macher der Mobilitätswende im DACH-Raum. Reichen Sie einen Vorschlag ein und erhalten Sie Neuigkeiten zum Award.", image = "/images/og-image.jpg", canonical, noindex = false, article } = Astro.props;
 const isHomepage = Astro.url.pathname === '/';
 
 // Get GA ID from environment variable
