@@ -91,7 +91,7 @@ This project includes several scripts to help with development and maintenance:
 | `npm run test:ui`         | Opens the Playwright UI for interactive test debugging.                  |
 | `npm run test:report`     | Shows the last Playwright test report.                                   |
 | `npm run optimize-images` | Optimizes all images in the `public/images` directory.                   |
-| `npm run lighthouse`      | Runs Lighthouse CI performance checks.                                   |
+| `npm run lighthouse`      | Runs Lighthouse CI performance checks via the bundled `@lhci/cli`.        |
 | `npm run lint`            | Lints CSS and Astro files using Stylelint.                               |
 | `npm run lint:fix`        | Automatically fixes linting issues.                                      |
 
@@ -103,7 +103,7 @@ Please read our [**Contribution Guidelines**](AGENTS.md) for details on our code
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 

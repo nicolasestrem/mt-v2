@@ -2,6 +2,7 @@
   "name": "mobility-astro",
   "type": "module",
   "version": "0.0.1",
+  "license": "MIT",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -35,6 +36,7 @@
     "stylelint": "^16.24.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-standard": "^39.0.0",
-    "stylelint-order": "^7.0.0"
+    "stylelint-order": "^7.0.0",
+    "@lhci/cli": "^0.14.0"
   }
 }
