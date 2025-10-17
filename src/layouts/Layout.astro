@@ -21,6 +21,7 @@ const isHomepage = Astro.url.pathname === '/';
 
 // Get GA ID from environment variable
 const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
+const IS_DEV = import.meta.env.DEV;
 ---
 
 <!doctype html>
@@ -200,7 +201,7 @@ const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-0C23GHZJQT';
 		<!-- Service Worker Registration and PWA Install -->
                <script is:inline>
                (function() {
-                       const DEBUG = import.meta.env.DEV;
+                       const DEBUG = ${JSON.stringify(IS_DEV)};
 
                        // Register service worker
                        if ('serviceWorker' in navigator) {
