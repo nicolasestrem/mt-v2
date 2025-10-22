@@ -531,6 +531,33 @@ href={`${product.url}${product.url.includes('?') ? '&' : '?'}utm_source=mobility
 3. Allow 2-4 weeks for Google to process changes
 4. Ensure schema is in page's initial HTML (not JS-rendered)
 
+#### Duplicate FAQPage Schema Error (FIXED - Oct 2025)
+**Problem**: Google Search Console reported "Duplicate field 'FAQPage'" error for the shop page
+**Root Cause**: Two FAQPage schemas were being added to `/shop`:
+- General nomination FAQ from `SEO.astro` component
+- Shop-specific FAQ from `shop.astro` page
+
+**Solution Implemented** (Oct 22, 2025):
+Modified `src/components/SEO.astro` to conditionally exclude the general FAQPage schema when rendering the shop page:
+
+```javascript
+// SEO.astro - Detect shop page and build conditional schema graph
+const isShopPage = Astro.url.pathname === '/shop' || Astro.url.pathname === '/shop/';
+
+// Build @graph array - exclude FAQPage on shop page
+const schemaGraph = isShopPage
+  ? [websiteSchema, organizationSchema, eventSchema, howToSchema, breadcrumbSchema]
+  : [websiteSchema, organizationSchema, eventSchema, faqSchema, howToSchema, breadcrumbSchema];
+```
+
+**Result**:
+- Shop page now has exactly ONE FAQPage (shop-specific questions)
+- Other pages retain the general nomination FAQPage
+- Google Search Console error resolved
+- No impact on SEO performance
+
+**Key Learning**: Google requires only ONE FAQPage schema per page. When multiple pages need different FAQs, implement conditional logic in global SEO components to prevent duplication.
+
 #### Product Images Not Loading
 **Problem**: Spreadshirt CDN images blocked or slow
 **Solutions**:
