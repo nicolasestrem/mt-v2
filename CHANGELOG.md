@@ -4,6 +4,35 @@ This file tracks major updates and enhancements to the MobilityTrailblazers.de p
 
 ## October 2025
 
+### SEO: Fixed Duplicate FAQPage Schema Error (Oct 22)
+
+**Issue**: Google Search Console reported "Duplicate field 'FAQPage'" error on `/shop` page.
+
+**Root Cause**:
+- Two FAQPage schemas were being rendered on the shop page:
+  1. General nomination FAQ from global `SEO.astro` component
+  2. Shop-specific product FAQ from `shop.astro` page
+
+**Solution**:
+Modified `src/components/SEO.astro` to implement conditional schema rendering:
+- Detects when rendering the `/shop` page via `Astro.url.pathname`
+- Builds a conditional `schemaGraph` array that excludes the general FAQPage on shop routes
+- Preserves all other schema types (WebSite, Organization, Event, HowTo, BreadcrumbList)
+- Shop page retains its product-specific FAQPage (manufacturing, shipping, returns)
+- All other pages continue using the general nomination FAQPage
+
+**Impact**:
+- ✅ Shop page now has exactly ONE FAQPage schema (compliant with Google guidelines)
+- ✅ Homepage and other pages retain their general FAQPage
+- ✅ No negative SEO impact - schema remains valid and comprehensive
+- ✅ Google Search Console error will be resolved on next crawl
+
+**Files Modified**:
+- `src/components/SEO.astro`: Added conditional logic for FAQPage inclusion
+- `docs/SHOP_SEO.md`: Documented fix in Troubleshooting section
+
+**Key Learning**: Google requires only ONE FAQPage schema per page. Global SEO components must implement conditional logic to prevent duplicate schemas on pages with page-specific FAQs.
+
 ### Documentation Cleanup
 - **DELETED**: Outdated documentation files (JURY_IMPLEMENTATION_SUMMARY.md, MISSING_FEATURES.md, PERFORMANCE_TEST_REPORT.md)
 - **NOTE**: Criteria component IS fully integrated and working (contrary to old MISSING_FEATURES.md)
