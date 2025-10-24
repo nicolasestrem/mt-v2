@@ -31,7 +31,7 @@ const juryMembers: JuryMember[] = [
 	},
 	{
 		id: "prof-dr-andreas-herrmann",
-		name: "Prof. Dr. Andreas Herrmann",
+		name: "Andreas Herrmann",
 		title: "Prof. Dr.",
 		role: "Präsident",
 		organization: "Institut für Mobilität, Universität St. Gallen",
@@ -72,7 +72,7 @@ const juryMembers: JuryMember[] = [
 	},
 	{
 		id: "dr-sabine-stock",
-		name: "Dr. Sabine Stock",
+		name: "Sabine Stock",
 		title: "Dr.",
 		role: "Jury",
 		organization: "ÖBB-Personenverkehr AG",
@@ -102,7 +102,7 @@ const juryMembers: JuryMember[] = [
 	},
 	{
 		id: "dr-astrid-fontaine",
-		name: "Dr. Astrid Fontaine",
+		name: "Astrid Fontaine",
 		title: "Dr.",
 		role: "Jury",
 		organization: "Schaeffler Gruppe",
@@ -112,7 +112,7 @@ const juryMembers: JuryMember[] = [
 	},
 	{
 		id: "dr-kjell-gruner",
-		name: "Dr. Kjell Gruner",
+		name: "Kjell Gruner",
 		title: "Dr.",
 		role: "Jury",
 		organization: "Volkswagen Group of America",
@@ -122,7 +122,7 @@ const juryMembers: JuryMember[] = [
 	},
 	{
 		id: "dr-philipp-rosler",
-		name: "Dr. Philipp Rösler",
+		name: "Philipp Rösler",
 		title: "Dr.",
 		role: "Jury",
 		organization: "Consessor AG",
@@ -173,17 +173,17 @@ const juryMembers: JuryMember[] = [
 	},
 	{
 		id: "prof-dr-nikolaus-lang",
-		name: "Prof. Dr. Nikolaus Lang",
+		name: "Nikolaus Lang",
 		title: "Prof. Dr.",
 		role: "Jury",
 		organization: "BCG Center for Mobility Innovation",
-		bio: "Founder & Director of BCG’s Center for Mobility Innovation und Global Leader des BCG Henderson Institute",
+		bio: "Founder & Director of BCG's Center for Mobility Innovation und Global Leader des BCG Henderson Institute",
 		image: "/images/jury/Nikolaus Lang.webp",
 		linkedin: "https://www.linkedin.com/in/nikolauslang",
 	},
 	{
 		id: "prof-dr-oliver-gassmann",
-		name: "Prof. Dr. Oliver Gassmann",
+		name: "Oliver Gassmann",
 		title: "Prof. Dr.",
 		role: "Jury",
 		organization:
@@ -194,7 +194,7 @@ const juryMembers: JuryMember[] = [
 	},
 	{
 		id: "prof-dr-wolfgang-jenewein",
-		name: "Prof. Dr. Wolfgang Jenewein",
+		name: "Wolfgang Jenewein",
 		title: "Prof. Dr.",
 		role: "Jury",
 		organization: "Jenewein AG",
@@ -204,7 +204,7 @@ const juryMembers: JuryMember[] = [
 	},
 	{
 		id: "prof-dr-zheng-han",
-		name: "Prof. Dr. Zheng Han",
+		name: "Zheng Han",
 		title: "Prof. Dr.",
 		role: "Jury",
 		organization: "Tongji University Shanghai",
@@ -290,7 +290,7 @@ const shuffledMembers = shuffleArray(juryMembers);
 									)}
 								</div>
 								<div class="member-info">
-									<h3 class="member-name">{member.name}</h3>
+									<h3 class="member-name">{member.title ? member.title + " " : ""}{member.name}</h3>
 									<h4 class="member-role">{member.role}</h4>
 									<p class="member-bio">{member.bio}</p>
 									{member.linkedin &&
@@ -301,7 +301,7 @@ const shuffledMembers = shuffleArray(juryMembers);
 													target="_blank"
 													rel="noopener noreferrer"
 													class="social-link"
-													aria-label={`LinkedIn Profil von ${member.name}`}
+													aria-label={`LinkedIn Profil von ${member.title ? member.title + " " : ""}${member.name}`}
 												>
 													<Icons name="linkedin" />
 												</a>
@@ -337,7 +337,7 @@ const shuffledMembers = shuffleArray(juryMembers);
 									)}
 								</div>
 								<div class="member-info">
-									<h3 class="member-name">{member.name}</h3>
+									<h3 class="member-name">{member.title ? member.title + " " : ""}{member.name}</h3>
 									<h4 class="member-role">{member.role}</h4>
 									<p class="member-bio">{member.bio}</p>
 									{member.linkedin &&
@@ -348,7 +348,7 @@ const shuffledMembers = shuffleArray(juryMembers);
 													target="_blank"
 													rel="noopener noreferrer"
 													class="social-link"
-													aria-label={`LinkedIn Profil von ${member.name}`}
+													aria-label={`LinkedIn Profil von ${member.title ? member.title + " " : ""}${member.name}`}
 												>
 													<Icons name="linkedin" />
 												</a>
