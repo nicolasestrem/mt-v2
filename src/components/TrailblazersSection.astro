@@ -1,8 +1,25 @@
 ---
-// Trailblazers 2025 section component with category filtering and expandable details
+/**
+ * TrailblazersSection Component
+ *
+ * Displays the 24 Mobility Trailblazers 2025 honorees with interactive features.
+ *
+ * Features:
+ * - Category filtering via tabs (All, Etablierte, Start-ups, Politik)
+ * - Expandable evaluation criteria for each trailblazer
+ * - Responsive grid layout
+ * - LinkedIn profile links
+ * - Glassmorphism design effects
+ *
+ * @component
+ * @version 1.0.0
+ * @since October 2024
+ */
+
+// Import required components
 import Icons from "./Icons.astro";
 
-// Define trailblazer data structure
+// Define trailblazer data structure with TypeScript for type safety
 interface Trailblazer {
 	id: string;
 	name: string;

@@ -42,7 +42,8 @@ mt-v2/
 │   │   ├── Newsletter.astro        # Newsletter signup form
 │   │   ├── NominationForm.astro    # Form with Web3Forms integration
 │   │   ├── ScrollToTop.astro       # Scroll to top button
-│   │   └── SEO.astro               # SEO meta tags and structured data
+│   │   ├── SEO.astro               # SEO meta tags and structured data
+│   │   └── TrailblazersSection.astro # Trailblazers 2025 (24 honorees with filtering)
 │   ├── layouts/
 │   │   └── Layout.astro            # Base HTML layout
 │   ├── pages/

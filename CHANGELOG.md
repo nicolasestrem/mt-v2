@@ -4,6 +4,52 @@ This file tracks major updates and enhancements to the MobilityTrailblazers.de p
 
 ## October 2025
 
+### Trailblazers 2025 Section Implementation (Oct 28)
+
+**Feature**: Added new "Trailblazers 2025" section showcasing 24 mobility innovators.
+
+**Implementation**:
+- Created `TrailblazersSection.astro` component with full data for all 24 honorees
+- Added interactive category filtering with tabs (All, Etablierte Unternehmen, Start-ups & Katalysatoren, Politik & Öffentliche Institutionen)
+- Implemented expandable details showing 5 evaluation criteria for each trailblazer
+- Added 24 profile photos to `/public/images/trailblazers/`
+
+**Key Features**:
+- **Category Distribution**: 6 Etablierte Unternehmen, 15 Start-ups & Katalysatoren, 3 Politik & Öffentliche Institutionen
+- **Profile Information**: Name, title, organization, quick summary, LinkedIn links
+- **Evaluation Criteria**: Mut (Courage), Innovation, Umsetzung (Implementation), Relevanz (Relevance), Vorbildfunktion (Role Model)
+- **Interactive Elements**: Category filter tabs, expandable criteria sections
+- **Responsive Design**: 3-column grid on desktop → 2 columns on tablet → 1 column on mobile
+
+**Navigation**:
+- Added "Trailblazers 2025" menu item in header after "About"
+- Section positioned between AboutSection and Criteria for logical content flow
+- Anchor link: `/#trailblazers`
+
+**Technical Details**:
+- TypeScript interface for type safety
+- Client-side JavaScript for filtering and expandable sections
+- ARIA labels for accessibility
+- Glassmorphism effects matching existing design
+- Category color coding (Etablierte: dark teal, Start-ups: orange, Politik: purple)
+
+**Files Modified**:
+- `src/components/TrailblazersSection.astro`: New component (1000+ lines)
+- `src/components/Header.astro`: Added navigation item
+- `src/pages/index.astro`: Integrated component
+- `src/layouts/Layout.astro`: Fixed inline script syntax error
+- `tests/pages/HomePage.ts`: Updated test selector for AboutSection
+
+**Documentation**:
+- Created comprehensive documentation at `docs/TRAILBLAZERS_2025.md`
+- Detailed component structure, data model, and maintenance guide
+- Usage instructions for adding/updating trailblazers
+
+**Testing**:
+- All critical Playwright tests passing (4/4)
+- Build successful with no errors
+- Manual testing completed for all interactive features
+
 ### SEO: Fixed Duplicate FAQPage Schema Error (Oct 22)
 
 **Issue**: Google Search Console reported "Duplicate field 'FAQPage'" error on `/shop` page.
