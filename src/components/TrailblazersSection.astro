@@ -1,0 +1,1016 @@
+---
+// Trailblazers 2025 section component with category filtering and expandable details
+import Icons from "./Icons.astro";
+
+// Define trailblazer data structure
+interface Trailblazer {
+	id: string;
+	name: string;
+	title?: string;
+	organization: string;
+	category: 'etablierte' | 'startups' | 'politik';
+	quickSummary: string;
+	criteria: {
+		courage: string;
+		innovation: string;
+		implementation: string;
+		relevance: string;
+		roleModel: string;
+	};
+	image: string;
+	linkedin?: string;
+}
+
+// Trailblazers data from the PDFs
+const trailblazers: Trailblazer[] = [
+	// ETABLIERTE UNTERNEHMEN (6)
+	{
+		id: "andre-schwammlein",
+		name: "André Schwämmlein",
+		organization: "FlixBus",
+		category: "etablierte",
+		quickSummary: "Gründer und CEO von FlixMobility, revolutionierte den Fernbusmarkt in Europa",
+		criteria: {
+			courage: "Wagte den Einstieg in einen stark regulierten Markt und schuf ein neues Mobilitätskonzept",
+			innovation: "Digitalisierung des Fernbusverkehrs mit dynamischer Preisgestaltung und App-basierter Buchung",
+			implementation: "Aufbau des größten Fernbusnetzes Europas mit über 400.000 täglichen Verbindungen",
+			relevance: "Demokratisierung des Reisens durch günstige und nachhaltige Mobilität",
+			roleModel: "Inspiration für Gründer im Mobilitätssektor und Vorreiter für nachhaltige Geschäftsmodelle"
+		},
+		image: "/images/trailblazers/AndréSchwämmlein.jpg",
+		linkedin: "https://www.linkedin.com/in/andreschwammlein/"
+	},
+	{
+		id: "friedrich-draxlmaier",
+		name: "Friedrich Dräxlmaier",
+		organization: "DRÄXLMAIER Group",
+		category: "etablierte",
+		quickSummary: "CEO der DRÄXLMAIER Group, führender Automobilzulieferer für Premium-Fahrzeuge",
+		criteria: {
+			courage: "Frühe Fokussierung auf Elektromobilität und nachhaltige Bordnetzsysteme",
+			innovation: "Entwicklung hochinnovativer Bordnetz- und Interieur-Systeme für E-Fahrzeuge",
+			implementation: "Weltweite Expansion mit über 70.000 Mitarbeitern an 60 Standorten",
+			relevance: "Schlüsselrolle in der Transformation zur Elektromobilität",
+			roleModel: "Familienunternehmen als Vorbild für nachhaltiges Wachstum und Innovation"
+		},
+		image: "/images/trailblazers/FriedrichDräxlmaier.png",
+		linkedin: ""
+	},
+	{
+		id: "helmut-ruhl",
+		name: "Helmut Ruhl",
+		organization: "AMAG Austria Metall AG",
+		category: "etablierte",
+		quickSummary: "CEO der AMAG, Pionier für nachhaltiges Aluminium in der Mobilitätsindustrie",
+		criteria: {
+			courage: "Konsequente Ausrichtung auf CO₂-neutrale Aluminiumproduktion",
+			innovation: "Entwicklung von Leichtbaulösungen für die Automobilindustrie",
+			implementation: "Aufbau einer der nachhaltigsten Aluminiumproduktionen weltweit",
+			relevance: "Ermöglicht Gewichtsreduktion und damit Reichweitenerhöhung bei E-Fahrzeugen",
+			roleModel: "Zeigt, wie traditionelle Industrie nachhaltig transformiert werden kann"
+		},
+		image: "/images/trailblazers/HelmutRuhl.jpg",
+		linkedin: "https://www.linkedin.com/in/helmut-ruhl/"
+	},
+	{
+		id: "olga-nevska",
+		name: "Olga Nevska",
+		organization: "Telekom MobilitySolutions",
+		category: "etablierte",
+		quickSummary: "Geschäftsführerin Telekom MobilitySolutions, treibt digitale Mobilitätslösungen voran",
+		criteria: {
+			courage: "Transformation vom Telekommunikations- zum Mobilitätsanbieter",
+			innovation: "Entwicklung integrierter Mobilitätsplattformen und Smart Mobility Lösungen",
+			implementation: "Aufbau eines der größten Ladenetze für Elektrofahrzeuge in Deutschland",
+			relevance: "Verbindung von Telekommunikation und Mobilität für vernetzte Städte",
+			roleModel: "Zeigt erfolgreiche Diversifikation in neue Geschäftsfelder"
+		},
+		image: "/images/trailblazers/OlgaNevska.jpg",
+		linkedin: "https://www.linkedin.com/in/olga-nevska/"
+	},
+	{
+		id: "tobias-liebelt",
+		name: "Tobias Liebelt",
+		organization: "Benteler Mobility Services",
+		category: "etablierte",
+		quickSummary: "Managing Director bei Benteler, entwickelt modulare Mobilitätslösungen",
+		criteria: {
+			courage: "Neuausrichtung vom klassischen Zulieferer zum Mobilitätsdienstleister",
+			innovation: "Entwicklung modularer E-Mobility Plattformen und autonomer Fahrzeugkonzepte",
+			implementation: "Serienproduktion skalierbarer E-Fahrzeug-Plattformen",
+			relevance: "Beschleunigt Time-to-Market für neue E-Fahrzeughersteller",
+			roleModel: "Transformation traditioneller Automotive-Zulieferer in die neue Mobilität"
+		},
+		image: "/images/trailblazers/TobiasLiebelt.jpg",
+		linkedin: "https://www.linkedin.com/in/tobias-liebelt/"
+	},
+	{
+		id: "ulrich-prediger",
+		name: "Ulrich Prediger",
+		organization: "JobRad",
+		category: "etablierte",
+		quickSummary: "Gründer und Geschäftsführer von JobRad, Pionier des Dienstrad-Leasings",
+		criteria: {
+			courage: "Schuf neues Geschäftsmodell für nachhaltige Mitarbeitermobilität",
+			innovation: "Digitalisierung des Dienstrad-Leasings mit Full-Service-Konzept",
+			implementation: "Über 40.000 Arbeitgeber und 2 Millionen Nutzer in Deutschland",
+			relevance: "Fördert Radverkehr und reduziert CO₂-Emissionen im Berufsverkehr",
+			roleModel: "Erfolgreiche Verbindung von Nachhaltigkeit und Wirtschaftlichkeit"
+		},
+		image: "/images/trailblazers/UlrichPrediger.jpg",
+		linkedin: "https://www.linkedin.com/in/ulrich-prediger/"
+	},
+
+	// START-UPS & KATALYSATOREN (14)
+	{
+		id: "corsin-sulser",
+		name: "Dr. Corsin Sulser",
+		organization: "Parcandi",
+		category: "startups",
+		quickSummary: "CEO und Co-Founder von Parcandi, revolutioniert urbanes Parken mit KI",
+		criteria: {
+			courage: "Angriff auf etablierte Parkraumkonzepte mit digitaler Lösung",
+			innovation: "KI-basierte Parkplatzoptimierung und dynamisches Pricing",
+			implementation: "Expansion in mehrere europäische Städte binnen 3 Jahren",
+			relevance: "Reduziert Parkplatzsuchverkehr um bis zu 30% in Innenstädten",
+			roleModel: "Zeigt, wie Tech-Startups urbane Mobilität verbessern können"
+		},
+		image: "/images/trailblazers/CorsinSulser.jpg",
+		linkedin: "https://www.linkedin.com/in/corsinsulser/"
+	},
+	{
+		id: "fabian-beste",
+		name: "Fabian Beste",
+		organization: "4Screen",
+		category: "startups",
+		quickSummary: "Founder & CEO von 4Screen, digitalisiert In-Car Entertainment",
+		criteria: {
+			courage: "Entwicklung einer Plattform für alle Automobilhersteller gleichzeitig",
+			innovation: "Erste herstellerübergreifende In-Car Commerce Plattform",
+			implementation: "Integration in über 15 Automobilmarken weltweit",
+			relevance: "Schafft neue Erlösmodelle für die Automobilindustrie",
+			roleModel: "Erfolgreiche B2B2C-Plattform im Automotive-Sektor"
+		},
+		image: "/images/trailblazers/FabianBeste.jpg",
+		linkedin: "https://www.linkedin.com/in/fabianbeste/"
+	},
+	{
+		id: "felix-pornbacher",
+		name: "Felix Pörnbacher",
+		organization: "DeepDrive",
+		category: "startups",
+		quickSummary: "Co-Founder & CEO von DeepDrive, entwickelt revolutionäre E-Motoren",
+		criteria: {
+			courage: "Neuerfindung des Radnabenmotors für E-Fahrzeuge",
+			innovation: "Patentierte Dual-Rotor-Technologie für höhere Effizienz",
+			implementation: "Serienreife Entwicklung mit namhaften Automobilherstellern",
+			relevance: "Ermöglicht bis zu 20% mehr Reichweite bei E-Fahrzeugen",
+			roleModel: "Deep-Tech Startup aus München erobert globalen Markt"
+		},
+		image: "/images/trailblazers/FelixPörnbacher.jpg",
+		linkedin: "https://www.linkedin.com/in/felix-poernbacher/"
+	},
+	{
+		id: "horst-graef",
+		name: "Horst Graef",
+		organization: "deer GmbH",
+		category: "startups",
+		quickSummary: "Founder & CEO von deer, Pionier für E-Scooter Sharing in Deutschland",
+		criteria: {
+			courage: "Früher Markteintritt in umstrittenen Mikromobilitätsmarkt",
+			innovation: "Swappable Battery Technologie und IoT-Integration",
+			implementation: "Aufbau nachhaltiger Betriebsmodelle in über 20 Städten",
+			relevance: "Lösung für die letzte Meile im urbanen Raum",
+			roleModel: "Zeigt verantwortungsvolles Wachstum im Sharing-Markt"
+		},
+		image: "/images/trailblazers/HorstGraef.jpg",
+		linkedin: "https://www.linkedin.com/in/horstgraef/"
+	},
+	{
+		id: "judith-haberli",
+		name: "Judith Häberli",
+		organization: "Urban Connect",
+		category: "startups",
+		quickSummary: "Gründerin von Urban Connect, vernetzt urbane Mobilitätsdienste",
+		criteria: {
+			courage: "Gründung als Female Founder im männerdominierten Mobilitätssektor",
+			innovation: "Intermodale Mobilitätsplattform mit Blockchain-Integration",
+			implementation: "Pilotprojekte in 5 Schweizer Städten",
+			relevance: "Vereinfacht Zugang zu nachhaltiger urbaner Mobilität",
+			roleModel: "Vorbild für Female Entrepreneurship in Tech"
+		},
+		image: "/images/trailblazers/JudithHäberli.jpeg",
+		linkedin: "https://www.linkedin.com/in/judithhaberli/"
+	},
+	{
+		id: "katharina-kreutzer",
+		name: "Katharina Kreutzer",
+		organization: "MOVN",
+		category: "startups",
+		quickSummary: "Co-Founderin MOVN, entwickelt Software für autonome Fahrzeuge",
+		criteria: {
+			courage: "Fokus auf Level 4 Autonomie in komplexen urbanen Umgebungen",
+			innovation: "Edge-Computing Lösungen für Echtzeit-Entscheidungen",
+			implementation: "Erfolgreiche Tests mit führenden OEMs",
+			relevance: "Beschleunigt Einführung autonomer Mobilität",
+			roleModel: "Junge Gründerin in der KI-Entwicklung"
+		},
+		image: "/images/trailblazers/KatharinaKreutzer.jpg",
+		linkedin: "https://www.linkedin.com/in/katharinakreutzer/"
+	},
+	{
+		id: "lea-miggiano",
+		name: "Léa Miggiano",
+		organization: "carvolution",
+		category: "startups",
+		quickSummary: "Co-Founder & CMO von carvolution, revolutioniert Auto-Abos in der Schweiz",
+		criteria: {
+			courage: "Disruption des traditionellen Autokaufs und Leasings",
+			innovation: "Volldigitales Auto-Abo-Modell mit All-Inclusive-Service",
+			implementation: "Marktführer in der Schweiz mit über 5.000 Abonnenten",
+			relevance: "Flexibilisierung der individuellen Mobilität",
+			roleModel: "Erfolgreiche Scale-up Story im Mobility-as-a-Service Bereich"
+		},
+		image: "/images/trailblazers/LéaMiggiano.jpg",
+		linkedin: "https://www.linkedin.com/in/leamiggiano/"
+	},
+	{
+		id: "lukas-stranger",
+		name: "Lukas Stranger",
+		organization: "NXRT",
+		category: "startups",
+		quickSummary: "CEO von NXRT, entwickelt Extended Reality Lösungen für Mobilität",
+		criteria: {
+			courage: "Pionierarbeit in AR/VR für Automotive-Anwendungen",
+			innovation: "Holographische Displays für Fahrzeuge der Zukunft",
+			implementation: "Partnerschaften mit Premium-Automobilherstellern",
+			relevance: "Definiert User Experience in zukünftigen Fahrzeugen neu",
+			roleModel: "Verbindung von Gaming-Technologie und Mobilität"
+		},
+		image: "/images/trailblazers/LukasStranger.jpg",
+		linkedin: "https://www.linkedin.com/in/lukasstranger/"
+	},
+	{
+		id: "matthias-ballweg",
+		name: "Matthias Ballweg",
+		organization: "Circular Republic / TU München",
+		category: "startups",
+		quickSummary: "Founder Circular Republic, treibt Kreislaufwirtschaft in der Mobilität voran",
+		criteria: {
+			courage: "Fokus auf Circular Economy in linearer Automobilindustrie",
+			innovation: "Digitaler Produktpass für Fahrzeugkomponenten",
+			implementation: "Pilotprojekte mit führenden OEMs und Zulieferern",
+			relevance: "Ermöglicht nachhaltige Wertschöpfungsketten",
+			roleModel: "Akademischer Entrepreneur mit Impact-Fokus"
+		},
+		image: "/images/trailblazers/MatthiasBallweg.jpg",
+		linkedin: "https://www.linkedin.com/in/matthiasballweg/"
+	},
+	{
+		id: "roy-uhlmann",
+		name: "Roy Uhlmann",
+		organization: "Motor Ai",
+		category: "startups",
+		quickSummary: "Co-Founder Motor Ai, automatisiert Fahrzeuginspektion mit Computer Vision",
+		criteria: {
+			courage: "Digitalisierung des analogen Gebrauchtwagenmarkts",
+			innovation: "KI-basierte Schadenserkennung in Echtzeit",
+			implementation: "Integration bei großen Autohäusern und Flottenbetreibern",
+			relevance: "Transparenz und Effizienz im Fahrzeughandel",
+			roleModel: "Tech-Transfer aus anderen Industrien in Automotive"
+		},
+		image: "/images/trailblazers/RoyUhlmann.jpg",
+		linkedin: "https://www.linkedin.com/in/royuhlmann/"
+	},
+	{
+		id: "sarah-fleischer",
+		name: "Sarah Fleischer",
+		organization: "ToZero",
+		category: "startups",
+		quickSummary: "Co-Founderin ToZero, recycelt Batterien für die E-Mobilität",
+		criteria: {
+			courage: "Angriff auf etablierte Recycling-Verfahren mit neuer Technologie",
+			innovation: "Chemisches Recycling mit 95% Materialrückgewinnung",
+			implementation: "Aufbau erster kommerzieller Anlage in Deutschland",
+			relevance: "Schlüssel für nachhaltige Elektromobilität",
+			roleModel: "Female Founder in der Kreislaufwirtschaft"
+		},
+		image: "/images/trailblazers/SarahFleischer.jpg",
+		linkedin: "https://www.linkedin.com/in/sarahfleischer/"
+	},
+	{
+		id: "sascha-meyer",
+		name: "Sascha Meyer",
+		organization: "MOIA",
+		category: "startups",
+		quickSummary: "CEO von MOIA, führt Ridepooling in deutschen Städten ein",
+		criteria: {
+			courage: "Aufbau eines völlig neuen Mobilitätsdienstes im ÖPNV",
+			innovation: "Algorithmen-basiertes Ridepooling mit E-Fahrzeugen",
+			implementation: "Größte Ridepooling-Flotte Europas in Hamburg",
+			relevance: "Ergänzung des ÖPNV und Reduktion des Individualverkehrs",
+			roleModel: "Erfolgreiche Public-Private-Partnership im Mobilitätssektor"
+		},
+		image: "/images/trailblazers/SaschaMeyer.jpg",
+		linkedin: "https://www.linkedin.com/in/saschameyer/"
+	},
+	{
+		id: "sebastian-tanzer",
+		name: "Sebastian Tanzer",
+		organization: "Triply",
+		category: "startups",
+		quickSummary: "Founder Triply, digitalisiert Mitarbeitermobilität für Unternehmen",
+		criteria: {
+			courage: "Neugestaltung betrieblicher Mobilität in konservativen Unternehmen",
+			innovation: "Ganzheitliche Mobilitätsbudget-Plattform",
+			implementation: "Über 100 Unternehmenskunden in DACH-Region",
+			relevance: "Fördert nachhaltige Mitarbeitermobilität",
+			roleModel: "B2B-SaaS Erfolg im Mobility-Sektor"
+		},
+		image: "/images/trailblazers/SebastianTanzer.jpg",
+		linkedin: "https://www.linkedin.com/in/sebastiantanzer/"
+	},
+	{
+		id: "wim-ouboter",
+		name: "Wim Ouboter",
+		organization: "Microlino AG",
+		category: "startups",
+		quickSummary: "Founder Microlino, entwickelt urbane Elektro-Kleinstfahrzeuge",
+		criteria: {
+			courage: "Neuinterpretation des Stadtautos gegen etablierte OEMs",
+			innovation: "Retro-Design trifft moderne E-Mobilität",
+			implementation: "Serienproduktion und europaweiter Vertrieb",
+			relevance: "Neue Fahrzeugkategorie für urbane Mobilität",
+			roleModel: "Familienunternehmen fordert Großkonzerne heraus"
+		},
+		image: "/images/trailblazers/WimOuboter.jpg",
+		linkedin: "https://www.linkedin.com/in/wimouboter/"
+	},
+
+	// POLITIK & ÖFFENTLICHE INSTITUTIONEN (3)
+	{
+		id: "alexander-moller",
+		name: "Alexander Möller",
+		organization: "Verband Deutscher Verkehrsunternehmen (VDV)",
+		category: "politik",
+		quickSummary: "Geschäftsführer Politik beim VDV, gestaltet Verkehrswende auf Bundesebene",
+		criteria: {
+			courage: "Konsequentes Eintreten für ÖPNV-Priorisierung in der Politik",
+			innovation: "Vorantreiben digitaler Tickets und intermodaler Vernetzung",
+			implementation: "Deutschlandticket als größte ÖPNV-Reform",
+			relevance: "Politische Weichenstellung für nachhaltige Mobilität",
+			roleModel: "Erfolgreiche Interessenvertretung für öffentlichen Verkehr"
+		},
+		image: "/images/trailblazers/AlexanderMöller.jpg",
+		linkedin: "https://www.linkedin.com/in/alexandermoeller/"
+	},
+	{
+		id: "anjes-tjarks",
+		name: "Dr. Anjes Tjarks",
+		organization: "Hansestadt Hamburg",
+		category: "politik",
+		quickSummary: "Senator für Verkehr und Mobilitätswende Hamburg, Vorreiter urbaner Transformation",
+		criteria: {
+			courage: "Radikale Neuaufteilung des Straßenraums zugunsten nachhaltiger Mobilität",
+			innovation: "Hamburg als Modellstadt für Mobilitätswende",
+			implementation: "Ausbau Radwegenetz, ÖPNV-Offensive, autofreie Quartiere",
+			relevance: "Blaupause für deutsche Großstädte",
+			roleModel: "Politischer Mut für unpopuläre aber notwendige Maßnahmen"
+		},
+		image: "/images/trailblazers/AnjesTjarks.jpg",
+		linkedin: "https://www.linkedin.com/in/anjes-tjarks/"
+	},
+	{
+		id: "nic-knapp",
+		name: "Nic Knapp",
+		organization: "TUM Venture Labs",
+		category: "politik",
+		quickSummary: "Managing Director TUM Venture Labs Mobility, fördert Deep-Tech Startups",
+		criteria: {
+			courage: "Aufbau eines führenden Mobility-Inkubators in Europa",
+			innovation: "Verbindung von Forschungsexzellenz und Unternehmertum",
+			implementation: "Über 50 Mobility-Startups in 3 Jahren gegründet",
+			relevance: "Beschleunigt Transfer von Forschung in die Praxis",
+			roleModel: "Erfolgreiches Ökosystem für Mobility Innovation"
+		},
+		image: "/images/trailblazers/NicKnapp.jpg",
+		linkedin: "https://www.linkedin.com/in/nicknapp/"
+	},
+
+	// Note: Xanthi Doubara appears to be in Start-ups category based on Via Transportation
+	{
+		id: "xanthi-doubara",
+		name: "Xanthi Doubara",
+		organization: "Via Transportation Berlin",
+		category: "startups",
+		quickSummary: "Managing Director Via Berlin, skaliert On-Demand Mobilität in Europa",
+		criteria: {
+			courage: "Expansion eines US-Startups in den regulierten europäischen Markt",
+			innovation: "Dynamisches Routing und KI-basierte Flottenoptimierung",
+			implementation: "Betrieb in über 20 europäischen Städten",
+			relevance: "Neue Form des öffentlichen Nahverkehrs",
+			roleModel: "Internationale Expansion im Mobility-Sektor"
+		},
+		image: "/images/trailblazers/XanthiDoubara.jpg",
+		linkedin: "https://www.linkedin.com/in/xanthidoubara/"
+	}
+];
+
+// Category labels for display
+const categoryLabels = {
+	all: "Alle",
+	etablierte: "Etablierte Unternehmen",
+	startups: "Start-ups & Katalysatoren",
+	politik: "Politik & Öffentliche Institutionen"
+};
+
+// Category colors
+const categoryColors = {
+	etablierte: "#003C3D",
+	startups: "#C1693C",
+	politik: "#6B46C1"
+};
+---
+
+<section class="trailblazers" id="trailblazers">
+	<!-- Section divider at top -->
+	<div class="section-divider-top">
+		<svg
+			viewBox="0 0 1200 60"
+			xmlns="http://www.w3.org/2000/svg"
+			preserveAspectRatio="none"
+		>
+			<polygon points="0,60 1200,0 1200,0 0,0" fill="#F8F0E3"></polygon>
+		</svg>
+	</div>
+
+	<div class="container">
+		<div class="trailblazers-header">
+			<h2 class="trailblazers-title">Mobility Trailblazers 2025</h2>
+			<p class="trailblazers-subtitle">
+				Die 25 Visionäre, die unsere Mobilität von morgen gestalten
+			</p>
+		</div>
+
+		<!-- Category Filter Tabs -->
+		<div class="category-tabs" role="tablist" aria-label="Kategorie Filter">
+			<button
+				class="category-tab active"
+				role="tab"
+				aria-selected="true"
+				aria-controls="trailblazers-panel"
+				data-category="all"
+			>
+				Alle <span class="count">(24)</span>
+			</button>
+			<button
+				class="category-tab"
+				role="tab"
+				aria-selected="false"
+				aria-controls="trailblazers-panel"
+				data-category="etablierte"
+			>
+				Etablierte Unternehmen <span class="count">(6)</span>
+			</button>
+			<button
+				class="category-tab"
+				role="tab"
+				aria-selected="false"
+				aria-controls="trailblazers-panel"
+				data-category="startups"
+			>
+				Start-ups & Katalysatoren <span class="count">(15)</span>
+			</button>
+			<button
+				class="category-tab"
+				role="tab"
+				aria-selected="false"
+				aria-controls="trailblazers-panel"
+				data-category="politik"
+			>
+				Politik & Institutionen <span class="count">(3)</span>
+			</button>
+		</div>
+
+		<!-- Trailblazers Grid -->
+		<div class="trailblazers-grid" id="trailblazers-panel" role="tabpanel">
+			{
+				trailblazers.map((trailblazer) => (
+					<div class="trailblazer-card" data-category={trailblazer.category}>
+						<div class="card-header">
+							<div class="card-image">
+								<img
+									src={trailblazer.image}
+									alt={`${trailblazer.title ? trailblazer.title + " " : ""}${trailblazer.name}`}
+									width="300"
+									height="300"
+									loading="lazy"
+								/>
+							</div>
+							<div class="category-badge" data-category={trailblazer.category}>
+								{categoryLabels[trailblazer.category]}
+							</div>
+						</div>
+
+						<div class="card-content">
+							<h3 class="card-name">
+								{trailblazer.title ? trailblazer.title + " " : ""}{trailblazer.name}
+							</h3>
+							<h4 class="card-organization">{trailblazer.organization}</h4>
+							<p class="card-summary">{trailblazer.quickSummary}</p>
+
+							{trailblazer.linkedin && (
+								<div class="card-social">
+									<a
+										href={trailblazer.linkedin}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="social-link"
+										aria-label={`LinkedIn Profil von ${trailblazer.name}`}
+									>
+										<Icons name="linkedin" />
+									</a>
+								</div>
+							)}
+
+							<!-- Expandable Criteria Section -->
+							<button
+								class="criteria-toggle"
+								aria-expanded="false"
+								aria-controls={`criteria-${trailblazer.id}`}
+							>
+								<span>Bewertungskriterien ansehen</span>
+								<svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24">
+									<path d="M12 15L7 10H17L12 15Z" fill="currentColor"/>
+								</svg>
+							</button>
+
+							<div class="criteria-content" id={`criteria-${trailblazer.id}`} aria-hidden="true">
+								<div class="criteria-item">
+									<h5>🎯 Mut</h5>
+									<p>{trailblazer.criteria.courage}</p>
+								</div>
+								<div class="criteria-item">
+									<h5>💡 Innovation</h5>
+									<p>{trailblazer.criteria.innovation}</p>
+								</div>
+								<div class="criteria-item">
+									<h5>⚙️ Umsetzung</h5>
+									<p>{trailblazer.criteria.implementation}</p>
+								</div>
+								<div class="criteria-item">
+									<h5>📊 Relevanz</h5>
+									<p>{trailblazer.criteria.relevance}</p>
+								</div>
+								<div class="criteria-item">
+									<h5>🌟 Vorbildfunktion</h5>
+									<p>{trailblazer.criteria.roleModel}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.trailblazers {
+		background: linear-gradient(
+			135deg,
+			var(--color-primary) 0%,
+			#1a5f60 100%
+		);
+		color: #fff;
+		position: relative;
+		padding: 4rem 0 5rem;
+		overflow: visible;
+	}
+
+	.section-divider-top {
+		position: absolute;
+		top: -1px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100%;
+		max-width: none;
+		overflow: hidden;
+		line-height: 0;
+		z-index: 2;
+	}
+
+	.section-divider-top svg {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 30px;
+	}
+
+	.container {
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		position: relative;
+		z-index: 2;
+	}
+
+	.trailblazers-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.trailblazers-title {
+		font-size: 3.2rem;
+		font-weight: 700;
+		margin-bottom: 1rem;
+		color: var(--color-accent);
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	.trailblazers-subtitle {
+		font-size: 1.3rem;
+		opacity: 0.95;
+		max-width: 700px;
+		margin: 0 auto;
+	}
+
+	/* Category Tabs */
+	.category-tabs {
+		display: flex;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-bottom: 3rem;
+		flex-wrap: wrap;
+	}
+
+	.category-tab {
+		padding: 0.75rem 1.5rem;
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(10px);
+		border: 2px solid rgba(255, 255, 255, 0.2);
+		border-radius: 50px;
+		color: #fff;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		white-space: nowrap;
+	}
+
+	.category-tab:hover {
+		background: rgba(255, 255, 255, 0.2);
+		transform: translateY(-2px);
+	}
+
+	.category-tab.active {
+		background: var(--color-accent);
+		border-color: var(--color-accent);
+		transform: scale(1.05);
+	}
+
+	.category-tab .count {
+		opacity: 0.9;
+		font-size: 0.9em;
+	}
+
+	/* Trailblazers Grid */
+	.trailblazers-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+		gap: 2.5rem;
+		animation: fadeIn 0.5s ease;
+	}
+
+	@keyframes fadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	/* Card Styles */
+	.trailblazer-card {
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(10px);
+		border-radius: 20px;
+		padding: 2rem;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		transition: all 0.3s ease;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.trailblazer-card:hover {
+		transform: translateY(-10px);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+		background: rgba(255, 255, 255, 0.15);
+	}
+
+	.trailblazer-card[data-hidden="true"] {
+		display: none;
+	}
+
+	.card-header {
+		position: relative;
+		margin-bottom: 1.5rem;
+	}
+
+	.card-image {
+		text-align: center;
+	}
+
+	.card-image img {
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		object-fit: cover;
+		object-position: center;
+		border: 4px solid var(--color-accent);
+		transition: transform 0.3s ease;
+	}
+
+	.trailblazer-card:hover .card-image img {
+		transform: scale(1.05);
+	}
+
+	.category-badge {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 0.5rem 1rem;
+		border-radius: 20px;
+		font-size: 0.85rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.category-badge[data-category="etablierte"] {
+		background: #003C3D;
+		color: #fff;
+	}
+
+	.category-badge[data-category="startups"] {
+		background: #C1693C;
+		color: #fff;
+	}
+
+	.category-badge[data-category="politik"] {
+		background: #6B46C1;
+		color: #fff;
+	}
+
+	.card-content {
+		flex: 1;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.card-name {
+		font-size: 1.6rem;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+		color: var(--color-accent);
+	}
+
+	.card-organization {
+		font-size: 1.1rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		opacity: 0.9;
+	}
+
+	.card-summary {
+		font-size: 1rem;
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+		opacity: 0.85;
+		flex-grow: 1;
+	}
+
+	.card-social {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 1.5rem;
+	}
+
+	.social-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		background: var(--color-accent);
+		color: #fff;
+		border-radius: 50%;
+		transition: all 0.3s ease;
+		text-decoration: none;
+	}
+
+	.social-link:hover {
+		background: #fff;
+		color: var(--color-accent);
+		transform: translateY(-3px);
+	}
+
+	.social-link :global(svg) {
+		width: 1.2rem;
+		height: 1.2rem;
+	}
+
+	/* Criteria Toggle */
+	.criteria-toggle {
+		width: 100%;
+		padding: 0.75rem 1rem;
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 10px;
+		color: #fff;
+		font-size: 0.95rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: auto;
+	}
+
+	.criteria-toggle:hover {
+		background: rgba(255, 255, 255, 0.2);
+	}
+
+	.criteria-toggle .toggle-icon {
+		transition: transform 0.3s ease;
+	}
+
+	.criteria-toggle[aria-expanded="true"] .toggle-icon {
+		transform: rotate(180deg);
+	}
+
+	/* Criteria Content */
+	.criteria-content {
+		max-height: 0;
+		overflow: hidden;
+		opacity: 0;
+		transition: all 0.4s ease;
+		margin-top: 0;
+	}
+
+	.criteria-content[aria-hidden="false"] {
+		max-height: 800px;
+		opacity: 1;
+		margin-top: 1rem;
+	}
+
+	.criteria-item {
+		background: rgba(0, 0, 0, 0.2);
+		border-radius: 10px;
+		padding: 1rem;
+		margin-bottom: 0.75rem;
+		text-align: left;
+	}
+
+	.criteria-item:last-child {
+		margin-bottom: 0;
+	}
+
+	.criteria-item h5 {
+		font-size: 1rem;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+		color: var(--color-accent);
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.criteria-item p {
+		font-size: 0.9rem;
+		line-height: 1.5;
+		opacity: 0.9;
+		margin: 0;
+	}
+
+	/* Responsive Design */
+	@media (min-width: 768px) {
+		.section-divider-top svg {
+			height: 50px;
+		}
+	}
+
+	@media (max-width: 1200px) {
+		.trailblazers-grid {
+			grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+		}
+	}
+
+	@media (max-width: 768px) {
+		.trailblazers-title {
+			font-size: 2.5rem;
+		}
+
+		.trailblazers-subtitle {
+			font-size: 1.1rem;
+		}
+
+		.category-tabs {
+			gap: 0.4rem;
+		}
+
+		.category-tab {
+			padding: 0.6rem 1rem;
+			font-size: 0.9rem;
+		}
+
+		.trailblazers-grid {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.card-image img {
+			width: 150px;
+			height: 150px;
+		}
+
+		.card-name {
+			font-size: 1.4rem;
+		}
+	}
+</style>
+
+<script is:inline>
+	// Category filtering and criteria toggle functionality
+	(function() {
+		function initTrailblazers() {
+			// Category filtering
+			var tabs = document.querySelectorAll('.category-tab');
+			var cards = document.querySelectorAll('.trailblazer-card');
+
+			if (!tabs.length || !cards.length) {
+				setTimeout(initTrailblazers, 100);
+				return;
+			}
+
+			// Tab click handler
+			function handleTabClick(e) {
+				var clickedTab = e.currentTarget;
+				var category = clickedTab.getAttribute('data-category');
+
+				// Update active tab
+				tabs.forEach(function(tab) {
+					tab.classList.remove('active');
+					tab.setAttribute('aria-selected', 'false');
+				});
+				clickedTab.classList.add('active');
+				clickedTab.setAttribute('aria-selected', 'true');
+
+				// Filter cards
+				cards.forEach(function(card) {
+					if (category === 'all' || card.getAttribute('data-category') === category) {
+						card.setAttribute('data-hidden', 'false');
+						card.style.display = '';
+					} else {
+						card.setAttribute('data-hidden', 'true');
+						card.style.display = 'none';
+					}
+				});
+			}
+
+			// Add tab listeners
+			tabs.forEach(function(tab) {
+				tab.addEventListener('click', handleTabClick);
+			});
+
+			// Criteria toggle functionality
+			var criteriaToggles = document.querySelectorAll('.criteria-toggle');
+
+			criteriaToggles.forEach(function(toggle) {
+				toggle.addEventListener('click', function(e) {
+					e.preventDefault();
+					var isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+					var targetId = toggle.getAttribute('aria-controls');
+					var content = document.getElementById(targetId);
+
+					if (!content) return;
+
+					if (isExpanded) {
+						toggle.setAttribute('aria-expanded', 'false');
+						content.setAttribute('aria-hidden', 'true');
+					} else {
+						toggle.setAttribute('aria-expanded', 'true');
+						content.setAttribute('aria-hidden', 'false');
+					}
+				});
+			});
+		}
+
+		// Initialize when DOM is ready
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initTrailblazers);
+		} else {
+			initTrailblazers();
+		}
+	})();
+</script>
