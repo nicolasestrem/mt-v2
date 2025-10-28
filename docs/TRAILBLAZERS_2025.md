@@ -5,6 +5,7 @@ The Trailblazers 2025 section showcases 24 selected mobility innovators who are 
 
 ## Component Location
 - **Main Component**: `/src/components/TrailblazersSection.astro`
+- **Data File**: `/src/data/trailblazers.ts` (all profile data, interfaces, and configuration)
 - **Integration**: Added to `/src/pages/index.astro` between AboutSection and Criteria
 - **Navigation**: Updated in `/src/components/Header.astro`
 
@@ -188,22 +189,44 @@ All profile photos have been extracted from the source PDFs and optimized for we
 - [x] Keyboard navigation works
 - [x] Screen reader compatibility
 
+## Data Management
+
+### Architecture (v1.1.0+)
+All trailblazer data is now stored in a separate TypeScript file for better maintainability:
+
+**Location**: `/src/data/trailblazers.ts`
+
+**Exports**:
+- `trailblazers`: Array of all 24 trailblazer profiles
+- `Trailblazer`: TypeScript interface
+- `categoryLabels`: Display labels for categories
+- `categoryColors`: Color codes for category badges
+- Helper types: `CategoryKey`, `CategoryLabels`, `CategoryColors`
+
+**Benefits**:
+- ✅ Centralized data management
+- ✅ Reduced component size (1000+ → 600 lines)
+- ✅ Better TypeScript support
+- ✅ Easier bulk updates
+- ✅ Reusable across components
+
 ## Maintenance
 
 ### Adding New Trailblazers
 1. Add photo to `/public/images/trailblazers/`
-2. Add data object to `trailblazers` array in component
-3. Update category counts in tab labels
+2. Add data object to `trailblazers` array in `/src/data/trailblazers.ts`
+3. Update category counts in tab labels (line 476-495 in component)
 
 ### Updating Content
-1. Edit data directly in `/src/components/TrailblazersSection.astro`
+1. Edit data in `/src/data/trailblazers.ts`
 2. Criteria text is stored in the `criteria` object for each trailblazer
 3. LinkedIn URLs can be updated in the `linkedin` field
+4. Changes are automatically reflected in the component
 
 ### Removing Trailblazers
-1. Remove data object from array
+1. Remove data object from array in `/src/data/trailblazers.ts`
 2. Delete image file from `/public/images/trailblazers/`
-3. Update category counts
+3. Update category counts in tab labels
 
 ## Source Documentation
 
