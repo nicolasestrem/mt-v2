@@ -85,6 +85,11 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 			</button>
 		</div>
 
+		<!-- Screen reader announcements for filter changes -->
+		<div class="sr-only" role="status" aria-live="polite" aria-atomic="true" id="filter-status">
+			Zeige alle 22 Trailblazers
+		</div>
+
 		<!-- Trailblazers Grid -->
 		<div class="trailblazers-grid" id="trailblazers-panel" role="tabpanel">
 			{
@@ -169,6 +174,29 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 </section>
 
 <style>
+	/* CSS Custom Properties for Glassmorphism Effects */
+	.trailblazers {
+		--glass-light: rgb(255 255 255 / 0.1);
+		--glass-medium: rgb(255 255 255 / 0.15);
+		--glass-strong: rgb(255 255 255 / 0.2);
+		--glass-border: rgb(255 255 255 / 0.2);
+		--shadow-dark: rgb(0 0 0 / 0.2);
+		--shadow-darker: rgb(0 0 0 / 0.3);
+	}
+
+	/* Screen reader only content */
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border-width: 0;
+	}
+
 	.trailblazers {
 		background: linear-gradient(
 			135deg,
@@ -240,9 +268,9 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 
 	.category-tab {
 		padding: 0.75rem 1.5rem;
-		background: rgb(255, 255, 255, 0.1);
+		background: var(--glass-light);
 		backdrop-filter: blur(10px);
-		border: 2px solid rgb(255, 255, 255, 0.2);
+		border: 2px solid var(--glass-border);
 		border-radius: 50px;
 		color: #fff;
 		font-size: 1rem;
@@ -253,7 +281,7 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 	}
 
 	.category-tab:hover {
-		background: rgb(255, 255, 255, 0.2);
+		background: var(--glass-strong);
 		transform: translateY(-2px);
 	}
 
@@ -274,20 +302,27 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 		grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
 		gap: 2.5rem;
 		animation: fade-in 0.5s ease;
+		will-change: transform, opacity;
 	}
 
 	@keyframes fade-in {
-		from { opacity: 0; }
-		to { opacity: 1; }
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	/* Card Styles */
 	.trailblazer-card {
-		background: rgb(255, 255, 255, 0.1);
+		background: var(--glass-light);
 		backdrop-filter: blur(10px);
 		border-radius: 20px;
 		padding: 2rem;
-		border: 1px solid rgb(255, 255, 255, 0.2);
+		border: 1px solid var(--glass-border);
 		transition: all 0.3s ease;
 		display: flex;
 		flex-direction: column;
@@ -295,8 +330,8 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 
 	.trailblazer-card:hover {
 		transform: translateY(-10px);
-		box-shadow: 0 20px 40px rgb(0, 0, 0, 0.3);
-		background: rgb(255, 255, 255, 0.15);
+		box-shadow: 0 20px 40px var(--shadow-darker);
+		background: var(--glass-medium);
 	}
 
 	.trailblazer-card[data-hidden="true"] {
@@ -416,8 +451,8 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 	.criteria-toggle {
 		width: 100%;
 		padding: 0.75rem 1rem;
-		background: rgb(255, 255, 255, 0.1);
-		border: 1px solid rgb(255, 255, 255, 0.2);
+		background: var(--glass-light);
+		border: 1px solid var(--glass-border);
 		border-radius: 10px;
 		color: #fff;
 		font-size: 0.95rem;
@@ -431,7 +466,7 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 	}
 
 	.criteria-toggle:hover {
-		background: rgb(255, 255, 255, 0.2);
+		background: var(--glass-strong);
 	}
 
 	.criteria-toggle .toggle-icon {
@@ -449,6 +484,7 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 		opacity: 0;
 		transition: all 0.4s ease;
 		margin-top: 0;
+		will-change: max-height, opacity, transform;
 	}
 
 	.criteria-content[aria-hidden="false"] {
@@ -458,7 +494,7 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 	}
 
 	.criteria-item {
-		background: rgb(0, 0, 0, 0.2);
+		background: var(--shadow-dark);
 		border-radius: 10px;
 		padding: 1rem;
 		margin-bottom: 0.75rem;
@@ -542,8 +578,27 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 			var cards = document.querySelectorAll('.trailblazer-card');
 
 			if (!tabs.length || !cards.length) {
-				setTimeout(initTrailblazers, 100);
+				// Use requestAnimationFrame for better performance
+				requestAnimationFrame(function() {
+					requestAnimationFrame(initTrailblazers);
+				});
 				return;
+			}
+
+			// Category labels for announcements
+			var categoryLabels = {
+				'all': 'alle 22 Trailblazers',
+				'etablierte': '5 Etablierte Unternehmen',
+				'startups': '14 Start-ups & Katalysatoren',
+				'politik': '3 Politik & Öffentliche Institutionen'
+			};
+
+			// Update filter status announcement for screen readers
+			function updateFilterStatus(category) {
+				var statusEl = document.getElementById('filter-status');
+				if (statusEl) {
+					statusEl.textContent = 'Zeige ' + categoryLabels[category];
+				}
 			}
 
 			// Tab click handler
@@ -569,6 +624,9 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 						card.style.display = 'none';
 					}
 				});
+
+				// Announce filter change to screen readers
+				updateFilterStatus(category);
 			}
 
 			// Add tab listeners
