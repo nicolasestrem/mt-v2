@@ -114,7 +114,18 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 								{trailblazer.title ? trailblazer.title + " " : ""}{trailblazer.name}
 							</h3>
 							<h4 class="card-organization">{trailblazer.organization}</h4>
-							<p class="card-summary">{trailblazer.quickSummary}</p>
+
+							<div class="card-summary-wrapper">
+								<p class="card-summary" data-full-length={trailblazer.quickSummary.length}>
+									{trailblazer.quickSummary}
+								</p>
+								{trailblazer.quickSummary.length > 150 && (
+									<button class="toggle-summary" aria-expanded="false" type="button">
+										<span class="icon-down">▼</span>
+										<span class="toggle-text">Mehr erfahren</span>
+									</button>
+								)}
+							</div>
 
 							{trailblazer.linkedin && (
 								<div class="card-social">
@@ -267,6 +278,7 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 		gap: 2.5rem;
 		animation: fade-in 0.5s ease;
 		will-change: transform, opacity;
+		align-items: start; /* Allow dynamic heights for accordion */
 	}
 
 	@keyframes fade-in {
@@ -373,12 +385,90 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 		opacity: 0.9;
 	}
 
+	/* Summary Accordion Wrapper */
+	.card-summary-wrapper {
+		position: relative;
+		margin-bottom: 1.5rem;
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
 	.card-summary {
 		font-size: 1rem;
 		line-height: 1.6;
-		margin-bottom: 1.5rem;
 		opacity: 0.85;
-		flex-grow: 1;
+		max-height: 4.8rem; /* ~3 lines at 1.6 line-height */
+		overflow: hidden;
+		position: relative;
+		transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		margin-bottom: 0;
+	}
+
+	/* Gradient fade overlay to hint at more content */
+	.card-summary::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 2rem;
+		background: linear-gradient(
+			to bottom,
+			transparent,
+			rgba(0, 60, 61, 0.9)
+		);
+		opacity: 1;
+		transition: opacity 0.3s ease;
+		pointer-events: none;
+	}
+
+	/* Expanded state */
+	.card-summary.expanded {
+		max-height: 500px; /* Large enough for any text */
+	}
+
+	.card-summary.expanded::after {
+		opacity: 0;
+	}
+
+	/* Toggle Button */
+	.toggle-summary {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		justify-content: center;
+		color: var(--color-accent);
+		font-size: 0.9rem;
+		font-weight: 600;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.75rem 0;
+		margin-top: 0.5rem;
+		transition: all 0.3s ease;
+	}
+
+	.toggle-summary:hover {
+		opacity: 0.8;
+		transform: translateX(4px);
+	}
+
+	.toggle-summary:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+		border-radius: 4px;
+	}
+
+	/* Icon rotation */
+	.icon-down {
+		font-size: 0.7rem;
+		transition: transform 0.3s ease;
+		display: inline-block;
+	}
+
+	.toggle-summary[aria-expanded="true"] .icon-down {
+		transform: rotate(180deg);
 	}
 
 	.card-social {
@@ -522,6 +612,48 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 			tabs.forEach(function(tab) {
 				tab.addEventListener('click', handleTabClick);
 			});
+
+			// Summary toggle functionality
+			var toggleButtons = document.querySelectorAll('.toggle-summary');
+
+			toggleButtons.forEach(function(button) {
+				button.addEventListener('click', function() {
+					var wrapper = this.closest('.card-summary-wrapper');
+					var summary = wrapper.querySelector('.card-summary');
+					var isExpanded = this.getAttribute('aria-expanded') === 'true';
+					var toggleText = this.querySelector('.toggle-text');
+
+					// Toggle expansion
+					if (isExpanded) {
+						summary.classList.remove('expanded');
+						this.setAttribute('aria-expanded', 'false');
+						toggleText.textContent = 'Mehr erfahren';
+					} else {
+						summary.classList.add('expanded');
+						this.setAttribute('aria-expanded', 'true');
+						toggleText.textContent = 'Weniger anzeigen';
+					}
+
+					// Announce to screen readers
+					var announcement = isExpanded
+						? 'Beschreibung eingeklappt'
+						: 'Vollständige Beschreibung angezeigt';
+					announceToScreenReader(announcement);
+				});
+			});
+		}
+
+		// Screen reader announcement helper
+		function announceToScreenReader(message) {
+			var announcement = document.createElement('div');
+			announcement.setAttribute('role', 'status');
+			announcement.setAttribute('aria-live', 'polite');
+			announcement.className = 'sr-only';
+			announcement.textContent = message;
+			document.body.appendChild(announcement);
+			setTimeout(function() {
+				announcement.remove();
+			}, 1000);
 		}
 
 		// Initialize when DOM is ready
