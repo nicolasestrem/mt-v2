@@ -104,9 +104,10 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 									loading="lazy"
 								/>
 							</div>
-							<div class="category-badge" data-category={trailblazer.category}>
-								{categoryLabels[trailblazer.category]}
-							</div>
+						</div>
+
+						<div class="category-badge" data-category={trailblazer.category}>
+							{categoryLabels[trailblazer.category]}
 						</div>
 
 						<div class="card-content">
@@ -315,8 +316,7 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 	}
 
 	.card-header {
-		position: relative;
-		margin-bottom: 1.5rem;
+		margin-bottom: 0;
 	}
 
 	.card-image {
@@ -338,15 +338,16 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 	}
 
 	.category-badge {
-		position: absolute;
-		top: 0;
-		right: 0;
+		display: block;
+		width: fit-content;
+		margin: 1rem auto 1.5rem;
 		padding: 0.5rem 1rem;
 		border-radius: 20px;
 		font-size: 0.85rem;
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
+		text-align: center;
 	}
 
 	.category-badge[data-category="etablierte"] {
