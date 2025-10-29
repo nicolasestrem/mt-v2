@@ -2,10 +2,10 @@
  * Trailblazers 2025 Data
  *
  * Contains all data for the 22 Mobility Trailblazers 2025 honorees,
- * including their profiles, evaluation criteria, and categorization.
+ * including their profiles and categorization.
  *
  * @module trailblazers
- * @version 1.1.0
+ * @version 2.0.0
  */
 
 // Type Definitions
@@ -16,13 +16,6 @@ export interface Trailblazer {
 	organization: string;
 	category: 'etablierte' | 'startups' | 'politik';
 	quickSummary: string;
-	criteria: {
-		courage: string;
-		innovation: string;
-		implementation: string;
-		relevance: string;
-		roleModel: string;
-	};
 	image: string;
 	linkedin?: string;
 }
@@ -50,14 +43,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "André Schwämmlein",
 		organization: "FlixBus",
 		category: "etablierte",
-		quickSummary: "Gründer und CEO von FlixMobility, revolutionierte den Fernbusmarkt in Europa",
-		criteria: {
-			courage: "Wagte den Einstieg in einen stark regulierten Markt und schuf ein neues Mobilitätskonzept",
-			innovation: "Digitalisierung des Fernbusverkehrs mit dynamischer Preisgestaltung und App-basierter Buchung",
-			implementation: "Aufbau des größten Fernbusnetzes Europas mit über 400.000 täglichen Verbindungen",
-			relevance: "Demokratisierung des Reisens durch günstige und nachhaltige Mobilität",
-			roleModel: "Inspiration für Gründer im Mobilitätssektor und Vorreiter für nachhaltige Geschäftsmodelle"
-		},
+		quickSummary: "André Schwämmlein hat mit FlixBus einen neuen globalen Mobilitätsanbieter geschaffen und den Fernverkehr digital, kundenfreundlich und nachhaltig neu definiert. Mit Mut und Weitblick nutzte er die Deregulierung des Marktes, um ein innovatives, asset-light Geschäftsmodell zu etablieren. Unter seiner Führung wuchs Flix zu einem internationalen Unternehmen mit Millionen Fahrgästen.",
 		image: "/images/trailblazers/AndréSchwämmlein.jpg",
 		linkedin: "https://www.linkedin.com/in/andreschwammlein/"
 	},
@@ -66,30 +52,17 @@ export const trailblazers: Trailblazer[] = [
 		name: "Helmut Ruhl",
 		organization: "AMAG",
 		category: "etablierte",
-		quickSummary: "Transformierte die AMAG vom Autoimporteur zum Anbieter nachhaltiger Mobilitätslösungen",
-		criteria: {
-			courage: "Aufbau eines Ökosystems aus E-Auto-Abos, Carsharing und Ladeinfrastruktur",
-			innovation: "Netto-Null-Ziel bis 2040 mit Fokus auf erneuerbare Energien",
-			implementation: "Best Practice für Dekarbonisierung der Automobilbranche",
-			relevance: "Zeigt werteorientierte Führung in der Transformation",
-			roleModel: "Vorbild für mutige und nachhaltige Unternehmenstransformation"
-		},
+		quickSummary: "Helmut Ruhl transformierte die AMAG vom Autoimporteur zum Anbieter nachhaltiger Mobilitätslösungen. Unter seiner Leitung entstand ein Ökosystem aus E-Auto-Abos, Carsharing und Ladeinfrastruktur. Das Unternehmen verfolgt ein Netto-Null-Ziel bis 2040 und setzt auf erneuerbare Energien. Ruhls Strategie gilt als Best Practice für die Dekarbonisierung der Branche. Er steht für werteorientierte Führung und mutige Transformation.",
 		image: "/images/trailblazers/HelmutRuhl.jpg",
 		linkedin: "https://www.linkedin.com/in/helmut-ruhl/"
 	},
 	{
 		id: "olga-nevska",
+		title: "Dr.",
 		name: "Olga Nevska",
 		organization: "Telekom MobilitySolutions",
 		category: "etablierte",
-		quickSummary: "Geschäftsführerin Telekom MobilitySolutions, treibt digitale Mobilitätslösungen voran",
-		criteria: {
-			courage: "Transformation vom Telekommunikations- zum Mobilitätsanbieter",
-			innovation: "Entwicklung integrierter Mobilitätsplattformen und Smart Mobility Lösungen",
-			implementation: "Aufbau eines der größten Ladenetze für Elektrofahrzeuge in Deutschland",
-			relevance: "Verbindung von Telekommunikation und Mobilität für vernetzte Städte",
-			roleModel: "Zeigt erfolgreiche Diversifikation in neue Geschäftsfelder"
-		},
+		quickSummary: "Olga Nevska wandelt Deutschlands zweitgrößte Firmenflotte in ein modernes Mobilitätsangebot. Sie führte E-Autos, Shuttle-Dienste und Dienstradleasing konsequent ein. Ihre App 'goodride' vereint alle Dienste in einem System. Nevska zeigt, wie Konzerne die Verkehrswende praktisch vorantreiben können. Sie gilt als sichtbare Vorkämpferin für nachhaltige Unternehmensmobilität.",
 		image: "/images/trailblazers/OlgaNevska.jpg",
 		linkedin: "https://www.linkedin.com/in/olga-nevska/"
 	},
@@ -98,14 +71,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Tobias Liebelt",
 		organization: "Benteler Mobility Services",
 		category: "etablierte",
-		quickSummary: "Managing Director bei Benteler, entwickelt modulare Mobilitätslösungen",
-		criteria: {
-			courage: "Neuausrichtung vom klassischen Zulieferer zum Mobilitätsdienstleister",
-			innovation: "Entwicklung modularer E-Mobility Plattformen und autonomer Fahrzeugkonzepte",
-			implementation: "Serienproduktion skalierbarer E-Fahrzeug-Plattformen",
-			relevance: "Beschleunigt Time-to-Market für neue E-Fahrzeughersteller",
-			roleModel: "Transformation traditioneller Automotive-Zulieferer in die neue Mobilität"
-		},
+		quickSummary: "Tobias Liebelt führt Benteler vom klassischen Zulieferer zum Hersteller autonomer E-Shuttles. Er brach mit alten Strukturen und schuf ein neues Geschäftsfeld für urbane Mobilität. Die Shuttles werden ab 2026 weltweit eingesetzt und ergänzen den ÖPNV. Damit treibt Liebelt die Dekarbonisierung und Barrierefreiheit voran. Er beweist, dass Transformation aus dem Inneren der Industrie möglich ist.",
 		image: "/images/trailblazers/TobiasLiebelt.jpg",
 		linkedin: "https://www.linkedin.com/in/tobias-liebelt/"
 	},
@@ -114,14 +80,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Ulrich Prediger",
 		organization: "JobRad",
 		category: "etablierte",
-		quickSummary: "Gründer und Geschäftsführer von JobRad, Pionier des Dienstrad-Leasings",
-		criteria: {
-			courage: "Schuf neues Geschäftsmodell für nachhaltige Mitarbeitermobilität",
-			innovation: "Digitalisierung des Dienstrad-Leasings mit Full-Service-Konzept",
-			implementation: "Über 40.000 Arbeitgeber und 2 Millionen Nutzer in Deutschland",
-			relevance: "Fördert Radverkehr und reduziert CO₂-Emissionen im Berufsverkehr",
-			roleModel: "Erfolgreiche Verbindung von Nachhaltigkeit und Wirtschaftlichkeit"
-		},
+		quickSummary: "Ulrich Prediger machte das Dienstrad zum gesellschaftlichen Phänomen. Sein Modell ermöglicht über Millionen Menschen den Umstieg vom Auto aufs Rad. JobRad spart jährlich tausende Tonnen CO₂ und belebt den Radverkehr. Prediger schuf eine neue Form betrieblicher Mobilität. Er steht für Unternehmertum mit gesellschaftlichem Antrieb.",
 		image: "/images/trailblazers/UlrichPrediger.jpg",
 		linkedin: "https://www.linkedin.com/in/ulrich-prediger/"
 	},
@@ -129,17 +88,11 @@ export const trailblazers: Trailblazer[] = [
 	// START-UPS & KATALYSATOREN (14)
 	{
 		id: "corsin-sulser",
-		name: "Dr. Corsin Sulser",
+		title: "Dr.",
+		name: "Corsin Sulser",
 		organization: "Parcandi",
 		category: "startups",
-		quickSummary: "CEO und Co-Founder von Parcandi, revolutioniert urbanes Parken mit KI",
-		criteria: {
-			courage: "Angriff auf etablierte Parkraumkonzepte mit digitaler Lösung",
-			innovation: "KI-basierte Parkplatzoptimierung und dynamisches Pricing",
-			implementation: "Expansion in mehrere europäische Städte binnen 3 Jahren",
-			relevance: "Reduziert Parkplatzsuchverkehr um bis zu 30% in Innenstädten",
-			roleModel: "Zeigt, wie Tech-Startups urbane Mobilität verbessern können"
-		},
+		quickSummary: "Dr. Corsin Sulser löst mit Parcandi ein alltägliches Mobilitätsproblem neu: Parkplätze werden digital geteilt statt neu gebaut. Die Plattform reduziert Stau, Suchverkehr und Emissionen in Städten. Mit über 40 wagte Sulser den Schritt vom Konzernmanager zum Gründer. Sein IoT-basierter Ansatz zeigt, wie Effizienz und Nachhaltigkeit zusammenwirken können. Parcandi verbessert die urbane Lebensqualität sichtbar.",
 		image: "/images/trailblazers/CorsinSulser.jpg",
 		linkedin: "https://www.linkedin.com/in/corsinsulser/"
 	},
@@ -148,14 +101,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Fabian Beste",
 		organization: "4Screen",
 		category: "startups",
-		quickSummary: "Founder & CEO von 4Screen, digitalisiert In-Car Entertainment",
-		criteria: {
-			courage: "Entwicklung einer Plattform für alle Automobilhersteller gleichzeitig",
-			innovation: "Erste herstellerübergreifende In-Car Commerce Plattform",
-			implementation: "Integration in über 15 Automobilmarken weltweit",
-			relevance: "Schafft neue Erlösmodelle für die Automobilindustrie",
-			roleModel: "Erfolgreiche B2B2C-Plattform im Automotive-Sektor"
-		},
+		quickSummary: "Fabian Beste entwickelte mit 4Screen die weltweit erste Plattform für Fahrer-Interaktion im Fahrzeugdisplay. Sie verbindet Marken, Händler und Fahrer in Echtzeit und schafft ein neues digitales Ökosystem. Innerhalb weniger Jahre gewann 4Screen große Automobilhersteller wie Mercedes-Benz und Audi als Partner. Beste steht für mutiges Unternehmertum und datengetriebene Innovation. Seine Technologie macht das Auto zur vernetzten Erlebniswelt.",
 		image: "/images/trailblazers/FabianBeste.jpg",
 		linkedin: "https://www.linkedin.com/in/fabianbeste/"
 	},
@@ -164,14 +110,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Felix Pörnbacher",
 		organization: "DeepDrive",
 		category: "startups",
-		quickSummary: "Co-Founder & CEO von DeepDrive, entwickelt revolutionäre E-Motoren",
-		criteria: {
-			courage: "Neuerfindung des Radnabenmotors für E-Fahrzeuge",
-			innovation: "Patentierte Dual-Rotor-Technologie für höhere Effizienz",
-			implementation: "Serienreife Entwicklung mit namhaften Automobilherstellern",
-			relevance: "Ermöglicht bis zu 20% mehr Reichweite bei E-Fahrzeugen",
-			roleModel: "Deep-Tech Startup aus München erobert globalen Markt"
-		},
+		quickSummary: "Felix Pörnbacher treibt mit DeepDrive eine bahnbrechende Motorentechnologie für Elektrofahrzeuge voran. Die Dual-Rotor-Technik steigert Reichweite und Effizienz um bis zu 20 Prozent. Acht der zehn größten OEMs setzen bereits auf die Lösung aus München. DeepDrive zeigt, wie Start-ups die Elektromobilität revolutionieren können. Pörnbacher beweist, dass technologische Exzellenz auch außerhalb der Großindustrie entsteht.",
 		image: "/images/trailblazers/FelixPörnbacher.jpg",
 		linkedin: "https://www.linkedin.com/in/felix-poernbacher/"
 	},
@@ -180,14 +119,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Judith Häberli",
 		organization: "Urban Connect",
 		category: "startups",
-		quickSummary: "Gründerin von Urban Connect, vernetzt urbane Mobilitätsdienste",
-		criteria: {
-			courage: "Gründung als Female Founder im männerdominierten Mobilitätssektor",
-			innovation: "Intermodale Mobilitätsplattform mit Blockchain-Integration",
-			implementation: "Pilotprojekte in 5 Schweizer Städten",
-			relevance: "Vereinfacht Zugang zu nachhaltiger urbaner Mobilität",
-			roleModel: "Vorbild für Female Entrepreneurship in Tech"
-		},
+		quickSummary: "Judith Häberli vernetzt mit Urban Connect Fahrräder, E-Bikes und Firmenmobilität auf einer Plattform. Ihr Ziel ist es, die letzte Meile in Städten nachhaltig zu gestalten. Unter ihrer Führung wurde Urban Connect zum wichtigen Partner für Unternehmen im DACH-Raum. Die Gründerin kombiniert Vision und Pragmatismus – mit spürbarer Wirkung auf Verkehr und Emissionen. Sie gilt als Role Model für weibliche Führung in der Mobilitätsbranche.",
 		image: "/images/trailblazers/JudithHäberli.jpeg",
 		linkedin: "https://www.linkedin.com/in/judithhaberli/"
 	},
@@ -196,14 +128,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Katharina Kreutzer",
 		organization: "MUVN",
 		category: "startups",
-		quickSummary: "Co-Founderin MUVN, entwickelt Plattform für nachhaltige urbane Logistik",
-		criteria: {
-			courage: "Verbindung von Sharing Economy und Gütertransport in neuem digitalen Ansatz",
-			innovation: "Vermeidung von Leerfahrten durch intelligente Plattform",
-			implementation: "Reduktion von Emissionen im urbanen Logistikverkehr",
-			relevance: "Zeigt wie Kreativität und Ökologie zusammenpassen",
-			roleModel: "Mutiges Gründen mit ökologischem Mehrwert"
-		},
+		quickSummary: "Katharina Kreutzer entwickelt mit MUVN eine Plattform für nachhaltige urbane Logistik. Sie verbindet Sharing Economy und Gütertransport in einem neuen digitalen Ansatz. Dadurch werden Leerfahrten vermieden und Emissionen gesenkt. Ihr Startup zeigt, wie Kreativität und Ökologie zusammenpassen. Kreutzer steht für mutiges Gründen mit ökologischem Mehrwert.",
 		image: "/images/trailblazers/KatharinaKreutzer.jpg",
 		linkedin: "https://www.linkedin.com/in/katharinakreutzer/"
 	},
@@ -212,14 +137,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Léa Miggiano",
 		organization: "carvolution",
 		category: "startups",
-		quickSummary: "Co-Founder & CMO von carvolution, revolutioniert Auto-Abos in der Schweiz",
-		criteria: {
-			courage: "Disruption des traditionellen Autokaufs und Leasings",
-			innovation: "Volldigitales Auto-Abo-Modell mit All-Inclusive-Service",
-			implementation: "Marktführer in der Schweiz mit über 5.000 Abonnenten",
-			relevance: "Flexibilisierung der individuellen Mobilität",
-			roleModel: "Erfolgreiche Scale-up Story im Mobility-as-a-Service Bereich"
-		},
+		quickSummary: "Als Mitgründerin und CMO hat sie das Auto-Abo in der Schweiz massentauglich gemacht und damit den Zugang zur Elektromobilität vereinfacht. Ihr Modell – ein Fixpreis inklusive Versicherung und Service – ersetzt den klassischen Fahrzeugbesitz durch eine flexible, transparente Lösung. Mit ihrem Konzept 'Mobilität wie Streaming' revolutioniert sie die Art, wie Menschen Autos nutzen: einfach, digital und kurzfristig. Unter ihrer Führung wurde das Unternehmen Marktführer, gewann Investoren und erweitert sein Angebot auf Firmenflotten.",
 		image: "/images/trailblazers/LéaMiggiano.jpg",
 		linkedin: "https://www.linkedin.com/in/leamiggiano/"
 	},
@@ -228,30 +146,17 @@ export const trailblazers: Trailblazer[] = [
 		name: "Lukas Stranger",
 		organization: "NXRT",
 		category: "startups",
-		quickSummary: "CEO von NXRT, entwickelt Extended Reality Lösungen für Mobilität",
-		criteria: {
-			courage: "Pionierarbeit in AR/VR für Automotive-Anwendungen",
-			innovation: "Holographische Displays für Fahrzeuge der Zukunft",
-			implementation: "Partnerschaften mit Premium-Automobilherstellern",
-			relevance: "Definiert User Experience in zukünftigen Fahrzeugen neu",
-			roleModel: "Verbindung von Gaming-Technologie und Mobilität"
-		},
+		quickSummary: "Als CEO von NXRT entwickelt Lukas Stranger einen Mixed-Reality-Fahrsimulator, der die Fahrausbildung sicherer, nachhaltiger und kosteneffizienter macht. Mit dem Mut, in einen komplexen B2B-Markt zu gehen, verband er reale Fahrzeuge mit virtuellen Umgebungen und schuf so ein völlig neues Trainingskonzept. Seine Technologie reduziert Ressourcenverbrauch und Emissionen und wird bereits von internationalen Großkunden eingesetzt. Stranger zeigt, wie aus visionärer Innovation ein weltweit beachtetes Technologieprodukt entsteht, das die Mobilitätswende praktisch vorantreibt.",
 		image: "/images/trailblazers/LukasStranger.jpg",
 		linkedin: "https://www.linkedin.com/in/lukasstranger/"
 	},
 	{
 		id: "matthias-ballweg",
+		title: "Dr.",
 		name: "Matthias Ballweg",
 		organization: "Circular Republic / TU München",
 		category: "startups",
-		quickSummary: "Founder Circular Republic, treibt Kreislaufwirtschaft in der Mobilität voran",
-		criteria: {
-			courage: "Fokus auf Circular Economy in linearer Automobilindustrie",
-			innovation: "Digitaler Produktpass für Fahrzeugkomponenten",
-			implementation: "Pilotprojekte mit führenden OEMs und Zulieferern",
-			relevance: "Ermöglicht nachhaltige Wertschöpfungsketten",
-			roleModel: "Akademischer Entrepreneur mit Impact-Fokus"
-		},
+		quickSummary: "Matthias Ballweg verbindet als Mitgründer von Circular Republic unternehmerisches Handeln mit gesellschaftlichem Engagement für nachhaltige Mobilität. Mit Projekten wie dem Bergbus und Circular Republic schafft er praxisnahe Lösungen, die Freizeit- und Alltagsmobilität gleichermaßen verbessern. Er beweist Mut, Unternehmergeist und Umsetzungsstärke, indem er Wirtschaft und Ehrenamt wirkungsvoll vereint. Ballweg steht beispielhaft dafür, wie persönliches Engagement und Innovation gemeinsam die Mobilitätswende voranbringen.",
 		image: "/images/trailblazers/MatthiasBallweg.jpg",
 		linkedin: "https://www.linkedin.com/in/matthiasballweg/"
 	},
@@ -260,14 +165,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Roy Uhlmann",
 		organization: "Motor Ai",
 		category: "startups",
-		quickSummary: "Co-Founder Motor Ai, automatisiert Fahrzeuginspektion mit Computer Vision",
-		criteria: {
-			courage: "Digitalisierung des analogen Gebrauchtwagenmarkts",
-			innovation: "KI-basierte Schadenserkennung in Echtzeit",
-			implementation: "Integration bei großen Autohäusern und Flottenbetreibern",
-			relevance: "Transparenz und Effizienz im Fahrzeughandel",
-			roleModel: "Tech-Transfer aus anderen Industrien in Automotive"
-		},
+		quickSummary: "Roy Uhlmann entwickelt zertifizierbare Level-4-Autopilotsysteme für autonomes Fahren. Sein Team setzt auf erklärbare KI, die sicher und transparenter entscheidet als Black-Box-Modelle. Damit stärkt Motor Ai den europäischen Technologiestandort. Uhlmann zeigt, dass künstliche Intelligenz und Verkehrssicherheit kein Widerspruch sind. Er steht für mutige Pionierarbeit im Feld des autonomen Fahrens",
 		image: "/images/trailblazers/RoyUhlmann.jpg",
 		linkedin: "https://www.linkedin.com/in/royuhlmann/"
 	},
@@ -276,14 +174,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Sarah Fleischer",
 		organization: "ToZero",
 		category: "startups",
-		quickSummary: "Co-Founderin ToZero, recycelt Batterien für die E-Mobilität",
-		criteria: {
-			courage: "Angriff auf etablierte Recycling-Verfahren mit neuer Technologie",
-			innovation: "Chemisches Recycling mit 95% Materialrückgewinnung",
-			implementation: "Aufbau erster kommerzieller Anlage in Deutschland",
-			relevance: "Schlüssel für nachhaltige Elektromobilität",
-			roleModel: "Female Founder in der Kreislaufwirtschaft"
-		},
+		quickSummary: "Sarah Fleischer schließt mit ToZero den Kreislauf für Batterien der E-Mobilität. Ihr Team entwickelte ein Verfahren, das Rohstoffe fast vollständig zurückgewinnt. Die Pilotanlage läuft bereits erfolgreich mit ersten Kunden. Fleischer zeigt, wie Cleantech skaliert und Klimaziele erreichbar macht. Sie steht für Tatkraft in einem kritischen Technologiefeld.",
 		image: "/images/trailblazers/SarahFleischer.jpg",
 		linkedin: "https://www.linkedin.com/in/sarahfleischer/"
 	},
@@ -292,14 +183,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Sascha Meyer",
 		organization: "MOIA",
 		category: "startups",
-		quickSummary: "CEO von MOIA, führt Ridepooling in deutschen Städten ein",
-		criteria: {
-			courage: "Aufbau eines völlig neuen Mobilitätsdienstes im ÖPNV",
-			innovation: "Algorithmen-basiertes Ridepooling mit E-Fahrzeugen",
-			implementation: "Größte Ridepooling-Flotte Europas in Hamburg",
-			relevance: "Ergänzung des ÖPNV und Reduktion des Individualverkehrs",
-			roleModel: "Erfolgreiche Public-Private-Partnership im Mobilitätssektor"
-		},
+		quickSummary: "Sascha Meyer führt MOIA, den elektrischen Ridepooling-Dienst von Volkswagen. Er setzte früh auf E-Antrieb und eigene Softwarelösungen. MOIA transportierte bereits über sechs Millionen Fahrgäste und reduzierte den innerstädtischen Autoverkehr. Meyer lenkt das Unternehmen nun in Richtung autonomes Fahren. Er steht für skalierbare Urban Mobility made in Germany.",
 		image: "/images/trailblazers/SaschaMeyer.jpg",
 		linkedin: "https://www.linkedin.com/in/saschameyer/"
 	},
@@ -308,14 +192,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Sebastian Tanzer",
 		organization: "Triply",
 		category: "startups",
-		quickSummary: "Founder Triply, digitalisiert Mitarbeitermobilität für Unternehmen",
-		criteria: {
-			courage: "Neugestaltung betrieblicher Mobilität in konservativen Unternehmen",
-			innovation: "Ganzheitliche Mobilitätsbudget-Plattform",
-			implementation: "Über 100 Unternehmenskunden in DACH-Region",
-			relevance: "Fördert nachhaltige Mitarbeitermobilität",
-			roleModel: "B2B-SaaS Erfolg im Mobility-Sektor"
-		},
+		quickSummary: "Sebastian Tanzer gründete mit 19 das B2B-Startup Triply zur Optimierung von Firmenmobilität. Seine Plattform analysiert Pendelwege und hilft Unternehmen, CO₂ zu senken. Zahlreiche Organisationen nutzen die Lösung bereits international. Triply macht betriebliche Mobilität sichtbar und steuerbar. Tanzer steht für Datenintelligenz im Dienst der Nachhaltigkeit.",
 		image: "/images/trailblazers/SebastianTanzer.jpg",
 		linkedin: "https://www.linkedin.com/in/sebastiantanzer/"
 	},
@@ -324,14 +201,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Wim Ouboter",
 		organization: "Microlino AG",
 		category: "startups",
-		quickSummary: "Founder Microlino, entwickelt urbane Elektro-Kleinstfahrzeuge",
-		criteria: {
-			courage: "Neuinterpretation des Stadtautos gegen etablierte OEMs",
-			innovation: "Retro-Design trifft moderne E-Mobilität",
-			implementation: "Serienproduktion und europaweiter Vertrieb",
-			relevance: "Neue Fahrzeugkategorie für urbane Mobilität",
-			roleModel: "Familienunternehmen fordert Großkonzerne heraus"
-		},
+		quickSummary: "Wim Ouboter erfand den Micro-Scooter und prägte die urbane Mikromobilität weltweit. Mit dem elektrischen Microlino entwickelte er ein kompaktes Stadtfahrzeug zwischen E-Bike und Auto. Sein Ansatz 'kleine Fahrzeuge statt großer Autos' reduziert Emissionen und Flächenverbrauch. Trotz Rückschlägen blieb er dem Ziel treu. Ouboter zeigt, wie europäischer Erfindergeist nachhaltige Lösungen bringt.",
 		image: "/images/trailblazers/WimOuboter.jpg",
 		linkedin: "https://www.linkedin.com/in/wimouboter/"
 	},
@@ -340,14 +210,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Xanthi Doubara",
 		organization: "Via Transportation Berlin",
 		category: "startups",
-		quickSummary: "Managing Director Via Berlin, skaliert On-Demand Mobilität in Europa",
-		criteria: {
-			courage: "Expansion eines US-Startups in den regulierten europäischen Markt",
-			innovation: "Dynamisches Routing und KI-basierte Flottenoptimierung",
-			implementation: "Betrieb in über 20 europäischen Städten",
-			relevance: "Neue Form des öffentlichen Nahverkehrs",
-			roleModel: "Internationale Expansion im Mobility-Sektor"
-		},
+		quickSummary: "Xanthi Doubara integriert On-Demand-Shuttles als Teil des öffentlichen Nahverkehrs in Städten und Regionen. Sie verbindet Technologie mit kommunaler Verkehrsplanung. Unter ihrer Leitung laufen bereits über 45 Via-Projekte in Deutschland. Diese verbessern Erreichbarkeit und reduzieren Wartezeiten nachweislich. Doubara steht für kluge Verzahnung von Innovation und Öffentlichem Dienst.",
 		image: "/images/trailblazers/XanthiDoubara.jpg",
 		linkedin: "https://www.linkedin.com/in/xanthidoubara/"
 	},
@@ -358,29 +221,16 @@ export const trailblazers: Trailblazer[] = [
 		name: "Alexandra Reinagl",
 		organization: "Wiener Linien",
 		category: "politik",
-		quickSummary: "Geschäftsführerin der Wiener Linien, prägt Entwicklung einer der größten städtischen Verkehrsbetriebe im DACH-Raum",
-		criteria: {
-			courage: "Konsequente Transformation hin zu emissionsfreier Mobilität",
-			innovation: "Massiver Ausbau der U-Bahn-Linie U2xU5 und Elektrifizierung der Busflotte",
-			implementation: "Innovative digitale Services für Fahrgäste und moderne Verkehrsinfrastruktur",
-			relevance: "Vorreiter klimafreundlicher und attraktiver urbaner Mobilität",
-			roleModel: "Internationale Strahlkraft für nachhaltige Verkehrsbetriebe"
-		},
+		quickSummary: "Als Geschäftsführerin der Wiener Linien prägt Alexandra Reinagl seit Jahren die Entwicklung einer der größten städtischen Verkehrsbetriebe im DACH-Raum. Sie treibt die konsequente Transformation hin zu emissionsfreier Mobilität voran – vom massiven Ausbau der U-Bahn-Linie U2xU5 über die Elektrifizierung der Busflotte bis hin zu innovativen digitalen Services für Fahrgäste. Unter ihrer Leitung positionieren sich die Wiener Linien als Vorreiter einer klimafreundlichen und attraktiven urbanen Mobilität, die internationale Strahlkraft hat.",
 		image: "/images/trailblazers/AlexandraReinagl.jpeg"
 	},
 	{
 		id: "anjes-tjarks",
-		name: "Dr. Anjes Tjarks",
+		title: "Dr.",
+		name: "Anjes Tjarks",
 		organization: "Hansestadt Hamburg",
 		category: "politik",
-		quickSummary: "Senator für Verkehr und Mobilitätswende Hamburg, Vorreiter urbaner Transformation",
-		criteria: {
-			courage: "Radikale Neuaufteilung des Straßenraums zugunsten nachhaltiger Mobilität",
-			innovation: "Hamburg als Modellstadt für Mobilitätswende",
-			implementation: "Ausbau Radwegenetz, ÖPNV-Offensive, autofreie Quartiere",
-			relevance: "Blaupause für deutsche Großstädte",
-			roleModel: "Politischer Mut für unpopuläre aber notwendige Maßnahmen"
-		},
+		quickSummary: "Dr. Anjes Tjarks gestaltet als Senator die Hamburger Verkehrswende mit klaren Zielen und messbaren Erfolgen. Sein erklärtes Ziel ist es, den Anteil des Umweltverbunds – also von ÖPNV, Rad- und Fußverkehr – bis 2030 auf 80 Prozent zu steigern. Unter seiner Leitung entstehen neue U-Bahn-Linien, Radwege und autonome Busprojekte. Hamburg dient damit als Vorbild für nachhaltige Stadtentwicklung. Tjarks gilt als pragmatischer Macher mit bundesweiter Strahlkraft.",
 		image: "/images/trailblazers/AnjesTjarks.jpg",
 		linkedin: "https://www.linkedin.com/in/anjes-tjarks/"
 	},
@@ -389,14 +239,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Nic Knapp",
 		organization: "TUM Venture Labs",
 		category: "politik",
-		quickSummary: "Managing Director TUM Venture Labs Mobility, fördert Deep-Tech Startups",
-		criteria: {
-			courage: "Aufbau eines führenden Mobility-Inkubators in Europa",
-			innovation: "Verbindung von Forschungsexzellenz und Unternehmertum",
-			implementation: "Über 50 Mobility-Startups in 3 Jahren gegründet",
-			relevance: "Beschleunigt Transfer von Forschung in die Praxis",
-			roleModel: "Erfolgreiches Ökosystem für Mobility Innovation"
-		},
+		quickSummary: "Nic Knapp unterstützt Start-ups von autonomen Shuttles bis E-Fluggeräten. Als Leiter des TUM Venture Labs Mobility verbindet er Forschung und Industrie. So entstehen aus Ideen marktreife Produkte und Investorenkontakte. Seine Arbeit macht München zu einem Hotspot für Mobilitätsinnovation. Knapp steht für mutige Förderung junger Talente.",
 		image: "/images/trailblazers/NicKnapp.jpg",
 		linkedin: "https://www.linkedin.com/in/nicknapp/"
 	}

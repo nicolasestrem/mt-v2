@@ -6,7 +6,6 @@
  *
  * Features:
  * - Category filtering via tabs (All, Etablierte, Start-ups, Politik)
- * - Expandable evaluation criteria for each trailblazer
  * - Responsive grid layout
  * - LinkedIn profile links
  * - Glassmorphism design effects
@@ -130,41 +129,6 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 									</a>
 								</div>
 							)}
-
-							<!-- Expandable Criteria Section -->
-							<button
-								class="criteria-toggle"
-								aria-expanded="false"
-								aria-controls={`criteria-${trailblazer.id}`}
-							>
-								<span>Bewertungskriterien ansehen</span>
-								<svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24">
-									<path d="M12 15L7 10H17L12 15Z" fill="currentColor"/>
-								</svg>
-							</button>
-
-							<div class="criteria-content" id={`criteria-${trailblazer.id}`} aria-hidden="true">
-								<div class="criteria-item">
-									<h5>🎯 Mut</h5>
-									<p>{trailblazer.criteria.courage}</p>
-								</div>
-								<div class="criteria-item">
-									<h5>💡 Innovation</h5>
-									<p>{trailblazer.criteria.innovation}</p>
-								</div>
-								<div class="criteria-item">
-									<h5>⚙️ Umsetzung</h5>
-									<p>{trailblazer.criteria.implementation}</p>
-								</div>
-								<div class="criteria-item">
-									<h5>📊 Relevanz</h5>
-									<p>{trailblazer.criteria.relevance}</p>
-								</div>
-								<div class="criteria-item">
-									<h5>🌟 Vorbildfunktion</h5>
-									<p>{trailblazer.criteria.roleModel}</p>
-								</div>
-							</div>
 						</div>
 					</div>
 				))
@@ -447,81 +411,6 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 		height: 1.2rem;
 	}
 
-	/* Criteria Toggle */
-	.criteria-toggle {
-		width: 100%;
-		padding: 0.75rem 1rem;
-		background: var(--glass-light);
-		border: 1px solid var(--glass-border);
-		border-radius: 10px;
-		color: #fff;
-		font-size: 0.95rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-top: auto;
-	}
-
-	.criteria-toggle:hover {
-		background: var(--glass-strong);
-	}
-
-	.criteria-toggle .toggle-icon {
-		transition: transform 0.3s ease;
-	}
-
-	.criteria-toggle[aria-expanded="true"] .toggle-icon {
-		transform: rotate(180deg);
-	}
-
-	/* Criteria Content */
-	.criteria-content {
-		max-height: 0;
-		overflow: hidden;
-		opacity: 0;
-		transition: all 0.4s ease;
-		margin-top: 0;
-		will-change: max-height, opacity, transform;
-	}
-
-	.criteria-content[aria-hidden="false"] {
-		max-height: 800px;
-		opacity: 1;
-		margin-top: 1rem;
-	}
-
-	.criteria-item {
-		background: var(--shadow-dark);
-		border-radius: 10px;
-		padding: 1rem;
-		margin-bottom: 0.75rem;
-		text-align: left;
-	}
-
-	.criteria-item:last-child {
-		margin-bottom: 0;
-	}
-
-	.criteria-item h5 {
-		font-size: 1rem;
-		font-weight: 600;
-		margin-bottom: 0.5rem;
-		color: var(--color-accent);
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
-
-	.criteria-item p {
-		font-size: 0.9rem;
-		line-height: 1.5;
-		opacity: 0.9;
-		margin: 0;
-	}
-
 	/* Responsive Design */
 	@media (min-width: 768px) {
 		.section-divider-top svg {
@@ -632,28 +521,6 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 			// Add tab listeners
 			tabs.forEach(function(tab) {
 				tab.addEventListener('click', handleTabClick);
-			});
-
-			// Criteria toggle functionality
-			var criteriaToggles = document.querySelectorAll('.criteria-toggle');
-
-			criteriaToggles.forEach(function(toggle) {
-				toggle.addEventListener('click', function(e) {
-					e.preventDefault();
-					var isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-					var targetId = toggle.getAttribute('aria-controls');
-					var content = document.getElementById(targetId);
-
-					if (!content) return;
-
-					if (isExpanded) {
-						toggle.setAttribute('aria-expanded', 'false');
-						content.setAttribute('aria-hidden', 'true');
-					} else {
-						toggle.setAttribute('aria-expanded', 'true');
-						content.setAttribute('aria-hidden', 'false');
-					}
-				});
 			});
 		}
 
