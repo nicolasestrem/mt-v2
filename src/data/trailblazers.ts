@@ -1,11 +1,11 @@
 /**
  * Trailblazers 2025 Data
  *
- * Contains all data for the 24 Mobility Trailblazers 2025 honorees,
+ * Contains all data for the 22 Mobility Trailblazers 2025 honorees,
  * including their profiles, evaluation criteria, and categorization.
  *
  * @module trailblazers
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 // Type Definitions
@@ -42,9 +42,9 @@ export interface CategoryColors {
 	politik: string;
 }
 
-// Trailblazers Data (24 total)
+// Trailblazers Data (22 total)
 export const trailblazers: Trailblazer[] = [
-	// ETABLIERTE UNTERNEHMEN (6)
+	// ETABLIERTE UNTERNEHMEN (5)
 	{
 		id: "andre-schwammlein",
 		name: "André Schwämmlein",
@@ -62,32 +62,17 @@ export const trailblazers: Trailblazer[] = [
 		linkedin: "https://www.linkedin.com/in/andreschwammlein/"
 	},
 	{
-		id: "friedrich-draxlmaier",
-		name: "Friedrich Dräxlmaier",
-		organization: "DRÄXLMAIER Group",
-		category: "etablierte",
-		quickSummary: "CEO der DRÄXLMAIER Group, führender Automobilzulieferer für Premium-Fahrzeuge",
-		criteria: {
-			courage: "Frühe Fokussierung auf Elektromobilität und nachhaltige Bordnetzsysteme",
-			innovation: "Entwicklung hochinnovativer Bordnetz- und Interieur-Systeme für E-Fahrzeuge",
-			implementation: "Weltweite Expansion mit über 70.000 Mitarbeitern an 60 Standorten",
-			relevance: "Schlüsselrolle in der Transformation zur Elektromobilität",
-			roleModel: "Familienunternehmen als Vorbild für nachhaltiges Wachstum und Innovation"
-		},
-		image: "/images/trailblazers/FriedrichDräxlmaier.png"
-	},
-	{
 		id: "helmut-ruhl",
 		name: "Helmut Ruhl",
-		organization: "AMAG Austria Metall AG",
+		organization: "AMAG",
 		category: "etablierte",
-		quickSummary: "CEO der AMAG, Pionier für nachhaltiges Aluminium in der Mobilitätsindustrie",
+		quickSummary: "Transformierte die AMAG vom Autoimporteur zum Anbieter nachhaltiger Mobilitätslösungen",
 		criteria: {
-			courage: "Konsequente Ausrichtung auf CO₂-neutrale Aluminiumproduktion",
-			innovation: "Entwicklung von Leichtbaulösungen für die Automobilindustrie",
-			implementation: "Aufbau einer der nachhaltigsten Aluminiumproduktionen weltweit",
-			relevance: "Ermöglicht Gewichtsreduktion und damit Reichweitenerhöhung bei E-Fahrzeugen",
-			roleModel: "Zeigt, wie traditionelle Industrie nachhaltig transformiert werden kann"
+			courage: "Aufbau eines Ökosystems aus E-Auto-Abos, Carsharing und Ladeinfrastruktur",
+			innovation: "Netto-Null-Ziel bis 2040 mit Fokus auf erneuerbare Energien",
+			implementation: "Best Practice für Dekarbonisierung der Automobilbranche",
+			relevance: "Zeigt werteorientierte Führung in der Transformation",
+			roleModel: "Vorbild für mutige und nachhaltige Unternehmenstransformation"
 		},
 		image: "/images/trailblazers/HelmutRuhl.jpg",
 		linkedin: "https://www.linkedin.com/in/helmut-ruhl/"
@@ -141,7 +126,7 @@ export const trailblazers: Trailblazer[] = [
 		linkedin: "https://www.linkedin.com/in/ulrich-prediger/"
 	},
 
-	// START-UPS & KATALYSATOREN (15)
+	// START-UPS & KATALYSATOREN (14)
 	{
 		id: "corsin-sulser",
 		name: "Dr. Corsin Sulser",
@@ -191,22 +176,6 @@ export const trailblazers: Trailblazer[] = [
 		linkedin: "https://www.linkedin.com/in/felix-poernbacher/"
 	},
 	{
-		id: "horst-graef",
-		name: "Horst Graef",
-		organization: "deer GmbH",
-		category: "startups",
-		quickSummary: "Founder & CEO von deer, Pionier für E-Scooter Sharing in Deutschland",
-		criteria: {
-			courage: "Früher Markteintritt in umstrittenen Mikromobilitätsmarkt",
-			innovation: "Swappable Battery Technologie und IoT-Integration",
-			implementation: "Aufbau nachhaltiger Betriebsmodelle in über 20 Städten",
-			relevance: "Lösung für die letzte Meile im urbanen Raum",
-			roleModel: "Zeigt verantwortungsvolles Wachstum im Sharing-Markt"
-		},
-		image: "/images/trailblazers/HorstGraef.jpg",
-		linkedin: "https://www.linkedin.com/in/horstgraef/"
-	},
-	{
 		id: "judith-haberli",
 		name: "Judith Häberli",
 		organization: "Urban Connect",
@@ -225,15 +194,15 @@ export const trailblazers: Trailblazer[] = [
 	{
 		id: "katharina-kreutzer",
 		name: "Katharina Kreutzer",
-		organization: "MOVN",
+		organization: "MUVN",
 		category: "startups",
-		quickSummary: "Co-Founderin MOVN, entwickelt Software für autonome Fahrzeuge",
+		quickSummary: "Co-Founderin MUVN, entwickelt Plattform für nachhaltige urbane Logistik",
 		criteria: {
-			courage: "Fokus auf Level 4 Autonomie in komplexen urbanen Umgebungen",
-			innovation: "Edge-Computing Lösungen für Echtzeit-Entscheidungen",
-			implementation: "Erfolgreiche Tests mit führenden OEMs",
-			relevance: "Beschleunigt Einführung autonomer Mobilität",
-			roleModel: "Junge Gründerin in der KI-Entwicklung"
+			courage: "Verbindung von Sharing Economy und Gütertransport in neuem digitalen Ansatz",
+			innovation: "Vermeidung von Leerfahrten durch intelligente Plattform",
+			implementation: "Reduktion von Emissionen im urbanen Logistikverkehr",
+			relevance: "Zeigt wie Kreativität und Ökologie zusammenpassen",
+			roleModel: "Mutiges Gründen mit ökologischem Mehrwert"
 		},
 		image: "/images/trailblazers/KatharinaKreutzer.jpg",
 		linkedin: "https://www.linkedin.com/in/katharinakreutzer/"
@@ -385,20 +354,19 @@ export const trailblazers: Trailblazer[] = [
 
 	// POLITIK & ÖFFENTLICHE INSTITUTIONEN (3)
 	{
-		id: "alexander-moller",
-		name: "Alexander Möller",
-		organization: "Verband Deutscher Verkehrsunternehmen (VDV)",
+		id: "alexandra-reinagl",
+		name: "Alexandra Reinagl",
+		organization: "Wiener Linien",
 		category: "politik",
-		quickSummary: "Geschäftsführer Politik beim VDV, gestaltet Verkehrswende auf Bundesebene",
+		quickSummary: "Geschäftsführerin der Wiener Linien, prägt Entwicklung einer der größten städtischen Verkehrsbetriebe im DACH-Raum",
 		criteria: {
-			courage: "Konsequentes Eintreten für ÖPNV-Priorisierung in der Politik",
-			innovation: "Vorantreiben digitaler Tickets und intermodaler Vernetzung",
-			implementation: "Deutschlandticket als größte ÖPNV-Reform",
-			relevance: "Politische Weichenstellung für nachhaltige Mobilität",
-			roleModel: "Erfolgreiche Interessenvertretung für öffentlichen Verkehr"
+			courage: "Konsequente Transformation hin zu emissionsfreier Mobilität",
+			innovation: "Massiver Ausbau der U-Bahn-Linie U2xU5 und Elektrifizierung der Busflotte",
+			implementation: "Innovative digitale Services für Fahrgäste und moderne Verkehrsinfrastruktur",
+			relevance: "Vorreiter klimafreundlicher und attraktiver urbaner Mobilität",
+			roleModel: "Internationale Strahlkraft für nachhaltige Verkehrsbetriebe"
 		},
-		image: "/images/trailblazers/AlexanderMöller.jpg",
-		linkedin: "https://www.linkedin.com/in/alexandermoeller/"
+		image: "/images/trailblazers/AlexandraReinagl.jpeg"
 	},
 	{
 		id: "anjes-tjarks",

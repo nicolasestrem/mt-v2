@@ -109,9 +109,9 @@ This document outlines the comprehensive SEO optimization implemented for mobili
 
 | Original | Optimized | Section |
 |----------|-----------|---------|
-| "Warum «25 Mobility Trailblazers In 25»?" | "Warum wir 25 Vorreiter der Mobilitätswende auszeichnen" | Mission |
+| "Warum «Mobility Trailblazers 2025»?" | "Warum wir Vorreiter der Mobilitätswende auszeichnen" | Mission |
 | "Was zeichnet Mobility Trailblazers aus?" | "Wen wir als Mobility Trailblazers suchen" | Mission |
-| "Wer steht hinter den «25 Mobility Trailblazers in 25»?" | "Die Initiative hinter den Mobility Trailblazers Awards" | About |
+| "Wer steht hinter den «Mobility Trailblazers 2025»?" | "Die Initiative hinter den Mobility Trailblazers Awards" | About |
 | "Update: Prozess für 25 in 2025 abgeschlossen" | "Aktueller Stand: 25 in 2025 erfolgreich abgeschlossen" | Nomination |
 | "Wer kann nominiert werden?" | "Voraussetzungen für eine Nominierung als Mobility Trailblazer" | Nomination |
 | "So funktioniert die Nominierung" | "Nominierungsprozess: So schlagen Sie Vorreiter vor" | Nomination |
@@ -128,8 +128,8 @@ This document outlines the comprehensive SEO optimization implemented for mobili
 
 | Image | Old Alt Text | New Alt Text |
 |-------|--------------|--------------|
-| Logo (Header) | "Mobility Trailblazers - 25 Mobility Trailblazers in 25, Logo zur Startseite" | "Mobility Trailblazers Logo - Award für Vorreiter der Mobilitätswende im DACH-Raum" |
-| Logo (Footer) | "Mobility Trailblazers - 25 Mobility Trailblazers in 25, Initiative für Mobilitätswende" | "Mobility Trailblazers Awards - Initiative zur Auszeichnung von Pionieren der nachhaltigen Verkehrswende" |
+| Logo (Header) | "Mobility Trailblazers 2025 - Logo zur Startseite" | "Mobility Trailblazers Logo - Award für Vorreiter der Mobilitätswende im DACH-Raum" |
+| Logo (Footer) | "Mobility Trailblazers 2025 - Initiative für Mobilitätswende" | "Mobility Trailblazers Awards - Initiative zur Auszeichnung von Pionieren der nachhaltigen Verkehrswende" |
 | Fernsehturm | "Fernsehturm Berlin - Wahrzeichen der deutschen Hauptstadt, symbolisiert die Innovationskraft im Mobilitätswandel" | "Berliner Fernsehturm - Symbol für Innovation und nachhaltige Mobilitätswende im DACH-Raum" |
 | IMO Logo | "Logo des Instituts für Mobilität der Universität St. Gallen - Forschungsinstitut für die Zukunft der Mobilität" | "IMO-HSG Logo - Institut für Mobilität der Universität St. Gallen, führendes Forschungsinstitut für nachhaltige Mobilitätswende" |
 | TG Logo | "Logo Tomczak-Gross & Partners AG - evidenzbasierte Beratung für New Mobility und Innovation" | "Tomczak-Gross & Partners AG Logo - Experten für New Mobility, nachhaltige Verkehrswende und Innovation im DACH-Raum" |

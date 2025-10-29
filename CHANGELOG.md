@@ -4,13 +4,64 @@ This file tracks major updates and enhancements to the MobilityTrailblazers.de p
 
 ## October 2025
 
+### Terminology Update - "Mobility Trailblazers 2025" (Oct 29)
+
+**Content Update**: Updated all instances of "25 Mobility Trailblazers in 25" to the correct "Mobility Trailblazers 2025" format across the entire website.
+
+**Changes**:
+- **Hero title**: Changed from "25 Mobility Trailblazers in 25" to "Mobility Trailblazers 2025"
+- **Hero subtitle**: Removed "25 Menschen" to simply "Menschen aus"
+- **Footer description**: Updated tagline to use correct format
+- **About section**: Award name corrected in description
+- **Thank you page**: Updated reference to award name
+- **PWA manifest**: Corrected app description
+- **Test expectations**: Updated title regex pattern
+- **Documentation**: Updated all code examples and references in docs
+
+**Files Modified**:
+- `src/components/Hero.astro`: Hero title and subtitle
+- `src/components/Footer.astro`: Footer description
+- `src/components/AboutSection.astro`: Award description
+- `src/components/TrailblazersSection.astro`: Removed candidate counts from tabs
+- `src/pages/danke-nominierung.astro`: Thank you page text
+- `public/manifest.json`: PWA description
+- `tests/core.spec.ts`: Test title expectation
+- `docs/PWA_GUIDE.md`, `docs/SEO_OPTIMIZATION_REPORT.md`, `docs/TESTING-IMPROVEMENTS.md`: Documentation examples
+
+**Result**: Consistent branding as "Mobility Trailblazers 2025" throughout the site.
+
+### Trailblazers 2025 - Data Correction to Match PDF Source (Oct 29)
+
+**Critical Fix**: Corrected candidate list to match official PDF source document.
+
+**Changes**:
+- **Removed 3 incorrect candidates** (not in PDF source):
+  - Friedrich Dräxlmaier (DRÄXLMAIER Group) - ETABLIERTE category
+  - Horst Graef (deer GmbH) - START-UPS category
+  - Alexander Möller (VDV) - POLITIK category
+- **Added 1 missing candidate**:
+  - Alexandra Reinagl (Wiener Linien) - POLITIK category
+- **Fixed organization name**: Changed "MOVN" to "MUVN" for Katharina Kreutzer
+- **Updated candidate details**: Corrected Helmut Ruhl's description to match PDF (AMAG as mobility solutions provider, not aluminum)
+- **Updated counts**: Changed from 24 to 22 total trailblazers
+  - ETABLIERTE: 6 → 5
+  - START-UPS: 15 → 14
+  - POLITIK: 3 (unchanged)
+
+**Files Modified**:
+- `src/data/trailblazers.ts`: Removed/added candidates, updated details
+- `src/components/TrailblazersSection.astro`: Updated subtitle and category counts
+- `public/images/trailblazers/`: Added AlexandraReinagl.jpeg, removed 3 unused images
+
+**Source of Truth**: `Mobility_Trailblazers_Top25_in_2025_V2.pdf` (actually contains 22 candidates, not 25)
+
 ### Trailblazers 2025 - Code Quality Improvements (Oct 28)
 
 **Fixes**:
 - Fixed 12 critical stylelint failures (CSS color notation + keyframe naming)
 - Changed `rgba()` syntax to modern `rgb()` format
 - Renamed keyframe from `fadeIn` to `fade-in` (kebab-case)
-- Corrected subtitle from "25 Visionäre" to "24 Visionäre"
+- Corrected subtitle from "25 Visionäre" to "24 Visionäre" (later corrected to "22 Visionäre" on Oct 29)
 - Removed empty LinkedIn field for Friedrich Dräxlmaier (profile not found)
 
 **Refactoring**:
@@ -31,16 +82,16 @@ This file tracks major updates and enhancements to the MobilityTrailblazers.de p
 
 ### Trailblazers 2025 Section Implementation (Oct 28)
 
-**Feature**: Added new "Trailblazers 2025" section showcasing 24 mobility innovators.
+**Feature**: Added new "Trailblazers 2025" section showcasing 22 mobility innovators (initially implemented with 24, corrected on Oct 29).
 
 **Implementation**:
-- Created `TrailblazersSection.astro` component with full data for all 24 honorees
+- Created `TrailblazersSection.astro` component with full data for all honorees
 - Added interactive category filtering with tabs (All, Etablierte Unternehmen, Start-ups & Katalysatoren, Politik & Öffentliche Institutionen)
 - Implemented expandable details showing 5 evaluation criteria for each trailblazer
-- Added 24 profile photos to `/public/images/trailblazers/`
+- Added profile photos to `/public/images/trailblazers/`
 
 **Key Features**:
-- **Category Distribution**: 6 Etablierte Unternehmen, 15 Start-ups & Katalysatoren, 3 Politik & Öffentliche Institutionen
+- **Category Distribution**: 5 Etablierte Unternehmen, 14 Start-ups & Katalysatoren, 3 Politik & Öffentliche Institutionen
 - **Profile Information**: Name, title, organization, quick summary, LinkedIn links
 - **Evaluation Criteria**: Mut (Courage), Innovation, Umsetzung (Implementation), Relevanz (Relevance), Vorbildfunktion (Role Model)
 - **Interactive Elements**: Category filter tabs, expandable criteria sections

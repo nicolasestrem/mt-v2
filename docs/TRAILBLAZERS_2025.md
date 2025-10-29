@@ -1,7 +1,7 @@
 # Trailblazers 2025 Section Documentation
 
 ## Overview
-The Trailblazers 2025 section showcases 24 selected mobility innovators who are shaping the future of transportation in the DACH region. This feature was added to highlight the winners/honorees of the Mobility Trailblazers 2025 award.
+The Trailblazers 2025 section showcases 22 selected mobility innovators who are shaping the future of transportation in the DACH region. This feature was added to highlight the winners/honorees of the Mobility Trailblazers 2025 award.
 
 ## Component Location
 - **Main Component**: `/src/components/TrailblazersSection.astro`
@@ -13,9 +13,9 @@ The Trailblazers 2025 section showcases 24 selected mobility innovators who are 
 
 ### 1. Category Filtering
 The section includes interactive tabs to filter trailblazers by category:
-- **All** (24 total)
-- **Etablierte Unternehmen** (6 companies)
-- **Start-ups & Katalysatoren** (15 startups)
+- **All** (22 total)
+- **Etablierte Unternehmen** (5 companies)
+- **Start-ups & Katalysatoren** (14 startups)
 - **Politik & Öffentliche Institutionen** (3 institutions)
 
 ### 2. Profile Cards
@@ -60,9 +60,9 @@ interface Trailblazer {
 ```
 
 ### Categories Distribution
-- **Etablierte Unternehmen (6)**: Schwämmlein, Dräxlmaier, Ruhl, Nevska, Liebelt, Prediger
-- **Start-ups & Katalysatoren (15)**: Sulser, Beste, Pörnbacher, Graef, Häberli, Kreutzer, Miggiano, Stranger, Ballweg, Uhlmann, Fleischer, Meyer, Tanzer, Ouboter, Doubara
-- **Politik & Öffentliche Institutionen (3)**: Möller, Tjarks, Knapp
+- **Etablierte Unternehmen (5)**: Schwämmlein, Ruhl, Nevska, Liebelt, Prediger
+- **Start-ups & Katalysatoren (14)**: Sulser, Beste, Pörnbacher, Häberli, Kreutzer, Miggiano, Stranger, Ballweg, Uhlmann, Fleischer, Meyer, Tanzer, Ouboter, Doubara
+- **Politik & Öffentliche Institutionen (3)**: Reinagl, Tjarks, Knapp
 
 ## Styling
 
@@ -138,7 +138,7 @@ interface Trailblazer {
 - Border: 4px solid accent color
 - Border-radius: 50% (circular)
 
-### Image Files (24 total)
+### Image Files (22 total)
 All profile photos have been extracted from the source PDFs and optimized for web display.
 
 ## Integration Points
@@ -169,7 +169,7 @@ All profile photos have been extracted from the source PDFs and optimized for we
 - Minimal JavaScript for interactivity
 
 ### Build Impact
-- Adds ~1MB for 24 images
+- Adds ~1MB for 22 images
 - Component size: ~35KB uncompressed
 - No additional dependencies
 
@@ -182,7 +182,7 @@ All profile photos have been extracted from the source PDFs and optimized for we
 
 ### Manual Testing Checklist
 - [x] Category filtering works correctly
-- [x] All 24 profiles display properly
+- [x] All 22 profiles display properly
 - [x] Expandable criteria sections function
 - [x] LinkedIn links open in new tabs
 - [x] Responsive design on all devices
@@ -197,7 +197,7 @@ All trailblazer data is now stored in a separate TypeScript file for better main
 **Location**: `/src/data/trailblazers.ts`
 
 **Exports**:
-- `trailblazers`: Array of all 24 trailblazer profiles
+- `trailblazers`: Array of all 22 trailblazer profiles
 - `Trailblazer`: TypeScript interface
 - `categoryLabels`: Display labels for categories
 - `categoryColors`: Color codes for category badges
