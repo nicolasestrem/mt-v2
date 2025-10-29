@@ -112,7 +112,7 @@ This document outlines the comprehensive SEO optimization implemented for mobili
 | "Warum «Mobility Trailblazers 2025»?" | "Warum wir Vorreiter der Mobilitätswende auszeichnen" | Mission |
 | "Was zeichnet Mobility Trailblazers aus?" | "Wen wir als Mobility Trailblazers suchen" | Mission |
 | "Wer steht hinter den «Mobility Trailblazers 2025»?" | "Die Initiative hinter den Mobility Trailblazers Awards" | About |
-| "Update: Prozess für 25 in 2025 abgeschlossen" | "Aktueller Stand: 25 in 2025 erfolgreich abgeschlossen" | Nomination |
+| "Update: Prozess für Mobility Trailblazers 2025 abgeschlossen" | "Aktueller Stand: Mobility Trailblazers 2025 erfolgreich abgeschlossen" | Nomination |
 | "Wer kann nominiert werden?" | "Voraussetzungen für eine Nominierung als Mobility Trailblazer" | Nomination |
 | "So funktioniert die Nominierung" | "Nominierungsprozess: So schlagen Sie Vorreiter vor" | Nomination |
 | "Warum Ihre Nominierung wichtig ist" | "Bedeutung Ihrer Nominierung für die Mobilitätswende" | Nomination |
