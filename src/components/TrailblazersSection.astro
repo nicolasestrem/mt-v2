@@ -5,22 +5,34 @@
  * Displays the 22 Mobility Trailblazers 2025 honorees with interactive features.
  *
  * Features:
- * - Category filtering via tabs (All, Etablierte, Start-ups, Politik)
+ * - Random ordering of candidates (shuffled on each page load)
  * - Responsive grid layout
  * - LinkedIn profile links
  * - Glassmorphism design effects
  *
  * @component
- * @version 1.1.0
+ * @version 1.2.0
  * @since October 2024
  */
 
 // Import required components and data
 import Icons from "./Icons.astro";
-import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "../data/trailblazers";
+import { trailblazers, type Trailblazer } from "../data/trailblazers";
+
+// Fisher-Yates shuffle algorithm for random ordering
+function shuffleArray<T>(array: T[]): T[] {
+	const shuffled = [...array];
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	return shuffled;
+}
+
+// Randomize trailblazers order
+const randomizedTrailblazers = shuffleArray(trailblazers);
 
 // Data now imported from src/data/trailblazers.ts for better maintainability
-// Removed 400+ lines of hardcoded data
 // TO ADD/EDIT TRAILBLAZERS: Edit src/data/trailblazers.ts instead
 ---
 
@@ -44,56 +56,11 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 			</p>
 		</div>
 
-		<!-- Category Filter Tabs -->
-		<div class="category-tabs" role="tablist" aria-label="Kategorie Filter">
-			<button
-				class="category-tab active"
-				role="tab"
-				aria-selected="true"
-				aria-controls="trailblazers-panel"
-				data-category="all"
-			>
-				Alle
-			</button>
-			<button
-				class="category-tab"
-				role="tab"
-				aria-selected="false"
-				aria-controls="trailblazers-panel"
-				data-category="etablierte"
-			>
-				Etablierte Unternehmen
-			</button>
-			<button
-				class="category-tab"
-				role="tab"
-				aria-selected="false"
-				aria-controls="trailblazers-panel"
-				data-category="startups"
-			>
-				Start-ups & Katalysatoren
-			</button>
-			<button
-				class="category-tab"
-				role="tab"
-				aria-selected="false"
-				aria-controls="trailblazers-panel"
-				data-category="politik"
-			>
-				Politik & Institutionen
-			</button>
-		</div>
-
-		<!-- Screen reader announcements for filter changes -->
-		<div class="sr-only" role="status" aria-live="polite" aria-atomic="true" id="filter-status">
-			Zeige alle 22 Trailblazers
-		</div>
-
 		<!-- Trailblazers Grid -->
-		<div class="trailblazers-grid" id="trailblazers-panel" role="tabpanel">
+		<div class="trailblazers-grid">
 			{
-				trailblazers.map((trailblazer) => (
-					<div class="trailblazer-card" data-category={trailblazer.category}>
+				randomizedTrailblazers.map((trailblazer) => (
+					<div class="trailblazer-card">
 						<div class="card-header">
 							<div class="card-image">
 								<img
@@ -104,10 +71,6 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 									loading="lazy"
 								/>
 							</div>
-						</div>
-
-						<div class="category-badge" data-category={trailblazer.category}>
-							{categoryLabels[trailblazer.category]}
 						</div>
 
 						<div class="card-content">
@@ -231,45 +194,7 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 		opacity: 0.95;
 		max-width: 700px;
 		margin: 0 auto;
-	}
-
-	/* Category Tabs */
-	.category-tabs {
-		display: flex;
-		justify-content: center;
-		gap: 0.5rem;
 		margin-bottom: 3rem;
-		flex-wrap: wrap;
-	}
-
-	.category-tab {
-		padding: 0.75rem 1.5rem;
-		background: var(--glass-light);
-		backdrop-filter: blur(10px);
-		border: 2px solid var(--glass-border);
-		border-radius: 50px;
-		color: #fff;
-		font-size: 1rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		white-space: nowrap;
-	}
-
-	.category-tab:hover {
-		background: var(--glass-strong);
-		transform: translateY(-2px);
-	}
-
-	.category-tab.active {
-		background: var(--color-accent);
-		border-color: var(--color-accent);
-		transform: scale(1.05);
-	}
-
-	.category-tab .count {
-		opacity: 0.9;
-		font-size: 0.9em;
 	}
 
 	/* Trailblazers Grid */
@@ -311,12 +236,8 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 		background: var(--glass-medium);
 	}
 
-	.trailblazer-card[data-hidden="true"] {
-		display: none;
-	}
-
 	.card-header {
-		margin-bottom: 0;
+		margin-bottom: 1.5rem;
 	}
 
 	.card-image {
@@ -335,34 +256,6 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 
 	.trailblazer-card:hover .card-image img {
 		transform: scale(1.05);
-	}
-
-	.category-badge {
-		display: block;
-		width: fit-content;
-		margin: 1rem auto 1.5rem;
-		padding: 0.5rem 1rem;
-		border-radius: 20px;
-		font-size: 0.85rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-		text-align: center;
-	}
-
-	.category-badge[data-category="etablierte"] {
-		background: #003C3D;
-		color: #fff;
-	}
-
-	.category-badge[data-category="startups"] {
-		background: #C1693C;
-		color: #fff;
-	}
-
-	.category-badge[data-category="politik"] {
-		background: #6B46C1;
-		color: #fff;
 	}
 
 	.card-content {
@@ -524,15 +417,6 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 			font-size: 1.1rem;
 		}
 
-		.category-tabs {
-			gap: 0.4rem;
-		}
-
-		.category-tab {
-			padding: 0.6rem 1rem;
-			font-size: 0.9rem;
-		}
-
 		.trailblazers-grid {
 			grid-template-columns: 1fr;
 			gap: 2rem;
@@ -550,72 +434,18 @@ import { trailblazers, categoryLabels, categoryColors, type Trailblazer } from "
 </style>
 
 <script is:inline>
-	// Category filtering and criteria toggle functionality
+	// Summary toggle functionality
 	(function() {
 		function initTrailblazers() {
-			// Category filtering
-			var tabs = document.querySelectorAll('.category-tab');
-			var cards = document.querySelectorAll('.trailblazer-card');
+			var toggleButtons = document.querySelectorAll('.toggle-summary');
 
-			if (!tabs.length || !cards.length) {
+			if (!toggleButtons.length) {
 				// Use requestAnimationFrame for better performance
 				requestAnimationFrame(function() {
 					requestAnimationFrame(initTrailblazers);
 				});
 				return;
 			}
-
-			// Category labels for announcements
-			var categoryLabels = {
-				'all': 'alle 22 Trailblazers',
-				'etablierte': '5 Etablierte Unternehmen',
-				'startups': '14 Start-ups & Katalysatoren',
-				'politik': '3 Politik & Öffentliche Institutionen'
-			};
-
-			// Update filter status announcement for screen readers
-			function updateFilterStatus(category) {
-				var statusEl = document.getElementById('filter-status');
-				if (statusEl) {
-					statusEl.textContent = 'Zeige ' + categoryLabels[category];
-				}
-			}
-
-			// Tab click handler
-			function handleTabClick(e) {
-				var clickedTab = e.currentTarget;
-				var category = clickedTab.getAttribute('data-category');
-
-				// Update active tab
-				tabs.forEach(function(tab) {
-					tab.classList.remove('active');
-					tab.setAttribute('aria-selected', 'false');
-				});
-				clickedTab.classList.add('active');
-				clickedTab.setAttribute('aria-selected', 'true');
-
-				// Filter cards
-				cards.forEach(function(card) {
-					if (category === 'all' || card.getAttribute('data-category') === category) {
-						card.setAttribute('data-hidden', 'false');
-						card.style.display = '';
-					} else {
-						card.setAttribute('data-hidden', 'true');
-						card.style.display = 'none';
-					}
-				});
-
-				// Announce filter change to screen readers
-				updateFilterStatus(category);
-			}
-
-			// Add tab listeners
-			tabs.forEach(function(tab) {
-				tab.addEventListener('click', handleTabClick);
-			});
-
-			// Summary toggle functionality
-			var toggleButtons = document.querySelectorAll('.toggle-summary');
 
 			toggleButtons.forEach(function(button) {
 				button.addEventListener('click', function() {
