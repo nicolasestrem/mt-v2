@@ -113,16 +113,6 @@ const randomizedTrailblazers = shuffleArray(trailblazers);
 </section>
 
 <style>
-	/* CSS Custom Properties for Glassmorphism Effects */
-	.trailblazers {
-		--glass-light: rgb(255 255 255 / 0.1);
-		--glass-medium: rgb(255 255 255 / 0.15);
-		--glass-strong: rgb(255 255 255 / 0.2);
-		--glass-border: rgb(255 255 255 / 0.2);
-		--shadow-dark: rgb(0 0 0 / 0.2);
-		--shadow-darker: rgb(0 0 0 / 0.3);
-	}
-
 	/* Screen reader only content */
 	.sr-only {
 		position: absolute;
@@ -131,12 +121,19 @@ const randomizedTrailblazers = shuffleArray(trailblazers);
 		padding: 0;
 		margin: -1px;
 		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
+		clip-path: inset(50%);
 		white-space: nowrap;
 		border-width: 0;
 	}
 
 	.trailblazers {
+		--glass-light: rgb(255 255 255 / 0.1);
+		--glass-medium: rgb(255 255 255 / 0.15);
+		--glass-strong: rgb(255 255 255 / 0.2);
+		--glass-border: rgb(255 255 255 / 0.2);
+		--shadow-dark: rgb(0 0 0 / 0.2);
+		--shadow-darker: rgb(0 0 0 / 0.3);
+
 		background: linear-gradient(
 			135deg,
 			var(--color-primary) 0%,
@@ -212,6 +209,7 @@ const randomizedTrailblazers = shuffleArray(trailblazers);
 			opacity: 0;
 			transform: translateY(10px);
 		}
+
 		to {
 			opacity: 1;
 			transform: translateY(0);
@@ -310,7 +308,7 @@ const randomizedTrailblazers = shuffleArray(trailblazers);
 		background: linear-gradient(
 			to bottom,
 			transparent,
-			rgba(0, 60, 61, 0.9)
+			rgb(0, 60, 61, 0.9)
 		);
 		opacity: 1;
 		transition: opacity 0.3s ease;
