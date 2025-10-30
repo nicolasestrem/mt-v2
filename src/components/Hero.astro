@@ -7,11 +7,11 @@
 		<div class="hero-content">
 			<div class="hero-text">
 				<h2 class="hero-title">
-					25 Mobility Trailblazers in 25
+					Mobility Trailblazers 2025
 				</h2>
 
 				<p class="hero-subtitle">
-					<strong><em>Wir zeichnen 25 Menschen aus, die 2025 den Mobilitätswandel mutig und innovativ in Deutschland, der Schweiz und Österreich vorantreiben.</em></strong><br>
+					<strong><em>Wir zeichnen Menschen aus, die 2025 den Mobilitätswandel mutig und innovativ in Deutschland, der Schweiz und Österreich vorantreiben.</em></strong><br>
 					<strong><em>Am 30. Oktober ist es so weit: Die Awards werden das erste Mal vergeben.</em></strong>
 				</p>
 
@@ -233,6 +233,8 @@
 
 <script>
 	// Countdown timer functionality
+	let intervalId;
+
 	function updateCountdown() {
 		const targetDate = new Date('2025-10-30T16:00:00').getTime();
 		const now = new Date().getTime();
@@ -254,15 +256,17 @@
 			if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
 			if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
 		} else {
-			// Event has passed
-			if (daysEl) daysEl.textContent = '00';
-			if (hoursEl) hoursEl.textContent = '00';
-			if (minutesEl) minutesEl.textContent = '00';
-			if (secondsEl) secondsEl.textContent = '00';
+			// Event has passed - remove countdown from DOM
+			const countdownSection = document.querySelector('.countdown-section');
+			if (countdownSection) {
+				countdownSection.remove();
+			}
+			// Stop the timer since countdown is removed
+			clearInterval(intervalId);
 		}
 	}
 
 	// Update countdown every second
-	setInterval(updateCountdown, 1000);
+	intervalId = setInterval(updateCountdown, 1000);
 	updateCountdown(); // Initial call
 </script>

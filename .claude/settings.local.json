@@ -47,7 +47,9 @@
       "Bash(git stash:*)",
       "Bash(npx:*)",
       "Bash(npm run test:pr:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(unzip:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

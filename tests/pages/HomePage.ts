@@ -100,8 +100,8 @@ export class HomePage {
     this.missionContent = this.missionSection.locator('.mission-description, .mission-box p');
     
     // About section - use class selector
-    this.aboutSection = page.locator('section.about-section, section').filter({ hasText: 'Wer steht hinter' });
-    this.aboutTitle = page.locator('h3').filter({ hasText: 'Wer steht hinter' });
+    this.aboutSection = page.locator('section.about-section, section').filter({ hasText: 'Die Initiative hinter' });
+    this.aboutTitle = page.locator('h2').filter({ hasText: 'Die Initiative hinter' });
     this.aboutContent = this.aboutSection.locator('p');
     this.partnerCards = page.locator('.partner-card, .partner');
     this.berlinImage = page.locator('img[alt*="Fernsehturm"], img[alt*="Berlin"]');

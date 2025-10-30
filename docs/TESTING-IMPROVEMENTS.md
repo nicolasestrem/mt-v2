@@ -22,10 +22,10 @@ This document outlines the comprehensive testing improvements made to the Mobili
 ```astro
 // Mission.astro - Fixed heading hierarchy
 <h2 class="mission-prefix">Unsere Mission</h2>
-<h3 class="mission-title">Warum «25 Mobility Trailblazers In 25»?</h3>
+<h3 class="mission-title">Warum «Mobility Trailblazers 2025»?</h3>
 
 // AboutSection.astro - Changed H4 to H3
-<h3 class="about-intro">Wer steht hinter den «25 Mobility Trailblazers in 25»?</h3>
+<h3 class="about-intro">Wer steht hinter den «Mobility Trailblazers 2025»?</h3>
 
 // Criteria.astro - Changed H4 to H3
 <h3 class="criteria-title">{item.title}</h3>

@@ -4,6 +4,162 @@ This file tracks major updates and enhancements to the MobilityTrailblazers.de p
 
 ## October 2025
 
+### Performance & Accessibility Improvements - Trailblazers Section (Oct 29)
+
+**Code Quality Update**: Optimized Trailblazers section for better performance, accessibility, and maintainability.
+
+**CSS Improvements**:
+- Added CSS custom properties for glassmorphism effects (--glass-light, --glass-medium, --glass-strong, etc.)
+- Replaced all hardcoded RGBA values with reusable custom properties
+- Improved consistency across design system
+
+**Performance Enhancements**:
+- Enhanced fade-in animation with `transform` for GPU acceleration
+- Added `will-change` hints for smoother animations
+- Improved rendering performance with hardware-accelerated transforms
+
+**JavaScript Optimizations**:
+- Replaced `setTimeout` retry pattern with `requestAnimationFrame` for better performance
+- Eliminated potential race conditions
+- More efficient DOM initialization
+
+**Accessibility Improvements**:
+- Added aria-live region for screen reader announcements
+- Filter changes now announce to assistive technologies (e.g., "Zeige 5 Etablierte Unternehmen")
+- Improved screen reader experience with real-time status updates
+
+**Files Modified**:
+- `src/components/TrailblazersSection.astro`: All CSS, JavaScript, and HTML improvements
+
+**Testing**:
+- ✅ All critical Playwright tests passing
+- ✅ Build successful with no errors
+- ✅ Backwards compatible with existing functionality
+
+**Note**: Image optimization (WebP conversion) deferred - recommend converting 22 images to WebP format for ~60-80% size reduction (~600KB savings).
+
+### Terminology Update - "Mobility Trailblazers 2025" (Oct 29)
+
+**Content Update**: Updated all instances of "25 Mobility Trailblazers in 25" to the correct "Mobility Trailblazers 2025" format across the entire website.
+
+**Changes**:
+- **Hero title**: Changed from "25 Mobility Trailblazers in 25" to "Mobility Trailblazers 2025"
+- **Hero subtitle**: Removed "25 Menschen" to simply "Menschen aus"
+- **Footer description**: Updated tagline to use correct format
+- **About section**: Award name corrected in description
+- **Thank you page**: Updated reference to award name
+- **PWA manifest**: Corrected app description
+- **Test expectations**: Updated title regex pattern
+- **Documentation**: Updated all code examples and references in docs
+
+**Files Modified**:
+- `src/components/Hero.astro`: Hero title and subtitle
+- `src/components/Footer.astro`: Footer description
+- `src/components/AboutSection.astro`: Award description
+- `src/components/TrailblazersSection.astro`: Removed candidate counts from tabs
+- `src/pages/danke-nominierung.astro`: Thank you page text
+- `public/manifest.json`: PWA description
+- `tests/core.spec.ts`: Test title expectation
+- `docs/PWA_GUIDE.md`, `docs/SEO_OPTIMIZATION_REPORT.md`, `docs/TESTING-IMPROVEMENTS.md`: Documentation examples
+
+**Result**: Consistent branding as "Mobility Trailblazers 2025" throughout the site.
+
+### Trailblazers 2025 - Data Correction to Match PDF Source (Oct 29)
+
+**Critical Fix**: Corrected candidate list to match official PDF source document.
+
+**Changes**:
+- **Removed 3 incorrect candidates** (not in PDF source):
+  - Friedrich Dräxlmaier (DRÄXLMAIER Group) - ETABLIERTE category
+  - Horst Graef (deer GmbH) - START-UPS category
+  - Alexander Möller (VDV) - POLITIK category
+- **Added 1 missing candidate**:
+  - Alexandra Reinagl (Wiener Linien) - POLITIK category
+- **Fixed organization name**: Changed "MOVN" to "MUVN" for Katharina Kreutzer
+- **Updated candidate details**: Corrected Helmut Ruhl's description to match PDF (AMAG as mobility solutions provider, not aluminum)
+- **Updated counts**: Changed from 24 to 22 total trailblazers
+  - ETABLIERTE: 6 → 5
+  - START-UPS: 15 → 14
+  - POLITIK: 3 (unchanged)
+
+**Files Modified**:
+- `src/data/trailblazers.ts`: Removed/added candidates, updated details
+- `src/components/TrailblazersSection.astro`: Updated subtitle and category counts
+- `public/images/trailblazers/`: Added AlexandraReinagl.jpeg, removed 3 unused images
+
+**Source of Truth**: `Mobility_Trailblazers_Top25_in_2025_V2.pdf` (actually contains 22 candidates, not 25)
+
+### Trailblazers 2025 - Code Quality Improvements (Oct 28)
+
+**Fixes**:
+- Fixed 12 critical stylelint failures (CSS color notation + keyframe naming)
+- Changed `rgba()` syntax to modern `rgb()` format
+- Renamed keyframe from `fadeIn` to `fade-in` (kebab-case)
+- Corrected subtitle from "25 Visionäre" to "24 Visionäre" (later corrected to "22 Visionäre" on Oct 29)
+- Removed empty LinkedIn field for Friedrich Dräxlmaier (profile not found)
+
+**Refactoring**:
+- Extracted data to separate file `src/data/trailblazers.ts`
+- Reduced component size from 1000+ lines to ~600 lines
+- Improved maintainability and code organization
+- Added TypeScript exports for better type safety
+
+**Files Modified**:
+- `src/components/TrailblazersSection.astro`: Major refactoring
+- `src/data/trailblazers.ts`: New data file
+- `docs/TRAILBLAZERS_2025.md`: Updated documentation
+
+**Testing**:
+- All critical Playwright tests passing (4/4) ✅
+- Build successful with no errors ✅
+- Stylelint errors resolved ✅
+
+### Trailblazers 2025 Section Implementation (Oct 28)
+
+**Feature**: Added new "Trailblazers 2025" section showcasing 22 mobility innovators (initially implemented with 24, corrected on Oct 29).
+
+**Implementation**:
+- Created `TrailblazersSection.astro` component with full data for all honorees
+- Added interactive category filtering with tabs (All, Etablierte Unternehmen, Start-ups & Katalysatoren, Politik & Öffentliche Institutionen)
+- Implemented expandable details showing 5 evaluation criteria for each trailblazer
+- Added profile photos to `/public/images/trailblazers/`
+
+**Key Features**:
+- **Category Distribution**: 5 Etablierte Unternehmen, 14 Start-ups & Katalysatoren, 3 Politik & Öffentliche Institutionen
+- **Profile Information**: Name, title, organization, quick summary, LinkedIn links
+- **Evaluation Criteria**: Mut (Courage), Innovation, Umsetzung (Implementation), Relevanz (Relevance), Vorbildfunktion (Role Model)
+- **Interactive Elements**: Category filter tabs, expandable criteria sections
+- **Responsive Design**: 3-column grid on desktop → 2 columns on tablet → 1 column on mobile
+
+**Navigation**:
+- Added "Trailblazers 2025" menu item in header after "About"
+- Section positioned between AboutSection and Criteria for logical content flow
+- Anchor link: `/#trailblazers`
+
+**Technical Details**:
+- TypeScript interface for type safety
+- Client-side JavaScript for filtering and expandable sections
+- ARIA labels for accessibility
+- Glassmorphism effects matching existing design
+- Category color coding (Etablierte: dark teal, Start-ups: orange, Politik: purple)
+
+**Files Modified**:
+- `src/components/TrailblazersSection.astro`: New component (1000+ lines)
+- `src/components/Header.astro`: Added navigation item
+- `src/pages/index.astro`: Integrated component
+- `src/layouts/Layout.astro`: Fixed inline script syntax error
+- `tests/pages/HomePage.ts`: Updated test selector for AboutSection
+
+**Documentation**:
+- Created comprehensive documentation at `docs/TRAILBLAZERS_2025.md`
+- Detailed component structure, data model, and maintenance guide
+- Usage instructions for adding/updating trailblazers
+
+**Testing**:
+- All critical Playwright tests passing (4/4)
+- Build successful with no errors
+- Manual testing completed for all interactive features
+
 ### SEO: Fixed Duplicate FAQPage Schema Error (Oct 22)
 
 **Issue**: Google Search Console reported "Duplicate field 'FAQPage'" error on `/shop` page.

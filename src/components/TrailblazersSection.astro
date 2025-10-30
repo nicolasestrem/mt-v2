@@ -1,0 +1,495 @@
+---
+/**
+ * TrailblazersSection Component
+ *
+ * Displays the 22 Mobility Trailblazers 2025 honorees with interactive features.
+ *
+ * Features:
+ * - Random ordering of candidates (shuffled on each page load)
+ * - Responsive grid layout
+ * - LinkedIn profile links
+ * - Glassmorphism design effects
+ *
+ * @component
+ * @version 1.2.0
+ * @since October 2024
+ */
+
+// Import required components and data
+import Icons from "./Icons.astro";
+import { trailblazers, type Trailblazer } from "../data/trailblazers";
+
+// Fisher-Yates shuffle algorithm for random ordering
+function shuffleArray<T>(array: T[]): T[] {
+	const shuffled = [...array];
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	return shuffled;
+}
+
+// Randomize trailblazers order
+const randomizedTrailblazers = shuffleArray(trailblazers);
+
+// Data now imported from src/data/trailblazers.ts for better maintainability
+// TO ADD/EDIT TRAILBLAZERS: Edit src/data/trailblazers.ts instead
+---
+
+<section class="trailblazers" id="trailblazers">
+	<!-- Section divider at top -->
+	<div class="section-divider-top">
+		<svg
+			viewBox="0 0 1200 60"
+			xmlns="http://www.w3.org/2000/svg"
+			preserveAspectRatio="none"
+		>
+			<polygon points="0,60 1200,0 1200,0 0,0" fill="#F8F0E3"></polygon>
+		</svg>
+	</div>
+
+	<div class="container">
+		<div class="trailblazers-header">
+			<h2 class="trailblazers-title">Mobility Trailblazers 2025</h2>
+			<p class="trailblazers-subtitle">
+				Die 22 Visionäre, die unsere Mobilität von morgen gestalten
+			</p>
+		</div>
+
+		<!-- Trailblazers Grid -->
+		<div class="trailblazers-grid">
+			{
+				randomizedTrailblazers.map((trailblazer) => (
+					<div class="trailblazer-card">
+						<div class="card-header">
+							<div class="card-image">
+								<img
+									src={trailblazer.image}
+									alt={`${trailblazer.title ? trailblazer.title + " " : ""}${trailblazer.name}`}
+									width="300"
+									height="300"
+									loading="lazy"
+								/>
+							</div>
+						</div>
+
+						<div class="card-content">
+							<h3 class="card-name">
+								{trailblazer.title ? trailblazer.title + " " : ""}{trailblazer.name}
+							</h3>
+							<h4 class="card-organization">{trailblazer.organization}</h4>
+
+							<div class="card-summary-wrapper">
+								<p class="card-summary" data-full-length={trailblazer.quickSummary.length}>
+									{trailblazer.quickSummary}
+								</p>
+								{trailblazer.quickSummary.length > 150 && (
+									<button class="toggle-summary" aria-expanded="false" type="button">
+										<span class="icon-down">▼</span>
+										<span class="toggle-text">Mehr erfahren</span>
+									</button>
+								)}
+							</div>
+
+							{trailblazer.linkedin && (
+								<div class="card-social">
+									<a
+										href={trailblazer.linkedin}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="social-link"
+										aria-label={`LinkedIn Profil von ${trailblazer.name}`}
+									>
+										<Icons name="linkedin" />
+									</a>
+								</div>
+							)}
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	/* Screen reader only content */
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+		border-width: 0;
+	}
+
+	.trailblazers {
+		--glass-light: rgb(255 255 255 / 0.1);
+		--glass-medium: rgb(255 255 255 / 0.15);
+		--glass-strong: rgb(255 255 255 / 0.2);
+		--glass-border: rgb(255 255 255 / 0.2);
+		--shadow-dark: rgb(0 0 0 / 0.2);
+		--shadow-darker: rgb(0 0 0 / 0.3);
+
+		background: linear-gradient(
+			135deg,
+			var(--color-primary) 0%,
+			#1a5f60 100%
+		);
+		color: #fff;
+		position: relative;
+		padding: 4rem 0 5rem;
+		overflow: visible;
+	}
+
+	.section-divider-top {
+		position: absolute;
+		top: -1px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100%;
+		max-width: none;
+		overflow: hidden;
+		line-height: 0;
+		z-index: 2;
+	}
+
+	.section-divider-top svg {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 30px;
+	}
+
+	.container {
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		position: relative;
+		z-index: 2;
+	}
+
+	.trailblazers-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.trailblazers-title {
+		font-size: 3.2rem;
+		font-weight: 700;
+		margin-bottom: 1rem;
+		color: var(--color-accent);
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	.trailblazers-subtitle {
+		font-size: 1.3rem;
+		opacity: 0.95;
+		max-width: 700px;
+		margin: 0 auto;
+		margin-bottom: 3rem;
+	}
+
+	/* Trailblazers Grid */
+	.trailblazers-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+		gap: 2.5rem;
+		animation: fade-in 0.5s ease;
+		will-change: transform, opacity;
+		align-items: start; /* Allow dynamic heights for accordion */
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	/* Card Styles */
+	.trailblazer-card {
+		background: var(--glass-light);
+		backdrop-filter: blur(10px);
+		border-radius: 20px;
+		padding: 2rem;
+		border: 1px solid var(--glass-border);
+		transition: all 0.3s ease;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.trailblazer-card:hover {
+		transform: translateY(-10px);
+		box-shadow: 0 20px 40px var(--shadow-darker);
+		background: var(--glass-medium);
+	}
+
+	.card-header {
+		margin-bottom: 1.5rem;
+	}
+
+	.card-image {
+		text-align: center;
+	}
+
+	.card-image img {
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		object-fit: cover;
+		object-position: center;
+		border: 4px solid var(--color-accent);
+		transition: transform 0.3s ease;
+	}
+
+	.trailblazer-card:hover .card-image img {
+		transform: scale(1.05);
+	}
+
+	.card-content {
+		flex: 1;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.card-name {
+		font-size: 1.6rem;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+		color: var(--color-accent);
+	}
+
+	.card-organization {
+		font-size: 1.1rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		opacity: 0.9;
+	}
+
+	/* Summary Accordion Wrapper */
+	.card-summary-wrapper {
+		position: relative;
+		margin-bottom: 1.5rem;
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.card-summary {
+		font-size: 1rem;
+		line-height: 1.6;
+		opacity: 0.85;
+		max-height: 4.8rem; /* ~3 lines at 1.6 line-height */
+		overflow: hidden;
+		position: relative;
+		transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		margin-bottom: 0;
+	}
+
+	/* Gradient fade overlay to hint at more content */
+	.card-summary::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 2rem;
+		background: linear-gradient(
+			to bottom,
+			transparent,
+			rgb(0, 60, 61, 0.9)
+		);
+		opacity: 1;
+		transition: opacity 0.3s ease;
+		pointer-events: none;
+	}
+
+	/* Expanded state */
+	.card-summary.expanded {
+		max-height: 500px; /* Large enough for any text */
+	}
+
+	.card-summary.expanded::after {
+		opacity: 0;
+	}
+
+	/* Toggle Button */
+	.toggle-summary {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		justify-content: center;
+		color: var(--color-accent);
+		font-size: 0.9rem;
+		font-weight: 600;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.75rem 0;
+		margin-top: 0.5rem;
+		transition: all 0.3s ease;
+	}
+
+	.toggle-summary:hover {
+		opacity: 0.8;
+		transform: translateX(4px);
+	}
+
+	.toggle-summary:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+		border-radius: 4px;
+	}
+
+	/* Icon rotation */
+	.icon-down {
+		font-size: 0.7rem;
+		transition: transform 0.3s ease;
+		display: inline-block;
+	}
+
+	.toggle-summary[aria-expanded="true"] .icon-down {
+		transform: rotate(180deg);
+	}
+
+	.card-social {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 1.5rem;
+	}
+
+	.social-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		background: var(--color-accent);
+		color: #fff;
+		border-radius: 50%;
+		transition: all 0.3s ease;
+		text-decoration: none;
+	}
+
+	.social-link:hover {
+		background: #fff;
+		color: var(--color-accent);
+		transform: translateY(-3px);
+	}
+
+	.social-link :global(svg) {
+		width: 1.2rem;
+		height: 1.2rem;
+	}
+
+	/* Responsive Design */
+	@media (min-width: 768px) {
+		.section-divider-top svg {
+			height: 50px;
+		}
+	}
+
+	@media (max-width: 1200px) {
+		.trailblazers-grid {
+			grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+		}
+	}
+
+	@media (max-width: 768px) {
+		.trailblazers-title {
+			font-size: 2.5rem;
+		}
+
+		.trailblazers-subtitle {
+			font-size: 1.1rem;
+		}
+
+		.trailblazers-grid {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.card-image img {
+			width: 150px;
+			height: 150px;
+		}
+
+		.card-name {
+			font-size: 1.4rem;
+		}
+	}
+</style>
+
+<script is:inline>
+	// Summary toggle functionality
+	(function() {
+		function initTrailblazers() {
+			var toggleButtons = document.querySelectorAll('.toggle-summary');
+
+			if (!toggleButtons.length) {
+				// Use requestAnimationFrame for better performance
+				requestAnimationFrame(function() {
+					requestAnimationFrame(initTrailblazers);
+				});
+				return;
+			}
+
+			toggleButtons.forEach(function(button) {
+				button.addEventListener('click', function() {
+					var wrapper = this.closest('.card-summary-wrapper');
+					var summary = wrapper.querySelector('.card-summary');
+					var isExpanded = this.getAttribute('aria-expanded') === 'true';
+					var toggleText = this.querySelector('.toggle-text');
+
+					// Toggle expansion
+					if (isExpanded) {
+						summary.classList.remove('expanded');
+						this.setAttribute('aria-expanded', 'false');
+						toggleText.textContent = 'Mehr erfahren';
+					} else {
+						summary.classList.add('expanded');
+						this.setAttribute('aria-expanded', 'true');
+						toggleText.textContent = 'Weniger anzeigen';
+					}
+
+					// Announce to screen readers
+					var announcement = isExpanded
+						? 'Beschreibung eingeklappt'
+						: 'Vollständige Beschreibung angezeigt';
+					announceToScreenReader(announcement);
+				});
+			});
+		}
+
+		// Screen reader announcement helper
+		function announceToScreenReader(message) {
+			var announcement = document.createElement('div');
+			announcement.setAttribute('role', 'status');
+			announcement.setAttribute('aria-live', 'polite');
+			announcement.className = 'sr-only';
+			announcement.textContent = message;
+			document.body.appendChild(announcement);
+			setTimeout(function() {
+				announcement.remove();
+			}, 1000);
+		}
+
+		// Initialize when DOM is ready
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initTrailblazers);
+		} else {
+			initTrailblazers();
+		}
+	})();
+</script>

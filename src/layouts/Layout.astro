@@ -199,9 +199,9 @@ const IS_DEV = import.meta.env.DEV;
 		</script>
 		
 		<!-- Service Worker Registration and PWA Install -->
-               <script is:inline>
+               <script is:inline define:vars={{ IS_DEV }}>
                (function() {
-                       const DEBUG = ${JSON.stringify(IS_DEV)};
+                       const DEBUG = IS_DEV;
 
                        // Register service worker
                        if ('serviceWorker' in navigator) {

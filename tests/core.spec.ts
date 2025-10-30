@@ -12,7 +12,7 @@ test.describe('Core Functionality Tests', () => {
   test.describe('Page Load and Basic Structure', () => {
     test('@critical should load successfully with correct title and structure', async ({ page }) => {
       // Check that the page loads with correct title
-      await expect(page).toHaveTitle(/25 Mobility Trailblazers|Mobility/i);
+      await expect(page).toHaveTitle(/Mobility Trailblazers/i);
       
       // Check that main structural elements are visible
       await expect(page.locator('main')).toBeVisible();

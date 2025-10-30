@@ -360,8 +360,8 @@ test.describe('Component Functionality Tests', () => {
       await expect(title).toContainText('26 in 2026');
       
       // Check for updated process description
-      await expect(page.locator('#update-25-in-2025')).toBeVisible();
-      await expect(page.locator('#update-25-in-2025')).toContainText('Update: Prozess für 25 in 2025 abgeschlossen');
+      await expect(page.locator('#update-trailblazers-2025')).toBeVisible();
+      await expect(page.locator('#update-trailblazers-2025')).toContainText('Mobility Trailblazers 2025');
       
       // Ensure old content references 2026
       const nominationContent = homePage.nominationSection;
@@ -391,7 +391,7 @@ test.describe('Component Functionality Tests', () => {
     test('navigation anchors should work correctly', async ({ page }) => {
       // Test some key anchor links
       const anchors = [
-        '#update-25-in-2025',
+        '#update-trailblazers-2025',
         '#eligibility', 
         '#criteria',
         '#how-to-nominate',
