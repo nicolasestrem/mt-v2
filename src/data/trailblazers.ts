@@ -222,7 +222,8 @@ export const trailblazers: Trailblazer[] = [
 		organization: "Wiener Linien",
 		category: "politik",
 		quickSummary: "Als Geschäftsführerin der Wiener Linien prägt Alexandra Reinagl seit Jahren die Entwicklung einer der größten städtischen Verkehrsbetriebe im DACH-Raum. Sie treibt die konsequente Transformation hin zu emissionsfreier Mobilität voran – vom massiven Ausbau der U-Bahn-Linie U2xU5 über die Elektrifizierung der Busflotte bis hin zu innovativen digitalen Services für Fahrgäste. Unter ihrer Leitung positionieren sich die Wiener Linien als Vorreiter einer klimafreundlichen und attraktiven urbanen Mobilität, die internationale Strahlkraft hat.",
-		image: "/images/trailblazers/AlexandraReinagl.jpeg"
+		image: "/images/trailblazers/AlexandraReinagl.jpeg",
+		linkedin: "https://www.linkedin.com/in/alexandra-reinagl-aa19001a2"
 	},
 	{
 		id: "anjes-tjarks",
