@@ -95,7 +95,7 @@ This file tracks major updates and enhancements to the MobilityTrailblazers.de p
 - Fixed 12 critical stylelint failures (CSS color notation + keyframe naming)
 - Changed `rgba()` syntax to modern `rgb()` format
 - Renamed keyframe from `fadeIn` to `fade-in` (kebab-case)
-- Corrected subtitle from "25 Visionäre" to "24 Visionäre" (later corrected to "22 Visionäre" on Oct 29)
+- Corrected subtitle from "25 Visionäre" to "24 Visionäre" (later changed to just "Die Visionäre" without number on Oct 30)
 - Removed empty LinkedIn field for Friedrich Dräxlmaier (profile not found)
 
 **Refactoring**:
