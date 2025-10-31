@@ -94,7 +94,7 @@ export const trailblazers: Trailblazer[] = [
 		category: "startups",
 		quickSummary: "Dr. Corsin Sulser löst mit Parcandi ein alltägliches Mobilitätsproblem neu: Parkplätze werden digital geteilt statt neu gebaut. Die Plattform reduziert Stau, Suchverkehr und Emissionen in Städten. Mit über 40 wagte Sulser den Schritt vom Konzernmanager zum Gründer. Sein IoT-basierter Ansatz zeigt, wie Effizienz und Nachhaltigkeit zusammenwirken können. Parcandi verbessert die urbane Lebensqualität sichtbar.",
 		image: "/images/trailblazers/CorsinSulser.jpg",
-		linkedin: "https://www.linkedin.com/in/corsinsulser/"
+		linkedin: "https://www.linkedin.com/in/corsin-sulser/"
 	},
 	{
 		id: "fabian-beste",
