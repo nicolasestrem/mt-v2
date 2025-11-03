@@ -49,7 +49,9 @@
       "Bash(npm run test:pr:*)",
       "Bash(git rm:*)",
       "Bash(unzip:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm run lint:css:*)",
+      "Bash(identify -format \"%f: %wx%h\\n\":*)"
     ],
     "deny": [],
     "ask": []
