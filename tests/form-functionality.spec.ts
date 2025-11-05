@@ -177,7 +177,7 @@ test.describe('Form Functionality Tests', () => {
     
     // Check button text contains correct text
     const buttonText = await homePage.submitButton.textContent();
-    expect(buttonText).toContain('Jetzt für 26 in 2026 nominieren');
+    expect(buttonText).toContain('Jetzt für 2026 nominieren');
   });
 
   test('form handles special characters and long text', async () => {
