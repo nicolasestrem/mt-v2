@@ -146,7 +146,7 @@ export const trailblazers: Trailblazer[] = [
 		name: "Lukas Stranger",
 		organization: "NXRT",
 		category: "startups",
-		quickSummary: "Als CEO von NXRT entwickelt Lukas Stranger einen Mixed-Reality-Fahrsimulator, der die Fahrausbildung sicherer, nachhaltiger und kosteneffizienter macht. Mit dem Mut, in einen komplexen B2B-Markt zu gehen, verband er reale Fahrzeuge mit virtuellen Umgebungen und schuf so ein völlig neues Trainingskonzept. Seine Technologie reduziert Ressourcenverbrauch und Emissionen und wird bereits von internationalen Großkunden eingesetzt. Stranger zeigt, wie aus visionärer Innovation ein weltweit beachtetes Technologieprodukt entsteht, das die Mobilitätswende praktisch vorantreibt.",
+		quickSummary: "Lukas Stranger gestaltet die Zukunft der Mobilität, indem er virtuelle und reale Welten nahtlos verbindet. Mit NXRT hat er ein Unternehmen geschaffen, das Mixed-Reality-Technologien für Training, Marketing und Vertrieb revolutioniert. Das Ziel: Fahrzeuge schnell erlebbar machen – immersiv, interaktiv und in Originalgröße. Mit HeroShow hat NXRT 2025 ein wegweisendes Produkt für den Fahrzeughandel eingeführt, das Fahrzeuge lange vor ihrer physischen Existenz realitätsnah präsentiert. Stranger und sein Team zeigen, wie technologische Präzision und unternehmerischer Mut zusammenkommen, um Mobilität neu zu definieren: Mixed Reality als Schlüssel für Effizienz, Begeisterung und nachhaltige Wertschöpfung.",
 		image: "/images/trailblazers/LukasStranger.jpg",
 		linkedin: "https://www.linkedin.com/in/lukasstranger/"
 	},
