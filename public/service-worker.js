@@ -9,6 +9,13 @@ const urlsToCache = [
   '/apple-touch-icon.png'
 ];
 
+// Pages that should never be cached (thank you pages, forms, etc.)
+const NEVER_CACHE = [
+  '/danke-nominierung',
+  '/danke-newsletter',
+  '/api/'
+];
+
 // Install event - cache essential files
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -41,10 +48,16 @@ self.addEventListener('activate', event => {
   );
 });
 
+// Helper function to check if URL should be cached
+function shouldCache(url) {
+  const urlPath = new URL(url).pathname;
+  return !NEVER_CACHE.some(pattern => urlPath.includes(pattern));
+}
+
 // Fetch event - network first, fallback to cache
 self.addEventListener('fetch', event => {
   // Skip chrome-extension and non-http(s) requests
-  if (event.request.url.startsWith('chrome-extension://') || 
+  if (event.request.url.startsWith('chrome-extension://') ||
       !event.request.url.startsWith('http')) {
     return;
   }
@@ -60,16 +73,18 @@ self.addEventListener('fetch', event => {
         // Clone the response
         const responseToCache = response.clone();
 
-        // Cache the fetched response for future use
-        caches.open(CACHE_NAME)
-          .then(cache => {
-            // Only cache GET requests
-            if (event.request.method === 'GET') {
-              cache.put(event.request, responseToCache)
-                .catch(err => console.error('Cache put failed:', err));
-            }
-          })
-          .catch(err => console.error('Cache open failed:', err));
+        // Cache the fetched response for future use (except sensitive pages)
+        if (shouldCache(event.request.url)) {
+          caches.open(CACHE_NAME)
+            .then(cache => {
+              // Only cache GET requests
+              if (event.request.method === 'GET') {
+                cache.put(event.request, responseToCache)
+                  .catch(err => console.error('Cache put failed:', err));
+              }
+            })
+            .catch(err => console.error('Cache open failed:', err));
+        }
 
         return response;
       })
