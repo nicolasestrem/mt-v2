@@ -4,6 +4,9 @@ import Icons from './Icons.astro';
 ---
 
 <header class="header">
+	<!-- Skip navigation link for accessibility -->
+	<a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
+
 	<div class="container">
 		<nav class="nav">
 			<div class="nav-brand">
@@ -47,6 +50,26 @@ import Icons from './Icons.astro';
 </header>
 
 <style>
+	/* Skip navigation link for accessibility */
+	.skip-link {
+		position: absolute;
+		top: -100px;
+		left: 0;
+		background: var(--color-primary);
+		color: white;
+		padding: 0.75rem 1.5rem;
+		text-decoration: none;
+		font-weight: 600;
+		z-index: 2000;
+		transition: top 0.3s ease;
+	}
+
+	.skip-link:focus {
+		top: 0;
+		outline: 3px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+
 	.header {
 		position: fixed;
 		top: 0;
@@ -95,7 +118,7 @@ import Icons from './Icons.astro';
 	}
 
 	.nav-list a {
-		color: #c1693c;
+		color: var(--color-accent);
 		font-weight: 600;
 		font-size: 1.1rem;
 		text-decoration: none;
@@ -104,7 +127,7 @@ import Icons from './Icons.astro';
 	}
 
 	.nav-list a:hover {
-		color: #004C5F;
+		color: var(--color-primary);
 	}
 
 	.nav-list a::after {
@@ -114,7 +137,7 @@ import Icons from './Icons.astro';
 		left: 0;
 		width: 0;
 		height: 2px;
-		background: #c1693c;
+		background: var(--color-accent);
 		transition: width 0.3s ease;
 	}
 
@@ -153,16 +176,18 @@ import Icons from './Icons.astro';
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
-		color: #c1693c;
+		color: var(--color-accent);
 		font-size: 1.25rem;
 		font-weight: 600;
 		transition: all 0.3s ease;
-		padding: 0.25rem 0.5rem;
+		/* Ensure 44x44px minimum touch target */
+		padding: 0.625rem 0.75rem;
+		min-height: 44px;
 		border-radius: 8px;
 	}
 
 	.social-link:hover {
-		color: #004C5F;
+		color: var(--color-primary);
 		transform: translateY(-2px);
 		background: rgb(193, 105, 60, 0.05);
 	}
@@ -189,7 +214,7 @@ import Icons from './Icons.astro';
 	.nav-toggle span {
 		width: 25px;
 		height: 3px;
-		background: #c1693c;
+		background: var(--color-accent);
 		transition: all 0.3s ease;
 	}
 
@@ -366,13 +391,27 @@ import Icons from './Icons.astro';
 					navToggle.setAttribute('aria-expanded', 'false');
 				}
 			});
-			
+
 			document.addEventListener('touchstart', function(e) {
 				if (!header.contains(e.target)) {
 					navMenu.classList.remove('active');
 					if (navSocial) navSocial.classList.remove('active');
 					navToggle.classList.remove('active');
 					navToggle.setAttribute('aria-expanded', 'false');
+				}
+			});
+
+			// Close menu on Escape key press
+			document.addEventListener('keydown', function(e) {
+				if (e.key === 'Escape' || e.keyCode === 27) {
+					if (navMenu.classList.contains('active')) {
+						navMenu.classList.remove('active');
+						if (navSocial) navSocial.classList.remove('active');
+						navToggle.classList.remove('active');
+						navToggle.setAttribute('aria-expanded', 'false');
+						// Return focus to toggle button
+						navToggle.focus();
+					}
 				}
 			});
 		}

@@ -6,16 +6,16 @@
 	<div class="container">
 		<div class="hero-content">
 			<div class="hero-text">
-				<h2 class="hero-title">
+				<h1 class="hero-title">
 					Mobility Trailblazers 2025
-				</h2>
+				</h1>
 
 				<p class="hero-subtitle">
 					<strong><em>Wir zeichnen Menschen aus, die 2025 den Mobilitätswandel mutig und innovativ in Deutschland, der Schweiz und Österreich vorantreiben.</em></strong><br>
 					<strong><em>Am 30. Oktober war es so weit: Die Awards wurden das erste Mal vergeben.</em></strong>
 				</p>
 
-				<p class="hero-tagline" style="color: #C1693C; font-size: 2rem; font-weight: 600; margin-bottom: 2rem;">Weil mobiler Wandel Mut braucht.</p>
+				<p class="hero-tagline">Weil mobiler Wandel Mut braucht.</p>
 			</div>
 			
 			<div class="countdown-section">
@@ -229,11 +229,27 @@
 			font-size: 0.8rem;
 		}
 	}
+
+	/* Reduced motion support for countdown animations */
+	@media (prefers-reduced-motion: reduce) {
+		.countdown-item {
+			transition: none;
+		}
+
+		.countdown-item:hover {
+			transform: none;
+		}
+
+		.countdown-item:nth-child(1):hover,
+		.countdown-item:nth-child(4):hover {
+			transform: none;
+		}
+	}
 </style>
 
 <script>
 	// Countdown timer functionality
-	let intervalId;
+	let intervalId: number | undefined;
 
 	function updateCountdown() {
 		const targetDate = new Date('2025-10-30T16:00:00').getTime();
@@ -262,11 +278,11 @@
 				countdownSection.remove();
 			}
 			// Stop the timer since countdown is removed
-			clearInterval(intervalId);
+			if (intervalId) clearInterval(intervalId);
 		}
 	}
 
 	// Update countdown every second
-	intervalId = setInterval(updateCountdown, 1000);
+	intervalId = window.setInterval(updateCountdown, 1000);
 	updateCountdown(); // Initial call
 </script>
