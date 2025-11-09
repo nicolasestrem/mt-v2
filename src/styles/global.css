@@ -310,6 +310,63 @@ a:hover {
 	50% { opacity: 0.5; }
 }
 
+/* Glow animation for forms */
+@keyframes subtle-glow {
+	from {
+		box-shadow:
+			0 20px 60px rgb(0, 0, 0, 0.2),
+			0 0 80px rgb(246, 173, 85, 0.3),
+			0 0 120px rgb(26, 54, 93, 0.2),
+			inset 0 0 60px rgb(246, 173, 85, 0.05);
+		border-color: rgb(246, 173, 85, 0.3);
+	}
+	to {
+		box-shadow:
+			0 20px 60px rgb(0, 0, 0, 0.2),
+			0 0 100px rgb(246, 173, 85, 0.5),
+			0 0 150px rgb(26, 54, 93, 0.3),
+			inset 0 0 80px rgb(246, 173, 85, 0.1);
+		border-color: rgb(246, 173, 85, 0.6);
+	}
+}
+
+/* Slide down animation */
+@keyframes slide-down {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Fade in up animation */
+@keyframes fade-in-up {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Border rotate animation */
+@keyframes border-rotate {
+	0% {
+		box-shadow: 0 0 0 2px var(--color-accent);
+	}
+	50% {
+		box-shadow: 0 0 0 2px var(--color-primary);
+	}
+	100% {
+		box-shadow: 0 0 0 2px var(--color-accent);
+	}
+}
+
 .animate-fade-in {
 	animation: fadeIn 0.6s ease-out;
 }
