@@ -51,7 +51,8 @@
       "Bash(unzip:*)",
       "Bash(find:*)",
       "Bash(npm run lint:css:*)",
-      "Bash(identify -format \"%f: %wx%h\\n\":*)"
+      "Bash(identify -format \"%f: %wx%h\\n\":*)",
+      "Bash(git config:*)"
     ],
     "deny": [],
     "ask": []
