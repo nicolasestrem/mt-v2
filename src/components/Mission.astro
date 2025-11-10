@@ -1,21 +1,17 @@
 ---
 // Mission section component for Mobility Trailblazers
 import Icons from './Icons.astro';
+import SectionDivider from './SectionDivider.astro';
 ---
 
 <section class="mission" id="about">
-	<!-- Subtle wave divider at top -->
-	<div class="section-divider-top">
-		<svg viewBox="0 0 1200 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-			<path d="M0,40 C300,80 900,0 1200,40 L1200,0 L0,0 Z" fill="#F8F0E3"></path>
-		</svg>
-	</div>
+	<SectionDivider type="wave" fillColor="#F8F0E3" position="top" />
 	<div class="container">
 		<div class="mission-grid">
 			<div class="mission-content">
 				<div class="mission-box">
 					<p class="mission-prefix">Unsere Mission</p>
-					<h2 class="mission-title" style="color: #004C5F;">Warum wir Vorreiter der Mobilitätswende auszeichnen</h2>
+					<h2 class="mission-title">Warum wir Vorreiter der Mobilitätswende auszeichnen</h2>
 					<p class="mission-description">
 						Wirtschaft, Gesellschaft und Politik im DACH-Raum müssen sich der Mobilitätswende und Verkehrswende stellen, sollen Wettbewerbsfähigkeit und Wohlstand behauptet werden. Die nachhaltige Transformation der Mobilität braucht mutige Pioniere. Unsere Awards geben innovativen Persönlichkeiten eine Bühne, die als Vorreiter vorangehen und mit konkreten Projekten den Wandel beschleunigen.
 					</p>
@@ -52,31 +48,6 @@ import Icons from './Icons.astro';
 		background: var(--color-background);
 		position: relative;
 		padding: 3rem 0;
-	}
-
-	.section-divider-top {
-		position: absolute;
-		top: -1px;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 100%;
-		max-width: none;
-		overflow: hidden;
-		line-height: 0;
-		z-index: 2;
-	}
-
-	.section-divider-top svg {
-		position: relative;
-		display: block;
-		width: 100%;
-		height: 40px;
-	}
-
-	@media (min-width: 768px) {
-		.section-divider-top svg {
-			height: 60px;
-		}
 	}
 
 	.mission::before {

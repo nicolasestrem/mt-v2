@@ -24,7 +24,6 @@ const enableGA = isProduction || import.meta.env.PUBLIC_ENABLE_GA_DEV === 'true'
       window.trackEvent = function(eventName, eventParams) {
         if (typeof gtag !== 'undefined') {
           gtag('event', eventName, eventParams);
-          console.log('GA4 Event:', eventName, eventParams);
         }
       };
       
