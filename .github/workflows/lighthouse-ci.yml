@@ -1,13 +1,17 @@
 name: Lighthouse CI
 
 on:
-  push:
-    branches: [ main ]
+  schedule:
+    - cron: "0 3 * * 0"  # Weekly on Sunday at 03:00 UTC
   pull_request:
+    types: [labeled, synchronize, reopened]
     branches: [ main ]
   workflow_dispatch:
 
-# ADD THIS PERMISSIONS BLOCK
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
   pull-requests: write
@@ -17,7 +21,14 @@ permissions:
 
 jobs:
   lighthouse:
+    # Only run on schedule, workflow_dispatch, or PR with 'perf' label
+    if: |
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'perf'))
+
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       
@@ -100,6 +111,7 @@ jobs:
         with:
           name: lighthouse-scores
           path: lighthouse-scores.json
+          retention-days: 3
       
       - name: Create Badge Data
         if: success() && github.ref == 'refs/heads/main'
@@ -265,4 +277,4 @@ jobs:
             .lighthouseci/
             badges/
             lighthouse-scores.json
-          retention-days: 30
+          retention-days: 3
