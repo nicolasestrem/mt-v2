@@ -352,30 +352,30 @@ test.describe('Component Functionality Tests', () => {
       await expect(faqContainer).toContainText('Was passiert nach der Einreichung?');
     });
     
-    test('should display "26 in 2026" content instead of old content', async ({ page }) => {
+    test('should display current nomination form content', async ({ page }) => {
       await homePage.scrollToSection(homePage.nominationSection);
-      
-      // Check for new "26 in 2026" content
+
+      // Check for nomination title
       const title = page.locator('h1.nomination-title');
-      await expect(title).toContainText('26 in 2026');
-      
+      await expect(title).toContainText('Schlagen Sie eine(n) Mobility Trailblazer vor');
+
       // Check for updated process description
       await expect(page.locator('#update-trailblazers-2025')).toBeVisible();
       await expect(page.locator('#update-trailblazers-2025')).toContainText('Mobility Trailblazers 2025');
-      
-      // Ensure old content references 2026
+
+      // Ensure content references 2026 nominations
       const nominationContent = homePage.nominationSection;
       await expect(nominationContent).toContainText('2026');
-      await expect(nominationContent).toContainText('26 in 2026');
+      await expect(nominationContent).toContainText('Mobility Trailblazers 2026');
     });
     
     test('should have proper heading hierarchy with h1 as main title', async ({ page }) => {
       await homePage.scrollToSection(homePage.nominationSection);
-      
+
       // Check that the main title is h1
       const mainTitle = page.locator('h1.nomination-title');
       await expect(mainTitle).toBeVisible();
-      await expect(mainTitle).toContainText('26 in 2026');
+      await expect(mainTitle).toContainText('Mobility Trailblazer');
       
       // Check h2 subheadings exist
       const h2Headings = homePage.nominationSection.locator('h2');

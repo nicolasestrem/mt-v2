@@ -398,7 +398,7 @@ test.describe('Responsive Design Tests', () => {
     // Verify button contains 2026 text on mobile
     const submitButton = homePage.submitButton;
     const buttonText = await submitButton.textContent();
-    expect(buttonText).toContain('26 in 2026');
+    expect(buttonText).toContain('2026');
   });
 
   test('countdown timer layout adapts to different screen sizes', async ({ page }) => {

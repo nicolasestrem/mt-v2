@@ -96,7 +96,7 @@ test.describe('Form Functionality Tests', () => {
     expect(buttonText).not.toContain('Wird gesendet');
     
     // Check that button has correct text for 2026
-    expect(buttonText).toContain('26 in 2026');
+    expect(buttonText).toContain('2026');
   });
 
   test('form submission with network error', async ({ page }) => {

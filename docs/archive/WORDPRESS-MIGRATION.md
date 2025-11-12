@@ -196,7 +196,7 @@ Create `public/_redirects`:
 **Astro:**
 ```astro
 ---
-const title = "25 Mobility Trailblazers in 25 - Award für Mobilitätspioniere";
+const title = "Mobility Trailblazers 2025 - Award für Mobilitätspioniere";
 const description = "Nominieren Sie Vorreiter der Mobilitätswende...";
 ---
 <Layout title={title} description={description}>
