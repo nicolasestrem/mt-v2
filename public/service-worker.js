@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mobility-trailblazers-v1';
+const CACHE_NAME = 'mobility-trailblazers-v2';
 const IS_DEV = self.location.hostname === 'localhost';
 const urlsToCache = [
   '/',

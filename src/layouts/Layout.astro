@@ -79,7 +79,6 @@ const IS_DEV = import.meta.env.DEV;
 		<!-- Preload critical images for homepage only -->
 		{isHomepage && (
 			<>
-				<link rel="preload" as="image" href="/images/about/fernsehturm-berlin-medium.jpg" fetchpriority="high" media="(min-width: 768px)">
 				<link rel="preload" as="image" href="/images/logo.webp" fetchpriority="high">
 			</>
 		)}
