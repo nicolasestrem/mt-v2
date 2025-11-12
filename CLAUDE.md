@@ -139,8 +139,36 @@ colors: {
 - `/Media` directory contains WordPress migration artifacts (ignored)
 - Only `/public` files are served
 
+## CI/CD & GitHub Actions
+
+### Workflow Optimization (Cost Reduction)
+This repository uses **label-gated workflows** to reduce GitHub Actions costs by 70-85%. See `docs/CI_OPTIMIZATION.md` for full details.
+
+**Key Workflows:**
+- **Playwright Tests**: Runs automatically on PRs (Chrome, @critical only) and full suite on main
+- **Stylelint**: Runs automatically on CSS/Astro changes
+- **Claude Code Review**: Requires `ci:full` label to run (cost optimization)
+- **Lighthouse CI**: Runs weekly (Sunday 3am UTC) or with `perf` label on PRs
+
+**When to Add Labels:**
+```bash
+# Add ci:full label for AI code review (>300 LOC changes, security, external contributors)
+gh pr edit <PR_NUMBER> --add-label "ci:full"
+
+# Add perf label for performance testing (UI changes, bundle size, assets)
+gh pr edit <PR_NUMBER> --add-label "perf"
+```
+
+**Important for LLMs:**
+- DO NOT assume all workflows run automatically on every PR
+- Claude Code Review requires explicit `ci:full` label
+- Lighthouse requires explicit `perf` label OR runs weekly
+- Recommend labels based on PR scope and risk level
+- See workflow decision tree in `docs/CI_OPTIMIZATION.md`
+
 ## Additional Documentation
 
+- **CI/CD Optimization**: See `docs/CI_OPTIMIZATION.md` ⚠️ **Required reading for workflow changes**
 - **Recent Updates & Changes**: See `CHANGELOG.md`
 - **PWA Implementation**: See `docs/PWA_GUIDE.md`
 - **Shop SEO Details**: See `docs/SHOP_SEO.md`
@@ -151,4 +179,5 @@ colors: {
 - Site includes PWA support with offline caching
 - Visual enhancements: Section dividers, form glow effects
 - Optimized Playwright tests (90%+ success rate, ~5 min PR tests)
+- CI/CD workflows use label gating for cost optimization
 - Always use specialized agents and sequential thinking for complex tasks

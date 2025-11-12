@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # Single unified job for all testing
   test:
@@ -66,7 +70,7 @@ jobs:
         path: |
           playwright-report/
           test-results/
-        retention-days: 7
+        retention-days: 3
     
     - name: Upload HTML Report
       uses: actions/upload-artifact@v4
@@ -74,7 +78,7 @@ jobs:
       with:
         name: playwright-html-report
         path: playwright-report/
-        retention-days: 30
+        retention-days: 3
     
     - name: Test Summary
       if: always()

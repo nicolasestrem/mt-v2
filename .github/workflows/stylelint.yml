@@ -16,6 +16,10 @@ on:
       - '.stylelintrc.json'
       - 'package.json'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   stylelint:
     name: Run Stylelint
