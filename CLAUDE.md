@@ -142,28 +142,26 @@ colors: {
 ## CI/CD & GitHub Actions
 
 ### Workflow Optimization (Cost Reduction)
-This repository uses **label-gated workflows** to reduce GitHub Actions costs by 70-85%. See `docs/CI_OPTIMIZATION.md` for full details.
+This repository uses optimized workflows to reduce GitHub Actions costs by 45-50%. See `docs/CI_OPTIMIZATION.md` for full details.
 
 **Key Workflows:**
+- **Claude Code Review**: Runs automatically on EVERY PR (required for code quality)
 - **Playwright Tests**: Runs automatically on PRs (Chrome, @critical only) and full suite on main
 - **Stylelint**: Runs automatically on CSS/Astro changes
-- **Claude Code Review**: Requires `ci:full` label to run (cost optimization)
-- **Lighthouse CI**: Runs weekly (Sunday 3am UTC) or with `perf` label on PRs
+- **Lighthouse CI**: Runs weekly (Sunday 3am UTC) or with `perf` label on PRs (continuous testing)
 
 **When to Add Labels:**
 ```bash
-# Add ci:full label for AI code review (>300 LOC changes, security, external contributors)
-gh pr edit <PR_NUMBER> --add-label "ci:full"
-
-# Add perf label for performance testing (UI changes, bundle size, assets)
+# Add perf label for continuous performance testing on every commit
 gh pr edit <PR_NUMBER> --add-label "perf"
+# Once added, Lighthouse runs on EVERY push to catch performance regressions
 ```
 
 **Important for LLMs:**
-- DO NOT assume all workflows run automatically on every PR
-- Claude Code Review requires explicit `ci:full` label
-- Lighthouse requires explicit `perf` label OR runs weekly
-- Recommend labels based on PR scope and risk level
+- Claude Code Review runs automatically on EVERY PR (no label needed)
+- Lighthouse requires explicit `perf` label for PR testing OR runs weekly
+- After adding `perf` label, Lighthouse runs on every subsequent commit to that PR
+- Main cost savings come from Lighthouse optimization and artifact storage reduction
 - See workflow decision tree in `docs/CI_OPTIMIZATION.md`
 
 ## Additional Documentation

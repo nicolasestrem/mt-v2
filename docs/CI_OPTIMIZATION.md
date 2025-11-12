@@ -2,48 +2,37 @@
 
 ## Overview
 
-This document explains the GitHub Actions optimization strategy implemented to reduce CI/CD costs by 70-85% while maintaining code quality and testing coverage.
+This document explains the GitHub Actions optimization strategy implemented to reduce CI/CD costs by 45-50% while maintaining code quality and testing coverage. Primary savings come from Lighthouse optimization (weekly schedule + on-demand testing) and artifact storage reduction.
 
 ## Problem Statement
 
 **Before Optimization:**
 - Lighthouse CI ran on every push to main + every PR (~20-30 runs/month)
-- Claude Code Review ran on every PR sync (~15-20 runs/month)
 - Combined cost: Significant Actions minutes consumption
-- Many runs provided redundant feedback
+- Artifact storage costs accumulating over 30 days
+- Many redundant Lighthouse runs
 
 **After Optimization:**
 - Lighthouse runs weekly + on-demand only (~4-8 runs/month)
-- Claude Code Review runs only when explicitly needed (~3-5 runs/month)
-- Expected savings: 70-85% reduction in Actions minutes
+- Claude Code Review runs on every PR (kept for code quality)
+- Artifact retention reduced from 30 days to 3 days
+- Expected savings: ~45-50% reduction in Actions minutes + 85% storage savings
 
 ## Implemented Changes
 
-### 1. Claude Code Review (High Impact - 80% savings)
+### 1. Claude Code Review (Optimization - No cost reduction)
 
 **File:** `.github/workflows/claude-code-review.yml`
 
 **Changes:**
-- ✅ Added `ci:full` label gating - only runs when PR has this label
 - ✅ Added concurrency group to cancel duplicate runs
 - ✅ Added 10-minute timeout
 - ✅ Added npm caching for faster execution
 - ✅ Added path filters to skip on non-code changes
 - ✅ Added workflow_dispatch for manual triggers
+- ⚠️ **Runs on EVERY PR** - required for code quality assurance
 
-**Usage:**
-```bash
-# To trigger Claude Code Review on a PR:
-1. Add the 'ci:full' label to your PR
-2. The review will start automatically
-3. Or trigger manually via GitHub Actions UI
-```
-
-**When to use:**
-- Complex PRs requiring AI review
-- External contributors' PRs
-- Major refactoring
-- Security-sensitive changes
+**Note:** Claude Code Review is critical for code quality and runs automatically on all PRs. No label gating applied per project requirements.
 
 ### 2. Lighthouse CI (Highest Impact - 90% savings)
 
@@ -52,6 +41,7 @@ This document explains the GitHub Actions optimization strategy implemented to r
 **Changes:**
 - ✅ Moved from push/PR triggers to weekly schedule (Sunday 3am UTC)
 - ✅ Added `perf` label for on-demand PR testing
+- ✅ Added `synchronize` event - continues testing after label added
 - ✅ Added concurrency group
 - ✅ Added 10-minute timeout
 - ✅ Reduced artifact retention from 30 days to 3 days
@@ -61,6 +51,7 @@ This document explains the GitHub Actions optimization strategy implemented to r
 ```bash
 # Weekly automatic run: Every Sunday at 3am UTC
 # For on-demand PR testing: Add 'perf' label to your PR
+# Once labeled, runs on EVERY subsequent commit
 # Manual trigger: Use GitHub Actions UI workflow_dispatch
 ```
 
@@ -69,6 +60,8 @@ This document explains the GitHub Actions optimization strategy implemented to r
 - Major UI/UX changes
 - Bundle size concerns
 - Weekly monitoring (automatic)
+
+**Important:** After adding the `perf` label, Lighthouse will run on every push to that PR to catch performance regressions.
 
 ### 3. Playwright Tests (Minor - 5% savings)
 
@@ -104,33 +97,32 @@ This document explains the GitHub Actions optimization strategy implemented to r
 
 ### Required Labels
 
-Create these labels in your repository:
+Create this label in your repository:
 
 | Label | Color | Description | Usage |
 |-------|-------|-------------|-------|
-| `ci:full` | `#0e8a16` | Trigger full Claude Code Review | Add to PR when AI review needed |
-| `perf` | `#fbca04` | Run Lighthouse performance test | Add to PR for performance testing |
+| `perf` | `#fbca04` | Run Lighthouse on every commit | Add to PR for continuous performance testing |
 
 ### Creating Labels
 
 **Via GitHub UI:**
 1. Go to Repository → Issues → Labels
 2. Click "New label"
-3. Create `ci:full` and `perf` with descriptions above
+3. Create `perf` with description above
 
 **Via GitHub CLI:**
 ```bash
-gh label create "ci:full" --description "Trigger full Claude Code Review" --color "0e8a16"
-gh label create "perf" --description "Run Lighthouse performance test" --color "fbca04"
+gh label create "perf" --description "Run Lighthouse on every commit" --color "fbca04"
 ```
 
 **Via API Script:**
 ```bash
 # Create a script: scripts/create-labels.sh
 #!/bin/bash
-gh api repos/:owner/:repo/labels -f name="ci:full" -f description="Trigger full Claude Code Review" -f color="0e8a16"
-gh api repos/:owner/:repo/labels -f name="perf" -f description="Run Lighthouse performance test" -f color="fbca04"
+gh api repos/:owner/:repo/labels -f name="perf" -f description="Run Lighthouse on every commit" -f color="fbca04"
 ```
+
+**Note:** The `ci:full` label is no longer needed as Claude Code Review runs automatically on all PRs.
 
 ## Cost Analysis
 
@@ -143,15 +135,17 @@ gh api repos/:owner/:repo/labels -f name="perf" -f description="Run Lighthouse p
 
 ### After Optimization (Monthly)
 - Lighthouse: ~6 runs × 8 min = 48 min (↓76%)
-- Claude Review: ~4 runs × 5 min = 20 min (↓80%)
+- Claude Review: ~20 runs × 5 min = 100 min (unchanged - required for quality)
 - Playwright: ~30 runs × 5 min = 150 min (unchanged)
 - Stylelint: ~30 runs × 2 min = 60 min (unchanged)
-- **Total: ~278 min/month**
+- **Total: ~358 min/month**
 
 ### Savings
-- **Direct minute savings:** 232 min/month (↓45%)
+- **Direct minute savings:** 152 min/month (↓30%)
 - **Artifact storage savings:** ~85% reduction (3d vs 30d retention)
-- **Combined effective savings:** 70-85% total cost reduction
+- **Combined effective savings:** 45-50% total cost reduction
+
+**Note:** Claude Code Review runs on every PR as required for code quality. Main savings come from Lighthouse optimization and artifact storage reduction.
 
 ## Workflow Decision Tree
 
@@ -163,14 +157,17 @@ PR Created
 │  ├─ Yes
 │  │  ├─ Stylelint: AUTO (if CSS/Astro changes)
 │  │  ├─ Playwright: AUTO (test:pr - Chrome, @critical)
-│  │  ├─ Claude Review: MANUAL (add ci:full label)
-│  │  └─ Lighthouse: MANUAL (add perf label)
+│  │  ├─ Claude Review: AUTO (runs on every PR)
+│  │  └─ Lighthouse: MANUAL (add perf label for continuous testing)
 │  └─ No → Skip all workflows
 │
+PR with 'perf' label + new commits
+└─ Lighthouse: AUTO (runs on every push while label present)
+
 Push to main
 ├─ Playwright: AUTO (test:full - Chrome + Firefox)
 ├─ Stylelint: AUTO (if CSS/Astro changes)
-├─ Claude Review: SKIP
+├─ Claude Review: SKIP (only on PRs)
 └─ Lighthouse: SKIP (runs weekly)
 
 Weekly (Sunday 3am)
@@ -207,12 +204,10 @@ gh api repos/:owner/:repo/issues/<PR_NUMBER>/labels \
 
 ### 3. When to Recommend Labels
 
-**Recommend `ci:full` when:**
-- PR has >300 lines of changes
-- PR touches core business logic
-- PR is from external contributor
-- User explicitly requests AI review
-- Security-sensitive changes
+**Always expect Claude Code Review:**
+- Runs automatically on every PR
+- Required for code quality assurance
+- No label needed
 
 **Recommend `perf` when:**
 - PR modifies bundle size
@@ -261,9 +256,9 @@ gh run view <RUN_ID>
 ## Troubleshooting
 
 ### "My PR didn't trigger Claude review"
-- ✅ Check if `ci:full` label is added
-- ✅ Verify workflow file has correct label check
-- ✅ Check Actions tab for skipped runs
+- ✅ Check if code files changed (src/**, tests/**, etc.)
+- ✅ Verify workflow file path filters
+- ✅ Check Actions tab for workflow runs
 
 ### "Lighthouse didn't run on my PR"
 - ✅ Check if `perf` label is added
@@ -274,9 +269,9 @@ gh run view <RUN_ID>
 - ✅ Use workflow_dispatch: Go to Actions → Select workflow → Run workflow
 - ✅ Or add appropriate label to PR
 
-### "Labels don't exist in my repo"
-- ✅ Create them using GitHub UI or CLI (see "Creating Labels" above)
-- ✅ Verify label names match exactly (case-sensitive)
+### "Label doesn't exist in my repo"
+- ✅ Create the `perf` label using GitHub UI or CLI (see "Creating Labels" above)
+- ✅ Verify label name matches exactly (case-sensitive)
 
 ## Related Documentation
 
