@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mobility-trailblazers-v1';
+const CACHE_NAME = 'mobility-trailblazers-v2';
 const IS_DEV = self.location.hostname === 'localhost';
 const urlsToCache = [
   '/',
@@ -65,8 +65,14 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request)
       .then(response => {
+        // Check if response exists
+        if (!response) {
+          // No response received, go to cache fallback
+          throw new Error('Network request failed: No response received');
+        }
+
         // Check if valid response - allow both same-origin and CORS responses
-        if (!response || response.status !== 200 || (response.type !== 'basic' && response.type !== 'cors')) {
+        if (response.status !== 200 || (response.type !== 'basic' && response.type !== 'cors')) {
           return response;
         }
 
