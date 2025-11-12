@@ -184,22 +184,20 @@ When working with this repository:
 // WRONG - Assuming all workflows run automatically
 "I'll create a PR and all checks will run"
 
-// RIGHT - Understanding label-gated workflows
-"I'll create a PR. Playwright will run automatically.
-For Claude review, I'll add the 'ci:full' label.
-For Lighthouse, I'll add 'perf' if needed."
+// RIGHT - Understanding workflow behavior
+"I'll create a PR. Playwright and Claude Code Review will run automatically.
+For Lighthouse performance testing, I'll add the 'perf' label if needed."
 ```
 
 ### 2. Adding Labels Programmatically
 
 ```bash
 # Add label to PR via GitHub CLI
-gh pr edit <PR_NUMBER> --add-label "ci:full"
 gh pr edit <PR_NUMBER> --add-label "perf"
 
 # Or via API
 gh api repos/:owner/:repo/issues/<PR_NUMBER>/labels \
-  -f labels[]="ci:full"
+  -f labels[]="perf"
 ```
 
 ### 3. When to Recommend Labels

@@ -68,7 +68,7 @@ self.addEventListener('fetch', event => {
         // Check if response exists
         if (!response) {
           // No response received, go to cache fallback
-          throw new Error('No response received');
+          throw new Error('Network request failed: No response received');
         }
 
         // Check if valid response - allow both same-origin and CORS responses
