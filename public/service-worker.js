@@ -65,8 +65,14 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request)
       .then(response => {
+        // Check if response exists
+        if (!response) {
+          // No response received, go to cache fallback
+          throw new Error('No response received');
+        }
+
         // Check if valid response - allow both same-origin and CORS responses
-        if (!response || response.status !== 200 || (response.type !== 'basic' && response.type !== 'cors')) {
+        if (response.status !== 200 || (response.type !== 'basic' && response.type !== 'cors')) {
           return response;
         }
 

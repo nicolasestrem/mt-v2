@@ -46,7 +46,6 @@ const IS_DEV = import.meta.env.DEV;
 		<link rel="manifest" href="/manifest.json" />
 		
 		<!-- iOS PWA Support -->
-		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 		<meta name="apple-mobile-web-app-title" content="Mobility Trailblazers" />
 		
@@ -80,7 +79,7 @@ const IS_DEV = import.meta.env.DEV;
 		<!-- Preload critical images for homepage only -->
 		{isHomepage && (
 			<>
-				<link rel="preload" as="image" href="/images/about/fernsehturm-berlin.jpg" fetchpriority="high" media="(min-width: 768px)">
+				<link rel="preload" as="image" href="/images/about/fernsehturm-berlin-medium.jpg" fetchpriority="high" media="(min-width: 768px)">
 				<link rel="preload" as="image" href="/images/logo.webp" fetchpriority="high">
 			</>
 		)}
@@ -333,7 +332,7 @@ const IS_DEV = import.meta.env.DEV;
 				});
 				button.appendChild(closeBtn);
 				
-				// Hide button after 30 seconds if not clicked
+				// Hide button after 60 seconds if not clicked
 				setTimeout(function() {
 					if (button && button.style.display !== 'none') {
 						button.style.opacity = '0';
@@ -343,7 +342,7 @@ const IS_DEV = import.meta.env.DEV;
 							}
 						}, 300);
 					}
-				}, 30000);
+				}, 60000);
 			}
 			
                        // Check if app is already installed
@@ -494,7 +493,7 @@ const IS_DEV = import.meta.env.DEV;
 		
 		// Google Analytics configuration (from environment variable)
 		// GA ID is configured in .env file as PUBLIC_GA_MEASUREMENT_ID
-		tarteaucitron.user.gtagUa = '${gaId}';
+		tarteaucitron.user.gtagUa = 'G-0C23GHZJQT';
 		tarteaucitron.user.gtagCrossdomain = ['mobilitytrailblazers.de'];
 		tarteaucitron.user.gtagMore = function() { /* Additional config */ };
 		
