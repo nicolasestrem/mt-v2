@@ -6,7 +6,7 @@ Successfully migrated the Mobility Trailblazers website from WordPress to Astro,
 ## Original WordPress Site Analysis
 - **URL**: https://mobilitytrailblazers.de/
 - **Export Date**: 2025-08-26
-- **Content**: German website for "25 Mobility Trailblazers in 25" award
+- **Content**: German website for "Mobility Trailblazers 2025" award
 - **Key Features**: Hero section, mission, jury, newsletter, nomination form, LinkedIn feed
 
 ## Astro Implementation

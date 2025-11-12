@@ -16,6 +16,18 @@ const NEVER_CACHE = [
   '/api/'
 ];
 
+// Third-party domains that should never be cached (analytics, tracking, etc.)
+const THIRD_PARTY_SKIP_CACHE = [
+  'google-analytics.com',
+  'googletagmanager.com',
+  'cloudflareinsights.com',
+  'sociablekit.com',
+  'tarteaucitron.io',
+  'umami.is',
+  'web3forms.com',
+  'spreadshirtmedia.net'
+];
+
 // Install event - cache essential files
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -50,8 +62,20 @@ self.addEventListener('activate', event => {
 
 // Helper function to check if URL should be cached
 function shouldCache(url) {
-  const urlPath = new URL(url).pathname;
-  return !NEVER_CACHE.some(pattern => urlPath.includes(pattern));
+  const urlObj = new URL(url);
+  const urlPath = urlObj.pathname;
+
+  // Skip sensitive pages
+  if (NEVER_CACHE.some(pattern => urlPath.includes(pattern))) {
+    return false;
+  }
+
+  // Skip third-party domains (analytics, tracking, etc.)
+  if (THIRD_PARTY_SKIP_CACHE.some(domain => urlObj.hostname.includes(domain))) {
+    return false;
+  }
+
+  return true;
 }
 
 // Fetch event - network first, fallback to cache
