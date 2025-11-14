@@ -323,7 +323,8 @@ function safeJsonStringify(schema: any): string {
 										<div class="product-meta">
 											{product.price && (
 												<p class="product-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-													<span itemprop="price">{product.price}</span>
+                                                                                                        <meta itemprop="price" content={parsePrice(product.price)} />
+                                                                                                        <span>{product.price}</span>
 													<meta itemprop="priceCurrency" content="EUR" />
 													<meta itemprop="availability" content="https://schema.org/InStock" />
 												</p>
