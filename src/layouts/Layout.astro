@@ -474,6 +474,18 @@ const IS_DEV = import.meta.env.DEV;
 			"partnersList": false /* Show partners list */
 		});
 
+		// Supplement tarteaucitron's consent defaults with missing buckets
+		// Tarteaucitron sets: ad_storage, analytics_storage, ad_user_data, ad_personalization
+		// We add: functionality_storage, personalization_storage (both denied until consent)
+		// Note: security_storage should remain granted (used for security features like fraud prevention)
+		window.dataLayer = window.dataLayer || [];
+		window.tac_gtag = window.tac_gtag || function(){dataLayer.push(arguments);};
+		window.tac_gtag('consent', 'default', {
+			'functionality_storage': 'denied',
+			'personalization_storage': 'denied',
+			'security_storage': 'granted'
+		});
+
 		// Google Analytics configuration (from environment variable)
 		// GA ID is configured in .env file as PUBLIC_GA_MEASUREMENT_ID
 		tarteaucitron.user.gtagUa = gaId;
