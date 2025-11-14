@@ -32,6 +32,19 @@ tarteaucitron.services.gtag = {
             gtag('js', new Date());
             var additional_config_info = (typeof timeExpire !== 'undefined') ? {'anonymize_ip': true, 'cookie_expires': timeExpire / 1000} : {'anonymize_ip': true};
 
+            if (tarteaucitron.state.gtag === true && typeof gtag === 'function') {
+                // Replay the consent update once gtag is ready. Tarteaucitron dispatches
+                // `gtag_consentModeOk` before this service wires up `window.gtag`, so the
+                // built-in consent handler fires too early and `analytics_storage` stays
+                // denied. Re-sending the update here ensures analytics starts immediately
+                // after the user opts in.
+                gtag('consent', 'update', {
+                    analytics_storage: 'granted',
+                    ad_user_data: 'denied',
+                    ad_personalization: 'denied'
+                });
+            }
+
             if (tarteaucitron.user.gtagCrossdomain) {
                 /**
                  * https://support.google.com/analytics/answer/7476333?hl=en
