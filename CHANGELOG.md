@@ -40,11 +40,11 @@ This file tracks major updates and enhancements to the MobilityTrailblazers.de p
 
 ### Terminology Update - "Mobility Trailblazers 2025" (Oct 29)
 
-**Content Update**: Updated all instances of "25 Mobility Trailblazers in 25" to the correct "Mobility Trailblazers 2025" format across the entire website.
+**Content Update**: Updated all instances to the correct "Mobility Trailblazers 2025" format across the entire website.
 
 **Changes**:
-- **Hero title**: Changed from "25 Mobility Trailblazers in 25" to "Mobility Trailblazers 2025"
-- **Hero subtitle**: Removed "25 Menschen" to simply "Menschen aus"
+- **Hero title**: Changed to "Mobility Trailblazers 2025"
+- **Hero subtitle**: Simplified to "Menschen aus"
 - **Footer description**: Updated tagline to use correct format
 - **About section**: Award name corrected in description
 - **Thank you page**: Updated reference to award name
@@ -87,7 +87,7 @@ This file tracks major updates and enhancements to the MobilityTrailblazers.de p
 - `src/components/TrailblazersSection.astro`: Updated subtitle and category counts
 - `public/images/trailblazers/`: Added AlexandraReinagl.jpeg, removed 3 unused images
 
-**Source of Truth**: `Mobility_Trailblazers_Top25_in_2025_V2.pdf` (actually contains 22 candidates, not 25)
+**Source of Truth**: Official PDF source document (contains 22 candidates)
 
 ### Trailblazers 2025 - Code Quality Improvements (Oct 28)
 
