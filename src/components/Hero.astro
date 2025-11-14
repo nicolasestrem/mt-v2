@@ -21,7 +21,7 @@
 			<div class="countdown-section">
 				<div class="countdown-container">
 					<div class="countdown-item">
-						<div class="countdown-number" id="days">00</div>
+						<div class="countdown-number" id="days">000</div>
 						<div class="countdown-label">Tage</div>
 					</div>
 					<div class="countdown-item">
@@ -158,6 +158,14 @@
 		font-weight: 700;
 		color: var(--color-accent);
 		margin-bottom: 0.5rem;
+		display: inline-block;
+		min-width: 2ch;
+		font-variant-numeric: tabular-nums;
+		text-align: center;
+	}
+
+	.countdown-item:first-child .countdown-number {
+		min-width: 3ch;
 	}
 
 	/* Larger, more prominent numbers for days and seconds */
@@ -267,7 +275,7 @@
 			const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 			const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-			if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
+			if (daysEl) daysEl.textContent = days.toString().padStart(3, '0');
 			if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
 			if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
 			if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
