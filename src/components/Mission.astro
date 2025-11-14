@@ -5,8 +5,18 @@ import SectionDivider from './SectionDivider.astro';
 ---
 
 <section class="mission" id="about">
-	<SectionDivider type="wave" fillColor="#F8F0E3" position="top" />
-	<div class="container">
+        <SectionDivider type="wave" fillColor="#F8F0E3" position="top" />
+        <div class="mission-background" aria-hidden="true">
+                <img
+                        src="/images/background.webp"
+                        alt=""
+                        width="1920"
+                        height="1080"
+                        loading="eager"
+                        fetchpriority="high"
+                />
+        </div>
+        <div class="container">
 		<div class="mission-grid">
 			<div class="mission-content">
 				<div class="mission-box">
@@ -50,14 +60,20 @@ import SectionDivider from './SectionDivider.astro';
 		padding: 3rem 0;
 	}
 
-	.mission::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: url('/images/background.webp') center center/cover;
-		opacity: 0.1;
-		z-index: 1;
-	}
+        .mission-background {
+                position: absolute;
+                inset: 0;
+                z-index: 1;
+                pointer-events: none;
+                overflow: hidden;
+        }
+
+        .mission-background img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.1;
+        }
 
 	.mission-grid {
 		display: grid;
