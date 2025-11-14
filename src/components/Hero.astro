@@ -20,23 +20,23 @@
 			
 			<div class="countdown-section">
 				<div class="countdown-container">
-                                        <div class="countdown-item">
-                                                <div class="countdown-number" id="days">000</div>
-                                                <div class="countdown-label">Tage</div>
-                                        </div>
-                                        <div class="countdown-item">
-                                                <div class="countdown-number" id="hours">000</div>
-                                                <div class="countdown-label">Stunden</div>
-                                        </div>
-                                        <div class="countdown-item">
-                                                <div class="countdown-number" id="minutes">000</div>
-                                                <div class="countdown-label">Minuten</div>
-                                        </div>
-                                        <div class="countdown-item">
-                                                <div class="countdown-number" id="seconds">000</div>
-                                                <div class="countdown-label">Sekunden</div>
-                                        </div>
-                                </div>
+					<div class="countdown-item">
+						<div class="countdown-number" id="days">000</div>
+						<div class="countdown-label">Tage</div>
+					</div>
+					<div class="countdown-item">
+						<div class="countdown-number" id="hours">00</div>
+						<div class="countdown-label">Stunden</div>
+					</div>
+					<div class="countdown-item">
+						<div class="countdown-number" id="minutes">00</div>
+						<div class="countdown-label">Minuten</div>
+					</div>
+					<div class="countdown-item">
+						<div class="countdown-number" id="seconds">00</div>
+						<div class="countdown-label">Sekunden</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -153,16 +153,20 @@
 			0 0 40px rgb(193, 105, 60, 0.25);
 	}
 
-        .countdown-number {
-                font-size: 2.5rem;
-                font-weight: 700;
-                color: var(--color-accent);
-                margin-bottom: 0.5rem;
-                display: inline-block;
-                min-width: 3ch;
-                font-variant-numeric: tabular-nums;
-                text-align: center;
-        }
+	.countdown-number {
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: var(--color-accent);
+		margin-bottom: 0.5rem;
+		display: inline-block;
+		min-width: 2ch;
+		font-variant-numeric: tabular-nums;
+		text-align: center;
+	}
+
+	.countdown-item:first-child .countdown-number {
+		min-width: 3ch;
+	}
 
 	/* Larger, more prominent numbers for days and seconds */
 	.countdown-item:nth-child(1) .countdown-number,
@@ -271,7 +275,7 @@
 			const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 			const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                        if (daysEl) daysEl.textContent = days.toString().padStart(3, '0');
+			if (daysEl) daysEl.textContent = days.toString().padStart(3, '0');
 			if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
 			if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
 			if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
