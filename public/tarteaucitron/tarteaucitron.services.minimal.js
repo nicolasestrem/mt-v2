@@ -32,6 +32,24 @@ tarteaucitron.services.gtag = {
             gtag('js', new Date());
             var additional_config_info = (typeof timeExpire !== 'undefined') ? {'anonymize_ip': true, 'cookie_expires': timeExpire / 1000} : {'anonymize_ip': true};
 
+            var grantAnalyticsConsent = function () {
+                gtag('consent', 'update', {
+                    analytics_storage: 'granted',
+                    ad_user_data: 'denied',
+                    ad_personalization: 'denied'
+                });
+            };
+
+            if (tarteaucitron.state && tarteaucitron.state.gtag === true) {
+                grantAnalyticsConsent();
+            } else {
+                var onConsentGranted = function () {
+                    grantAnalyticsConsent();
+                    document.removeEventListener('gtag_consentModeOk', onConsentGranted);
+                };
+                document.addEventListener('gtag_consentModeOk', onConsentGranted);
+            }
+
             if (tarteaucitron.user.gtagCrossdomain) {
                 /**
                  * https://support.google.com/analytics/answer/7476333?hl=en
