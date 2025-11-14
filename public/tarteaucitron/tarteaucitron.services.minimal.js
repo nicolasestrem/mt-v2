@@ -40,15 +40,7 @@ tarteaucitron.services.gtag = {
                 });
             };
 
-            if (tarteaucitron.state && tarteaucitron.state.gtag === true) {
-                grantAnalyticsConsent();
-            } else {
-                var onConsentGranted = function () {
-                    grantAnalyticsConsent();
-                    document.removeEventListener('gtag_consentModeOk', onConsentGranted);
-                };
-                document.addEventListener('gtag_consentModeOk', onConsentGranted);
-            }
+            grantAnalyticsConsent();
 
             if (tarteaucitron.user.gtagCrossdomain) {
                 /**
