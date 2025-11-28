@@ -4,12 +4,18 @@
  */
 
 export interface FormSubmissionOptions {
-	form: HTMLFormElement;
-	successRedirect: string;
-	eventLabel: string;
-	onStart?: () => void;
-	onSuccess?: () => void;
-	onError?: (error: string) => void;
+        form: HTMLFormElement;
+        successRedirect: string;
+        eventLabel: string;
+        onStart?: () => void;
+        onSuccess?: () => void;
+        onError?: (error: string) => void;
+        onValidationError?: (validation: ValidationResult) => void;
+}
+
+export interface SubmissionResult {
+        success: boolean;
+        validation?: ValidationResult;
 }
 
 export interface ValidationResult {
@@ -120,15 +126,16 @@ export function setRateLimit(formId: string): void {
 /**
  * Submits form to Web3Forms with validation and error handling
  */
-export async function submitToWeb3Forms(options: FormSubmissionOptions): Promise<void> {
-	const {
-		form,
-		successRedirect,
-		eventLabel,
-		onStart,
-		onSuccess,
-		onError
-	} = options;
+export async function submitToWeb3Forms(options: FormSubmissionOptions): Promise<SubmissionResult> {
+        const {
+                form,
+                successRedirect,
+                eventLabel,
+                onStart,
+                onSuccess,
+                onError,
+                onValidationError
+        } = options;
 
 	const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
 	if (!submitButton) {
@@ -148,11 +155,17 @@ export async function submitToWeb3Forms(options: FormSubmissionOptions): Promise
 		const formData = new FormData(form);
 
 		// Validate form data
-		const validation = validateFormData(formData);
-		if (!validation.isValid) {
-			const firstError = Array.from(validation.errors.values())[0];
-			throw new Error(firstError);
-		}
+                const validation = validateFormData(formData);
+                if (!validation.isValid) {
+                        if (onValidationError) {
+                                onValidationError(validation);
+                        }
+
+                        return {
+                                success: false,
+                                validation
+                        };
+                }
 
 		// Check rate limit (1 minute)
 		const formId = form.id || 'default';
@@ -197,12 +210,14 @@ export async function submitToWeb3Forms(options: FormSubmissionOptions): Promise
 			window.location.href = successRedirect;
 
 			// Reset form (in case redirect fails)
-			form.reset();
-		} else {
-			throw new Error(result.message || 'Form submission failed');
-		}
-	} catch (error) {
-		console.error('Form submission error:', error);
+                        form.reset();
+
+                        return { success: true, validation };
+                } else {
+                        throw new Error(result.message || 'Form submission failed');
+                }
+        } catch (error) {
+                console.error('Form submission error:', error);
 
 		const errorMessage = error instanceof Error ? error.message : 'Es gab einen Fehler beim Senden. Bitte versuchen Sie es erneut.';
 
@@ -211,10 +226,10 @@ export async function submitToWeb3Forms(options: FormSubmissionOptions): Promise
 			onError(errorMessage);
 		}
 
-		throw error;
-	} finally {
-		// Reset button state
-		submitButton.textContent = originalText;
-		submitButton.disabled = false;
-	}
+                throw error;
+        } finally {
+                // Reset button state
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+        }
 }

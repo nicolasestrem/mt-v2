@@ -86,40 +86,45 @@ import SectionDivider from './SectionDivider.astro';
 				<input type="hidden" name="_captcha" value="false">
 				
 				<div class="form-row">
-					<div class="form-group">
-						<label for="nominatorFirstName">Ihr Vorname *</label>
-						<input type="text" id="nominatorFirstName" name="nominatorFirstName" required aria-required="true">
-					</div>
-					
-					<div class="form-group">
-						<label for="nominatorLastName">Ihr Nachname *</label>
-						<input type="text" id="nominatorLastName" name="nominatorLastName" required aria-required="true">
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="nominatorEmail">Ihre E-Mail *</label>
-					<input type="email" id="nominatorEmail" name="nominatorEmail" required aria-required="true" aria-describedby="emailHelp">
-					<small id="emailHelp" class="form-help">Wir verwenden Ihre E-Mail nur für Rückfragen zu Ihrer Nominierung.</small>
-				</div>
+                                        <div class="form-group">
+                                                <label for="nominatorFirstName">Ihr Vorname *</label>
+                                                <input type="text" id="nominatorFirstName" name="nominatorFirstName" required aria-required="true">
+                                                <p class="field-error" id="nominatorFirstNameError"></p>
+                                        </div>
+
+                                        <div class="form-group">
+                                                <label for="nominatorLastName">Ihr Nachname *</label>
+                                                <input type="text" id="nominatorLastName" name="nominatorLastName" required aria-required="true">
+                                                <p class="field-error" id="nominatorLastNameError"></p>
+                                        </div>
+                                </div>
+
+                                <div class="form-group">
+                                        <label for="nominatorEmail">Ihre E-Mail *</label>
+                                        <input type="email" id="nominatorEmail" name="nominatorEmail" required aria-required="true" aria-describedby="emailHelp">
+                                        <small id="emailHelp" class="form-help">Wir verwenden Ihre E-Mail nur für Rückfragen zu Ihrer Nominierung.</small>
+                                        <p class="field-error" id="nominatorEmailError"></p>
+                                </div>
 				
 				<!-- Honeypot Spam Protection -->
 				<input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 				
 				<div class="form-group">
-					<label for="nominatorSalutation">Anrede *</label>
-					<select id="nominatorSalutation" name="nominatorSalutation" required aria-required="true">
-						<option value="">Bitte wählen</option>
-						<option value="Frau">Frau</option>
-						<option value="Herr">Herr</option>
-						<option value="Keine Angabe">Keine Angabe</option>
-					</select>
-				</div>
-				
-				<div class="form-group">
-					<label for="nominationMessage">Optionale Nachricht</label>
-					<textarea id="nominationMessage" name="nominationMessage" rows="6" placeholder="Wen schlagen Sie für 2026 vor? Gerne mit einer kurzen oder auch ausführlichen Begründung."></textarea>
-				</div>
+                                        <label for="nominatorSalutation">Anrede *</label>
+                                        <select id="nominatorSalutation" name="nominatorSalutation" required aria-required="true">
+                                                <option value="">Bitte wählen</option>
+                                                <option value="Frau">Frau</option>
+                                                <option value="Herr">Herr</option>
+                                                <option value="Keine Angabe">Keine Angabe</option>
+                                        </select>
+                                        <p class="field-error" id="nominatorSalutationError"></p>
+                                </div>
+
+                                <div class="form-group">
+                                        <label for="nominationMessage">Optionale Nachricht</label>
+                                        <textarea id="nominationMessage" name="nominationMessage" rows="6" placeholder="Wen schlagen Sie für 2026 vor? Gerne mit einer kurzen oder auch ausführlichen Begründung."></textarea>
+                                        <p class="field-error" id="nominationMessageError"></p>
+                                </div>
 				
 				<div class="form-group checkbox-group">
 					<label class="checkbox-label">
@@ -280,11 +285,11 @@ import SectionDivider from './SectionDivider.astro';
 		color: var(--color-primary);
 	}
 
-	.form-group input,
-	.form-group select,
-	.form-group textarea {
-		padding: 0.8rem 1rem;
-		border: 2px solid #e5e7eb;
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+                padding: 0.8rem 1rem;
+                border: 2px solid #e5e7eb;
 		border-radius: 8px;
 		background: #fff;
 		color: var(--color-text);
@@ -297,10 +302,18 @@ import SectionDivider from './SectionDivider.astro';
 			0 0 24px rgb(26, 54, 93, 0.1);
 	}
 
-	.form-group textarea {
-		resize: vertical;
-		min-height: 120px;
-	}
+        .form-group textarea {
+                resize: vertical;
+                min-height: 120px;
+        }
+
+        .field-error {
+                color: #b91c1c;
+                font-size: 0.85rem;
+                margin-top: 0.35rem;
+                min-height: 1.2rem;
+                display: none;
+        }
 
 	.form-group input:hover,
 	.form-group select:hover,
@@ -470,26 +483,114 @@ import SectionDivider from './SectionDivider.astro';
 <script>
 	import { submitToWeb3Forms } from '../utils/formSubmission';
 
-	// Form handling with validation and rate limiting
-	const nominationForm = document.getElementById('nominationForm') as HTMLFormElement;
+        // Form handling with validation and rate limiting
+        const nominationForm = document.getElementById('nominationForm') as HTMLFormElement;
 
-	nominationForm?.addEventListener('submit', async function(e) {
-		e.preventDefault();
+        const fieldConfig = {
+                nominatorFirstName: {
+                        input: document.getElementById('nominatorFirstName') as HTMLInputElement,
+                        error: document.getElementById('nominatorFirstNameError') as HTMLElement,
+                        baseDescribedBy: (document.getElementById('nominatorFirstName') as HTMLElement)?.getAttribute('aria-describedby')
+                },
+                nominatorLastName: {
+                        input: document.getElementById('nominatorLastName') as HTMLInputElement,
+                        error: document.getElementById('nominatorLastNameError') as HTMLElement,
+                        baseDescribedBy: (document.getElementById('nominatorLastName') as HTMLElement)?.getAttribute('aria-describedby')
+                },
+                nominatorEmail: {
+                        input: document.getElementById('nominatorEmail') as HTMLInputElement,
+                        error: document.getElementById('nominatorEmailError') as HTMLElement,
+                        baseDescribedBy: (document.getElementById('nominatorEmail') as HTMLElement)?.getAttribute('aria-describedby')
+                },
+                nominatorSalutation: {
+                        input: document.getElementById('nominatorSalutation') as HTMLSelectElement,
+                        error: document.getElementById('nominatorSalutationError') as HTMLElement,
+                        baseDescribedBy: (document.getElementById('nominatorSalutation') as HTMLElement)?.getAttribute('aria-describedby')
+                },
+                nominationMessage: {
+                        input: document.getElementById('nominationMessage') as HTMLTextAreaElement,
+                        error: document.getElementById('nominationMessageError') as HTMLElement,
+                        baseDescribedBy: (document.getElementById('nominationMessage') as HTMLElement)?.getAttribute('aria-describedby')
+                }
+        };
 
-		const errorMsg = document.getElementById('errorMessage') as HTMLElement;
-		const errorText = document.getElementById('errorText') as HTMLElement;
-		const successMsg = document.getElementById('successMessage') as HTMLElement;
+        const updateDescribedBy = (
+                element: HTMLElement,
+                errorId: string,
+                isActive: boolean,
+                baseDescribedBy: string | null | undefined
+        ) => {
+                const baseIds = baseDescribedBy ? baseDescribedBy.split(' ').filter(Boolean) : [];
+                const ids = new Set(baseIds);
 
-		try {
-			await submitToWeb3Forms({
-				form: this,
-				successRedirect: '/danke-nominierung',
-				eventLabel: 'nomination_form',
-				onError: (errorMessage) => {
-					// Show error message
-					if (successMsg) successMsg.style.display = 'none';
-					if (errorMsg && errorText) {
-						errorText.textContent = errorMessage;
+                if (isActive) {
+                        ids.add(errorId);
+                } else {
+                        ids.delete(errorId);
+                }
+
+                if (ids.size > 0) {
+                        element.setAttribute('aria-describedby', Array.from(ids).join(' '));
+                } else {
+                        element.removeAttribute('aria-describedby');
+                }
+        };
+
+        const clearFieldErrors = () => {
+                Object.values(fieldConfig).forEach(({ input, error, baseDescribedBy }) => {
+                        if (error) {
+                                error.textContent = '';
+                                error.style.display = 'none';
+                        }
+                        if (input) {
+                                input.removeAttribute('aria-invalid');
+                                updateDescribedBy(input, error.id, false, baseDescribedBy);
+                        }
+                });
+        };
+
+        const showFieldErrors = (errors: Map<string, string>) => {
+                errors.forEach((message, field) => {
+                        const config = fieldConfig[field as keyof typeof fieldConfig];
+                        if (!config) return;
+
+                        const { input, error, baseDescribedBy } = config;
+                        if (error) {
+                                error.textContent = message;
+                                error.style.display = 'block';
+                        }
+
+                        if (input) {
+                                input.setAttribute('aria-invalid', 'true');
+                                updateDescribedBy(input, error.id, true, baseDescribedBy);
+                        }
+                });
+        };
+
+        nominationForm?.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const errorMsg = document.getElementById('errorMessage') as HTMLElement;
+                const errorText = document.getElementById('errorText') as HTMLElement;
+                const successMsg = document.getElementById('successMessage') as HTMLElement;
+
+                clearFieldErrors();
+
+                try {
+                        await submitToWeb3Forms({
+                                form: this,
+                                successRedirect: '/danke-nominierung',
+                                eventLabel: 'nomination_form',
+                                onValidationError: ({ errors }) => {
+                                        if (successMsg) successMsg.style.display = 'none';
+                                        if (errorMsg) errorMsg.style.display = 'none';
+                                        showFieldErrors(errors);
+                                },
+                                onError: (errorMessage) => {
+                                        // Show error message
+                                        if (successMsg) successMsg.style.display = 'none';
+                                        if (errorMsg && errorText) {
+                                                errorText.textContent = errorMessage;
 						errorMsg.style.display = 'block';
 						// Auto-hide after 7 seconds
 						setTimeout(() => errorMsg.style.display = 'none', 7000);
